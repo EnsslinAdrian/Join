@@ -12,7 +12,25 @@ body {
 }
 
 .board-header-right {
+    display: flex;
+    align-items: center;
     gap: 32px;
+    padding-right: 64px;
+}
+
+.inputfield {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    width: 312px;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    padding: 8px 16px 8px 16px;
+}
+
+.input {
+    border: none;
+
 }
 
 .list {
@@ -26,6 +44,7 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 244px;
+    padding-top: 48px;
 }
 
 p {
@@ -37,6 +56,24 @@ p {
 .tasks-container {
     display: flex;
     padding: 0px 64px 0px 64px;
+    height: 688px;
+    gap: 24px;
 }
 
+.task-columns {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-card {
+    width: 252px;
+    height: 244px;
+    border-radius: 24px;
+    padding: 16px;
+    border: 1px solid black;
+}
+
+.board-btn {
+    height: 48px;
+}
 
