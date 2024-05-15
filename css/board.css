@@ -54,7 +54,8 @@ p {
 
 .tasks-container {
     display: flex;
-    padding: 0px 64px 0px 64px;
+    margin-left: 64px;
+    margin-right: 64px;
     height: 688px;
     gap: 24px;
 }
@@ -62,14 +63,16 @@ p {
 .task-columns {
     display: flex;
     flex-direction: column;
+    width: 252px;
 }
 
 .task-card {
+    box-sizing: border-box;
     width: 252px;
     height: 244px;
     border-radius: 24px;
     padding: 16px;
-    border: 1px solid black;
+    border: 1px solid lightgrey;
 }
 
 .board-btn {
