@@ -49,3 +49,11 @@ display: flex;
 align-items: center;
 }
 
+input {
+    height: 24px;
+    width: 300px;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 8px;
+    color: grey;
+}
