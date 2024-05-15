@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+}
+
+.display-flex {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+header {
+    height: 96px;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px #0000001A;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-description {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 116px;
+}
+
+.help-profil-container {
+    display: flex;
+    align-items: center;
+    margin-right: 44px;
+}
+
+.help-profil-container img {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+}
+
+.profil-initials {
+    border: 3px solid #2A3647;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profil-initials p {
+    color: #29ABE2;
+    font-weight: 800;
+    font-size: 24px;
+    font-family: 'Inter';
+}
+
+.menubar-section {
+    background-color: #2A3647;
+    width: 232px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    width: 100.03px;
+    height: 121.97px;
+    margin-top: 64px;
+}
+
+.navbar-container {
+    margin-top: 114.02px;
+    margin-bottom: 365.02px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 229px;
+    width: 232px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    transition: all 225ms;
+    height: 46px;
+}
+
+.navbar:hover {
+    background-color: #334052;
+}
+
+.nav-bg {
+    background-color: #091931;
+  /*  pointer-events: none; 
+    cursor: default; */
+}
+
+.navbar img {
+    margin-right: 10.5px;
+    margin-left: 58.5px;
+    height: 25px;
+    width: 25px;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.protection-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.protection-container a {
+    text-decoration: none;
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 400;
+    color: #A8A8A8;
+}
+
+.protection-container a:hover {
+color: #29ABE2;
+}
