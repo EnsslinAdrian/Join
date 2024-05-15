@@ -35,6 +35,8 @@ background: #FFFFFF;
 display: flex;
 justify-content: space-around;
 align-items: center;
+padding-left: 65px;
+padding-right: 65px;
 }
 
 .tasks-feedback-dashboard {
@@ -57,7 +59,7 @@ width: 93px;
 }
 
 .task-current-number {
-    font-family: Inter;
+    font-family: 'Inter';
     font-size: 64px;
     font-weight: 600;
     text-align: center;
@@ -90,6 +92,12 @@ margin-left: 80px;
     font-family: 'Inter';
     font-size: 21px;
     font-weight: 700;
+}
+
+.deadline-text {
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 400;    
 }
 
 h2 {
