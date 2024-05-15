@@ -1,0 +1,19 @@
+body {
+    margin: 60px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.sign_up {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+p {
+    margin: 0;
+}
