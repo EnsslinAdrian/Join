@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/menubar.css">
+    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="style.css">
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
@@ -17,6 +19,20 @@
     <div w3-include-html="./assets/templates/menubar.html"></div>
      <div style="width: 100%;">
     <div w3-include-html="./assets/templates/header.html"></div>
+
+    <div class="board-header">
+        <h1>Board</h1>
+        <div>
+            <input placeholder="Find Task"><img src="./assets/img/search.png">
+            <button>Add Task +</button>
+        </div>
+        <div class="">
+            <p>To do</p> <button>+</button>
+            <p>In progress</p> <button>+</button>
+            <p>Await feedback</p> <button>+</button>
+            <p>Done</p>
+        </div>
+    </div>
 
     
      <!-- Seiten Inhalt  -->
