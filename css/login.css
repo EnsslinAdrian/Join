@@ -31,8 +31,15 @@ p {
 .main_login_content {
     background-color: white;
     text-align: center;
-    padding: 48px 115px;
-    border-radius: 10px;
+    padding: 48px 80px;
+    border-radius: 20px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.underline_login {
+    width: 100px;
+    height: 5px;
+    color: blue;
 }
 
 .remember_me input {
@@ -50,6 +57,30 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.login_buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 260px;
+    margin-left: 25px;
+}
+
+.btn_login {
+    background-color: #2a3647;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn_guest_login {
+    color: #2a3647;
+    background-color: white;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid #2a3647;
 }
 
 
