@@ -1,9 +1,12 @@
 body {
     margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
-.display-flex {
-    display: flex;
+.content-container {
+display: flex;
+width: 2200px;
 }
 
 header {
@@ -16,6 +19,10 @@ header {
     justify-content: space-between;
 }
 
+.header-logo {
+display: none;
+}
+
 .header-description {
     font-family: 'Inter';
     font-size: 20px;
@@ -26,7 +33,7 @@ header {
 .help-profil-container {
     display: flex;
     align-items: center;
-    margin-right: 44px;
+    margin-right: 40px;
 }
 
 .help-profil-container img {
@@ -124,4 +131,111 @@ header {
 
 .protection-container a:hover {
 color: #29ABE2;
+}
+
+@media (max-width: 900px) {
+    .header-description {
+        font-size: 16px;
+        margin-left: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menubar-section {
+        background-color: #2A3647;
+        width: 100vw;
+        height: 80px;
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo {
+       display: none;
+    }
+
+    .navbar-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        height: 100%;
+        width: 100%;
+    }
+
+    .nav-bg {
+        background-color: #091931;
+        border-radius: 16px;
+      /*  pointer-events: none; 
+        cursor: default; */
+    }
+
+    .navbar:hover {
+        background-color: #334052;
+        border-radius: 16px;
+    }
+
+    .navbar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 225ms;
+        height: 76px;
+        width: 80px;
+    }
+
+    .navbar img {
+        margin-right: 0px;
+        margin-left: 0px;
+        height: 22px;
+        width: 22px;
+    }
+
+    .protection-container {
+        display: none;
+    }
+
+    .navbar a {
+        font-family: 'Open Sans';
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .profil-initials {
+        border: 2px solid #2A3647;
+        width: 40px;
+        height: 40px;
+    }
+
+    .help-profil-container {
+        margin-right: 16px;
+    }
+
+    .help-profil-container img {
+        display: none;
+    }
+
+    .profil-initials p {
+        color: #29ABE2;
+        font-weight: 800;
+        font-size: 16px;
+        font-family: 'Open Sans';
+    }
+
+    .header-description {
+        display: none;
+    }
+
+    .header-logo {
+        display: block;
+        object-fit: contain;
+        width: 32px;
+        height: 93px;
+        margin-left: 16px;
+        }
+
 }
