@@ -83,5 +83,9 @@ p {
     border: 1px solid #2a3647;
 }
 
+::placeholder {
+    color: lightgray;
+}
+
 
 
