@@ -17,3 +17,7 @@ header {
 p {
     margin: 0;
 }
+
+.logo_image img {
+    object-fit: cover;
+}
