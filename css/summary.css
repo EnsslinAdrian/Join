@@ -23,8 +23,8 @@ align-items: center;
 }
 
 .todos-done-dashboard img {
-height: 96px;
-width: 96px;
+height: 69px;
+width: 69px;
 }
 
 .urgent-dashboard {
@@ -33,7 +33,7 @@ height: 168px;
 border-radius: 30px;
 background: #FFFFFF;
 display: flex;
-justify-content: center;
+justify-content: space-around;
 align-items: center;
 }
 
@@ -53,16 +53,43 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+width: 93px;
 }
 
 .task-current-number {
     font-family: Inter;
     font-size: 64px;
     font-weight: 600;
+    text-align: center;
 }
 
 .greeting-container {
 margin-left: 80px;
+}
+
+.task-current-dodo-done {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;    
+}
+
+.task-current-name {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400; 
+    text-align: center;   
+}
+
+.between-line {
+    border: 2px solid #D1D1D1;
+    height: 102px;
+    border-radius: 3px;
+}
+
+.date-text {
+    font-family: 'Inter';
+    font-size: 21px;
+    font-weight: 700;
 }
 
 h2 {
