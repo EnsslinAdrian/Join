@@ -47,12 +47,24 @@ justify-content: space-between;
 margin-top: 56px;
 }
 
+.task-dashboard-container p{
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 .todos-done-dashboard {
 width: 264px;
 height: 168px;
 border-radius: 30px;
 background: #FFFFFF;
+display: flex;
+justify-content: center;
+align-items: center;
+}
 
+.todos-done-dashboard img {
+height: 96px;
+width: 96px;
 }
 
 .urgent-dashboard {
@@ -60,6 +72,9 @@ width: 560px;
 height: 168px;
 border-radius: 30px;
 background: #FFFFFF;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .tasks-feedback-dashboard {
@@ -67,6 +82,23 @@ width: 168px;
 height: 168px;
 border-radius: 30px;
 background: #FFFFFF;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+.task-current-conatiner {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.task-current-number {
+    font-family: Inter;
+    font-size: 64px;
+    font-weight: 600;
 }
 
 .greeting-container {
