@@ -1,0 +1,91 @@
+.margin-left-top {
+    margin-left: 96px;
+    margin-top: 110px;
+}
+
+.hedline-container {
+    display: flex;
+    align-items: center;
+}
+
+.parting-line {
+    height: 59px;
+    border: 3px solid #29ABE2;
+    border-radius: 3px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+h1 {
+    font-family: 'Inter';
+    font-size: 61px;
+    font-weight: 700;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.hedline-container p {
+    font-family: 'Inter';
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.display-flex {
+display: flex;
+}
+
+.align-items {
+align-items: center;
+}
+
+.task-dashboard-container {
+width: 560px;
+height: 562px;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+margin-top: 56px;
+}
+
+.todos-done-dashboard {
+width: 264px;
+height: 168px;
+border-radius: 30px;
+background: #FFFFFF;
+
+}
+
+.urgent-dashboard {
+width: 560px;
+height: 168px;
+border-radius: 30px;
+background: #FFFFFF;
+}
+
+.tasks-feedback-dashboard {
+width: 168px;
+height: 168px;
+border-radius: 30px;
+background: #FFFFFF;
+}
+
+.greeting-container {
+margin-left: 80px;
+}
+
+h2 {
+    font-family: 'Inter';
+    font-size: 64px;
+    font-weight: 700;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    color: #29ABE2;
+}
+
+h3 {
+    font-family: 'Inter';
+    font-size: 47px;
+    font-weight: 500;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}

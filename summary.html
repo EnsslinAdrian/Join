@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,45 @@
 
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/menubar.css">
+    <link rel="stylesheet" href="./css/summary.css">
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
 </head>
+
 <body onload="init()">
     <div class="content-container">
-    <div w3-include-html="./assets/templates/menubar.html"></div>
-     <div style="width: 100%;">
-    <div w3-include-html="./assets/templates/header.html"></div>
+        <div w3-include-html="./assets/templates/menubar.html"></div>
+        <div style="width: 100%;">
+            <div w3-include-html="./assets/templates/header.html"></div>
+            
+            <div class="margin-left-top">
+                <section class="hedline-container">
+                    <h1>Join 360</h1>
+                    <div class="parting-line"></div>
+                    <p>Key Metrics at a Glance</p>
+                </section>
 
-    
-     <!-- Seiten Inhalt  -->
+                <div class="display-flex align-items">
+            <section class="task-dashboard-container">
+            <div class="todos-done-dashboard">1</div>
+            <div class="todos-done-dashboard">2</div>
+            <div class="urgent-dashboard">3</div>
+            <div class="tasks-feedback-dashboard">4</div>
+            <div class="tasks-feedback-dashboard">5</div>
+            <div class="tasks-feedback-dashboard">6</div>
+            </section>
 
+            <section class="greeting-container">
+            <h3>Good morning,</h3>
+            <h2>Sofia Müller</h2>
+            </section>
+                </div>
 
-     </div>
+            </div>
+
+        </div>
     </div>
 </body>
+
 </html>
