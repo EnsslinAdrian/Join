@@ -21,7 +21,6 @@ body {
 .inputfield {
     display: flex;
     align-items: center;
-    height: 48px;
     width: 312px;
     border-radius: 10px;
     border: 1px solid lightgrey;
