@@ -18,6 +18,21 @@ body {
     padding-right: 64px;
 }
 
+/* .inputfield-container {
+    position: relative;
+    width: fit-content;
+} */
+
+.inputfield {
+    font-weight: 400;
+    font-size: 20px;
+    color: #D1D1D1;
+}
+
+.search-icon {
+    
+}
+
 .list {
     display: flex;
     justify-content: space-between;
@@ -123,7 +138,7 @@ h2 {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: blue;
+    background-color: blue;
     color: white;
     font-size: 12px;
     font-weight: 400;
@@ -131,17 +146,8 @@ h2 {
     width: 30px;
 }
 
-.sizing {
-    box-sizing: border-box;
-}
 
-.inputfield {
-    font-weight: 400;
-    font-size: 20px;
-    color: #D1D1D1;
-}
-
-@media (max-width: 1370px) {
-
+@media (max-width: 768px) {
+    
 }
 
