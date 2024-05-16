@@ -40,6 +40,7 @@ p {
 
 .tasks-container {
     display: flex;
+    justify-content: space-between;
     margin-left: 64px;
     margin-right: 64px;
     height: 688px;
@@ -58,7 +59,8 @@ p {
     height: 244px;
     border-radius: 24px;
     padding: 16px;
-    border: 1px solid lightgrey;
+    border: 1px;
+    background-color: white;
 }
 
 .task-card-bottom {
@@ -83,5 +85,9 @@ p {
     border-radius: 50%;
     background: blue;
     color: white;
+}
+
+.sizing {
+    box-sizing: border-box;
 }
 
