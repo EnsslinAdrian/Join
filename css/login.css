@@ -122,6 +122,8 @@ input[type="password"] {
 
 input[type="password"]:focus {
     border-color: rgb(64, 171, 226);
+    background: url("../assets/img/visibility_off.svg") no-repeat;
+    background-position: 300px 8.5px;
 }
 
 ::placeholder {
