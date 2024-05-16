@@ -157,7 +157,7 @@ input[type="checkbox"]:checked:before {
 .footer_login {
     display: flex;
     justify-content: center;
-    padding-top: 90px;
+    padding-top: 80px;
     gap: 40px;
 }
 
