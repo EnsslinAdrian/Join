@@ -63,10 +63,6 @@ p {
     gap: 12px;
 }
 
-.remember_me img:hover {
-    cursor: pointer;
-}
-
 .input_login_field {
     display: flex;
     flex-direction: column;
@@ -133,6 +129,26 @@ p {
     background: url("/assets/img/lock.svg") no-repeat;
     background-position: 303px 6px;
 }
+
+input[type="checkbox"] {
+    visibility: hidden;
+}
+
+input[type="checkbox"]:before {
+    content: url('../assets/img/checkbox-empty.svg');
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+}
+
+input[type="checkbox"]:checked:before {
+    content: url('../assets/img/checkbox-checked.svg');
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+}
+
+
 
 
 
