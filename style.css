@@ -3,10 +3,12 @@
     color: white;
     padding: 12px 16px;
     border-radius: 8px;
+    border: none;
 }
 
 .btn:hover {
     background-color: rgb(64,171,226);
+    cursor: pointer;
 }
 
 .margin-left-top {
@@ -50,8 +52,8 @@ align-items: center;
 }
 
 input {
-    height: 24px;
-    width: 300px;
+    height: 26px;
+    width: 330px;
     padding: 5px;
     margin: 10px;
     border-radius: 8px;

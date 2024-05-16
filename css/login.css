@@ -1,6 +1,12 @@
+html {
+    text-align: -webkit-center;
+}
+
 body {
     margin: 60px;
     background-color: #f6f7f8;
+    font-family: 'Inter';
+    max-width: 1440px;
 }
 
 header {
@@ -17,6 +23,7 @@ header {
 
 p {
     margin: 0;
+    font-size: 16px;
 }
 
 .logo_image img {
@@ -26,6 +33,7 @@ p {
 .main_login_container {
     display: flex;
     justify-content: center;
+    margin-top: 40px;
 }
 
 .main_login_content {
@@ -37,9 +45,8 @@ p {
 }
 
 .underline_login {
-    width: 100px;
-    height: 5px;
-    color: blue;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .remember_me input {
@@ -49,8 +56,15 @@ p {
 .remember_me {
     display: flex;
     align-items: center;
-    margin-left: 30px;
+    margin-left: 36px;
+    margin-top: 24px;
+    margin-bottom: 28px;
     font-size: 14px;
+    gap: 12px;
+}
+
+.remember_me img:hover {
+    cursor: pointer;
 }
 
 .input_login_field {
@@ -59,11 +73,20 @@ p {
     align-items: center;
 }
 
+.input_login_field:hover {
+    cursor: pointer;
+}
+
+.input_login_field input:hover {
+    cursor: pointer;
+}
+
 .login_buttons {
     display: flex;
     justify-content: space-around;
     width: 260px;
     margin-left: 25px;
+    margin-top: 16px;
 }
 
 .btn_login {
@@ -72,6 +95,12 @@ p {
     padding: 6px 15px;
     border-radius: 4px;
     font-weight: bold;
+    border: none;
+}
+
+.btn_login:hover {
+    background-color: rgb(64,171,226);
+    cursor: pointer;
 }
 
 .btn_guest_login {
@@ -83,8 +112,26 @@ p {
     border: 1px solid #2a3647;
 }
 
+.btn_guest_login:hover {
+    cursor: pointer;
+    color: rgb(64,171,226);
+    border-color: rgb(64,171,226);
+}
+
 ::placeholder {
     color: lightgray;
+    padding-left: 7px;
+    font-size: 14px;
+}
+
+.mail_icon {
+    background: url("/assets/img/mail.svg") no-repeat;
+    background-position: 300px 8.5px;
+}
+
+.lock_icon {
+    background: url("/assets/img/lock.svg") no-repeat;
+    background-position: 303px 6px;
 }
 
 
