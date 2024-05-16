@@ -32,6 +32,12 @@ body {
     padding-top: 48px;
 }
 
+.list-btn {
+    border: 2px solid black;
+    border-radius: 7px;
+    background: transparent;
+}
+
 p {
     height: 24px;
     color:#42526E;
@@ -50,17 +56,25 @@ p {
 .task-columns {
     display: flex;
     flex-direction: column;
-    width: 252px;
 }
 
 .task-card {
     box-sizing: border-box;
     width: 252px;
-    height: 244px;
     border-radius: 24px;
     padding: 16px;
     border: 1px;
     background-color: white;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.task-description {
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .task-card-bottom {
@@ -71,23 +85,63 @@ p {
 .task-card-type {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: #3539FF;
-    border-radius: 8px;
     color: white;
+}
+
+.type-bg {
+    background-color: #3539FF;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+}
+
+.progress-bar {
+    background-color: #F4F4F4;
+    width: 100px;
+    height: 10px;
+    border-radius: 10px;
 }
 
 .board-btn {
     height: 48px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 21px;
+    gap: 4px;
+    padding: 8px 16px 8px 16px;
 }
 
 .user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     background: blue;
     color: white;
+    font-size: 12px;
+    font-weight: 400;
+    height: 30px;
+    width: 30px;
 }
 
 .sizing {
     box-sizing: border-box;
+}
+
+.inputfield {
+    font-weight: 400;
+    font-size: 20px;
+    color: #D1D1D1;
+}
+
+@media (max-width: 1370px) {
+
 }
 

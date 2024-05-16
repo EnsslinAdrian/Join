@@ -33,7 +33,7 @@ p {
 .main_login_container {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .main_login_content {
@@ -91,7 +91,7 @@ p {
 }
 
 .btn_login:hover {
-    background-color: rgb(64,171,226);
+    background-color: rgb(64, 171, 226);
     cursor: pointer;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -107,9 +107,25 @@ p {
 
 .btn_guest_login:hover {
     cursor: pointer;
-    color: rgb(64,171,226);
-    border-color: rgb(64,171,226);
+    color: rgb(64, 171, 226);
+    border-color: rgb(64, 171, 226);
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+input[type="email"] {
+    outline: none;
+    letter-spacing: 0.05em;
+}
+
+input[type="password"] {
+    outline: none;
+    letter-spacing: 0.05em;
+}
+
+input[type="password"]:focus {
+    border-color: rgb(64, 171, 226);
+    background: url("../assets/img/visibility_off.svg") no-repeat;
+    background-position: 300px 8.5px;
 }
 
 ::placeholder {
@@ -157,7 +173,7 @@ input[type="checkbox"]:checked:before {
 .footer_login {
     display: flex;
     justify-content: center;
-    padding-top: 80px;
+    padding-top: 60px;
     gap: 40px;
 }
 
@@ -165,16 +181,123 @@ input[type="checkbox"]:checked:before {
 
 .footer_login a {
     color: #d1d1d1;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 .footer_login a:hover {
     cursor: pointer;
-    color: rgb(64,171,226);
+    color: rgb(64, 171, 226);
     font-weight: bolder;
 }
 
+.sign_up_mobile {
+    display: none;
+}
 
+@media(max-width: 580px) {
+    body {
+        margin: 20px 20px 0px 20px;
+    }
 
+    .logo_image img {
+        height: 78px;
+    }
 
+    h1 {
+        font-size: 45px !important;
+    }
 
+    .underline_login img {
+        width: 90px;
+    }
+
+    .main_login_content {
+        width: 396px;
+        height: 410px;
+        padding: 25px 4px 0 4px;
+    }
+
+    .remember_me {
+        margin-left: 20px;
+    }
+
+    .login_buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 21px;
+        width: 100%;
+        align-items: center;
+        margin-left: 0;
+        margin-top: 21px;
+    }
+
+    .btn_login {
+        padding: 10px 4px 10px 4px;
+        width: 150px;
+    }
+
+    .btn_guest_login {
+        padding: 10px 4px 10px 4px;
+        width: 150px;
+    }
+
+    .sign_up {
+        display: none;
+    }
+
+    .sign_up_mobile {
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+        gap: 35px;
+    }
+
+    .footer_login {
+        padding-top: 40px;
+        padding-bottom: 30px;
+    }
+}
+
+@media(max-width: 400px) {
+    h1 {
+        font-size: 38px !important;
+    }
+
+    .underline_login img {
+        width: 80px;
+    }
+
+    .main_login_content {
+        width: 270px;
+    }
+
+    .remember_me p{
+        font-size: 15px !important;
+    }
+
+    input {
+        width: 230px !important;
+    }
+
+    input[type="checkbox"] {
+        width: 16px !important;
+    }
+
+    .mail_icon {
+        background-position: 200px 8.5px;
+    }
+    
+    .lock_icon {
+        background-position: 202px 6px;
+    }
+
+    .sign_up_mobile {
+        font-size: 15px !important;
+    }
+
+    .footer_login {
+        gap: 20px;
+    }
+}
