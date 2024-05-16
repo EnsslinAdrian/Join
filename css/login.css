@@ -136,7 +136,9 @@ input[type="checkbox"]:hover {
 input[type="checkbox"] {
     visibility: hidden;
 }
+*/
 
+/*
 input[type="checkbox"]:before {
     content: url('../assets/img/checkbox-empty.svg');
     display: inline-block;
