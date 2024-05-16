@@ -1,10 +1,15 @@
+.task-dashboard-section {
+display: flex;
+align-items: center;
+}
+
 .task-dashboard-container {
 width: 560px;
 height: 562px;
 display: flex;
 flex-wrap: wrap;
 justify-content: space-between;
-margin-top: 56px;
+margin-top: 45px;
 }
 
 .task-dashboard-container p{
@@ -35,8 +40,8 @@ background: #FFFFFF;
 display: flex;
 justify-content: space-around;
 align-items: center;
-padding-left: 65px;
-padding-right: 65px;
+padding-left: 40px;
+padding-right: 40px;
 }
 
 .tasks-feedback-dashboard {
@@ -115,4 +120,36 @@ h3 {
     font-weight: 500;
     margin-block-start: 0;
     margin-block-end: 0;
+}
+
+@media (max-width: 1200px) {
+    .task-dashboard-section {
+        flex-direction: column;
+        align-items: start;
+        }
+
+        .greeting-container {
+            margin-left: 0;
+            width: 274px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            }
+
+            h2 {
+                font-family: 'Inter';
+                font-size: 47px;
+                font-weight: 700;
+                margin-block-start: 0;
+                margin-block-end: 0;
+                color: #29ABE2;
+            }
+            
+            h3 {
+                font-family: 'Inter';
+                font-size: 36px;
+                font-weight: 500;
+                margin-block-start: 0;
+                margin-block-end: 0;
+            }
 }
