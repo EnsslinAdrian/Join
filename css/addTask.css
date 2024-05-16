@@ -1,0 +1,127 @@
+.add-task-section {
+display: flex;
+margin-top: 48px;
+}
+
+.add-task-titel-container {
+width: 440px;
+height: 376px;
+}
+
+.add-task-between-line {
+height: 424px;
+border: 1px solid #D1D1D1;
+margin-left: 48px;
+margin-right: 48px;
+}
+
+.add-task-date-container {
+height: 440px;
+width: 416px;
+}
+
+h1 {
+    font-family: 'Inter';
+    font-size: 61px;
+    font-weight: 700;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.margin-left-top {
+    margin-left: 96px;
+    margin-top: 79px;
+}
+
+input {
+    height: 26px;
+    width: 95%;
+    padding: 5px;
+    border-radius: 8px;
+    color: grey;
+    border: 1px solid lightgray;
+    text-indent: 10px;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+textarea {
+width: 95%;
+max-width: 95%;
+min-width: 95%;
+height: 120px;
+max-height: 120px;
+min-height: 120px;
+border-radius: 10px;
+}
+
+select {
+    height: 48px;
+    width: 95%;
+    border-radius: 8px;
+    color: grey;
+    border: 1px solid lightgray;
+    text-indent: 10px;
+}
+
+p {
+    font-family: 'Inter';
+    font-size: 20px;
+    font-weight: 400;
+    margin-block-start: 0;
+    margin-block-end: 8px;
+}
+
+.margin-buttom {
+margin-bottom: 32px;
+}
+
+.add-task-prio {
+display: flex;
+justify-content: space-between;
+}
+
+.prio-selection-urgent {
+height: 56px;
+width: 136px;
+border-radius: 10px;
+background-color: #FFFFFF;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+}
+
+.prio-selection-medium {
+    height: 56px;
+    width: 136px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.prio-selection-low {
+    height: 56px;
+    width: 136px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.prio-selection-urgent:hover,
+.prio-selection-medium:hover,
+.prio-selection-low:hover {
+    box-shadow: -4px 4px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.prio-icons {
+margin-left: 8px;
+}
