@@ -114,10 +114,12 @@ p {
 
 input[type="email"] {
     outline: none;
+    letter-spacing: 0.05em;
 }
 
 input[type="password"] {
     outline: none;
+    letter-spacing: 0.05em;
 }
 
 input[type="password"]:focus {

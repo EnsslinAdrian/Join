@@ -61,3 +61,7 @@ input {
     border: 1px solid lightgray;
     text-indent: 10px;
 }
+
+input:focus::placeholder {
+    color: transparent;
+}
