@@ -33,7 +33,7 @@ p {
 .main_login_container {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .main_login_content {
@@ -112,6 +112,19 @@ p {
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
+input[type="email"] {
+    outline: none;
+}
+
+input[type="password"] {
+    outline: none;
+    transition: 0.3s;
+}
+
+input[type="password"]:focus {
+    border-color: rgb(64,171,226);
+}
+
 ::placeholder {
     color: lightgray;
     padding-left: 7px;
@@ -157,7 +170,7 @@ input[type="checkbox"]:checked:before {
 .footer_login {
     display: flex;
     justify-content: center;
-    padding-top: 80px;
+    padding-top: 60px;
     gap: 40px;
 }
 
@@ -172,7 +185,49 @@ input[type="checkbox"]:checked:before {
     font-weight: bolder;
 }
 
+@media(max-width: 580px) {
+    .logo_image img {
+        height: 78px;
+    }
 
+    h1 {
+        font-size: 45px !important;
+    }
+
+    .underline_login img {
+        width: 90px;
+    }
+
+    .main_login_content {
+        width: 396px;
+        height: 410px;
+        padding: 25px 4px 0 4px;
+    }
+
+    .remember_me {
+        margin-left: 20px;
+    }
+
+    .login_buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 21px;
+        width: 100%;
+        align-items: center;
+        margin-left: 0;
+        margin-top: 21px;
+    }
+
+    .btn_login {
+        padding: 10px 4px 10px 4px;
+        width: 150px;
+    }
+
+    .btn_guest_login {
+        padding: 10px 4px 10px 4px;
+        width: 150px;
+    }
+}
 
 
 
