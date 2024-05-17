@@ -35,6 +35,10 @@ body {
     padding: 0;
 }
 
+.inputfield:focus {
+    outline: none;
+}
+
 .input-icon {
     display: flex;
     align-items: center;
@@ -73,7 +77,6 @@ p {
     justify-content: space-between;
     margin-left: 64px;
     margin-right: 64px;
-    height: 688px;
     gap: 24px;
 }
 
