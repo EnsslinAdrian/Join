@@ -92,13 +92,13 @@ header {
 }
 
 .navbar:hover {
-    background-color: #334052;
+    background-color: #2A3D59;
 }
 
 .nav-bg {
     background-color: #091931;
-    /*  pointer-events: none; 
-    cursor: default; */
+    pointer-events: none; 
+    cursor: default; 
 }
 
 .navbar img {
@@ -108,12 +108,17 @@ header {
     width: 25px;
 }
 
-.navbar a {
-    text-decoration: none;
+.link-text {
     font-family: 'Inter';
     font-size: 16px;
     font-weight: 400;
     color: #FFFFFF;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+a {
+    text-decoration: none;
 }
 
 .protection-container {
@@ -131,7 +136,7 @@ header {
 }
 
 .protection-container a:hover {
-    color: #2A3D59;
+    color: #29ABE2;
 }
 
 @media (max-width: 900px) {
