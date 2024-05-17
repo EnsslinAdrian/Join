@@ -7,6 +7,30 @@ body {
     justify-content: center;
 }
 
+.sign_up_header {
+    display: flex;
+}
+
+.sign_up_headline {
+    padding-left: 50px;
+}
+
+.back_to_login {
+    width: 25px;
+    height: 25px;
+}
+
+.back_to_login img {
+    object-fit: cover;
+}
+
+.back_to_login img:hover {
+    cursor: pointer;
+    background-color: #D1D1D1;
+    padding: 3px;
+    border-radius: 15px;
+}
+
 .main_login_container {
     margin-top: 0 !important;
 }
@@ -33,4 +57,20 @@ body {
 
 input[type="checkbox"] {
     width: 15px;
+}
+
+input[type="text"] {
+    outline: none;
+}
+
+.name_icon {
+    background: url("/assets/img/person.svg") no-repeat;
+    background-position: 303px 9.5px;
+}
+
+.sign_up button {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
