@@ -18,19 +18,28 @@ body {
     padding-right: 64px;
 }
 
-/* .inputfield-container {
-    position: relative;
-    width: fit-content;
-} */
+.inputfield-container {
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
 
 .inputfield {
+    border: none;
+    width: 200px;
+    background-color: transparent;
     font-weight: 400;
     font-size: 20px;
     color: #D1D1D1;
+    padding: 0;
 }
 
-.search-icon {
-    
+.input-icon {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-right: 16px;
 }
 
 .list {
