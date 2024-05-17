@@ -12,12 +12,13 @@ body {
 }
 
 .sign_up_headline {
-    padding-left: 50px;
+    padding-left: 76px;
 }
 
 .back_to_login {
-    width: 25px;
-    height: 25px;
+    width: 15px;
+    height: 15px;
+    padding-top: 15px;
 }
 
 .back_to_login img {
