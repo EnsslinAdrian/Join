@@ -13,7 +13,8 @@
 
 .margin-left-top {
     margin-left: 96px;
-    margin-top: 30px;
+    margin-top: 50px;
+    height: 80vh;
 }
 
 .hedline-container {
@@ -95,5 +96,13 @@ font-size: 47px;
         margin-left: 20px;
         margin-top: 20px;
         margin-right: 20px;
+    }
+}
+
+@media (max-width: 420px) {
+    .margin-left-top {
+        margin-left: 5px;
+        margin-top: 20px;
+        margin-right: 5px;
     }
 }

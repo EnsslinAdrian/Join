@@ -38,15 +38,15 @@
 
                 <div class="task-dashboard-section">
                     <section class="task-dashboard-container" id="summaryTaskDashboard">
-                        <div class="todos-done-dashboard">
-                            <img src="./assets/img/pen.png" alt="Pen">
+                        <div class="todos-done-dashboard" id="todosContainer">
+                            <img id="pen" src="./assets/img/pen.svg" alt="Pen">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number">1</p>
                                 <p class="task-current-dodo-done">To-do</p>
                             </div>
                         </div>
-                        <div class="todos-done-dashboard">
-                            <img src="./assets/img/chop.png" alt="Chop">
+                        <div class="todos-done-dashboard" id="doneContainer">
+                            <img src="./assets/img/chop.svg" alt="Chop">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number">1</p>
                                 <p class="task-current-dodo-done">Done</p>
@@ -118,8 +118,8 @@
                 let greet = document.getElementById('greeting');
 
                 headline.classList.add('d-none');
-                headlineResponsiv.classList.add('d-none-opacity');
-                taskDashboard.classList.add('d-none-opacity');
+                headlineResponsiv.classList.add('d-none');
+                taskDashboard.classList.add('d-none');
                 greet.classList.add('d-none');
 
                 setTimeout(() => {
@@ -127,22 +127,32 @@
                 }, "1000");
 
                 setTimeout(() => {
-                    greet.classList.add('d-none-opacity');
-                    headlineResponsiv.classList.remove('d-none-opacity');
-                    taskDashboard.classList.remove('d-none-opacity');
-                }, "3000");
-
-                setTimeout(() => {
                     greet.classList.add('d-none');
                     headlineResponsiv.classList.remove('d-none');
                     taskDashboard.classList.remove('d-none');
-                }, "4000");
+                }, "3000");
+
             }
         }
 
         window.addEventListener('resize', renderResponsivSummary);
 
         renderResponsivSummary();
+
+        var originalSrc = './assets/img/pen.svg';  // Speichert den ursprünglichen Bildpfad
+  var newSrc = './assets/img/chop.svg';                // Speichert den neuen Bildpfad
+
+  var todosContainer = document.getElementById('todosContainer');
+  var penImage = document.getElementById('pen');
+
+  todosContainer.addEventListener('mouseenter', function() {
+    console.log('Mouseover auf todos-done-dashboard!');
+    penImage.src = newSrc;  // Ändert das Bild beim Betreten des Containers
+  });
+
+  todosContainer.addEventListener('mouseleave', function() {
+    penImage.src = originalSrc;  // Setzt das Bild zurück, wenn der Mauszeiger das Element verlässt
+  });
     </script>
 </body>
 

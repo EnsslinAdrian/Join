@@ -1,6 +1,6 @@
 .task-dashboard-section {
     display: flex;
-    align-items: center;
+    height: 60vh;
 }
 
 .task-dashboard-container {
@@ -8,7 +8,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .task-dashboard-container p {
@@ -19,11 +19,22 @@
 .todos-done-dashboard {
     width: 264px;
     border-radius: 30px;
-    background-color: #ddcccc;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    transition: all 175ms ease-in-out;
+}
+
+.todos-done-dashboard:hover,
+.urgent-dashboard:hover,
+.tasks-feedback-dashboard:hover {
+    background-color: #2A3647;
+    cursor: pointer;
+    transform: scale(1.05);
+    transform-origin: center;
+    color: white;
 }
 
 .todos-done-dashboard img {
@@ -33,23 +44,25 @@
 .urgent-dashboard {
     width: 560px;
     border-radius: 30px;
-    background-color: #ddcccc;
+    background-color: white;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-left: 40px;
     padding-right: 40px;
     margin-bottom: 20px;
+    transition: all 175ms ease-in-out;
 }
 
 .tasks-feedback-dashboard {
     width: 168px;
     border-radius: 30px;
-    background-color: #ddcccc;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: all 175ms ease-in-out;
 }
 
 .task-current-conatiner {
@@ -69,6 +82,9 @@
 
 .greeting-container {
     margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .task-current-dodo-done {
@@ -86,7 +102,7 @@
 
 .between-line {
     border: 2px solid #D1D1D1;
-    height: 102px;
+    height: 80%;
     border-radius: 3px;
 }
 
@@ -149,6 +165,12 @@ width: 25%;
 }
 
 @media (max-width: 1050px) {
+    .task-dashboard-section {
+        display: flex;
+        align-items: center;
+        height: 50vh;
+    }
+
     .task-dashboard-container {
         width: 420px;
         height: 448px;
@@ -231,6 +253,10 @@ width: 25%;
     opacity: 1;
     transition: opacity 1s ease-in-out;
     }
+
+    .task-current-conatiner {
+        width: auto;
+    }
 }
 
 @media (max-width: 768px) {
@@ -254,6 +280,11 @@ width: 25%;
         width: 31%;
         height: auto;
     }
+
+    .tasks-feedback-dashboard {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    }
 }
 
 @media (max-width: 550px) {
@@ -267,5 +298,27 @@ width: 25%;
 @media (max-width: 420px) {
     .task-current-conatiner {
         width: 60px;
+    }
+
+    h2 {
+        font-family: 'Inter';
+        font-size: 47px;
+        font-weight: 700;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        color: #29ABE2;
+    }
+    
+    h3 {
+        font-family: 'Inter';
+        font-size: 36px;
+        font-weight: 500;
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
+    .urgent-dashboard {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
