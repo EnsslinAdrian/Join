@@ -1,0 +1,31 @@
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    width: 456px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.new-contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-weight: 700;
+    font-size: 21px;
+    margin: 22.5px 52px 22.5px 52px;
+    width: 352px;
+}
+
+.contacts-headline {
+    display: flex;
+    width: 569px;
+    height: 73px;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 27px;
+    color: #2A3647;
+}
