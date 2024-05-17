@@ -1,10 +1,18 @@
+body {
+    font-family: 'inter';
+}
 
-.contact-list {
+.contact-container {
     display: flex;
     flex-direction: column;
     width: 456px;
-    height: 100vh;
     overflow-y: scroll;
+}
+
+.contact-list {
+    width: 400px;
+    padding-left: 28px;
+    padding-right: 28px;
 }
 
 .new-contact {
@@ -20,12 +28,47 @@
 
 .contacts-headline {
     display: flex;
+    padding-top: 110px;
     width: 569px;
     height: 73px;
+}
+
+.contact-card {
+    display: flex;
+    width: 352px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 h2 {
     font-weight: 400;
     font-size: 27px;
     color: #2A3647;
+}
+
+.contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: blue;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    height: 30px;
+    width: 30px;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+a {
+    color: #007CEE;
 }
