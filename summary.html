@@ -24,14 +24,20 @@
             <div w3-include-html="./assets/templates/header.html"></div>
 
             <div class="margin-left-top">
-                <section class="hedline-container">
+                <section class="hedline-container" id="summaryHeadline">
                     <h1>Join 360</h1>
                     <div class="parting-line"></div>
                     <p>Key Metrics at a Glance</p>
                 </section>
 
+                <section class="hedline-container-responsiv d-none" id="summaryHeadlineResponsiv">
+                    <h1>Join 360</h1>
+                    <p>Key Metrics at a Glance</p>
+                    <div class="parting-line-responsiv"></div>
+                </section>
+
                 <div class="task-dashboard-section">
-                    <section class="task-dashboard-container">
+                    <section class="task-dashboard-container" id="summaryTaskDashboard">
                         <div class="todos-done-dashboard">
                             <img src="./assets/img/pen.png" alt="Pen">
                             <div class="task-current-conatiner">
@@ -52,7 +58,7 @@
                         <div class="urgent-dashboard">
 
                             <div class="display-flex align-items">
-                                <img  src="./assets/img/double_arrows.svg" alt="Double Arrows">
+                                <img class="double-arrows" src="./assets/img/double_arrows.svg" alt="Double Arrows">
                                 <div class="task-current-conatiner">
                                     <p class="task-current-number">1</p>
                                     <p>Urgent</p>
@@ -91,7 +97,7 @@
                         </div>
                     </section>
 
-                    <section class="greeting-container">
+                    <section class="greeting-container" id="greeting">
                         <h3>Good morning,</h3>
                         <h2>Sofia Müller</h2>
                     </section>
@@ -101,5 +107,43 @@
 
         </div>
     </div>
+
+    <script>
+        function renderResponsivSummary() {
+
+            if (window.innerWidth <= 1050) {
+                let headline = document.getElementById('summaryHeadline');
+                let headlineResponsiv = document.getElementById('summaryHeadlineResponsiv');
+                let taskDashboard = document.getElementById('summaryTaskDashboard');
+                let greet = document.getElementById('greeting');
+
+                headline.classList.add('d-none');
+                headlineResponsiv.classList.add('d-none-opacity');
+                taskDashboard.classList.add('d-none-opacity');
+                greet.classList.add('d-none');
+
+                setTimeout(() => {
+                    greet.classList.remove('d-none');
+                }, "1000");
+
+                setTimeout(() => {
+                    greet.classList.add('d-none-opacity');
+                    headlineResponsiv.classList.remove('d-none-opacity');
+                    taskDashboard.classList.remove('d-none-opacity');
+                }, "3000");
+
+                setTimeout(() => {
+                    greet.classList.add('d-none');
+                    headlineResponsiv.classList.remove('d-none');
+                    taskDashboard.classList.remove('d-none');
+                }, "4000");
+            }
+        }
+
+        window.addEventListener('resize', renderResponsivSummary);
+
+        renderResponsivSummary();
+    </script>
 </body>
+
 </html>

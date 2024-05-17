@@ -1,66 +1,63 @@
 .task-dashboard-section {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .task-dashboard-container {
-width: 560px;
-height: 562px;
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-margin-top: 45px;
+    width: 560px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
 }
 
-.task-dashboard-container p{
+.task-dashboard-container p {
     margin-block-start: 0;
     margin-block-end: 0;
 }
 
 .todos-done-dashboard {
-width: 264px;
-height: 168px;
-border-radius: 30px;
-background: #FFFFFF;
-display: flex;
-justify-content: center;
-align-items: center;
+    width: 264px;
+    border-radius: 30px;
+    background-color: #ddcccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .todos-done-dashboard img {
-height: 69px;
-width: 69px;
+    width: 25%;
 }
 
 .urgent-dashboard {
-width: 560px;
-height: 168px;
-border-radius: 30px;
-background: #FFFFFF;
-display: flex;
-justify-content: space-around;
-align-items: center;
-padding-left: 40px;
-padding-right: 40px;
+    width: 560px;
+    border-radius: 30px;
+    background-color: #ddcccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-bottom: 20px;
 }
 
 .tasks-feedback-dashboard {
-width: 168px;
-height: 168px;
-border-radius: 30px;
-background: #FFFFFF;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+    width: 168px;
+    border-radius: 30px;
+    background-color: #ddcccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .task-current-conatiner {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-width: 93px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 93px;
 }
 
 .task-current-number {
@@ -71,20 +68,20 @@ width: 93px;
 }
 
 .greeting-container {
-margin-left: 80px;
+    margin-left: 80px;
 }
 
 .task-current-dodo-done {
     font-family: 'Inter';
     font-size: 20px;
-    font-weight: 400;    
+    font-weight: 400;
 }
 
 .task-current-name {
     font-family: 'Inter';
     font-size: 20px;
-    font-weight: 400; 
-    text-align: center;   
+    font-weight: 400;
+    text-align: center;
 }
 
 .between-line {
@@ -102,7 +99,7 @@ margin-left: 80px;
 .deadline-text {
     font-family: 'Inter';
     font-size: 16px;
-    font-weight: 400;    
+    font-weight: 400;
 }
 
 h2 {
@@ -122,3 +119,153 @@ h3 {
     margin-block-end: 0;
 }
 
+.d-none {
+    display: none;
+}
+
+.d-none-opacity {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 0s 1s;
+}
+
+.hedline-container-responsiv p {
+    font-family: 'Inter';
+    font-size: 27px;
+    font-weight: 400;
+    margin-block-start: 0;
+    margin-block-end: 16px;
+}
+
+.parting-line-responsiv {
+    height: 0;
+    width: 130px;
+    border: 3px solid #29ABE2;
+    border-radius: 3px;
+}
+
+.double-arrows {
+width: 25%;
+}
+
+@media (max-width: 1050px) {
+    .task-dashboard-container {
+        width: 420px;
+        height: 448px;
+        margin-top: 45px;
+    }
+
+    .todos-done-dashboard {
+        width: 186px;
+        height: 120px;
+        border-radius: 20px;
+    }
+
+    .todos-done-dashboard img {
+        width: 30%;
+    }
+
+    .urgent-dashboard {
+        width: 396px;
+        height: 110px;
+        border-radius: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .tasks-feedback-dashboard {
+        width: 116px;
+        height: 116px;
+        border-radius: 20px;
+    }
+
+    .task-current-dodo-done {
+        font-family: 'Inter';
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .task-current-number {
+        font-family: 'Inter';
+        font-size: 47px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .task-current-name {
+        font-family: 'Inter';
+        font-size: 14px;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .date-text {
+        font-family: 'Inter';
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .deadline-text {
+        font-family: 'Inter';
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .between-line {
+        border: 2px solid #D1D1D1;
+        height: 80%;
+    }
+
+    .double-arrows {
+        width: 30%;
+        }
+
+    .greeting-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-left: 0;
+    height: 80vh;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    }
+}
+
+@media (max-width: 768px) {
+    .task-dashboard-container {
+        width: 70%;
+        height: auto;
+        margin-top: 30px;
+    }
+
+    .todos-done-dashboard {
+        width: 48%;
+    }
+
+    .urgent-dashboard {
+        width: 100%;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .tasks-feedback-dashboard {
+        width: 31%;
+        height: auto;
+    }
+}
+
+@media (max-width: 550px) {
+    .task-dashboard-container {
+        width: 100%;
+        height: auto;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 420px) {
+    .task-current-conatiner {
+        width: 60px;
+    }
+}
