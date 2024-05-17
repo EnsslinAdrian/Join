@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="./css/menubar.css">
     <link rel="stylesheet" href="./css/board.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/addTask.css">
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
+    <script src="javascript/board.js"></script>
 </head>
 <body onload="init()">
     <div class="content-container">
@@ -31,22 +33,22 @@
                     </div>
                 </div>
                 <div>
-                    <button onclick="" class="btn board-btn">Add Task<img src="assets/img/plus-symbol.svg"></button>
+                    <button onclick="openAddTask()" class="btn board-btn">Add Task<img src="assets/img/plus-symbol.svg"></button>
                 </div>
             </div>
         </div>
         <div class="list">
             <div class="list-item">
                 <p>To do</p>
-                <button class="list-btn">+</button>
+                <button onclick="openAddTask()" class="list-btn">+</button>
             </div>
             <div class="list-item">
                 <p>In progress</p>
-                <button class="list-btn">+</button>
+                <button onclick="openAddTask()" class="list-btn">+</button>
             </div>
             <div class="list-item">
                 <p>Await feedback</p>
-                <button class="list-btn">+</button>
+                <button onclick="openAddTask()" class="list-btn">+</button>
             </div>
             <div class="list-item">
                 <p>Done</p>
@@ -135,6 +137,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <div id="add-task-popup" class="add-task-popup d-none">
+
     </div>
 </body>
 </html>

@@ -50,6 +50,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 0px 64px 0px 64px;
+    padding-top: 48px;
 }
 
 .list-item {
@@ -57,13 +58,13 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 244px;
-    padding-top: 48px;
 }
 
 .list-btn {
     border: 2px solid black;
     border-radius: 7px;
     background: transparent;
+    cursor: pointer;
 }
 
 p {
@@ -158,6 +159,15 @@ h2 {
     width: 30px;
 }
 
+.add-task-popup {
+    position: absolute;
+    border-radius: 20px;
+    top: 100px;
+    bottom: 100px;
+    left: 150px;
+    right: 150px;
+    background-color: white;
+} 
 
 @media (max-width: 768px) {
     
