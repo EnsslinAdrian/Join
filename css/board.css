@@ -49,7 +49,7 @@ body {
 .list {
     display: flex;
     justify-content: space-between;
-    padding: 0px 64px 0px 64px;
+    padding: 0px 64px 15px 64px;
     padding-top: 48px;
 }
 
@@ -93,6 +93,21 @@ p {
     padding: 16px;
     border: 1px;
     background-color: white;
+}
+
+.no-task {
+    font-family: 'open-sans';
+    color: #A8A8A8;
+    background-color: rgb(231,231,231);
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 252px;
+    border: 1px dashed lightgrey;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 h2 {
@@ -166,10 +181,17 @@ h2 {
     bottom: 100px;
     left: 150px;
     right: 150px;
-    background-color: white;
+    background-color: rgb(48, 30, 30);
 } 
+
+@media (max-width: 1370px) {
+    
+}
 
 @media (max-width: 768px) {
     
 }
 
+@media (max-width: 428px) {
+
+}
