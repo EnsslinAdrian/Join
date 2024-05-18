@@ -28,6 +28,7 @@ body {
 
 .contacts-headline {
     display: flex;
+    align-items: center;
     padding-top: 110px;
     width: 569px;
     height: 73px;
