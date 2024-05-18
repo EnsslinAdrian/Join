@@ -39,14 +39,14 @@
                 <div class="task-dashboard-section">
                     <section class="task-dashboard-container" id="summaryTaskDashboard">
                         <div class="todos-done-dashboard" id="todosContainer">
-                            <img id="pen" src="./assets/img/pen.svg" alt="Pen">
+                            <img id="pen" src="./assets/img/summary/pen.svg" alt="Pen">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number">1</p>
                                 <p class="task-current-dodo-done">To-do</p>
                             </div>
                         </div>
                         <div class="todos-done-dashboard" id="doneContainer">
-                            <img src="./assets/img/chop.svg" alt="Chop">
+                            <img src="./assets/img/summary/chop.svg" alt="Chop">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number">1</p>
                                 <p class="task-current-dodo-done">Done</p>
@@ -58,7 +58,7 @@
                         <div class="urgent-dashboard">
 
                             <div class="display-flex align-items">
-                                <img class="double-arrows" src="./assets/img/double_arrows.svg" alt="Double Arrows">
+                                <img class="double-arrows" src="./assets/img/summary/double_arrows.svg" alt="Double Arrows">
                                 <div class="task-current-conatiner">
                                     <p class="task-current-number">1</p>
                                     <p>Urgent</p>
@@ -139,19 +139,19 @@
 
         renderResponsivSummary();
 
-  let originalSrc = './assets/img/pen.svg';  // Speichert den ursprünglichen Bildpfad
-  let newSrc = './assets/img/chop.svg';                // Speichert den neuen Bildpfad
+  let originalSrc = './assets/img/summary/pen.svg';  
+  let newSrc = './assets/img/summary/chop.svg';              
 
   let todosContainer = document.getElementById('todosContainer');
   let penImage = document.getElementById('pen');
 
   todosContainer.addEventListener('mouseenter', function() {
     console.log('Mouseover auf todos-done-dashboard!');
-    penImage.src = newSrc;  // Ändert das Bild beim Betreten des Containers
+    penImage.src = newSrc;  
   });
 
   todosContainer.addEventListener('mouseleave', function() {
-    penImage.src = originalSrc;  // Setzt das Bild zurück, wenn der Mauszeiger das Element verlässt
+    penImage.src = originalSrc; 
   });
     </script>
 </body>
