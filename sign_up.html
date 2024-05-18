@@ -31,19 +31,19 @@
             <div class="underline_login">
                 <img src="./assets/img/login-underline.svg">
             </div>
-            <form action="">
+            <form id="registrationForm" onsubmit="registration(event)">
                 <div class="input_login_field">
-                    <input type="text" required class="name_icon" placeholder="Name">
-                    <input type="email" required class="mail_icon" placeholder="Email">
-                    <input type="password" required class="lock_icon" placeholder="Password">
-                    <input type="password" required class="lock_icon" placeholder="Confirm Password">
+                    <input id="name" type="text" required class="name_icon" placeholder="Name">
+                    <input id="email" type="email" required class="mail_icon" placeholder="Email">
+                    <input id="password" type="password" required class="lock_icon" placeholder="Password">
+                    <input id="confirmPassword" type="password" required class="lock_icon" placeholder="Confirm Password">
                 </div>
                 <div class="accept_privacy_policy">
                     <input type="checkbox">
                     <p>I accept the <a href="">Privacy policy</a></p> <!--Link einfügen Privacy Policy-->
                 </div>
                 <div class="sign_up">
-                    <button class="btn">Sign up</button>
+                    <button type="submit" class="btn">Sign up</button>
                 </div>
             </form>
         </div>
@@ -52,6 +52,8 @@
         <a href="">Pivacy Policy</a> <!--Link einfügen Privacy Policy-->
         <a href="">Legal notice</a> <!--Link einfügen Legal notice-->
     </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
