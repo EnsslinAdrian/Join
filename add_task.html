@@ -27,8 +27,9 @@
                 <div class="add-task-section">
 
                     <div class="add-task-titel-container">
+                        <form action="">
                         <p>Titel<span class="color-red">*</span></p>
-                        <input class="margin-buttom" type="text" placeholder="Enter a title">
+                        <input required class="margin-buttom" type="text" placeholder="Enter a title">
                         <p>Description</p>
                         <textarea class="margin-buttom" name="" id="" placeholder="Enter a Description"></textarea>
                         <p>Assigned to</p>
@@ -48,7 +49,7 @@
 
                     <div class="add-task-date-container">
                         <p>Due date<span class="color-red">*</span></p>
-                        <input class="margin-buttom" type="date">
+                        <input required class="margin-buttom" type="date">
                         <p>Prio</p>
                         <div class="margin-buttom add-task-prio">
                             <div class="prio-selection-urgent">
@@ -82,9 +83,10 @@
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
                     <div>
                         <button class="clear-button">Clear x</button>
-                        <button class="btn">Create Task ✅</button>
+                        <button class="btn" onsubmit="">Create Task ✅</button>
                     </div>
                 </div>
+            </form>
                 <!-- ende -->
             </div>
 
