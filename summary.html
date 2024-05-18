@@ -29,7 +29,7 @@
                     <div class="parting-line"></div>
                     <p>Key Metrics at a Glance</p>
                 </section>
-
+<!-- Responsiv Headline  -->
                 <section class="hedline-container-responsiv d-none" id="summaryHeadlineResponsiv">
                     <h1>Join 360</h1>
                     <p>Key Metrics at a Glance</p>
@@ -46,17 +46,14 @@
                             </div>
                         </div>
                         <div class="todos-done-dashboard" id="doneContainer">
-                            <img src="./assets/img/summary/chop.svg" alt="Chop">
+                            <img id="chop" src="./assets/img/summary/chop.svg" alt="Chop">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number">1</p>
                                 <p class="task-current-dodo-done">Done</p>
                             </div>
                         </div>
 
-
-
                         <div class="urgent-dashboard">
-
                             <div class="display-flex align-items">
                                 <img class="double-arrows" src="./assets/img/summary/double_arrows.svg"
                                     alt="Double Arrows">
@@ -72,11 +69,7 @@
                                 <p class="date-text">October 16, 2022</p>
                                 <p class="deadline-text">Upcoming Deadline</p>
                             </div>
-
                         </div>
-
-
-
 
                         <div class="tasks-feedback-dashboard">
                             <div class="task-current-conatiner">
@@ -109,63 +102,7 @@
         </div>
     </div>
 
-    <script>
-        let isRendering = false;
-
-        function renderResponsivSummary() {
-            if (isRendering) return;
-            isRendering = true;
-
-            let headline = document.getElementById('summaryHeadline');
-            let headlineResponsiv = document.getElementById('summaryHeadlineResponsiv');
-            let taskDashboard = document.getElementById('summaryTaskDashboard');
-            let greet = document.getElementById('greeting');
-
-            if (window.innerWidth <= 1200) {
-                headline.classList.add('d-none');
-                headlineResponsiv.classList.add('d-none');
-                taskDashboard.classList.add('d-none');
-                greet.classList.add('d-none');
-
-                setTimeout(() => {
-                    greet.classList.remove('d-none');
-                }, 1000);
-
-                setTimeout(() => {
-                    greet.classList.add('d-none');
-                    headlineResponsiv.classList.remove('d-none');
-                    taskDashboard.classList.remove('d-none');
-                    isRendering = false;
-                }, 3000);
-
-            } else {
-                headline.classList.remove('d-none');
-                headlineResponsiv.classList.add('d-none');
-                taskDashboard.classList.remove('d-none');
-                greet.classList.remove('d-none');
-                isRendering = false;
-            }
-        }
-
-        window.addEventListener('resize', renderResponsivSummary);
-
-        renderResponsivSummary();
-
-        let originalSrc = './assets/img/summary/pen.svg';
-        let newSrc = './assets/img/summary/chop.svg';
-
-        let todosContainer = document.getElementById('todosContainer');
-        let penImage = document.getElementById('pen');
-
-        todosContainer.addEventListener('mouseenter', function () {
-            console.log('Mouseover auf todos-done-dashboard!');
-            penImage.src = newSrc;
-        });
-
-        todosContainer.addEventListener('mouseleave', function () {
-            penImage.src = originalSrc;
-        });
-    </script>
+    <script src="./javascript/summary.js"></script>
 </body>
 
 </html>
