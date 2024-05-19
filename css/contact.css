@@ -1,0 +1,81 @@
+body {
+    font-family: 'inter';
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    width: 456px;
+    overflow-y: scroll;
+}
+
+.contact-list {
+    width: 400px;
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+.new-contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-weight: 700;
+    font-size: 21px;
+    margin: 22.5px 52px 22.5px 52px;
+    width: 352px;
+}
+
+.contacts-headline {
+    display: flex;
+    align-items: center;
+    padding-top: 110px;
+    width: 569px;
+    height: 73px;
+}
+
+.contact-card {
+    display: flex;
+    width: 352px;
+    padding: 15px 24px 15px 24px;
+    gap: 35px;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 27px;
+    color: #2A3647;
+    white-space: nowrap;
+}
+
+.contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: blue;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    height: 30px;
+    width: 30px;
+    margin-left: 24px;
+    margin-top: 15px;
+    margin-bottom: 21px;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.name {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+a {
+    color: #007CEE;
+}

@@ -1,0 +1,77 @@
+body {
+    font-family: 'Inter';
+    max-width: 1440px;
+}
+
+.sign_up {
+    justify-content: center;
+}
+
+.sign_up_header {
+    display: flex;
+}
+
+.sign_up_headline {
+    padding-left: 76px;
+}
+
+.back_to_login {
+    width: 15px;
+    height: 15px;
+    padding-top: 15px;
+}
+
+.back_to_login img {
+    object-fit: cover;
+}
+
+.back_to_login img:hover {
+    cursor: pointer;
+    background-color: #D1D1D1;
+    padding: 3px;
+    border-radius: 15px;
+}
+
+.main_login_container {
+    margin-top: 0 !important;
+}
+
+.accept_privacy_policy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.accept_privacy_policy a {
+    text-decoration: none;
+    color: rgb(64, 171, 226);
+}
+
+.accept_privacy_policy a:hover {
+    text-decoration: underline;
+    font-size: bold;
+}
+
+input[type="checkbox"] {
+    width: 15px;
+}
+
+input[type="text"] {
+    outline: none;
+}
+
+.name_icon {
+    background: url("/assets/img/person.svg") no-repeat;
+    background-position: 303px 9.5px;
+}
+
+.sign_up button {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
