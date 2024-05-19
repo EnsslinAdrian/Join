@@ -79,3 +79,12 @@ h2 {
 a {
     color: #007CEE;
 }
+
+.show-contact {
+
+}
+
+.add-contact-popup {
+    position: absolute;
+    border-radius: 20px;
+}
