@@ -95,7 +95,7 @@ p {
     border: 1px;
     background-color: white;
     margin-bottom: 16px;
-
+    cursor: pointer;
 }
 
 .no-task {
@@ -186,6 +186,44 @@ h2 {
     right: 150px;
     background-color: white;
 } 
+
+.popup-headline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-pupop {
+    height: 13.5px;
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.prio-selection-urgent {
+    border: 1px solid lightgrey;
+}
+
+.prio-selection-medium {
+    border: 1px solid lightgrey;
+}
+
+.prio-selection-low {
+    border: 1px solid lightgrey;
+}
+
+.prio-gap {
+    gap: 16px;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.clear-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
 @media (max-width: 1370px) {
     

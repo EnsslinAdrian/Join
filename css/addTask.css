@@ -113,8 +113,7 @@ p {
     height: 56px;
     width: 136px;
     border-radius: 10px;
-    background-color: rgb(247, 168, 2);
-    color: white;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -226,6 +225,11 @@ margin-top: 50px;
     cursor: pointer;
 }
 
+.buttons {
+    display: flex;
+    gap: 16px;
+}
+
 .clear-button {
     color: #2a3647;
     background-color: white;
@@ -233,6 +237,9 @@ margin-top: 50px;
     border-radius: 10px;
     font-weight: bold;
     border: 1px solid #2a3647;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .clear-button:hover {

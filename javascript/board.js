@@ -3,7 +3,10 @@ function openAddTask() {
     container.classList.remove('d-none');
     container.innerHTML = `
     <div class="margin-left-top">
-    <h1>Add Task</h1>
+    <div class="popup-headline">
+        <h1>Add Task</h1>
+        <img onclick="closeAddTask()" class="close-pupop" src="assets/img/add_task/close.svg">
+    </div>
     <div class="add-task-section">
 
         <div class="add-task-titel-container">
@@ -31,7 +34,7 @@ function openAddTask() {
             <p>Due date<span class="color-red">*</span></p>
             <input required class="margin-buttom" type="date">
             <p>Prio</p>
-            <div class="margin-buttom add-task-prio">
+            <div class="margin-buttom add-task-prio prio-gap">
                 <div class="prio-selection-urgent">
                     <span>Urgent</span> 
                     <img class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
@@ -61,11 +64,16 @@ function openAddTask() {
 
     <div class="send-add-task-buttons">
         <p class="required-text"><span class="color-red">*</span>This field is required</p>
-        <div>
-            <button class="clear-button">Clear x</button>
-            <button class="btn" onsubmit="">Create Task ✅</button>
+        <div class="popup-buttons">
+            <button class="clear-button">Cancel <img src="assets/img/add_task/close.svg"></button>
+            <button class="btn" onsubmit="">Create Task <img src="assets/img/add_task/check.svg"></button>
         </div>
     </div>
 </form>
 `;
+}
+
+function closeAddTask() {
+    let container = document.getElementById('add-task-popup');
+    container.classList.add('d-none');
 }
