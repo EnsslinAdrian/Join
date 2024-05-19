@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/menubar.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/addTask.css">
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
@@ -132,24 +133,37 @@
 
             </div>
             </div>    
-        <div class="right-side">
+        <div class="right-content">
             <div class="contacts-headline">
                 <h1>Contacts</h1>
                 <div class="parting-line"></div>
                 <h2>Better with a team</h2>
             </div>
             <div class="show-contact">
-                
+
             </div>
-        </div>
 
-        <div id="add-contact-popup" class="add-contact-popup d-none">
+            <!-- wird nur vorübergehend hier hardgecodet und später beim aufrufen der einzelnen kontakte gebraucht -->
+        <div id="add-contact-popup" class="add-contact-popup d-none">  
+            <div class="left-side"> 
+                <img src="">
+                <h1>Add Contact</h1>
+                <p class="subheadline">Tasks are better with a team!</p>
+                <img src="assets/img/contacts/contacts-underline.svg">
+            </div>
+            <div class="right-side">
+                <input placeholder="Name" type="text">
+                <input placeholder="Email" type="text">
+                <input placeholder="Phone" type="text">
+                <div>
+                    <button class="clear-button">Cancel<img src="assets/img/add_task/close.svg"></button>
+                    <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
+                </div>
+            </div>
 
-        </div>
 
     </div>
 
-     </div>
     </div>
 </body>
 </html>

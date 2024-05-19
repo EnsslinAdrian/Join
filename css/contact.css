@@ -85,6 +85,24 @@ a {
 }
 
 .add-contact-popup {
+    display: flex;
     position: absolute;
     border-radius: 20px;
+}
+
+.left-side {
+    background-color: #2B3647;
+    color: white;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.subheadline {
+    font-size: 27px;
+    font-weight: 400;
 }
