@@ -30,7 +30,6 @@ header {
     letter-spacing: 0.5px;
 }
 
-/*
 .animate_logo {
     position: absolute;
     animation: moveLogo 2s ease forwards;
@@ -43,12 +42,11 @@ header {
         transform: translate(100%, 100%);
     }
     100% {
-        top: 60;
-        left: 60;
+        top: 60px;
+        left: 60px;
         transform: translate(0, 0);
     }
 }
-*/
 
 p {
     margin: 0;
