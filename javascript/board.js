@@ -1,11 +1,14 @@
 function openAddTask() {
     let container = document.getElementById('add-task-popup');
+    container.classList.remove('slide-out');
     container.classList.remove('d-none');
     container.innerHTML = `
     <div class="margin-left-top">
     <div class="popup-headline">
         <h1>Add Task</h1>
-        <img onclick="closeAddTask()" class="close-pupop" src="assets/img/add_task/close.svg">
+        <div class="close-popup">
+            <img onclick="closeAddTask()" src="assets/img/add_task/close.svg">
+        </div>
     </div>
     <div class="add-task-section">
 
@@ -65,7 +68,7 @@ function openAddTask() {
     <div class="send-add-task-buttons">
         <p class="required-text"><span class="color-red">*</span>This field is required</p>
         <div class="popup-buttons">
-            <button class="clear-button">Cancel <img src="assets/img/add_task/close.svg"></button>
+            <button onclick="cancelAddTask()" class="clear-button">Cancel <img src="assets/img/add_task/close.svg"></button>
             <button class="btn" onsubmit="">Create Task <img src="assets/img/add_task/check.svg"></button>
         </div>
     </div>
@@ -77,3 +80,11 @@ function closeAddTask() {
     let container = document.getElementById('add-task-popup');
     container.classList.add('d-none');
 }
+
+function cancelAddTask() {
+    let popup = document.getElementById('add-task-popup');
+    popup.classList.add('slide-out');
+    popup.addEventListener('transitionend', function() { // sobald die animation fertig ist, wird der task geschlossen
+        closeAddTask();
+    }, { once: true });
+};

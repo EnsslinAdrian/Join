@@ -185,17 +185,33 @@ h2 {
     left: 150px;
     right: 150px;
     background-color: white;
+    transition: transform 0.5s ease-in-out;
 } 
+
+.slide-out {
+    transform: translateX(150%);
+}
 
 .popup-headline {
     display: flex;
     justify-content: space-between;
 }
 
-.close-pupop {
+.close-popup {
+    display: flex;
+    align-items: center;
     height: 13.5px;
     margin-right: 40px;
     cursor: pointer;
+    border: 1px;
+    border-radius: 50%;
+    padding: 4px;
+    background-color: white;
+}
+
+.close-popup:hover {
+    background-color: lightgray;
+    transform: scale(1.10);
 }
 
 .prio-selection-urgent {
