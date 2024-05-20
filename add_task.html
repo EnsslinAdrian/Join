@@ -36,11 +36,11 @@
                 <div class="add-task-section">
 
                     <div class="add-task-titel-container">
-                        <form action="">
+                        <form onsubmit="addNewTask(event)" action="">
                         <p>Titel<span class="color-red">*</span></p>
-                        <input required class="margin-buttom" type="text" placeholder="Enter a title">
+                        <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
                         <p>Description</p>
-                        <textarea class="margin-buttom" name="" id="" placeholder="Enter a Description"></textarea>
+                        <textarea id="description" class="margin-buttom" name="" id="" placeholder="Enter a Description"></textarea>
                         <p>Assigned to</p>
                         <div class="custom-select" style="width:100%;">
                             <select>
@@ -58,7 +58,7 @@
 
                     <div class="add-task-date-container">
                         <p>Due date<span class="color-red">*</span></p>
-                        <input required class="margin-buttom" type="date">
+                        <input id="date" required class="margin-buttom" type="date">
                         <p>Prio</p>
                         <div class="margin-buttom add-task-prio">
                             <div class="prio-selection-urgent">
@@ -76,14 +76,14 @@
                         </div>
                         <p>Category<span class="color-red">*</span></p>
                         <div class="custom-select" style="width:100%;">
-                            <select>
+                            <select id="select">
                               <option value="0">Select car:</option>
                               <option value="1">Audi</option>
                               <option value="2">BMW</option>
                             </select>
                           </div>
                         <p>Subtasks</p>
-                        <input type="text" name="" id="">
+                        <input id="subtasks" type="text" name="">
                     </div>
 
                 </div>
@@ -92,7 +92,7 @@
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
                     <div class="buttons">
                         <button class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
-                        <button class="btn" onsubmit="">Create Task <img src="assets/img/add_task/check.svg"></button>
+                        <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
                     </div>
                 </div>
             </form>

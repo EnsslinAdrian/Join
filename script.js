@@ -1,6 +1,5 @@
 let registered = [];
 
-
 function init() {
     includeHTML();
     loadData();
@@ -30,6 +29,7 @@ async function checkUser(event) {
     for (let key in registered) {
         if (registered.hasOwnProperty(key)) {
             let user = registered[key];
+            localStorage.setItem('userKey', key);
 
             if (user.email === email && user.password === password) {
                 console.log('Passwort richtig');
@@ -58,7 +58,7 @@ async function postUser(path = "", data = {}) {
 
         method: "Post",
         headers: {
-            "Content-Type": "application/jason",
+            "Content-Type": "application/json", 
         },
         body: JSON.stringify(data),
     });
@@ -90,4 +90,42 @@ function registration(event) {
     email.value = "";
     password.value = "";
     confirmPassword.value = "";
+}
+
+async function addNewTask(event) {
+    event.preventDefault();
+
+    let title = document.getElementById('title').value;
+    let description = document.getElementById('description').value;
+    let date = document.getElementById('date').value;
+    let categoryElement = document.getElementById('select');
+    let categoryText = categoryElement.selectedOptions[0].text;
+    let subtasks = document.getElementById('subtasks').value;
+
+    let task = {
+        'title': title,
+        'description': description,
+        'date': date,
+        'category': categoryText,
+        'subtasks': subtasks
+    };
+
+    let userKey = localStorage.getItem('userKey');
+
+    const response = await fetch(`${firebaseUrl}/registered/${userKey}.json`);
+    const user = await response.json();
+
+    if (!user.tasks) {
+        user.tasks = [];
+    }
+
+    user.tasks.push(task);
+
+    await fetch(`${firebaseUrl}/registered/${userKey}.json`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+    });
 }
