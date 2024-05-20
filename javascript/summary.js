@@ -26,6 +26,14 @@ doneContainer.addEventListener('mouseleave', function () {
     doneImage.src = chopOriginalSrc;
 });
 
+function greetingUser() {
+    let userName = localStorage.getItem('username');
+    let name = document.getElementById('greetingUserName');
+    name.innerHTML = userName;
+}
+
+greetingUser();
+
 function renderResponsivSummary() {
     if (isRendering) return;
     isRendering = true;

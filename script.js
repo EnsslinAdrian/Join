@@ -1,8 +1,10 @@
 let registered = [];
 
+
 function init() {
     includeHTML();
     loadData();
+    initials();
 }
 
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -11,6 +13,44 @@ async function loadData(path = "") {
     const response = await fetch(firebaseUrl + ".json");
     const responseToJson = await response.json();
     console.log(responseToJson);
+}
+
+async function checkUser(event) {
+    event.preventDefault();
+
+    let email = document.getElementById('loginEmail').value;
+    let password = document.getElementById('loginPassword').value;
+
+    const response = await fetch(firebaseUrl + ".json");
+    const responseToJson = await response.json();
+
+    let registered = responseToJson.registered;
+    let userFound = false;
+
+    for (let key in registered) {
+        if (registered.hasOwnProperty(key)) {
+            let user = registered[key];
+
+            if (user.email === email && user.password === password) {
+                console.log('Passwort richtig');
+                console.log('Hallo ' + user.name);
+                localStorage.setItem('username', user.name)
+                window.location.href = "summary.html";
+                userFound = true;
+                break;
+            }
+        }
+    }
+
+    if (!userFound) {
+        console.log('Passwort falsch oder Benutzer nicht gefunden');
+    }
+}
+
+function initials() {
+    let userName = localStorage.getItem('username');
+    let initials = userName.split(' ').map(word => word[0]).join('');
+    document.getElementById('initials').innerHTML = initials;
 }
 
 async function postUser(path = "", data = {}) {
@@ -25,39 +65,29 @@ async function postUser(path = "", data = {}) {
     return responseToJson = await response.json();
 }
 
-loadData();
-
 function registration(event) {
     event.preventDefault();
 
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let confirmPassword = document.getElementById('confirmPassword').value;
+    let name = document.getElementById('name');
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    let confirmPassword = document.getElementById('confirmPassword');
 
-    if (password !== confirmPassword) {
+    if (password.value !== confirmPassword.value) {
         alert("Passwörter stimmen nicht überein");
         return;
     }
 
     let user = {
-        'name': name,
-        'email': email,
-        'password': password
+        'name': name.value,
+        'email': email.value,
+        'password': password.value
     };
 
-    registered.push(user);
-    savelocal();
-}
+    postUser("registered", user);
 
-function savelocal() {
-    let saveJsonAsText = JSON.stringify(registered);
-    localStorage.setItem('register', saveJsonAsText);
-}
-
-function loadlocal() {
-    let saveJsonAsText = localStorage.getItem('register');
-    if (saveJsonAsText) {
-        registered = JSON.parse(saveJsonAsText);
-    }
+    name.value = "";
+    email.value = "";
+    password.value = "";
+    confirmPassword.value = "";
 }

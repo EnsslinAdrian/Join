@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./css/fonts.css">
     <title>JOIN</title>
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.png">
+
+    <script src="script.js"></script>
 </head>
 
 <body>
@@ -27,10 +29,10 @@
             <div class="underline_login">
                 <img src="./assets/img/login-underline.svg">
             </div>
-            <form  action="">
+            <form onsubmit="checkUser(event)">
                 <div class="input_login_field">
-                    <input type="email" required class="mail_icon" placeholder=" Email">
-                    <input type="password" required class="lock_icon" placeholder=" Password">
+                    <input id="loginEmail" type="email" required class="mail_icon" placeholder=" Email">
+                    <input id="loginPassword" type="password" required class="lock_icon" placeholder=" Password">
                 </div>
                 <div class="remember_me">
                     <input type="checkbox">
