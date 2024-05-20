@@ -7,6 +7,7 @@ body {
     background-color: #f6f7f8;
     font-family: 'Inter';
     max-width: 1440px;
+    text-align: center;
 }
 
 h1 {
@@ -30,7 +31,18 @@ header {
     letter-spacing: 0.5px;
 }
 
-.animate_logo {
+.content_container {
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.animate_logo img {
     position: absolute;
     animation: moveLogo 2s ease forwards;
 }
@@ -39,12 +51,19 @@ header {
     0% {
         top: 50%;
         left: 50%;
-        transform: translate(100%, 100%);
+        transform: translate(-50%, -50%) scale(3);
     }
+
+    25% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(3);
+    }
+
     100% {
         top: 60px;
         left: 60px;
-        transform: translate(0, 0);
+        transform: translate(0, 0) scale(1);
     }
 }
 
@@ -70,6 +89,7 @@ p {
     padding: 30px 60px;
     border-radius: 20px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .underline_login {
@@ -228,6 +248,10 @@ input[type="checkbox"]:checked:before {
     display: none;
 }
 
+.sign_up_mobile a {
+    text-decoration: none;
+}
+
 @media(max-width: 580px) {
     body {
         margin: 20px 20px 0px 20px;
@@ -249,6 +273,7 @@ input[type="checkbox"]:checked:before {
         width: 396px;
         height: 410px;
         padding: 25px 4px 0 4px;
+        margin-top: 150px;
     }
 
     .remember_me {
@@ -266,8 +291,8 @@ input[type="checkbox"]:checked:before {
     }
 
     .btn_login {
-        padding: 10px 4px 10px 4px;
-        width: 150px;
+        padding: 12px 4px 12px 4px;
+        width: 160px;
     }
 
     .btn_guest_login {
@@ -295,6 +320,10 @@ input[type="checkbox"]:checked:before {
 }
 
 @media(max-width: 400px) {
+    body {
+        margin: 20px 20px 0 20px;
+    }
+
     h1 {
         font-size: 38px !important;
     }
@@ -333,5 +362,29 @@ input[type="checkbox"]:checked:before {
 
     .footer_login {
         gap: 20px;
+    }
+
+    input[type="password"]:focus {
+        background-position: 201px 9px;
+    }
+
+    @keyframes moveLogo {
+        0% {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(3);
+        }
+    
+        25% {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(3);
+        }
+    
+        100% {
+            top: 30px;
+            left: 30px;
+            transform: translate(0, 0) scale(1);
+        }
     }
 }

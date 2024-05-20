@@ -69,9 +69,46 @@ input[type="text"] {
     background-position: 303px 9.5px;
 }
 
-.sign_up button {
+.sign_up a {
     padding-left: 20px;
     padding-right: 20px;
-    font-weight: bold;
     letter-spacing: 1px;
+}
+
+@media(max-width:580px) {
+    .sign_up_container {
+        margin-top: 25px;
+    }
+
+    .sign_up {
+        display: inline !important;
+        margin-top: 400px !important;
+    }
+
+    .sign_up_headline {
+        padding-left: 100px !important;
+    }
+
+    .main_login_content {
+        height: 460px !important;
+        margin-top: 100px !important;
+    }
+}
+
+@media(max-width: 400px) {
+    .sign_up_header {
+        padding-left: 20px !important;
+    }
+
+    .sign_up_headline {
+        padding-left: 28px !important;
+    }
+
+    input[type="text"] {
+        background-position: 203px 9.5px !important;
+    }
+
+    .back_to_login img {
+        height: 19px;
+    }
 }
