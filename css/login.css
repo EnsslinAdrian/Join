@@ -59,7 +59,7 @@ header {
 
 .animate_logo img {
     position: absolute;
-    animation: moveLogo 2s ease forwards;
+    animation: moveLogo 2s forwards;
     content: url(../assets/img/logo_hell.svg);
 }
 
