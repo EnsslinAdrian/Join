@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="./css/menubar.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/contact.css">
-    <link rel="stylesheet" href="css/addTask.css">
 
+    <script src="./javascript/contacts.js"></script>
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
-    <script src="contacts.js"></script>
+
 </head>
 <body onload="init()">
     <div class="content-container">
@@ -32,7 +32,7 @@
         </header> 
 
     <div class="display-flex">
-        <div class="contact-container">
+        <div class="contact-container" id="contact-container">
             <div class="contact-list">
                 <button onclick="addNewContact()" class="btn new-contact">Add new contact<img src="assets/img/contacts/person_add.svg"></button>
             
@@ -141,38 +141,42 @@
                 </div>
 
             </div>
-            </div>    
+        </div>    
         <div class="right-content">
             <div class="contacts-headline">
                 <h1>Contacts</h1>
                 <div class="parting-line"></div>
                 <h2>Better with a team</h2>
             </div>
-            <div class="show-contact">
+            <!-- <div class="show-contact">
 
-            </div>
+            </div> -->
 
             <!-- wird nur vorübergehend hier hardgecodet und später beim aufrufen der einzelnen kontakte gebraucht -->
         <div id="add-contact-popup" class="add-contact-popup d-none">  
             <div class="left-side"> 
-                <img src="">
-                <h1>Add Contact</h1>
+                <img class="popup-logo" src="assets/img/contacts/logo.svg">
+                <h1 class="popup-headline">Add Contact</h1>
                 <p class="subheadline">Tasks are better with a team!</p>
-                <img src="assets/img/contacts/contacts-underline.svg">
+                <img class="underline" src="assets/img/contacts/contacts-underline.svg">
             </div>
             <div class="right-side">
+                <div class="popup-icon">
+                    <img src="assets/img/contacts/person.svg">
+                </div>
+                <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
                 <input placeholder="Name" type="text">
                 <input placeholder="Email" type="text">
                 <input placeholder="Phone" type="text">
-                <div>
-                    <button class="clear-button">Cancel<img src="assets/img/add_task/close.svg"></button>
+                <div class="buttons">
+                    <button class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
                     <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
                 </div>
             </div>
+        </div>
 
-
+        </div>
     </div>
 
-    </div>
 </body>
 </html>

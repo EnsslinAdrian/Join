@@ -6,7 +6,6 @@ body {
     display: flex;
     flex-direction: column;
     width: 456px;
-    overflow-y: scroll;
 }
 
 .contact-list {
@@ -80,19 +79,44 @@ a {
     color: #007CEE;
 }
 
-.show-contact {
-
-}
-
 .add-contact-popup {
     display: flex;
     position: absolute;
+    top: 200px;
+    left: 100px;
+    right: 100px;
     border-radius: 20px;
+    overflow: hidden;
+    height: 592px;
 }
 
 .left-side {
     background-color: #2B3647;
     color: white;
+    height: 594px;
+    width: 467px;
+}
+
+.popup-logo {
+    height: 66.5px;
+}
+
+.popup-headline {
+    padding-left: 48px;
+    padding-right: 53px;
+    padding-top: 232.5px;
+    white-space: nowrap;
+}
+
+.subheadline {
+    font-size: 27px;
+    font-weight: 400;
+    padding-left: 48px;
+}
+
+.underline {
+    padding-left: 48px;
+    padding-bottom: 232.5px;
 }
 
 .right-side {
@@ -100,9 +124,63 @@ a {
     flex-direction: column;
     align-items: center;
     background-color: white;
+    width: 745px;
 }
 
-.subheadline {
-    font-size: 27px;
-    font-weight: 400;
+.popup-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(209, 209, 209);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+}
+
+.popup-icon img {
+    height: 42.67px;
+}
+
+.cancel-button {
+    color: #2a3647;
+    background-color: white;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    border: 1px solid #2a3647;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cancel-button:hover {
+    cursor: pointer;
+    color: rgb(64, 171, 226);
+    border-color: rgb(64, 171, 226);
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.buttons {
+    display: flex;
+}
+
+.d-none {
+    display: none;
+}
+
+.close-popup {
+    display: flex;
+    align-items: center;
+    height: 13.5px;
+    margin-right: 40px;
+    cursor: pointer;
+    border: 1px;
+    border-radius: 50%;
+    padding: 4px;
+    background-color: white;
+}
+
+.close-popup:hover {
+    background-color: lightgray;
+    transform: scale(1.10);
 }

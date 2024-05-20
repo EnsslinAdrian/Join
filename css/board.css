@@ -178,6 +178,8 @@ h2 {
 }
 
 .add-task-popup {
+    display: flex;
+    justify-content: center;
     position: absolute;
     border-radius: 20px;
     top: 100px;
@@ -194,6 +196,7 @@ h2 {
 
 .popup-headline {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
