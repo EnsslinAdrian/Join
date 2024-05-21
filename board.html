@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,126 +17,135 @@
     <script src="script.js"></script>
     <script src="javascript/board.js"></script>
 </head>
-<body onload="init()">
+
+<body onload="init(); updateHTML();">
     <div class="content-container">
-    <div w3-include-html="./assets/templates/boardMenu.html"></div>
-    <div class="main-content">
-        <header>
-            <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
-            <p class="header-description">Kanban Project Management Tool</p>
-            <div class="help-profil-container">
-                <img src="./assets/img/help.png" alt="Help">
-                <div class="profil-initials">
-                    <p id="initials"></p>
-                </div>
-            </div>
-        </header> 
-    <div>
-        <div class="board-header">
-            <h1>Board</h1>
-            <div class="board-header-right">
-                <div class="inputfield-container">
-                    <input class="inputfield" placeholder="Find Task">
-                    <div class="input-icon">
-                        <img src="assets/img/vertical-line.svg">
-                        <img src="./assets/img/search.png">
+        <div w3-include-html="./assets/templates/boardMenu.html"></div>
+        <div class="main-content">
+            <header>
+                <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
+                <p class="header-description">Kanban Project Management Tool</p>
+                <div class="help-profil-container">
+                    <img src="./assets/img/help.png" alt="Help">
+                    <div class="profil-initials">
+                        <p id="initials"></p>
                     </div>
                 </div>
-                <div>
-                    <button onclick="openAddTask()" class="btn board-btn">Add Task<img src="assets/img/plus-symbol.svg"></button>
+            </header>
+            <div>
+                <div class="board-header">
+                    <h1>Board</h1>
+                    <div class="board-header-right">
+                        <div class="inputfield-container">
+                            <input class="inputfield" placeholder="Find Task">
+                            <div class="input-icon">
+                                <img src="assets/img/vertical-line.svg">
+                                <img src="./assets/img/search.png">
+                            </div>
+                        </div>
+                        <div>
+                            <button onclick="openAddTask()" class="btn board-btn">Add Task<img
+                                    src="assets/img/plus-symbol.svg"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="list-item">
+                        <p>To do</p>
+                        <button onclick="openAddTask()" class="list-btn">+</button>
+                    </div>
+                    <div class="list-item">
+                        <p>In progress</p>
+                        <button onclick="openAddTask()" class="list-btn">+</button>
+                    </div>
+                    <div class="list-item">
+                        <p>Await feedback</p>
+                        <button onclick="openAddTask()" class="list-btn">+</button>
+                    </div>
+                    <div class="list-item">
+                        <p>Done</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="list">
-            <div class="list-item">
-                <p>To do</p>
-                <button onclick="openAddTask()" class="list-btn">+</button>
-            </div>
-            <div class="list-item">
-                <p>In progress</p>
-                <button onclick="openAddTask()" class="list-btn">+</button>
-            </div>
-            <div class="list-item">
-                <p>Await feedback</p>
-                <button onclick="openAddTask()" class="list-btn">+</button>
-            </div>
-            <div class="list-item">
-                <p>Done</p>
-            </div>
-        </div>
-    </div>
 
-    <div class="tasks-container">
-        <div class="task-columns">
-            <div class="no-task">
-                    No tasks To do
-            </div>
-        </div>
-        <div class="task-columns">
-            <div class="task-card">
-                                <div class="task-card-type">
-                    <div class="type-bg">User Story</div>
+            <div class="tasks-container">
+                <div class="task-columns" id="todo" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')"
+                    ondragover="allowDrop(event); highlight('todo')">
+                    <div class="no-task" draggable="true">
+                        No tasks To do
+                    </div>
                 </div>
+                <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
+                    ondragleave="removeHighlight('in-progress')"
+                    ondragover="allowDrop(event); highlight('in-progress')">
+                    <div class="task-card" draggable="true">
+                        <div class="task-card-type">
+                            <div class="type-bg">User Story</div>
+                        </div>
 
-                <h2>Contact Form & Imprint</h2>
-                <p class="task-description">Create a contact form and imprint page...</p>
+                        <h2>Contact Form & Imprint</h2>
+                        <p class="task-description">Create a contact form and imprint page...</p>
 
-                <div class="progress">
-                    <div class="progress-bar"></div>
-                    0/2 Subtasks
+                        <div class="progress">
+                            <div class="progress-bar"></div>
+                            0/2 Subtasks
+                        </div>
+
+                        <div class="task-card-bottom">
+                            <p class="user-icon">AS</p>
+                            <img src="assets/img/Vector.svg">
+                        </div>
+                    </div>
                 </div>
+                <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
+                    ondragleave="removeHighlight('await-feedback')"
+                    ondragover="allowDrop(event); highlight('await-feedback')">
+                    <div class="task-card" draggable="true">
+                        <div class="task-card-type">
+                            <div class="type-bg" style="background-color: aquamarine;">Technical Task</div>
+                        </div>
 
-                <div class="task-card-bottom">
-                    <p class="user-icon">AS</p>
-                    <img src="assets/img/Vector.svg">
+                        <h2>Contact Form & Imprint</h2>
+                        <p class="task-description">Create a contact form and imprint page...</p>
+
+                        <div class="progress">
+                            <div class="progress-bar"></div>
+                            0/2 Subtasks
+                        </div>
+
+                        <div class="task-card-bottom">
+                            <p class="user-icon">AS</p>
+                            <img src="assets/img/Vector.svg">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="task-columns">
-            <div class="task-card">
-                                <div class="task-card-type">
-                    <div class="type-bg" style="background-color: aquamarine;">Technical Task</div>
-                </div>
+                <div class="task-columns" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+                    ondragover="allowDrop(event); highlight('done')">
+                    <div class="task-card" draggable="true">
+                        <div class="task-card-type">
+                            <div class="type-bg">User Story</div>
+                        </div>
 
-                <h2>Contact Form & Imprint</h2>
-                <p class="task-description">Create a contact form and imprint page...</p>
+                        <h2>Contact Form & Imprint</h2>
+                        <p class="task-description">Create a contact form and imprint page...</p>
 
-                <div class="progress">
-                    <div class="progress-bar"></div>
-                    0/2 Subtasks
-                </div>
+                        <div class="progress">
+                            <div class="progress-bar"></div>
+                            0/2 Subtasks
+                        </div>
 
-                <div class="task-card-bottom">
-                    <p class="user-icon">AS</p>
-                    <img src="assets/img/Vector.svg">
-                </div>
-            </div>
-        </div>
-        <div class="task-columns">
-            <div class="task-card">
-                                <div class="task-card-type">
-                    <div class="type-bg">User Story</div>
-                </div>
-
-                <h2>Contact Form & Imprint</h2>
-                <p class="task-description">Create a contact form and imprint page...</p>
-
-                <div class="progress">
-                    <div class="progress-bar"></div>
-                    0/2 Subtasks
-                </div>
-
-                <div class="task-card-bottom">
-                    <p class="user-icon">AS</p>
-                    <img src="assets/img/Vector.svg">
+                        <div class="task-card-bottom">
+                            <p class="user-icon">AS</p>
+                            <img src="assets/img/Vector.svg">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
-    <div id="add-task-popup" class="add-task-popup d-none">
+            <div id="add-task-popup" class="add-task-popup d-none">
 
-    </div>
+            </div>
 </body>
+
 </html>

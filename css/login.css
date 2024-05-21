@@ -4,13 +4,14 @@ html {
 
 body {
     margin: 60px 60px 0 60px;
-    background-color: #2a3647;
+    background-color: #f6f7f8;
     font-family: 'Inter';
     max-width: 1440px;
     text-align: center;
     animation: backgroundColorChange 2s ease forwards;
 }
 
+/*
 @keyframes backgroundColorChange {
     0% {
         background-color: #2a3647;
@@ -20,6 +21,7 @@ body {
         background-color: #f6f7f8;
     }
 }
+*/
 
 h1 {
     font-size: 50px !important;
@@ -44,7 +46,7 @@ header {
 
 .content_container {
     opacity: 0;
-    animation: fadeIn 1s ease-out 1.5s forwards;
+    animation: fadeIn 1s ease-out 0.7s forwards;
 }
 
 @keyframes fadeIn {
@@ -55,8 +57,8 @@ header {
 
 .animate_logo img {
     position: absolute;
-    animation: moveLogo 2s forwards;
-    content: url(../assets/img/logo_hell.svg);
+    animation: moveLogo 1.5s forwards;
+    content: url(../assets/img/logo.svg);
 }
 
 @keyframes moveLogo {
@@ -64,7 +66,14 @@ header {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(3);
-        content: url(../assets/img/logo_hell.svg);
+        content: url(../assets/img/logo.svg);
+    }
+
+    25% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(3);
+        content: url(../assets/img/logo.svg);
     }
 
     75% {
@@ -72,12 +81,13 @@ header {
     }
 
     100% {
-        top: 60px;
-        left: 60px;
+        top: 20px;
+        left: 20px;
         transform: translate(0, 0) scale(1);
         content: url(../assets/img/logo.svg);
     }
 }
+
 
 .animate_logo::after {
     animation: changeLetter 3s linear infinite alternate;
@@ -96,7 +106,9 @@ p {
 .main_login_container {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 120px;
+    position: relative;
+    z-index: 1;
 }
 
 .main_login_content {
@@ -105,7 +117,6 @@ p {
     padding: 30px 60px;
     border-radius: 20px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
 }
 
 .underline_login {
@@ -271,10 +282,6 @@ input[type="checkbox"]:checked:before {
 }
 
 @media(max-width: 580px) {
-    body {
-        margin: 20px 20px 0px 20px;
-    }
-
     .logo_image img {
         height: 78px;
     }
@@ -291,7 +298,7 @@ input[type="checkbox"]:checked:before {
         width: 396px;
         height: 410px;
         padding: 25px 4px 0 4px;
-        margin-top: 150px;
+        margin-top: 50px;
     }
 
     .remember_me {
@@ -334,6 +341,16 @@ input[type="checkbox"]:checked:before {
     .footer_login {
         padding-top: 40px;
         padding-bottom: 30px;
+    }
+
+    @keyframes backgroundColorChange {
+        0% {
+            background-color: #2a3647;
+        }
+    
+        100% {
+            background-color: #f6f7f8;
+        }
     }
 }
 
