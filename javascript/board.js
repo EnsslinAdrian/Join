@@ -3,7 +3,7 @@ function openAddTask() {
     container.classList.remove('slide-out');
     container.classList.remove('d-none');
     container.innerHTML = `
-    <div class="margin-left-top">
+    <div class="padding-top">
     <div class="popup-headline">
         <h1>Add Task</h1>
         <div class="close-popup">
@@ -65,7 +65,7 @@ function openAddTask() {
 
     </div>
 
-    <div class="send-add-task-buttons">
+    <div class="add-task-buttons">
         <p class="required-text"><span class="color-red">*</span>This field is required</p>
         <div class="popup-buttons">
             <button onclick="cancelAddTask()" class="clear-button">Cancel <img src="assets/img/add_task/close.svg"></button>

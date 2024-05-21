@@ -238,10 +238,21 @@ h2 {
     gap: 16px;
 }
 
+.add-task-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 59em;
+}
+
 .clear-button {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.padding-top {
+    padding-top: 30px;
 }
 
 @media (max-width: 1370px) {
