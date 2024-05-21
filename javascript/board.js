@@ -87,4 +87,4 @@ function cancelAddTask() {
     popup.addEventListener('transitionend', function() { // sobald die animation fertig ist, wird der task geschlossen
         closeAddTask();
     }, { once: true });
-};
+}

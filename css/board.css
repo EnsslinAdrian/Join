@@ -190,10 +190,6 @@ h2 {
     transition: transform 0.5s ease-in-out;
 } 
 
-.slide-out {
-    transform: translateX(150%);
-}
-
 .popup-headline {
     display: flex;
     align-items: center;
