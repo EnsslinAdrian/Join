@@ -1,3 +1,12 @@
+let tasks = [{
+    'id': 0,
+    'title': 'User Story',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2
+    'category': 'In progress'
+}]
+
+
 function openAddTask() {
     let container = document.getElementById('add-task-popup');
     container.classList.remove('slide-out');

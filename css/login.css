@@ -16,10 +16,6 @@ body {
         background-color: #2a3647;
     }
 
-    50% {
-        background-color: #2a3647;
-    }
-
     100% {
         background-color: #f6f7f8;
     }
@@ -71,13 +67,7 @@ header {
         content: url(../assets/img/logo_hell.svg);
     }
 
-    25% {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(3);
-    }
-
-    50% {
+    75% {
         content: url(../assets/img/logo.svg);
     }
 
@@ -85,6 +75,7 @@ header {
         top: 60px;
         left: 60px;
         transform: translate(0, 0) scale(1);
+        content: url(../assets/img/logo.svg);
     }
 }
 
