@@ -153,7 +153,7 @@
             </div> -->
 
             <!-- wird nur vorübergehend hier hardgecodet und später beim aufrufen der einzelnen kontakte gebraucht -->
-        <div id="add-contact-popup" class="add-contact-popup d-none">  
+        <div id="add-contact-popup" class="add-contact-popup d-none">
             <div class="left-side"> 
                 <div class="popup-headline">
                     <img class="popup-logo" src="assets/img/contacts/logo.svg">
@@ -165,16 +165,20 @@
                 </div>
             </div>
             <div class="right-side">
-                <div class="popup-icon">
-                    <img src="assets/img/contacts/person.svg">
+                <div class="right-side-icon">
+                    <div class="popup-icon">
+                        <img src="assets/img/contacts/person.svg">
+                    </div>
                 </div>
                 <div class="inputfields">
-                    <div class="flex-end">
-                        <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
-                    </div>
-                    <input placeholder="Name" type="text">
-                    <input placeholder="Email" type="text">
-                    <input placeholder="Phone" type="text">
+                        <div class="flex-end">
+                            <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
+                        </div>
+                        <div>
+                            <input class="input" placeholder="Name" type="text">
+                            <input class="input" placeholder="Email" type="text">
+                            <input class="input" placeholder="Phone" type="text">
+                        </div>
                     <div class="buttons">
                         <button class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
                         <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>

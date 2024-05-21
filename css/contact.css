@@ -1,17 +1,24 @@
 body {
     font-family: 'inter';
+    overflow: hidden;
 }
 
 .contact-container {
     display: flex;
     flex-direction: column;
     width: 456px;
+    overflow-y: auto;
+    height: calc(100vh - 100px); 
+    box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
 .contact-list {
     width: 400px;
     padding-left: 28px;
     padding-right: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .new-contact {
@@ -31,6 +38,7 @@ body {
     padding-top: 110px;
     width: 569px;
     height: 73px;
+    padding-left: 55px;
 }
 
 .contact-card {
@@ -82,13 +90,14 @@ a {
 .add-contact-popup {
     display: flex;
     justify-content: center;
-    position: absolute;
-    top: 200px;
-    left: 100px;
-    right: 100px;
-    bottom: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 20px;
     height: 592px;
+    width: 1212px;
+    overflow: hidden;
 }
 
 .left-side {
@@ -98,7 +107,6 @@ a {
     justify-content: center;
     background-color: #2B3647;
     color: white;
-    height: 594px;
     width: 467px;
 }
 
@@ -127,6 +135,7 @@ a {
     justify-content: center;
     background-color: white;
     width: 745px;
+    height: 592px;
 }
 
 .inputfields {
@@ -135,9 +144,15 @@ a {
     padding-left: 72px;
 }
 
+.input {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .flex-end {
     display: flex;
     justify-content: flex-end;
+    width: 345px;
 }
 
 .popup-icon {
@@ -148,7 +163,10 @@ a {
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    margin-left: 83px;
+}
+
+.right-side-icon {
+    padding-left: 72px;
 }
 
 .popup-icon img {
@@ -179,6 +197,12 @@ a {
     gap: 16px;
 }
 
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .d-none {
     display: none;
 }
@@ -187,7 +211,6 @@ a {
     display: flex;
     align-items: center;
     height: 13.5px;
-    margin-right: 40px;
     cursor: pointer;
     border: 1px;
     border-radius: 50%;
