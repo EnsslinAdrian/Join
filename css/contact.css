@@ -90,14 +90,17 @@ a {
 .add-contact-popup {
     display: flex;
     justify-content: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     border-radius: 20px;
     height: 592px;
     width: 1212px;
     overflow: hidden;
+    transition: transform 0.5s ease-in-out;
 }
 
 .left-side {

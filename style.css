@@ -116,6 +116,10 @@ input:focus::placeholder {
     font-family: 'inter';
 }
 
+.slide-out {
+    transform: translateX(150%);
+}
+
 @media (max-width: 1300px) {
     .impressum-content {
         width: 100%;
