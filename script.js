@@ -84,13 +84,18 @@ function registration(event) {
         'password': password.value
     };
 
-    postUser("registered", user);
+    postUser("registered", user)
+        .then(() => {
+            window.location.href = "index.html";
+        })
+        .catch(error => {
+            console.error('Fehler beim Speichern des Benutzers:', error);
+        });
 
     name.value = "";
     email.value = "";
     password.value = "";
     confirmPassword.value = "";
-    window.location.href = "index.html";
 }
 
 async function addNewTask(event) {
