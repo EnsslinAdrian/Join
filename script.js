@@ -135,3 +135,19 @@ async function addNewTask(event) {
         body: JSON.stringify(user),
     });
 }
+
+async function newContact() {
+    let name = document.getElementById('contactName');
+    let email = document.getElementById('contactEmail');
+    let phone = document.getElementById('contactPhone');
+
+    let contact = {
+        'name': name.value,
+        'email': email.value,
+        'phone': phone.value
+    }
+
+    postUser('contacts', contact);
+};
+
+

@@ -175,13 +175,13 @@
                             <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
                         </div>
                         <div>
-                            <input class="input" placeholder="Name" type="text">
-                            <input class="input" placeholder="Email" type="text">
-                            <input class="input" placeholder="Phone" type="text">
+                            <input id="contactName" class="input" placeholder="Name" type="text">
+                            <input id="contactEmail" class="input" placeholder="Email" type="text">
+                            <input id="contactPhone" class="input" placeholder="Phone" type="text">
                         </div>
                     <div class="buttons">
                         <button class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
-                        <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
+                        <button onclick="newContact()" class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
                     </div>
                 </div>  
 

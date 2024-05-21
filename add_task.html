@@ -13,6 +13,87 @@
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
+
+    <style>
+        .assigned-search {
+            width: 95%;
+            text-align: start;
+            height: 36px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 0;
+            color: grey;
+            border: 1px solid lightgray;
+            background-color: white;
+            font-size: 20px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .assigned-contacts-container {
+            width: 95%;
+            background-color: rgb(253, 255, 255);
+            height: 300px;
+            position: relative;
+            overflow-y: scroll;
+        }
+
+        #style-9::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #F5F5F5;
+        }
+
+        #style-9::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #style-9::-webkit-scrollbar-thumb {
+            background-color: #F90;
+            background-image: -webkit-linear-gradient(90deg,
+                    rgba(255, 255, 255, .2) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, .2) 50%,
+                    rgba(255, 255, 255, .2) 75%,
+                    transparent 75%,
+                    transparent)
+        }
+
+        .assigned-contact {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .assigned-contact:hover {
+        background-color: rgba(128, 128, 128, 0.219);
+        }
+
+        .assigned-contact p {
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .assigned-initials {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: aqua;
+        }
+
+        .d-none {
+        display: none;
+        }
+    </style>
+
 </head>
 
 <body onload="init()">
@@ -28,7 +109,7 @@
                         <p id="initials">G</p>
                     </div>
                 </div>
-            </header> 
+            </header>
 
             <div class="margin-left-top">
                 <h1>Add Task</h1>
@@ -37,21 +118,24 @@
 
                     <div class="add-task-titel-container">
                         <form onsubmit="addNewTask(event)" action="">
-                        <p>Titel<span class="color-red">*</span></p>
-                        <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
-                        <p>Description</p>
-                        <textarea id="description" class="margin-buttom" name="" id="" placeholder="Enter a Description"></textarea>
-                        <p>Assigned to</p>
-                        <div class="custom-select" style="width:100%;">
-                            <select>
-                              <option value="0">Select car:</option>
-                              <option class="assigned-conainer" value="1">
-                            <div class="assigned-circle-name">SM</div>
-                             <p>Sofia Müller</p>
-                             
-                              </option>
-                            </select>
-                          </div>
+                            <p>Titel<span class="color-red">*</span></p>
+                            <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
+                            <p>Description</p>
+                            <textarea id="description" class="margin-buttom" name="" id=""
+                                placeholder="Enter a Description"></textarea>
+
+                            <p>Assigned to</p>
+                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search" placeholder="Select car:">
+                            <div class="assigned-contacts-container d-none" id="assignedContainer">
+
+                                <div class="assigned-contact">
+                                    <div class="assigned-initials">SW</div>
+                                    <p>Adrian Enßlin</p>
+                                </div>
+
+                            </div>
+
+
                     </div>
 
                     <div class="add-task-between-line"></div>
@@ -62,26 +146,26 @@
                         <p>Prio</p>
                         <div class="margin-buttom add-task-prio">
                             <div class="prio-selection-urgent">
-                                <span>Urgent</span> 
+                                <span>Urgent</span>
                                 <img class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
                             </div>
                             <div class="prio-selection-medium">
-                                <span>Medium </span> 
+                                <span>Medium </span>
                                 <img class="prio-icons" src="./assets/img/add_task/result.svg">
                             </div>
                             <div class="prio-selection-low">
-                                <span>Low</span> 
+                                <span>Low</span>
                                 <img class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
                             </div>
                         </div>
                         <p>Category<span class="color-red">*</span></p>
                         <div class="custom-select" style="width:100%;">
                             <select id="select">
-                              <option value="0">Select car:</option>
-                              <option value="1">Audi</option>
-                              <option value="2">BMW</option>
+                                <option value="0">Select car:</option>
+                                <option value="1">Audi</option>
+                                <option value="2">BMW</option>
                             </select>
-                          </div>
+                        </div>
                         <p>Subtasks</p>
                         <input id="subtasks" type="text" name="">
                     </div>
@@ -95,7 +179,7 @@
                         <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
                     </div>
                 </div>
-            </form>
+                </form>
                 <!-- ende -->
             </div>
 
