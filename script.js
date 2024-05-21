@@ -90,6 +90,7 @@ function registration(event) {
     email.value = "";
     password.value = "";
     confirmPassword.value = "";
+    window.location.href = "index.html";
 }
 
 async function addNewTask(event) {
