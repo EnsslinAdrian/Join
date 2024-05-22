@@ -1,10 +1,13 @@
-let tasks = [{
+let todos = [{
     'id': 0,
     'title': 'User Story',
     'description': 'Create a contact form and imprint page...',
-    'subtasks': 2
-    'category': 'In progress'
+    'subtasks': 2,
+    'category': 'in-progress'
 }]
+
+
+let currentDraggedTask;
 
 
 function openAddTask() {
@@ -96,4 +99,91 @@ function cancelAddTask() {
     popup.addEventListener('transitionend', function() { // sobald die animation fertig ist, wird der task geschlossen
         closeAddTask();
     }, { once: true });
+}
+
+
+function updateHTML() {
+    upadeteTodo();
+    updateInProgress();
+    updateAwaitFeedback();
+    updateDone();
+}
+
+
+function upadeteTodo() {
+    let todo = todos.filter(t => t['category'] == 'todo');
+
+    document.getElementById('todo').innerHTML = '';
+
+    for (let i = 0; i < todo.length; i++) {
+        const todoElement = todo[i];
+        document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
+    }
+}
+
+
+function updateInProgress() {
+    let inProgress = todos.filter(t => t['category'] == 'in-progress');
+
+    document.getElementById('in-progress').innerHTML = '';
+
+    for (let i = 0; i < inProgress.length; i++) {
+        const inProgressElement = inProgress[i];
+        document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement);
+    }
+}
+
+
+function updateAwaitFeedback() {
+    let awaitFeedback = todos.filter(t => t['category'] == 'await-feedback');
+
+    document.getElementById('await-feedback').innerHTML = '';
+
+    for (let i = 0; i < awaitFeedback.length; i++) {
+        const awaitFeedbackElement = awaitFeedback[i];
+        document.getElementById('await-feedback').innerHTML += generateTodoHTML(awaitFeedbackElement);
+    }
+}
+
+
+function updateDone() {
+    let done = todos.filter(t => t['category'] == 'done');
+
+    document.getElementById('done').innerHTML = '';
+
+    for (let i = 0; i < done.length; i++) {
+        const doneElement = done[i];
+        document.getElementById('done').innerHTML += generateTodoHTML(doneElement);
+    }
+}
+
+
+function startDragging(id) {
+    currentDraggedTask = id;
+}
+
+
+function generateTodoHTML(element) {
+    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
+}
+
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+
+function moveTo(category) {
+    todos[currentDraggedTask]['category'] = category;
+    updateHTML();
+}
+
+
+function highlight(id) {
+    document.getElementById(id).classList.add('drag_area_hightlight');
+}
+
+
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove('drag_area_hightlight');
 }

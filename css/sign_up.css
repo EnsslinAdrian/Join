@@ -1,8 +1,3 @@
-body {
-    font-family: 'Inter';
-    max-width: 1440px;
-}
-
 .sign_up {
     justify-content: center;
 }
@@ -33,7 +28,7 @@ body {
 }
 
 .main_login_container {
-    margin-top: 0 !important;
+    margin-top: 30px !important;
 }
 
 .accept_privacy_policy {
@@ -76,6 +71,9 @@ input[type="text"] {
 }
 
 @media(max-width:580px) {
+    .logo_image img {
+        height: 78px;
+    }
     .sign_up_container {
         margin-top: 25px;
     }
@@ -91,7 +89,6 @@ input[type="text"] {
 
     .main_login_content {
         height: 460px !important;
-        margin-top: 100px !important;
     }
 }
 
