@@ -136,7 +136,7 @@ async function addNewTask(event) {
         body: JSON.stringify(user),
     });
 }
-
+/*
 async function newContact() {
     let name = document.getElementById('contactName');
     let email = document.getElementById('contactEmail');
@@ -150,29 +150,40 @@ async function newContact() {
 
     postUser('contacts', contact);
 };
+*/
+
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
 async function renderContacts(path = "") {
     let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
     let responseToJson = await response.json();
     
     let content = document.getElementById('contactContainer');
-    content.innerHTML = '';
     let contacts = responseToJson.contacts;
     let contactsArray = Object.values(contacts); // Convert the contacts object to an array
   
     for (let i = 0; i < contactsArray.length; i++) {
       let contact = contactsArray[i];
-      content.innerHTML += generateTaskContactHtml(contact, i);
+      let initialsBgColor = getRandomColor();
+
+      content.innerHTML += generateTaskContactHtml(contact, i, initialsBgColor);
     }
   }
   
-  function generateTaskContactHtml(contact, i) {
+  function generateTaskContactHtml(contact, i, color) {
   let contactName = contact['name'];
   let initials = contactName.split(' ').map(word => word[0]).join('');
   
   return `
   <div class="contact-card">
-  <div class="contact-icon">
+  <div style="background-color: ${color};" class="contact-icon">
       <span>${initials}</span>
   </div>
   <div class="contact">
