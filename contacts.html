@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,182 +17,92 @@
     <script src="script.js"></script>
 
 </head>
+
 <body onload="init()">
     <div class="content-container">
-    <div w3-include-html="./assets/templates/contactsMenu.html"></div>
-    <div class="main-content">
-        <header>
-            <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
-            <p class="header-description">Kanban Project Management Tool</p>
-            <div class="help-profil-container">
-                <img src="./assets/img/help.png" alt="Help">
-                <div class="profil-initials">
-                    <p id="initials">G</p>
-                </div>
-            </div>
-        </header> 
-
-    <div class="display-flex">
-        <div class="contact-container" id="contact-container">
-            <div class="contact-list">
-                <button onclick="addNewContact()" class="btn new-contact">Add new contact<img src="assets/img/contacts/person_add.svg"></button>
-            
-                <div>
-                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>AM</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">Anton Mayer</span>
-                        <a>antom@gmail.com</a>
+        <div w3-include-html="./assets/templates/contactsMenu.html"></div>
+        <div class="main-content">
+            <header>
+                <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
+                <p class="header-description">Kanban Project Management Tool</p>
+                <div class="help-profil-container">
+                    <img src="./assets/img/help.png" alt="Help">
+                    <div class="profil-initials">
+                        <p id="initials">G</p>
                     </div>
                 </div>
+            </header>
 
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>AS</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">Anja Schulz</span>
-                        <a>schulz@hotmail.com</a>
+            <div class="display-flex">
+                <div class="contact-container" id="contact-container">
+                    <div class="contact-list">
+                        <button onclick="addNewContact()" class="btn new-contact">Add new contact<img
+                                src="assets/img/contacts/person_add.svg"></button>
+
+                        <div>
+                            <img src="assets/img/contacts/contact-seperator.svg" alt="">
+                        </div>
+
+                        <div id="contactContainer">
+
+                        </div>
+
                     </div>
                 </div>
-
-                <div>
-                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>BZ</span>
+                <div class="right-content">
+                    <div class="contacts-headline">
+                        <h1>Contacts</h1>
+                        <div class="parting-line"></div>
+                        <h2>Better with a team</h2>
                     </div>
-                    <div class="contact">
-                        <span class="name">Benedikt Ziegler</span>
-                        <a>benedikt@gmail.com</a>
-                    </div>
-                </div>
-
-                <div>
-                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>DE</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">David Eisenberg</span>
-                        <a>davidberg@gmail.com</a>
-                    </div>
-                </div>
-
-                <div>
-                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>EF</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">Eva Fischer</span>
-                        <a>eva@gmail.com</a>
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>EM</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">Emmanuel Mauer</span>
-                        <a>emmanuelma@gmail.com</a>
-                    </div>
-                </div>
-
-                <div>
-                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>MB</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">Marcel Bauer</span>
-                        <a>bauer@gmail.com</a>
-                    </div>
-                </div>
-
-                <div>
-                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <span>TW</span>
-                    </div>
-                    <div class="contact">
-                        <span class="name">Tatjana Wolf</span>
-                        <a>wolf@gmail.com</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>    
-        <div class="right-content">
-            <div class="contacts-headline">
-                <h1>Contacts</h1>
-                <div class="parting-line"></div>
-                <h2>Better with a team</h2>
-            </div>
-            <!-- <div class="show-contact">
+                    <!-- <div class="show-contact">
 
             </div> -->
 
-            <!-- wird nur vorübergehend hier hardgecodet und später beim aufrufen der einzelnen kontakte gebraucht -->
-        <div id="add-contact-popup" class="add-contact-popup d-none">
-            <div class="left-side"> 
-                <div class="popup-headline">
-                    <img class="popup-logo" src="assets/img/contacts/logo.svg">
-                    <h1>Add Contact</h1>
+                    <!-- wird nur vorübergehend hier hardgecodet und später beim aufrufen der einzelnen kontakte gebraucht -->
+                    <div id="add-contact-popup" class="add-contact-popup d-none">
+                        <div class="left-side">
+                            <div class="popup-headline">
+                                <img class="popup-logo" src="assets/img/contacts/logo.svg">
+                                <h1>Add Contact</h1>
+                            </div>
+                            <div class="subheadline">
+                                <p class="p">Tasks are better with a team!</p>
+                                <img class="underline" src="assets/img/contacts/contacts-underline.svg">
+                            </div>
+                        </div>
+                        <div class="right-side">
+                            <div class="right-side-icon">
+                                <div class="popup-icon">
+                                    <img src="assets/img/contacts/person.svg">
+                                </div>
+                            </div>
+                            <div class="inputfields">
+                                <div class="flex-end">
+                                    <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
+                                </div>
+                                <div>
+                                    <input id="contactName" class="input" placeholder="Name" type="text">
+                                    <input id="contactEmail" class="input" placeholder="Email" type="text">
+                                    <input id="contactPhone" class="input" placeholder="Phone" type="text">
+                                </div>
+                                <div class="buttons">
+                                    <button class="cancel-button">Cancel<img
+                                            src="assets/img/add_task/close.svg"></button>
+                                    <button onclick="newContact()" class="btn">Create Contact<img
+                                            src="assets/img/add_task/check.svg"></button>
+                                    <button onclick="closePopup()" class="cancel-button">Cancel<img
+                                            src="assets/img/add_task/close.svg"></button>
+                                    <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                <div class="subheadline">
-                    <p class="p">Tasks are better with a team!</p>
-                    <img class="underline" src="assets/img/contacts/contacts-underline.svg">
+
                 </div>
             </div>
-            <div class="right-side">
-                <div class="right-side-icon">
-                    <div class="popup-icon">
-                        <img src="assets/img/contacts/person.svg">
-                    </div>
-                </div>
-                <div class="inputfields">
-                        <div class="flex-end">
-                            <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
-                        </div>
-                        <div>
-                            <input id="contactName" class="input" placeholder="Name" type="text">
-                            <input id="contactEmail" class="input" placeholder="Email" type="text">
-                            <input id="contactPhone" class="input" placeholder="Phone" type="text">
-                        </div>
-                    <div class="buttons">
-                        <button class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
-                        <button onclick="newContact()" class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
-                        <button onclick="closePopup()" class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
-                        <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
-                    </div>
-                </div>  
-
-            </div>
-        </div>
-
-        </div>
-    </div>
 
 </body>
+
 </html>

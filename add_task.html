@@ -38,36 +38,24 @@
             overflow-y: scroll;
         }
 
-        #style-9::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            background-color: #F5F5F5;
-        }
-
-        #style-9::-webkit-scrollbar {
-            width: 10px;
-            background-color: #F5F5F5;
-        }
-
-        #style-9::-webkit-scrollbar-thumb {
-            background-color: #F90;
-            background-image: -webkit-linear-gradient(90deg,
-                    rgba(255, 255, 255, .2) 25%,
-                    transparent 25%,
-                    transparent 50%,
-                    rgba(255, 255, 255, .2) 50%,
-                    rgba(255, 255, 255, .2) 75%,
-                    transparent 75%,
-                    transparent)
-        }
-
         .assigned-contact {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 10px;
         }
 
+        .contact-name {
+            display: flex;
+            align-items: center;
+        }
+
         .assigned-contact:hover {
-        background-color: rgba(128, 128, 128, 0.219);
+            background-color: rgba(128, 128, 128, 0.219);
+        }
+
+        .click-contact-bg {
+            background-color: rgba(128, 128, 128, 0.219);
         }
 
         .assigned-contact p {
@@ -90,7 +78,11 @@
         }
 
         .d-none {
-        display: none;
+            display: none;
+        }
+
+        .checkbox {
+            width: auto;
         }
     </style>
 
@@ -125,17 +117,11 @@
                                 placeholder="Enter a Description"></textarea>
 
                             <p>Assigned to</p>
-                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search" placeholder="Select car:">
+                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search"
+                                placeholder="Select car:">
                             <div class="assigned-contacts-container d-none" id="assignedContainer">
 
-                                <div class="assigned-contact">
-                                    <div class="assigned-initials">SW</div>
-                                    <p>Adrian Enßlin</p>
-                                </div>
-
                             </div>
-
-
                     </div>
 
                     <div class="add-task-between-line"></div>

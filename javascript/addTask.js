@@ -75,20 +75,44 @@ function closeAllSelect(elmnt) {
   }
 }
 
-/* If the user clicks anywhere outside the select box,
-then close all select boxes: */
 document.addEventListener("click", closeAllSelect);
 
 async function toggleAssigned(path = "") {
-  let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/contacts' + '.json');
+  let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
   let responseToJson = await response.json();
   console.log(responseToJson);
+  
+  let content = document.getElementById('assignedContainer');
+  content.innerHTML = '';
+  let contacts = responseToJson.contacts;
+  let contactsArray = Object.values(contacts); // Convert the contacts object to an array
 
-for (let i = 0; i < responseToJson.length; i++) {
-  let contact = responseToJson[i];
-
-  console.log(contact)
-}
+  for (let i = 0; i < contactsArray.length; i++) {
+    let contact = contactsArray[i];
+    
+    content.innerHTML += generateTaskContactHtml(contact, i);
+  }
 
   document.getElementById('assignedContainer').classList.toggle('d-none');
+}
+
+function generateTaskContactHtml(contact, i) {
+let contactName = contact['name'];
+let initials = contactName.split(' ').map(word => word[0]).join('');
+
+return `
+<div class="assigned-contact" id="contactTask${i}">
+
+<div class="contact-name">
+<div class="assigned-initials">${initials}</div>
+<p>${contact['name']}</p>
+</div>
+<input onclick="addContactTask(${i})" class="checkbox" type="checkbox">
+</div>
+`;
+}
+
+
+function addContactTask(i) {
+  document.getElementById(`contactTask${i}`).classList.toggle('click-contact-bg');
 }

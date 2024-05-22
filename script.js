@@ -4,6 +4,7 @@ function init() {
     includeHTML();
     loadData();
     initials();
+    renderContacts();
 }
 
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -149,5 +150,37 @@ async function newContact() {
 
     postUser('contacts', contact);
 };
+
+async function renderContacts(path = "") {
+    let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
+    let responseToJson = await response.json();
+    
+    let content = document.getElementById('contactContainer');
+    content.innerHTML = '';
+    let contacts = responseToJson.contacts;
+    let contactsArray = Object.values(contacts); // Convert the contacts object to an array
+  
+    for (let i = 0; i < contactsArray.length; i++) {
+      let contact = contactsArray[i];
+      content.innerHTML += generateTaskContactHtml(contact, i);
+    }
+  }
+  
+  function generateTaskContactHtml(contact, i) {
+  let contactName = contact['name'];
+  let initials = contactName.split(' ').map(word => word[0]).join('');
+  
+  return `
+  <div class="contact-card">
+  <div class="contact-icon">
+      <span>${initials}</span>
+  </div>
+  <div class="contact">
+      <span class="name">${contact['name']}</span>
+      <a>${contact['email']}</a>
+  </div>
+</div>
+  `;
+  }
 
 
