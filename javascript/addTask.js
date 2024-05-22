@@ -77,51 +77,7 @@ function closeAllSelect(elmnt) {
 
 document.addEventListener("click", closeAllSelect);
 
-function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
 
-async function toggleAssigned(path = "") {
-  let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
-  let responseToJson = await response.json();
-  console.log(responseToJson);
-  
-  let content = document.getElementById('assignedContainer');
-  content.innerHTML = '';
-  let contacts = responseToJson.contacts;
-  let contactsArray = Object.values(contacts); // Convert the contacts object to an array
-
-  for (let i = 0; i < contactsArray.length; i++) {
-    let contact = contactsArray[i];
-    let initialsBgColor = getRandomColor();
-
-    
-    content.innerHTML += generateTaskContactHtml(contact, i, initialsBgColor);
-  }
-
+function toggleAssigned() {
   document.getElementById('assignedContainer').classList.toggle('d-none');
-}
-
-function generateTaskContactHtml(contact, i, color) {
-let contactName = contact['name'];
-let initials = contactName.split(' ').map(word => word[0]).join('');
-return `
-<div class="assigned-contact" id="contactTask${i}">
-<div class="contact-name">
-<div style="background-color: ${color};" class="assigned-initials">${initials}</div>
-<p>${contact['name']}</p>
-</div>
-<input onclick="addContactTask(${i})" class="checkbox" type="checkbox">
-</div>
-`;
-}
-
-
-function addContactTask(i) {
-  document.getElementById(`contactTask${i}`).classList.toggle('click-contact-bg');
 }

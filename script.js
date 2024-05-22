@@ -5,6 +5,7 @@ function init() {
     loadData();
     initials();
     renderContacts();
+    renderContactsAddTask();
 }
 
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -59,7 +60,7 @@ async function postUser(path = "", data = {}) {
 
         method: "Post",
         headers: {
-            "Content-Type": "application/json", 
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
     });
@@ -156,32 +157,35 @@ function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
+}
 
 async function renderContacts(path = "") {
-    let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
-    let responseToJson = await response.json();
-    
-    let content = document.getElementById('contactContainer');
-    let contacts = responseToJson.contacts;
-    let contactsArray = Object.values(contacts); // Convert the contacts object to an array
-  
-    for (let i = 0; i < contactsArray.length; i++) {
-      let contact = contactsArray[i];
-      let initialsBgColor = getRandomColor();
+    if (window.location.pathname.endsWith("contacts.html")) {
+        let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
+        let responseToJson = await response.json();
 
-      content.innerHTML += generateTaskContactHtml(contact, i, initialsBgColor);
+        let content = document.getElementById('contactContainer');
+        let contacts = responseToJson.contacts;
+        let contactsArray = Object.values(contacts); // Convert the contacts object to an array
+        content.innerHTML = "";
+
+        for (let i = 0; i < contactsArray.length; i++) {
+            let contact = contactsArray[i];
+            let initialsBgColor = getRandomColor();
+
+            content.innerHTML += generateContactHtml(contact, i, initialsBgColor);
+        }
     }
-  }
-  
-  function generateTaskContactHtml(contact, i, color) {
-  let contactName = contact['name'];
-  let initials = contactName.split(' ').map(word => word[0]).join('');
-  
-  return `
+}
+
+function generateContactHtml(contact, i, color) {
+    let contactName = contact['name'];
+    let initials = contactName.split(' ').map(word => word[0]).join('');
+
+    return `
   <div class="contact-card">
   <div style="background-color: ${color};" class="contact-icon">
       <span>${initials}</span>
@@ -192,6 +196,45 @@ async function renderContacts(path = "") {
   </div>
 </div>
   `;
-  }
+}
+
+async function renderContactsAddTask() {
+    if (window.location.pathname.endsWith("add_task.html")) {
+        let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
+        let responseToJson = await response.json();
+
+        let content = document.getElementById('assignedContainer');
+        content.innerHTML = '';
+        let contacts = responseToJson.contacts;
+        let contactsArray = Object.values(contacts); // Convert the contacts object to an array
+
+        for (let i = 0; i < contactsArray.length; i++) {
+            let contact = contactsArray[i];
+            let initialsBgColor = getRandomColor();
+
+            content.innerHTML += generateTaskContactHtml(contact, i, initialsBgColor);
+        }
+    }
+}
+
+function generateTaskContactHtml(contact, i, color) {
+    let contactName = contact['name'];
+    let initials = contactName.split(' ').map(word => word[0]).join('');
+    return `
+    <div class="assigned-contact" id="contactTask${i}">
+    <div class="contact-name">
+    <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
+    <p>${contact['name']}</p>
+    </div>
+    <input onclick="addContactTask('${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
+    </div>
+    `;
+}
+
+function addContactTask(initials, i, color) {
+    document.getElementById('selectedContact').innerHTML += `
+<div style="background-color: ${color};" class="assigned-initials">${initials}</div>
+`;
+}
 
 
