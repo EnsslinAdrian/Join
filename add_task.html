@@ -94,6 +94,22 @@
         scrollbar-width: none;
         padding: 5px;
         }
+
+        .urgent {
+            background-color: #FF3D00;
+            color: white;
+        }
+
+        .medium {
+            background-color: #FFA800;
+            color: white;
+        }
+
+        .low {
+            background-color: #7AE229;
+            color: white;
+        }
+
     </style>
 
 </head>
@@ -132,7 +148,7 @@
                             <div class="assigned-contacts-container d-none" id="assignedContainer">
 
                             </div>
-                            <div class="selected-contact" id="selectedContact"></div>
+                            <div class="selected-contact " id="selectedContact"></div>
                     </div>
 
                     <div class="add-task-between-line"></div>
@@ -142,17 +158,17 @@
                         <input id="date" required class="margin-buttom" type="date">
                         <p>Prio</p>
                         <div class="margin-buttom add-task-prio">
-                            <div class="prio-selection-urgent">
+                            <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
                                 <span>Urgent</span>
-                                <img class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                                <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
                             </div>
-                            <div class="prio-selection-medium">
+                            <div class="prio-selection-medium" onclick="taskMedium()" id="medium">
                                 <span>Medium </span>
-                                <img class="prio-icons" src="./assets/img/add_task/result.svg">
+                                <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result.svg">
                             </div>
-                            <div class="prio-selection-low">
+                            <div class="prio-selection-low" onclick="taskLow()" id="low">
                                 <span>Low</span>
-                                <img class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                                <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
                             </div>
                         </div>
                         <p>Category<span class="color-red">*</span></p>

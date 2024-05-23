@@ -226,15 +226,74 @@ function generateTaskContactHtml(contact, i, color) {
     <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
     <p>${contact['name']}</p>
     </div>
-    <input onclick="addContactTask('${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
+    <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}' ,'${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
     </div>
     `;
 }
 
-function addContactTask(initials, i, color) {
-    document.getElementById('selectedContact').innerHTML += `
-<div style="background-color: ${color};" class="assigned-initials">${initials}</div>
-`;
+let taskContacts = []
+
+function addContactTask(contactName, initials, i, color) {
+    let newTaskContact = {
+        'initials': initials,
+        'color': color,
+        'name': contactName
+    };
+
+    let checkbox = document.getElementById(`taskCheckbox${i}`);
+    if (checkbox.checked) {
+        if (!taskContacts.some(contact => contact.name === contactName)) {
+            taskContacts.push(newTaskContact);
+        }
+    } else {
+        let index = taskContacts.findIndex(contact => contact.name === contactName);
+        if (index !== -1) {
+            taskContacts.splice(index, 1);
+        }
+    }
+    renderAddTaskContactInitials();
+}
+
+function renderAddTaskContactInitials() {
+    let content = document.getElementById('selectedContact');
+    content.innerHTML = "";
+    for (let i = 0; i < taskContacts.length; i++) {
+        let contact = taskContacts[i];
+        content.innerHTML += ` <div style="background-color: ${contact['color']};" class="assigned-initials">${contact['initials']}</div>`;
+    }
+}
+
+let prio = '';
+
+function taskUrgent() {
+    prio = 'Urgent';
+    document.getElementById('urgent').classList.add('urgent')
+    document.getElementById('medium').classList.remove('medium')
+    document.getElementById('low').classList.remove('low')
+    document.getElementById('imgUrgent').src = './assets/img/add_task/arrow_white.svg';
+    document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
+    document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
+}
+
+function taskMedium() {
+    prio = 'Medium';
+    document.getElementById('medium').classList.add('medium')
+    document.getElementById('urgent').classList.remove('urgent')
+    document.getElementById('low').classList.remove('low')
+    document.getElementById('imgMedium').src = './assets/img/add_task/result_white.svg';
+    document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
+    document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
+}
+
+function taskLow() {
+    prio = 'Low';
+    document.getElementById('low').classList.add('low')
+    document.getElementById('urgent').classList.remove('urgent')
+    document.getElementById('medium').classList.remove('medium')
+    document.getElementById('imgLow').src = './assets/img/add_task/arrow_buttom_white.svg';
+    document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
+    document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
+
 }
 
 

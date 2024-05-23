@@ -80,4 +80,6 @@ document.addEventListener("click", closeAllSelect);
 
 function toggleAssigned() {
   document.getElementById('assignedContainer').classList.toggle('d-none');
+  document.getElementById('selectedContact').classList.toggle('selected-contact');
+  document.getElementById('selectedContact').classList.toggle('d-none');
 }
