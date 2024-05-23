@@ -17,6 +17,10 @@ body {
         background-color: #2a3647;
     }
 
+    50% {
+        background-color: #2a3647;
+    }
+
     100% {
         background-color: #f6f7f8;
     }
@@ -76,7 +80,13 @@ header {
         content: url(../assets/img/logo.svg);
     }
 
-    75% {
+    25% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(3);
+    }
+
+    50% {
         content: url(../assets/img/logo.svg);
     }
 
@@ -84,7 +94,6 @@ header {
         top: 20px;
         left: 20px;
         transform: translate(0, 0) scale(1);
-        content: url(../assets/img/logo.svg);
     }
 }
 

@@ -75,20 +75,11 @@ function closeAllSelect(elmnt) {
   }
 }
 
-/* If the user clicks anywhere outside the select box,
-then close all select boxes: */
 document.addEventListener("click", closeAllSelect);
 
-async function toggleAssigned(path = "") {
-  let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/contacts' + '.json');
-  let responseToJson = await response.json();
-  console.log(responseToJson);
 
-for (let i = 0; i < responseToJson.length; i++) {
-  let contact = responseToJson[i];
-
-  console.log(contact)
-}
-
+function toggleAssigned() {
   document.getElementById('assignedContainer').classList.toggle('d-none');
+  document.getElementById('selectedContact').classList.toggle('selected-contact');
+  document.getElementById('selectedContact').classList.toggle('d-none');
 }

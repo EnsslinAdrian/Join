@@ -38,36 +38,24 @@
             overflow-y: scroll;
         }
 
-        #style-9::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            background-color: #F5F5F5;
-        }
-
-        #style-9::-webkit-scrollbar {
-            width: 10px;
-            background-color: #F5F5F5;
-        }
-
-        #style-9::-webkit-scrollbar-thumb {
-            background-color: #F90;
-            background-image: -webkit-linear-gradient(90deg,
-                    rgba(255, 255, 255, .2) 25%,
-                    transparent 25%,
-                    transparent 50%,
-                    rgba(255, 255, 255, .2) 50%,
-                    rgba(255, 255, 255, .2) 75%,
-                    transparent 75%,
-                    transparent)
-        }
-
         .assigned-contact {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 10px;
         }
 
+        .contact-name {
+            display: flex;
+            align-items: center;
+        }
+
         .assigned-contact:hover {
-        background-color: rgba(128, 128, 128, 0.219);
+            background-color: rgba(128, 128, 128, 0.219);
+        }
+
+        .click-contact-bg {
+            background-color: rgba(128, 128, 128, 0.219);
         }
 
         .assigned-contact p {
@@ -86,12 +74,68 @@
             color: white;
             font-size: 14px;
             font-weight: 600;
-            background-color: aqua;
         }
 
         .d-none {
-        display: none;
+            display: none;
         }
+
+        .checkbox {
+            width: auto;
+        }
+
+        .selected-contact {
+            width: 95%;
+            max-width: 95%;
+            height: auto;
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            scrollbar-width: none;
+            padding: 5px;
+        }
+
+        .urgent {
+            background-color: #FF3D00;
+            color: white;
+        }
+
+        .medium {
+            background-color: #FFA800;
+            color: white;
+        }
+
+        .low {
+            background-color: #7AE229;
+            color: white;
+        }
+
+        .subtasks-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        padding-right: 10px;
+        border-radius: 10px;
+        }
+
+        .subtasks-container input {
+        border: 0;
+        width: 85%;
+        outline: none;
+        }
+
+        .subtasks-button button{
+        border: 0;
+        border-radius: 50%;
+        font-size: 20px;
+        background-color: white;
+        }
+
+        .subtasks-button button:hover {
+            background-color: rgb(230, 227, 227);
+        }
+
     </style>
 
 </head>
@@ -125,17 +169,12 @@
                                 placeholder="Enter a Description"></textarea>
 
                             <p>Assigned to</p>
-                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search" placeholder="Select car:">
+                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search"
+                                placeholder="Select contacts to assign">
                             <div class="assigned-contacts-container d-none" id="assignedContainer">
 
-                                <div class="assigned-contact">
-                                    <div class="assigned-initials">SW</div>
-                                    <p>Adrian Enßlin</p>
-                                </div>
-
                             </div>
-
-
+                            <div class="selected-contact " id="selectedContact"></div>
                     </div>
 
                     <div class="add-task-between-line"></div>
@@ -145,29 +184,37 @@
                         <input id="date" required class="margin-buttom" type="date">
                         <p>Prio</p>
                         <div class="margin-buttom add-task-prio">
-                            <div class="prio-selection-urgent">
+                            <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
                                 <span>Urgent</span>
-                                <img class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                                <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
                             </div>
-                            <div class="prio-selection-medium">
+                            <div class="prio-selection-medium" onclick="taskMedium()" id="medium">
                                 <span>Medium </span>
-                                <img class="prio-icons" src="./assets/img/add_task/result.svg">
+                                <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result.svg">
                             </div>
-                            <div class="prio-selection-low">
+                            <div class="prio-selection-low" onclick="taskLow()" id="low">
                                 <span>Low</span>
-                                <img class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                                <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
                             </div>
                         </div>
                         <p>Category<span class="color-red">*</span></p>
                         <div class="custom-select" style="width:100%;">
                             <select id="select">
-                                <option value="0">Select car:</option>
-                                <option value="1">Audi</option>
-                                <option value="2">BMW</option>
+                                <option value="0">Select task category</option>
+                                <option value="1">Technical Task</option>
+                                <option value="2">User Story</option>
                             </select>
                         </div>
                         <p>Subtasks</p>
-                        <input id="subtasks" type="text" name="">
+                        <div class="subtasks-container">
+                            <input id="subtask" placeholder="Add new subtask">
+                            <div class="subtasks-button">
+                                <button onclick="addNewSubtasks()" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="subtasks-list">
+                            <ul id="subtasksList"></ul>
+                        </div>
                     </div>
 
                 </div>
@@ -175,7 +222,7 @@
                 <div class="send-add-task-buttons">
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
                     <div class="buttons">
-                        <button class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
+                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
                         <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
                     </div>
                 </div>
