@@ -102,6 +102,7 @@ function cancelAddTask() {
 }
 
 
+
 function updateHTML() {
     upadeteTodo();
     updateInProgress();
