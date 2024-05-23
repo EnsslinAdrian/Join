@@ -19,6 +19,12 @@
 </head>
 
 <body onload="init(); updateHTML();">
+    <div id="dialog" class="dialog_bg d_none" onclick="closeDialogTask()">
+        <div id="taskDetails" class="dialog">
+            <h1>Dialog</h1>
+            <p id="dialog_message">Informationen</p>
+        </div>
+    </div>
     <div class="content-container">
         <div w3-include-html="./assets/templates/boardMenu.html"></div>
         <div class="main-content">
@@ -92,6 +98,7 @@
             <div id="add-task-popup" class="add-task-popup d-none">
 
             </div>
+
 </body>
 
 </html>

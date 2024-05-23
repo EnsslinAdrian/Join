@@ -264,3 +264,53 @@ h2 {
 @media (max-width: 428px) {
 
 }
+
+.dialog_bg {
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.d_none {
+    display: none;
+}
+
+.dialog {
+    width: 350px;
+    background-color: white;
+    border: 1 px solid lightgray;
+    border-radius: 25px;
+    padding: 24px;
+}
+
+.header_task_details h1 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.header_task_details p {
+    margin-bottom: 12px;
+    color: black;
+}
+
+.details_delete_edit {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 4px;
+}
+
+.details_delete_edit p {
+    margin: 0;
+}
+
+.details_delete_edit img {
+    height: 20px;
+}

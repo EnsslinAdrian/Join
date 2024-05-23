@@ -1,31 +1,31 @@
 let todos = [{
     'id': 0,
-    'tasktype' : 'User Story',
-    'taskcolor' : 'aquamarine',
+    'tasktype': 'User Story',
+    'taskcolor': 'aquamarine',
     'title': 'In progress',
     'description': 'Create a contact form and imprint page...',
     'subtasks': 2,
     'category': 'in-progress'
 }, {
     'id': 1,
-    'tasktype' : 'Technical Task',
-    'taskcolor' : 'aquamarine',
+    'tasktype': 'Technical Task',
+    'taskcolor': 'aquamarine',
     'title': 'done',
     'description': 'Create a contact form and imprint page...',
     'subtasks': 2,
     'category': 'done'
 }, {
     'id': 2,
-    'tasktype' : 'User Story',
-    'taskcolor' : 'aquamarine',
+    'tasktype': 'User Story',
+    'taskcolor': 'aquamarine',
     'title': 'To do',
     'description': 'Create a contact form and imprint page...',
     'subtasks': 2,
     'category': 'todo'
 }, {
     'id': 3,
-    'tasktype' : 'Technical Task',
-    'taskcolor' : 'aquamarine',
+    'tasktype': 'Technical Task',
+    'taskcolor': 'aquamarine',
     'title': 'Await feedback',
     'description': 'Create a contact form and imprint page...',
     'subtasks': 2,
@@ -134,6 +134,7 @@ function updateHTML() {
     updateInProgress();
     updateAwaitFeedback();
     updateDone();
+    console.log(todos);
 }
 
 
@@ -192,7 +193,7 @@ function startDragging(id) {
 
 function generateTodoHTML(element) {
     return /*html*/`
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo" onclick="openDialogTask(${element['id']})">
         <div class="task-card">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['tasktype']}</div>
@@ -231,4 +232,51 @@ function highlight(id) {
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag_area_hightlight');
+}
+
+
+function openDialogTask(id) {
+    let task = todos.find(t => t.id === id);
+    console.log("dialog Fenster öffnet sich.")
+    document.getElementById('dialog').classList.remove('d_none');
+    let taskDetails = document.getElementById('taskDetails');
+    taskDetails.innerHTML = showDetails(task);
+}
+
+
+function closeDialogTask() {
+    document.getElementById('dialog').classList.add('d_none');
+}
+
+
+function showDetails(element) {
+    return /*html*/`
+    <div class="task-card-type">
+         <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['tasktype']}</div>
+    </div>
+    <div class="header_task_details">
+        <h1>${element['title']}</h1>
+        <p class="task-description">${element['description']}</p>
+    </div>
+    <div class="task_details_information">
+        <div>
+        <p>Due date:</p><p>${element['date']}</p>
+        </div>
+        <div>
+        <p>Priority</p><img src="${element['prioImg']}" alt="">
+        </div>
+        <div>
+        <p>Assigned To:</p><p>${element['taskContacts']}</p>
+        </div>
+        <div>
+            <p>Subtasks</p>
+            <p>${element['subtasks']}</p>
+        </div>
+        <footer class="details_delete_edit">
+            <img src="../assets/img/delete.svg" alt="">
+            <p>Delete</p>|
+            <img src="../assets/img/edit.svg" alt="">
+            <p>Edit</p>
+        </footer>
+    `;
 }

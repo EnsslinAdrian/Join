@@ -91,8 +91,8 @@ header {
     }
 
     100% {
-        top: 20px;
-        left: 20px;
+        top: 60px;
+        left: 60px;
         transform: translate(0, 0) scale(1);
     }
 }
@@ -352,13 +352,64 @@ input[type="checkbox"]:checked:before {
         padding-bottom: 30px;
     }
 
+    body {
+        margin: 60px 60px 0 60px;
+        background-color: #f6f7f8;
+        font-family: 'Inter';
+        max-width: 1440px;
+        text-align: center;
+        animation: backgroundColorChange 2s ease forwards;
+    }
+
     @keyframes backgroundColorChange {
         0% {
-            background-color: #2a3647;
+            background-color: #2a3647 !important;
+        }
+    
+        50% {
+            background-color: #2a3647 !important;
         }
     
         100% {
-            background-color: #f6f7f8;
+            background-color: #f6f7f8 !important;
+        }
+    }
+
+    .animate_logo img {
+        position: absolute;
+        animation: moveLogo 1.5s forwards;
+        content: url(../assets/img/logo-hell.svg);
+    }
+
+    @keyframes moveLogo {
+        0% {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(3);
+            content: url(../assets/img/logo_hell.svg) !important;
+        }
+    
+        25% {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(3);
+            content: url(../assets/img/logo_hell.svg) !important;
+        }
+    
+        25% {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(3);
+        }
+    
+        50% {
+            content: url(../assets/img/logo.svg);
+        }
+    
+        100% {
+            top: 60px;
+            left: 60px;
+            transform: translate(0, 0) scale(1);
         }
     }
 }
@@ -426,8 +477,8 @@ input[type="checkbox"]:checked:before {
         }
     
         100% {
-            top: 30px;
-            left: 30px;
+            top: 20px;
+            left: 20px;
             transform: translate(0, 0) scale(1);
         }
     }
