@@ -108,14 +108,12 @@ async function addNewTask(event) {
     let date = document.getElementById('date').value;
     let categoryElement = document.getElementById('select');
     let categoryText = categoryElement.selectedOptions[0].text;
-    let subtasks = document.getElementById('subtasks').value;
 
     let task = {
         'title': title,
         'description': description,
         'date': date,
-        'category': categoryText,
-        'subtasks': subtasks
+        'category': categoryText
     };
 
     let userKey = localStorage.getItem('userKey');
@@ -231,7 +229,7 @@ function generateTaskContactHtml(contact, i, color) {
     `;
 }
 
-let taskContacts = []
+let taskContacts = [];
 
 function addContactTask(contactName, initials, i, color) {
     let newTaskContact = {
@@ -293,7 +291,43 @@ function taskLow() {
     document.getElementById('imgLow').src = './assets/img/add_task/arrow_buttom_white.svg';
     document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
     document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
+}
 
+let subtasks = [];
+
+function addNewSubtasks() {
+let subtask = document.getElementById('subtask');
+if (subtasks.length < 2) {
+subtasks.push(subtask.value);
+subtask.value = '';
+renderSubtasksList();
+}
+}
+
+function renderSubtasksList() {
+    let content = document.getElementById('subtasksList');
+    content.innerHTML = '';
+    for (let i = 0; i < subtasks.length; i++) {
+        let subtask = subtasks[i];
+        content.innerHTML += `<li>${subtask}</li>`;
+    }
+}
+
+function clearTask() {
+document.getElementById('title').value = '';
+document.getElementById('description').value = '';
+taskContacts = [];
+document.getElementById('date').value = '';
+prio = '';
+document.getElementById('urgent').classList.remove('urgent')
+document.getElementById('medium').classList.remove('medium')
+document.getElementById('low').classList.remove('low')
+document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
+document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
+document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
+subtasks = [];
+renderAddTaskContactInitials();
+renderSubtasksList();
 }
 
 

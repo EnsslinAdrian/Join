@@ -85,14 +85,14 @@
         }
 
         .selected-contact {
-        width: 95%;
-        max-width: 95%;
-        height: auto;
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        scrollbar-width: none;
-        padding: 5px;
+            width: 95%;
+            max-width: 95%;
+            height: auto;
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            scrollbar-width: none;
+            padding: 5px;
         }
 
         .urgent {
@@ -108,6 +108,32 @@
         .low {
             background-color: #7AE229;
             color: white;
+        }
+
+        .subtasks-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        padding-right: 10px;
+        border-radius: 10px;
+        }
+
+        .subtasks-container input {
+        border: 0;
+        width: 85%;
+        outline: none;
+        }
+
+        .subtasks-button button{
+        border: 0;
+        border-radius: 50%;
+        font-size: 20px;
+        background-color: white;
+        }
+
+        .subtasks-button button:hover {
+            background-color: rgb(230, 227, 227);
         }
 
     </style>
@@ -144,7 +170,7 @@
 
                             <p>Assigned to</p>
                             <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search"
-                                placeholder="Select car:">
+                                placeholder="Select contacts to assign">
                             <div class="assigned-contacts-container d-none" id="assignedContainer">
 
                             </div>
@@ -180,7 +206,15 @@
                             </select>
                         </div>
                         <p>Subtasks</p>
-                        <input id="subtasks" type="text" name="">
+                        <div class="subtasks-container">
+                            <input id="subtask" placeholder="Add new subtask">
+                            <div class="subtasks-button">
+                                <button onclick="addNewSubtasks()" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="subtasks-list">
+                            <ul id="subtasksList"></ul>
+                        </div>
                     </div>
 
                 </div>
@@ -188,7 +222,7 @@
                 <div class="send-add-task-buttons">
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
                     <div class="buttons">
-                        <button class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
+                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
                         <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
                     </div>
                 </div>
