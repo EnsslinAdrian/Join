@@ -1,9 +1,35 @@
 let todos = [{
     'id': 0,
-    'title': 'User Story',
+    'tasktype' : 'User Story',
+    'taskcolor' : 'aquamarine',
+    'title': 'In progress',
     'description': 'Create a contact form and imprint page...',
     'subtasks': 2,
     'category': 'in-progress'
+}, {
+    'id': 1,
+    'tasktype' : 'Technical Task',
+    'taskcolor' : 'aquamarine',
+    'title': 'done',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'done'
+}, {
+    'id': 2,
+    'tasktype' : 'User Story',
+    'taskcolor' : 'aquamarine',
+    'title': 'To do',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'todo'
+}, {
+    'id': 3,
+    'tasktype' : 'Technical Task',
+    'taskcolor' : 'aquamarine',
+    'title': 'Await feedback',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'await-feedback'
 }]
 
 
@@ -96,7 +122,7 @@ function closeAddTask() {
 function cancelAddTask() {
     let popup = document.getElementById('add-task-popup');
     popup.classList.add('slide-out');
-    popup.addEventListener('transitionend', function() { // sobald die animation fertig ist, wird der task geschlossen
+    popup.addEventListener('transitionend', function () { // sobald die animation fertig ist, wird der task geschlossen
         closeAddTask();
     }, { once: true });
 }
@@ -165,7 +191,25 @@ function startDragging(id) {
 
 
 function generateTodoHTML(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
+    return /*html*/`
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+        <div class="task-card">
+            <div class="task-card-type">
+                <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['tasktype']}</div>
+            </div>
+            <h2>${element['title']}</h2>
+            <p class="task-description">${element['description']}</p>
+            <div class="progress">
+                <div class="progress-bar"></div>
+                    ${element['subtasks']} Subtasks
+            </div>
+            <div class="task-card-bottom">
+                <p class="user-icon">AS</p>
+                <img src="assets/img/Vector.svg">
+            </div>
+        </div>
+    </div>
+    `;
 }
 
 
