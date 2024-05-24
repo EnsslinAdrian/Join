@@ -62,6 +62,9 @@
                     <!-- wird nur vorübergehend hier hardgecodet und später beim aufrufen der einzelnen kontakte gebraucht -->
                     <div id="add-contact-popup" class="add-contact-popup d-none">
                         <div class="left-side">
+                            <div class="responsive-close">
+                                <img onclick="closePopup()" src="assets/img/contacts/close-white.svg">
+                            </div>
                             <div class="popup-headline">
                                 <img class="popup-logo" src="assets/img/contacts/logo.svg">
                                 <h1>Add Contact</h1>
@@ -81,19 +84,16 @@
                                 <div class="flex-end">
                                     <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
                                 </div>
-                                <div>
+                                <div class="contact-input">
                                     <input id="contactName" class="input" placeholder="Name" type="text">
                                     <input id="contactEmail" class="input" placeholder="Email" type="text">
                                     <input id="contactPhone" class="input" placeholder="Phone" type="text">
                                 </div>
                                 <div class="buttons">
-                                    <button class="cancel-button">Cancel<img
-                                            src="assets/img/add_task/close.svg"></button>
+                                    <button onclick="closePopup()" class="cancel-button">Cancel<img
+                                        src="assets/img/add_task/close.svg"></button>
                                     <button onclick="newContact()" class="btn">Create Contact<img
                                             src="assets/img/add_task/check.svg"></button>
-                                    <button onclick="closePopup()" class="cancel-button">Cancel<img
-                                            src="assets/img/add_task/close.svg"></button>
-                                    <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
                                 </div>
                             </div>
 
