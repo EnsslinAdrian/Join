@@ -11,22 +11,6 @@ body {
     animation: backgroundColorChange 2s ease forwards;
 }
 
-/*
-@keyframes backgroundColorChange {
-    0% {
-        background-color: #2a3647;
-    }
-
-    50% {
-        background-color: #2a3647;
-    }
-
-    100% {
-        background-color: #f6f7f8;
-    }
-}
-*/
-
 h1 {
     font-size: 50px !important;
 }
@@ -104,6 +88,7 @@ p {
 .logo_image img {
     object-fit: cover;
     height: 80px;
+    z-index: 10;
 }
 
 .main_login_container {
