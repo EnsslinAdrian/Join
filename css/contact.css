@@ -146,21 +146,36 @@ a {
     height: 592px;
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
 .inputfields {
     display: flex;
     flex-direction: column;
     padding-left: 72px;
+    gap: 16px;
 }
 
 .input {
+    padding: 0;
+    border: none;
     margin-left: 0;
     margin-right: 0;
+    outline: none;
 }
 
-.flex-end {
-    display: flex;
-    justify-content: flex-end;
-    width: 345px;
+.input-icon {
+    padding-right: 8px;
+}
+
+.close-button {
+    position: absolute;
+    top: 48px;
+    right: 48px;
 }
 
 .popup-icon {
@@ -302,12 +317,13 @@ a {
         top: -15%;
     }
 
-    .flex-end {
+    .close-button {
         display: none;
     }
 
     .inputfields {
-        padding: 16px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
     .contact-input {
