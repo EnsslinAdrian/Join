@@ -80,12 +80,6 @@ header {
         content: url(../assets/img/logo.svg);
     }
 
-    25% {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(3);
-    }
-
     50% {
         content: url(../assets/img/logo.svg);
     }
@@ -242,28 +236,6 @@ input[type="checkbox"]:hover {
     cursor: pointer;
 }
 
-/*
-input[type="checkbox"] {
-    visibility: hidden;
-}
-*/
-
-/*
-input[type="checkbox"]:before {
-    content: url('../assets/img/checkbox-empty.svg');
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-}
-
-input[type="checkbox"]:checked:before {
-    content: url('../assets/img/checkbox-checked.svg');
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-}
-*/
-
 .footer_login {
     display: flex;
     justify-content: center;
@@ -353,32 +325,28 @@ input[type="checkbox"]:checked:before {
     }
 
     body {
-        margin: 60px 60px 0 60px;
-        background-color: #f6f7f8;
-        font-family: 'Inter';
-        max-width: 1440px;
-        text-align: center;
-        animation: backgroundColorChange 2s ease forwards;
+        background-color: #2a3647;
+        animation: backgroundColorChange 1s ease forwards;
     }
 
     @keyframes backgroundColorChange {
         0% {
-            background-color: #2a3647 !important;
+            background-color: #2a3647;
         }
     
         50% {
-            background-color: #2a3647 !important;
+            background-color: #2a3647;
         }
     
         100% {
-            background-color: #f6f7f8 !important;
+            background-color: #f6f7f8;
         }
     }
 
     .animate_logo img {
         position: absolute;
         animation: moveLogo 1.5s forwards;
-        content: url(../assets/img/logo-hell.svg);
+        content: url(../assets/img/logo_hell.svg);
     }
 
     @keyframes moveLogo {
@@ -386,20 +354,14 @@ input[type="checkbox"]:checked:before {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(3);
-            content: url(../assets/img/logo_hell.svg) !important;
+            content: url(../assets/img/logo_hell.svg);
         }
     
         25% {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(3);
-            content: url(../assets/img/logo_hell.svg) !important;
-        }
-    
-        25% {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(3);
+            content: url(../assets/img/logo_hell.svg);
         }
     
         50% {
@@ -407,9 +369,10 @@ input[type="checkbox"]:checked:before {
         }
     
         100% {
-            top: 60px;
-            left: 60px;
+            top: 20px;
+            left: 20px;
             transform: translate(0, 0) scale(1);
+            content: url(../assets/img/logo.svg);
         }
     }
 }
@@ -461,25 +424,5 @@ input[type="checkbox"]:checked:before {
 
     input[type="password"]:focus {
         background-position: 201px 9px;
-    }
-
-    @keyframes moveLogo {
-        0% {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(3);
-        }
-    
-        25% {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(3);
-        }
-    
-        100% {
-            top: 20px;
-            left: 20px;
-            transform: translate(0, 0) scale(1);
-        }
     }
 }

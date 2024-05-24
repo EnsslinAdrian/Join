@@ -71,6 +71,10 @@ input[type="text"] {
 }
 
 @media(max-width:580px) {
+    body {
+        background-color: #f6f7f8 !important;
+    }
+
     .logo_image img {
         height: 78px;
     }
@@ -83,8 +87,12 @@ input[type="text"] {
         margin-top: 400px !important;
     }
 
+    .sign_up_header {
+        margin-left: 20px;
+    }
+
     .sign_up_headline {
-        padding-left: 100px !important;
+        padding-left: 65px !important;
     }
 
     .main_login_content {
@@ -95,6 +103,7 @@ input[type="text"] {
 @media(max-width: 400px) {
     .sign_up_header {
         padding-left: 20px !important;
+        margin: 0;
     }
 
     .sign_up_headline {
