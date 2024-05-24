@@ -100,6 +100,11 @@ function registration(event) {
     confirmPassword.value = "";
 }
 
+let taskContacts = [];
+let subtasks = [];
+let prio = '';
+let prioImg = '';
+
 async function addNewTask(event) {
     event.preventDefault();
 
@@ -110,10 +115,15 @@ async function addNewTask(event) {
     let categoryText = categoryElement.selectedOptions[0].text;
 
     let task = {
+        'category': 'todo',
         'title': title,
         'description': description,
         'date': date,
-        'category': categoryText
+        'prio': prio,
+        'prioImg': prioImg,
+        'taskCategory': categoryText,
+        'subtasks': subtasks,
+        'taskContacts': taskContacts
     };
 
     let userKey = localStorage.getItem('userKey');
@@ -134,6 +144,7 @@ async function addNewTask(event) {
         },
         body: JSON.stringify(user),
     });
+    clearTask();
 }
 /*
 async function newContact() {
@@ -167,7 +178,7 @@ async function renderContacts(path = "") {
 
         let content = document.getElementById('contactContainer');
         let contacts = responseToJson.contacts;
-        let contactsArray = Object.values(contacts); // Convert the contacts object to an array
+        let contactsArray = Object.values(contacts);
         content.innerHTML = "";
 
         for (let i = 0; i < contactsArray.length; i++) {
@@ -204,7 +215,7 @@ async function renderContactsAddTask() {
         let content = document.getElementById('assignedContainer');
         content.innerHTML = '';
         let contacts = responseToJson.contacts;
-        let contactsArray = Object.values(contacts); // Convert the contacts object to an array
+        let contactsArray = Object.values(contacts);
 
         for (let i = 0; i < contactsArray.length; i++) {
             let contact = contactsArray[i];
@@ -228,8 +239,6 @@ function generateTaskContactHtml(contact, i, color) {
     </div>
     `;
 }
-
-let taskContacts = [];
 
 function addContactTask(contactName, initials, i, color) {
     let newTaskContact = {
@@ -261,10 +270,9 @@ function renderAddTaskContactInitials() {
     }
 }
 
-let prio = '';
-
 function taskUrgent() {
     prio = 'Urgent';
+    prioImg = './assets/img/add_task/arrowsTop.svg';
     document.getElementById('urgent').classList.add('urgent')
     document.getElementById('medium').classList.remove('medium')
     document.getElementById('low').classList.remove('low')
@@ -275,6 +283,7 @@ function taskUrgent() {
 
 function taskMedium() {
     prio = 'Medium';
+    prioImg = './assets/img/add_task/result.svg';
     document.getElementById('medium').classList.add('medium')
     document.getElementById('urgent').classList.remove('urgent')
     document.getElementById('low').classList.remove('low')
@@ -285,6 +294,7 @@ function taskMedium() {
 
 function taskLow() {
     prio = 'Low';
+    prioImg = './assets/img/add_task/arrowsButtom.svg';
     document.getElementById('low').classList.add('low')
     document.getElementById('urgent').classList.remove('urgent')
     document.getElementById('medium').classList.remove('medium')
@@ -293,15 +303,17 @@ function taskLow() {
     document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
 }
 
-let subtasks = [];
+
 
 function addNewSubtasks() {
-let subtask = document.getElementById('subtask');
-if (subtasks.length < 2) {
-subtasks.push(subtask.value);
-subtask.value = '';
-renderSubtasksList();
-}
+    let subtask = document.getElementById('subtask');
+    if (subtasks.length < 2) {
+        if (subtask.value.length >= 1) {
+            subtasks.push(subtask.value);
+            subtask.value = '';
+            renderSubtasksList();
+        }
+    }
 }
 
 function renderSubtasksList() {
@@ -314,20 +326,62 @@ function renderSubtasksList() {
 }
 
 function clearTask() {
-document.getElementById('title').value = '';
-document.getElementById('description').value = '';
-taskContacts = [];
-document.getElementById('date').value = '';
-prio = '';
-document.getElementById('urgent').classList.remove('urgent')
-document.getElementById('medium').classList.remove('medium')
-document.getElementById('low').classList.remove('low')
-document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
-document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
-document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
-subtasks = [];
-renderAddTaskContactInitials();
-renderSubtasksList();
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    taskContacts = [];
+    document.getElementById('date').value = '';
+    prio = '';
+    document.getElementById('urgent').classList.remove('urgent')
+    document.getElementById('medium').classList.remove('medium')
+    document.getElementById('low').classList.remove('low')
+    document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
+    document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
+    document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
+    subtasks = [];
+    renderAddTaskContactInitials();
+    renderSubtasksList();
+}
+
+
+async function filterContacts(path = '') {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+
+    let contacts = responseToJson.contacts;
+    let contactsArray = Object.values(contacts);
+
+    let search = document.getElementById('assignedSearch').value.toLowerCase(); // Suchwert in Kleinbuchstaben umwandeln
+
+    let content = document.getElementById('assignedContainer');
+    content.innerHTML = '';
+
+    for (let i = 0; i < contactsArray.length; i++) {
+        let contact = contactsArray[i];
+        let contactName = contact.name.toLowerCase(); // Zugriff auf die Eigenschaft 'name'
+
+        if (contactName.includes(search)) {
+            let initials = contact.name.split(' ').map(word => word[0]).join(''); // Initialen berechnen
+            let initialsBgColor = getRandomColor();
+            if (search.length == 0) {
+                renderContactsAddTask();
+            } else {
+
+                content.innerHTML += generateContactsSearchHtml(contact, initials, initialsBgColor, i);
+            }
+        }
+    }
+}
+
+function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
+    return `
+    <div class="assigned-contact" id="contactTask${i}">
+                <div class="contact-name">
+                    <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
+                    <p>${contact.name}</p>
+                </div>
+                <input id="taskCheckbox${i}" onclick="addContactTask('${contact.name}', '${initials}', ${i}, '${initialsBgColor}')" class="checkbox" type="checkbox">
+            </div>
+    `;
 }
 
 

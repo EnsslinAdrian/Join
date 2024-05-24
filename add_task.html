@@ -111,31 +111,30 @@
         }
 
         .subtasks-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: white;
-        padding-right: 10px;
-        border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding-right: 10px;
+            border-radius: 10px;
         }
 
         .subtasks-container input {
-        border: 0;
-        width: 85%;
-        outline: none;
+            border: 0;
+            width: 85%;
+            outline: none;
         }
 
-        .subtasks-button button{
-        border: 0;
-        border-radius: 50%;
-        font-size: 20px;
-        background-color: white;
+        .subtasks-button button {
+            border: 0;
+            border-radius: 50%;
+            font-size: 20px;
+            background-color: white;
         }
 
         .subtasks-button button:hover {
             background-color: rgb(230, 227, 227);
         }
-
     </style>
 
 </head>
@@ -169,7 +168,7 @@
                                 placeholder="Enter a Description"></textarea>
 
                             <p>Assigned to</p>
-                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" class="assigned-search"
+                            <input onclick="toggleAssigned()" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
                                 placeholder="Select contacts to assign">
                             <div class="assigned-contacts-container d-none" id="assignedContainer">
 
@@ -222,7 +221,8 @@
                 <div class="send-add-task-buttons">
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
                     <div class="buttons">
-                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
+                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img
+                                src="assets/img/add_task/close.svg"></button>
                         <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
                     </div>
                 </div>
