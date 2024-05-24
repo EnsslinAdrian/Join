@@ -3,6 +3,7 @@ let taskContacts = [];
 let subtasks = [];
 let prio = '';
 let prioImg = '';
+let tasks = [];
 
 function init() {
     includeHTML();
@@ -391,6 +392,7 @@ async function renderTaskBoard() {
         let responseToJson = await response.json();
 
         let content = document.getElementById('todo');
+        let detailsContent = document.getElementById('taskDetails');
 
         let user = localStorage.getItem('userKey');
         let path = responseToJson['registered'][user];
@@ -401,20 +403,21 @@ async function renderTaskBoard() {
             let task = tasks[i];
 
             content.innerHTML += generateTodoHTML(task, i);
+            detailsContent.innerHTML = showDetails(task, i);
 
-        let conatctsContent = document.getElementById(`taskContacts${i}`)
-        for (let j = 0; j < task['taskContacts'].length; j++) {
-            let contacts = task['taskContacts'][j];
-          
-        conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-        }
+            let conatctsContent = document.getElementById(`taskContacts${i}`)
+            for (let j = 0; j < task['taskContacts'].length; j++) {
+                let contacts = task['taskContacts'][j];
+
+                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+            }
         }
     }
 }
 
 function generateTodoHTML(element, i) {
     return /*html*/`
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo" onclick="openDialogTask(${element})">
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo" onclick="openDialogTask(${i})">
         <div class="task-card">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['taskCategory']}</div>
@@ -436,43 +439,48 @@ function generateTodoHTML(element, i) {
     `;
 }
 
-function openDialogTask(id) {
-    let task = id.find(t => t.id.length === id.length);
+
+function openDialogTask(i) {
+    let task = tasks[i];
     console.log("dialog Fenster öffnet sich.")
     document.getElementById('dialog').classList.remove('d_none');
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = showDetails(task);
 }
 
-function showDetails(element) {
+
+function showDetails(task) {
     return /*html*/`
-    <div class="task-card-type">
-         <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['taskCategory']}</div>
+    <div id="taskDetails">
+        <div class="task-card-type">
+             <div class="type-bg">${task['taskCategory']}</div> <!-- style="background-color: ${task['taskcolor']};"-->
+        </div>
+        <div class="header_task_details">
+            <h1>${task['title']}</h1>
+            <p class="task-description">${task['description']}</p>
+        </div>
+        <div class="task_details_information">
+            <div>
+                <p>Due date:</p><p>${task['date']}</p>
+            </div>
+            <div>
+                <p>Priority</p><img src="${task['prioImg']}" alt="">
+            </div>
+            <div>
+                <p>Assigned To:</p><p>${task['taskContacts']}</p>
+            </div>
+            <div>
+                <p>Subtasks</p>
+                <p>${task['subtasks']}</p>
+            </div>
+            <footer class="details_delete_edit">
+                <img src="../assets/img/delete.svg" alt="">
+                <p>Delete</p>|
+                <img src="../assets/img/edit.svg" alt="">
+                <p>Edit</p>
+            </footer>
+        </div>
     </div>
-    <div class="header_task_details">
-        <h1>${element['title']}</h1>
-        <p class="task-description">${element['description']}</p>
-    </div>
-    <div class="task_details_information">
-        <div>
-        <p>Due date:</p><p>${element['date']}</p>
-        </div>
-        <div>
-        <p>Priority</p><img src="${element['prioImg']}" alt="">
-        </div>
-        <div>
-        <p>Assigned To:</p><p>${element['taskContacts']}</p>
-        </div>
-        <div>
-            <p>Subtasks</p>
-            <p>${element['subtasks']}</p>
-        </div>
-        <footer class="details_delete_edit">
-            <img src="../assets/img/delete.svg" alt="">
-            <p>Delete</p>|
-            <img src="../assets/img/edit.svg" alt="">
-            <p>Edit</p>
-        </footer>
     `;
 }
 

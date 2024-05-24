@@ -1,3 +1,4 @@
+/*
 let todos = [{
     'id': 0,
     'tasktype': 'User Story',
@@ -31,6 +32,7 @@ let todos = [{
     'subtasks': 2,
     'category': 'await-feedback'
 }]
+*/
 
 
 let currentDraggedTask;
@@ -156,15 +158,6 @@ function highlight(id) {
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag_area_hightlight');
-}
-
-
-function openDialogTask(id) {
-    let task = todos.find(t => t.id === id);
-    console.log("dialog Fenster öffnet sich.")
-    document.getElementById('dialog').classList.remove('d_none');
-    let taskDetails = document.getElementById('taskDetails');
-    taskDetails.innerHTML = showDetails(task);
 }
 
 
