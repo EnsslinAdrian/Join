@@ -266,6 +266,30 @@ a {
     }
 }
 
+@media (max-width: 768px) {
+    .right-content {
+        display: none;
+    }
+
+    
+
+    .contact-container {
+        width: 100%;
+    }
+
+    .contact-list {
+        width: 100%;
+        padding: 0;
+    }
+
+    #contactContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+}
+
 @media (max-width: 428px) {
     .contacts-headline {
         display: none;
