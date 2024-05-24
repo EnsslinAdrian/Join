@@ -171,7 +171,6 @@ h2 {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: blue;
     color: white;
     font-size: 12px;
     font-weight: 400;
@@ -251,6 +250,12 @@ h2 {
 
 .padding-top {
     padding-top: 30px;
+}
+
+.taskContacts {
+display: flex;
+width: 70%;
+justify-content: space-between;
 }
 
 @media (max-width: 1370px) {

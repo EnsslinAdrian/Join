@@ -128,7 +128,7 @@ function cancelAddTask() {
 }
 
 
-
+/*
 function updateHTML() {
     upadeteTodo();
     updateInProgress();
@@ -136,83 +136,7 @@ function updateHTML() {
     updateDone();
     console.log(todos);
 }
-
-
-function upadeteTodo() {
-    let todo = todos.filter(t => t['category'] == 'todo');
-
-    document.getElementById('todo').innerHTML = '';
-
-    for (let i = 0; i < todo.length; i++) {
-        const todoElement = todo[i];
-        document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
-    }
-}
-
-
-function updateInProgress() {
-    let inProgress = todos.filter(t => t['category'] == 'in-progress');
-
-    document.getElementById('in-progress').innerHTML = '';
-
-    for (let i = 0; i < inProgress.length; i++) {
-        const inProgressElement = inProgress[i];
-        document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement);
-    }
-}
-
-
-function updateAwaitFeedback() {
-    let awaitFeedback = todos.filter(t => t['category'] == 'await-feedback');
-
-    document.getElementById('await-feedback').innerHTML = '';
-
-    for (let i = 0; i < awaitFeedback.length; i++) {
-        const awaitFeedbackElement = awaitFeedback[i];
-        document.getElementById('await-feedback').innerHTML += generateTodoHTML(awaitFeedbackElement);
-    }
-}
-
-
-function updateDone() {
-    let done = todos.filter(t => t['category'] == 'done');
-
-    document.getElementById('done').innerHTML = '';
-
-    for (let i = 0; i < done.length; i++) {
-        const doneElement = done[i];
-        document.getElementById('done').innerHTML += generateTodoHTML(doneElement);
-    }
-}
-
-
-function startDragging(id) {
-    currentDraggedTask = id;
-}
-
-
-function generateTodoHTML(element) {
-    return /*html*/`
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo" onclick="openDialogTask(${element['id']})">
-        <div class="task-card">
-            <div class="task-card-type">
-                <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['tasktype']}</div>
-            </div>
-            <h2>${element['title']}</h2>
-            <p class="task-description">${element['description']}</p>
-            <div class="progress">
-                <div class="progress-bar"></div>
-                    ${element['subtasks']} Subtasks
-            </div>
-            <div class="task-card-bottom">
-                <p class="user-icon">AS</p>
-                <img src="assets/img/Vector.svg">
-            </div>
-        </div>
-    </div>
-    `;
-}
-
+*/
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -246,37 +170,4 @@ function openDialogTask(id) {
 
 function closeDialogTask() {
     document.getElementById('dialog').classList.add('d_none');
-}
-
-
-function showDetails(element) {
-    return /*html*/`
-    <div class="task-card-type">
-         <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['tasktype']}</div>
-    </div>
-    <div class="header_task_details">
-        <h1>${element['title']}</h1>
-        <p class="task-description">${element['description']}</p>
-    </div>
-    <div class="task_details_information">
-        <div>
-        <p>Due date:</p><p>${element['date']}</p>
-        </div>
-        <div>
-        <p>Priority</p><img src="${element['prioImg']}" alt="">
-        </div>
-        <div>
-        <p>Assigned To:</p><p>${element['taskContacts']}</p>
-        </div>
-        <div>
-            <p>Subtasks</p>
-            <p>${element['subtasks']}</p>
-        </div>
-        <footer class="details_delete_edit">
-            <img src="../assets/img/delete.svg" alt="">
-            <p>Delete</p>|
-            <img src="../assets/img/edit.svg" alt="">
-            <p>Edit</p>
-        </footer>
-    `;
 }
