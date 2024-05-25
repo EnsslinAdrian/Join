@@ -403,7 +403,7 @@ async function renderTaskBoard() {
             let task = tasks[i];
 
             content.innerHTML += generateTodoHTML(task, i);
-            detailsContent.innerHTML = showDetails(task, i);
+            detailsContent.innerHTML = showDetails(task);
 
             let conatctsContent = document.getElementById(`taskContacts${i}`)
             for (let j = 0; j < task['taskContacts'].length; j++) {
