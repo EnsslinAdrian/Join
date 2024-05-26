@@ -101,7 +101,7 @@ p {
 }
 
 .task-card:hover {
-    transform: rotate(6deg);
+    transform: rotate(3deg);
 }
 
 .no-task {

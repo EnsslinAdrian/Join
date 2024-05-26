@@ -205,6 +205,16 @@ function generateTaskDetails(task) {
     `;
 }
 
+
+function updateHTML() {
+    upadeteTodo();
+    updateInProgress();
+    updateAwaitFeedback();
+    updateDone();
+    console.log(todos);
+}
+
+
 function upadeteTodo() {
     let todo = tasks.filter(t => t['category'] == 'todo');
 
@@ -255,15 +265,6 @@ function updateDone() {
 
 function startDragging(i) {
     currentDraggedTask = i;
-}
-
-
-function updateHTML() {
-    upadeteTodo();
-    updateInProgress();
-    updateAwaitFeedback();
-    updateDone();
-    console.log(todos);
 }
 
 
