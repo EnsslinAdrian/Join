@@ -387,23 +387,25 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
 }
 
 async function renderTaskBoard() {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    tasks = responseToJson.registered[localStorage.getItem('userKey')].tasks;
+   
     if (window.location.pathname.endsWith("board.html")) {
-        let response = await fetch(`${firebaseUrl}.json`);
-        let responseToJson = await response.json();
-
         let content = document.getElementById('todo');
-        let detailsContent = document.getElementById('taskDetails');
+        let inProgress = document.getElementById('in-progress');
+        let awaitFeeback = document.getElementById('await-feedback');
+        let done = document.getElementById('done');
 
-        let user = localStorage.getItem('userKey');
-        let path = responseToJson['registered'][user];
-        let tasks = path['tasks'];
-        console.log(tasks)
+        content.innerHTML= '';
+        inProgress.innerHTML= '';
+        awaitFeeback.innerHTML= '';
+        done.innerHTML= ''
 
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
 
             content.innerHTML += generateTodoHTML(task, i);
-            detailsContent.innerHTML = showDetails(task);
 
             let conatctsContent = document.getElementById(`taskContacts${i}`)
             for (let j = 0; j < task['taskContacts'].length; j++) {
@@ -417,8 +419,8 @@ async function renderTaskBoard() {
 
 function generateTodoHTML(element, i) {
     return /*html*/`
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo" onclick="openDialogTask(${i})">
-        <div class="task-card">
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+        <div class="task-card" onclick="openDialogTask(${i})">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['taskCategory']}</div>
             </div>
@@ -444,12 +446,18 @@ function openDialogTask(i) {
     let task = tasks[i];
     console.log("dialog Fenster öffnet sich.")
     document.getElementById('dialog').classList.remove('d_none');
-    let taskDetails = document.getElementById('taskDetails');
-    taskDetails.innerHTML = showDetails(task);
+    showTaskDetails(task);
 }
 
 
-function showDetails(task) {
+function showTaskDetails(task) {
+    let taskDetails = document.getElementById('taskDetails');
+    taskDetails.innerHTML ='';
+    taskDetails.innerHTML = generateTaskDetails(task);
+}
+
+
+function generateTaskDetails(task) {
     return /*html*/`
     <div id="taskDetails">
         <div class="task-card-type">

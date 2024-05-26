@@ -161,15 +161,6 @@ function removeHighlight(id) {
 }
 
 
-function openDialogTask(id) {
-    let task = tasks.find(t => t.id === id);
-    console.log("dialog Fenster öffnet sich.")
-    document.getElementById('dialog').classList.remove('d_none');
-    let taskDetails = document.getElementById('taskDetails');
-    taskDetails.innerHTML = showDetails(task);
-}
-
-
 function closeDialogTask() {
     document.getElementById('dialog').classList.add('d_none');
 }
