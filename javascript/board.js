@@ -1,40 +1,3 @@
-/*
-let todos = [{
-    'id': 0,
-    'tasktype': 'User Story',
-    'taskcolor': 'aquamarine',
-    'title': 'In progress',
-    'description': 'Create a contact form and imprint page...',
-    'subtasks': 2,
-    'category': 'in-progress'
-}, {
-    'id': 1,
-    'tasktype': 'Technical Task',
-    'taskcolor': 'aquamarine',
-    'title': 'done',
-    'description': 'Create a contact form and imprint page...',
-    'subtasks': 2,
-    'category': 'done'
-}, {
-    'id': 2,
-    'tasktype': 'User Story',
-    'taskcolor': 'aquamarine',
-    'title': 'To do',
-    'description': 'Create a contact form and imprint page...',
-    'subtasks': 2,
-    'category': 'todo'
-}, {
-    'id': 3,
-    'tasktype': 'Technical Task',
-    'taskcolor': 'aquamarine',
-    'title': 'Await feedback',
-    'description': 'Create a contact form and imprint page...',
-    'subtasks': 2,
-    'category': 'await-feedback'
-}]
-*/
-
-
 let currentDraggedTask;
 
 
@@ -130,6 +93,38 @@ function cancelAddTask() {
 }
 
 
+async function renderTaskBoard() {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    tasks = responseToJson.registered[localStorage.getItem('userKey')].tasks;
+   
+    if (window.location.pathname.endsWith("board.html")) {
+        let content = document.getElementById('todo');
+        let inProgress = document.getElementById('in-progress');
+        let awaitFeeback = document.getElementById('await-feedback');
+        let done = document.getElementById('done');
+
+        content.innerHTML= '';
+        inProgress.innerHTML= '';
+        awaitFeeback.innerHTML= '';
+        done.innerHTML= ''
+
+        for (let i = 0; i < tasks.length; i++) {
+            let task = tasks[i];
+
+            content.innerHTML += generateTodoHTML(task, i);
+
+            let conatctsContent = document.getElementById(`taskContacts${i}`)
+            for (let j = 0; j < task['taskContacts'].length; j++) {
+                let contacts = task['taskContacts'][j];
+
+                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+            }
+        }
+    }
+}
+
+
 function generateTodoHTML(element, i) {
     return /*html*/`
     <div draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -207,15 +202,14 @@ function generateTaskDetails(task) {
 
 
 function updateHTML() {
-    upadeteTodo();
+    updateTodo();
     updateInProgress();
     updateAwaitFeedback();
     updateDone();
-    console.log(todos);
 }
 
 
-function upadeteTodo() {
+function updateTodo() {
     let todo = tasks.filter(t => t['category'] == 'todo');
 
     document.getElementById('todo').innerHTML = '';
@@ -274,8 +268,8 @@ function allowDrop(ev) {
 
 
 function moveTo(category) {
-    tasks[currentDraggedTask]['category'] = category;
-    updateHTML();
+    tasks[currentDraggedTask]['category'] == category;
+    currentDraggedTask = null;
 }
 
 
@@ -287,6 +281,7 @@ function highlight(id) {
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag_area_hightlight');
 }
+
 
 
 function closeDialogTask() {
