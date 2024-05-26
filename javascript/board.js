@@ -1,3 +1,40 @@
+/*
+let todos = [{
+    'id': 0,
+    'tasktype': 'User Story',
+    'taskcolor': 'aquamarine',
+    'title': 'In progress',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'in-progress'
+}, {
+    'id': 1,
+    'tasktype': 'Technical Task',
+    'taskcolor': 'aquamarine',
+    'title': 'done',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'done'
+}, {
+    'id': 2,
+    'tasktype': 'User Story',
+    'taskcolor': 'aquamarine',
+    'title': 'To do',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'todo'
+}, {
+    'id': 3,
+    'tasktype': 'Technical Task',
+    'taskcolor': 'aquamarine',
+    'title': 'Await feedback',
+    'description': 'Create a contact form and imprint page...',
+    'subtasks': 2,
+    'category': 'await-feedback'
+}]
+*/
+
+
 let currentDraggedTask;
 
 
@@ -93,15 +130,6 @@ function cancelAddTask() {
 }
 
 
-
-function updateHTML() {
-    upadeteTodo();
-    updateInProgress();
-    updateAwaitFeedback();
-    updateDone();
-}
-
-
 function generateTodoHTML(element, i) {
     return /*html*/`
     <div draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -177,7 +205,6 @@ function generateTaskDetails(task) {
     `;
 }
 
-
 function upadeteTodo() {
     let todo = tasks.filter(t => t['category'] == 'todo');
 
@@ -230,6 +257,14 @@ function startDragging(i) {
     currentDraggedTask = i;
 }
 
+
+function updateHTML() {
+    upadeteTodo();
+    updateInProgress();
+    updateAwaitFeedback();
+    updateDone();
+    console.log(todos);
+}
 
 
 function allowDrop(ev) {
