@@ -419,7 +419,7 @@ async function renderTaskBoard() {
 
 function generateTodoHTML(element, i) {
     return /*html*/`
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+    <div draggable="true" ondragstart="startDragging(${i})" class="todo">
         <div class="task-card" onclick="openDialogTask(${i})">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['taskCategory']}</div>
@@ -493,7 +493,7 @@ function generateTaskDetails(task) {
 }
 
 function upadeteTodo() {
-    let todo = todos.filter(t => t['category'] == 'todo');
+    let todo = tasks.filter(t => t['category'] == 'todo');
 
     document.getElementById('todo').innerHTML = '';
 
@@ -505,7 +505,7 @@ function upadeteTodo() {
 
 
 function updateInProgress() {
-    let inProgress = todos.filter(t => t['category'] == 'in-progress');
+    let inProgress = tasks.filter(t => t['category'] == 'in-progress');
 
     document.getElementById('in-progress').innerHTML = '';
 
@@ -517,7 +517,7 @@ function updateInProgress() {
 
 
 function updateAwaitFeedback() {
-    let awaitFeedback = todos.filter(t => t['category'] == 'await-feedback');
+    let awaitFeedback = tasks.filter(t => t['category'] == 'await-feedback');
 
     document.getElementById('await-feedback').innerHTML = '';
 
@@ -529,7 +529,7 @@ function updateAwaitFeedback() {
 
 
 function updateDone() {
-    let done = todos.filter(t => t['category'] == 'done');
+    let done = tasks.filter(t => t['category'] == 'done');
 
     document.getElementById('done').innerHTML = '';
 
@@ -540,6 +540,6 @@ function updateDone() {
 }
 
 
-function startDragging(id) {
-    currentDraggedTask = id;
+function startDragging(i) {
+    currentDraggedTask = i;
 }

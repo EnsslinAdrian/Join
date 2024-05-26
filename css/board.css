@@ -100,6 +100,10 @@ p {
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);;
 }
 
+.task-card:hover {
+    transform: rotate(6deg);
+}
+
 .no-task {
     font-family: 'open-sans';
     color: #A8A8A8;
