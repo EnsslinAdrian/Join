@@ -147,6 +147,7 @@ async function addNewTask(event) {
     clearTask();
 }
 
+/*
 async function newContact() {
     let name = document.getElementById('contactName');
     let email = document.getElementById('contactEmail');
@@ -162,7 +163,7 @@ async function newContact() {
 
     postUser('contacts', contact);
 };
-
+*/
 
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -198,7 +199,7 @@ function generateContactHtml(contact, i, color) {
 
     return `
   <div class="contact-card">
-  <div style="background-color: ${color};" class="contact-icon">
+  <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
   <div class="contact">
@@ -234,7 +235,7 @@ function generateTaskContactHtml(contact, i, color) {
     return `
     <div class="assigned-contact" id="contactTask${i}">
     <div class="contact-name">
-    <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
+    <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
     <p>${contact['name']}</p>
     </div>
     <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}' ,'${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
