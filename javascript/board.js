@@ -216,7 +216,7 @@ function updateTodo() {
 
     for (let i = 0; i < todo.length; i++) {
         const todoElement = todo[i];
-        document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
+        document.getElementById('todo').innerHTML += generateTodoHTML(todoElement, i);
     }
 }
 
@@ -228,7 +228,7 @@ function updateInProgress() {
 
     for (let i = 0; i < inProgress.length; i++) {
         const inProgressElement = inProgress[i];
-        document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement);
+        document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement, i);
     }
 }
 
@@ -240,7 +240,7 @@ function updateAwaitFeedback() {
 
     for (let i = 0; i < awaitFeedback.length; i++) {
         const awaitFeedbackElement = awaitFeedback[i];
-        document.getElementById('await-feedback').innerHTML += generateTodoHTML(awaitFeedbackElement);
+        document.getElementById('await-feedback').innerHTML += generateTodoHTML(awaitFeedbackElement, i);
     }
 }
 
@@ -252,7 +252,7 @@ function updateDone() {
 
     for (let i = 0; i < done.length; i++) {
         const doneElement = done[i];
-        document.getElementById('done').innerHTML += generateTodoHTML(doneElement);
+        document.getElementById('done').innerHTML += generateTodoHTML(doneElement, i);
     }
 }
 
@@ -268,7 +268,8 @@ function allowDrop(ev) {
 
 
 function moveTo(category) {
-    tasks[currentDraggedTask]['category'] == category;
+    tasks[currentDraggedTask]['category'] = category;  // Zuweisung statt Vergleich
+    updateHTML();  // HTML aktualisieren, um die Änderungen anzuzeigen
     currentDraggedTask = null;
 }
 
