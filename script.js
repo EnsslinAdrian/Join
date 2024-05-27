@@ -306,8 +306,6 @@ function taskLow() {
     document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
 }
 
-
-
 function addNewSubtasks() {
     let subtask = document.getElementById('subtask');
     if (subtasks.length < 2) {
@@ -344,7 +342,6 @@ function clearTask() {
     renderAddTaskContactInitials();
     renderSubtasksList();
 }
-
 
 async function filterContacts(path = '') {
     let response = await fetch(`${firebaseUrl}.json`);
@@ -385,4 +382,31 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
                 <input id="taskCheckbox${i}" onclick="addContactTask('${contact.name}', '${initials}', ${i}, '${initialsBgColor}')" class="checkbox" type="checkbox">
             </div>
     `;
+}
+
+async function renderTaskBoard() {
+    if (window.location.pathname.endsWith("board.html")) {
+        let response = await fetch(`${firebaseUrl}.json`);
+        let responseToJson = await response.json();
+
+        let content = document.getElementById('todo');
+
+        let user = localStorage.getItem('userKey');
+        let path = responseToJson['registered'][user];
+        let tasks = path['tasks'];
+        console.log(tasks)
+
+        for (let i = 0; i < tasks.length; i++) {
+            let task = tasks[i];
+
+            content.innerHTML += generateTodoHTML(task, i);
+
+        let conatctsContent = document.getElementById(`taskContacts${i}`)
+        for (let j = 0; j < task['taskContacts'].length; j++) {
+            let contacts = task['taskContacts'][j];
+
+        conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+        }
+        }
+    }
 }

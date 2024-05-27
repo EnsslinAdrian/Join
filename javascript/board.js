@@ -93,38 +93,6 @@ function cancelAddTask() {
 }
 
 
-async function renderTaskBoard() {
-    let response = await fetch(`${firebaseUrl}.json`);
-    let responseToJson = await response.json();
-    tasks = responseToJson.registered[localStorage.getItem('userKey')].tasks;
-   
-    if (window.location.pathname.endsWith("board.html")) {
-        let content = document.getElementById('todo');
-        let inProgress = document.getElementById('in-progress');
-        let awaitFeeback = document.getElementById('await-feedback');
-        let done = document.getElementById('done');
-
-        content.innerHTML= '';
-        inProgress.innerHTML= '';
-        awaitFeeback.innerHTML= '';
-        done.innerHTML= ''
-
-        for (let i = 0; i < tasks.length; i++) {
-            let task = tasks[i];
-
-            content.innerHTML += generateTodoHTML(task, i);
-
-            let conatctsContent = document.getElementById(`taskContacts${i}`)
-            for (let j = 0; j < task['taskContacts'].length; j++) {
-                let contacts = task['taskContacts'][j];
-
-                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-            }
-        }
-    }
-}
-
-
 function generateTodoHTML(element, i) {
     return /*html*/`
     <div draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -216,7 +184,7 @@ function updateTodo() {
 
     for (let i = 0; i < todo.length; i++) {
         const todoElement = todo[i];
-        document.getElementById('todo').innerHTML += generateTodoHTML(todoElement, i);
+        document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
     }
 }
 
@@ -228,7 +196,7 @@ function updateInProgress() {
 
     for (let i = 0; i < inProgress.length; i++) {
         const inProgressElement = inProgress[i];
-        document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement, i);
+        document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement);
     }
 }
 
@@ -240,7 +208,7 @@ function updateAwaitFeedback() {
 
     for (let i = 0; i < awaitFeedback.length; i++) {
         const awaitFeedbackElement = awaitFeedback[i];
-        document.getElementById('await-feedback').innerHTML += generateTodoHTML(awaitFeedbackElement, i);
+        document.getElementById('await-feedback').innerHTML += generateTodoHTML(awaitFeedbackElement);
     }
 }
 
@@ -252,7 +220,7 @@ function updateDone() {
 
     for (let i = 0; i < done.length; i++) {
         const doneElement = done[i];
-        document.getElementById('done').innerHTML += generateTodoHTML(doneElement, i);
+        document.getElementById('done').innerHTML += generateTodoHTML(doneElement);
     }
 }
 
@@ -268,8 +236,7 @@ function allowDrop(ev) {
 
 
 function moveTo(category) {
-    tasks[currentDraggedTask]['category'] = category;  // Zuweisung statt Vergleich
-    updateHTML();  // HTML aktualisieren, um die Änderungen anzuzeigen
+    tasks[currentDraggedTask]['category'] == category;
     currentDraggedTask = null;
 }
 
