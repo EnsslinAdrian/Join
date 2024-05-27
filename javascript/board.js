@@ -93,38 +93,6 @@ function cancelAddTask() {
 }
 
 
-async function renderTaskBoard() {
-    let response = await fetch(`${firebaseUrl}.json`);
-    let responseToJson = await response.json();
-    tasks = responseToJson.registered[localStorage.getItem('userKey')].tasks;
-   
-    if (window.location.pathname.endsWith("board.html")) {
-        let content = document.getElementById('todo');
-        let inProgress = document.getElementById('in-progress');
-        let awaitFeeback = document.getElementById('await-feedback');
-        let done = document.getElementById('done');
-
-        content.innerHTML= '';
-        inProgress.innerHTML= '';
-        awaitFeeback.innerHTML= '';
-        done.innerHTML= ''
-
-        for (let i = 0; i < tasks.length; i++) {
-            let task = tasks[i];
-
-            content.innerHTML += generateTodoHTML(task, i);
-
-            let conatctsContent = document.getElementById(`taskContacts${i}`)
-            for (let j = 0; j < task['taskContacts'].length; j++) {
-                let contacts = task['taskContacts'][j];
-
-                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-            }
-        }
-    }
-}
-
-
 function generateTodoHTML(element, i) {
     return /*html*/`
     <div draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -257,8 +225,9 @@ function updateDone() {
 }
 
 
-function startDragging(i) {
-    currentDraggedTask = i;
+function startDragging(id) {
+    currentDraggedTask = id;
+    console.log(id);
 }
 
 
