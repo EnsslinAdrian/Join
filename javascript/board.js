@@ -225,8 +225,9 @@ function updateDone() {
 }
 
 
-function startDragging(i) {
-    currentDraggedTask = i;
+function startDragging(id) {
+    currentDraggedTask = id;
+    console.log(id);
 }
 
 

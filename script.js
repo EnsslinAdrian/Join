@@ -384,29 +384,33 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
     `;
 }
 
+
 async function renderTaskBoard() {
-    if (window.location.pathname.endsWith("board.html")) {
-        let response = await fetch(`${firebaseUrl}.json`);
+    let response = await fetch(`${firebaseUrl}.json`);
         let responseToJson = await response.json();
-
+        tasks = responseToJson.registered[localStorage.getItem('userKey')].tasks;
+    if (window.location.pathname.endsWith("board.html")) {
         let content = document.getElementById('todo');
+        let inProgress = document.getElementById('in-progress');
+        let awaitFeeback = document.getElementById('await-feedback');
+        let done = document.getElementById('done');
 
-        let user = localStorage.getItem('userKey');
-        let path = responseToJson['registered'][user];
-        let tasks = path['tasks'];
-        console.log(tasks)
+        content.innerHTML = '';
+        inProgress.innerHTML = '';
+        awaitFeeback.innerHTML = '';
+        done.innerHTML = ''
 
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
 
             content.innerHTML += generateTodoHTML(task, i);
 
-        let conatctsContent = document.getElementById(`taskContacts${i}`)
-        for (let j = 0; j < task['taskContacts'].length; j++) {
-            let contacts = task['taskContacts'][j];
+            let conatctsContent = document.getElementById(`taskContacts${i}`)
+            for (let j = 0; j < task['taskContacts'].length; j++) {
+                let contacts = task['taskContacts'][j];
 
-        conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-        }
+                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+            }
         }
     }
 }
