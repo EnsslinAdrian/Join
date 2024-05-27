@@ -118,17 +118,23 @@ function generateTodoHTML(element, i) {
 }
 
 
-function openDialogTask(i) {
-    let task = tasks[i];
-    console.log("dialog Fenster öffnet sich.")
+async function openDialogTask(i) {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+
+    let user = localStorage.getItem('userKey');
+    let path = responseToJson['registered'][user];
+    let tasks = path['tasks'];
+
+
     document.getElementById('dialog').classList.remove('d_none');
-    showTaskDetails(task);
+    showTaskDetails(tasks[i])
 }
 
 
 function showTaskDetails(task) {
     let taskDetails = document.getElementById('taskDetails');
-    taskDetails.innerHTML ='';
+    taskDetails.innerHTML = '';
     taskDetails.innerHTML = generateTaskDetails(task);
 }
 
@@ -137,7 +143,7 @@ function generateTaskDetails(task) {
     return /*html*/`
     <div id="taskDetails">
         <div class="task-card-type">
-             <div class="type-bg">${task['taskCategory']}</div> <!-- style="background-color: ${task['taskcolor']};"-->
+             <div class="type-bg">${task['taskCategory']}</div>
         </div>
         <div class="header_task_details">
             <h1>${task['title']}</h1>
@@ -178,7 +184,7 @@ function updateHTML() {
 
 
 function updateTodo() {
-    let todo = tasks.filter(t => t['category'] == 'todo');
+    let todo = test.filter(t => t['category'] == 'todo');
 
     document.getElementById('todo').innerHTML = '';
 
@@ -190,7 +196,7 @@ function updateTodo() {
 
 
 function updateInProgress() {
-    let inProgress = tasks.filter(t => t['category'] == 'in-progress');
+    let inProgress = test.filter(t => t['category'] == 'in-progress');
 
     document.getElementById('in-progress').innerHTML = '';
 
@@ -202,7 +208,7 @@ function updateInProgress() {
 
 
 function updateAwaitFeedback() {
-    let awaitFeedback = tasks.filter(t => t['category'] == 'await-feedback');
+    let awaitFeedback = test.filter(t => t['category'] == 'await-feedback');
 
     document.getElementById('await-feedback').innerHTML = '';
 
@@ -214,7 +220,7 @@ function updateAwaitFeedback() {
 
 
 function updateDone() {
-    let done = tasks.filter(t => t['category'] == 'done');
+    let done = test.filter(t => t['category'] == 'done');
 
     document.getElementById('done').innerHTML = '';
 
@@ -228,6 +234,7 @@ function updateDone() {
 function startDragging(id) {
     currentDraggedTask = id;
     console.log(id);
+    putData();
 }
 
 
@@ -235,10 +242,13 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
+let test = [];
 
 function moveTo(category) {
-    tasks[currentDraggedTask]['category'] == category;
-    currentDraggedTask = null;
+    test[currentDraggedTask]['category'] = category;
+    console.log(test[currentDraggedTask]['category'])
+    console.log(category)
+    updateHTML();
 }
 
 
@@ -255,4 +265,15 @@ function removeHighlight(id) {
 
 function closeDialogTask() {
     document.getElementById('dialog').classList.add('d_none');
+}
+
+async function putData(path = "") {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    
+    let user = localStorage.getItem('userKey');
+    let pathUser = responseToJson['registered'][user];
+    let tasks = pathUser['tasks'];
+
+    console.log(tasks[currentDraggedTask])
 }
