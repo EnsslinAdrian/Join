@@ -72,3 +72,39 @@ function renderResponsivSummary() {
 window.addEventListener('resize', renderResponsivSummary);
 
 renderResponsivSummary();
+
+async function renderSummaryTasks() {
+    let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json')
+    let responseToJson = await response.json();
+
+    let user = localStorage.getItem('userKey');
+    let pathUser = responseToJson['registered'][user];
+    let tasks = pathUser['tasks'];
+
+    console.log(tasks);
+    document.getElementById('allTask').innerHTML = tasks.length;
+
+    let categoryCounts = {
+        'todo': 0,
+        'in-progress': 0,
+        'done': 0,
+        'await-feedback': 0
+    };
+
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+        let category = task['category'];
+        if (categoryCounts.hasOwnProperty(category)) {
+            categoryCounts[category]++;
+        } else {
+            categoryCounts[category] = 1;
+        }
+    }
+
+    document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
+    document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
+    document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
+    document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
+}
+
+renderSummaryTasks();
