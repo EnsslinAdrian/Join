@@ -147,7 +147,7 @@ async function addNewTask(event) {
     clearTask();
 }
 
-/*
+
 async function newContact() {
     let name = document.getElementById('contactName');
     let email = document.getElementById('contactEmail');
@@ -163,7 +163,7 @@ async function newContact() {
 
     postUser('contacts', contact);
 };
-*/
+
 
 function getRandomColor() {
     const letters = '0123456789ABCDEF';

@@ -1,5 +1,4 @@
-let currentDraggedTask;
-
+let currentDraggedTask = null;
 
 function openAddTask() {
     let container = document.getElementById('add-task-popup');
@@ -95,7 +94,7 @@ function cancelAddTask() {
 
 function generateTodoHTML(element, i) {
     return /*html*/`
-    <div draggable="true" ondragstart="startDragging(${i})" class="todo">
+    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
         <div class="task-card" onclick="openDialogTask(${i})">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['taskCategory']}</div>
@@ -108,7 +107,6 @@ function generateTodoHTML(element, i) {
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
-            
                 </div>
                 <img src="assets/img/Vector.svg">
             </div>
@@ -233,8 +231,8 @@ function updateDone() {
 
 function startDragging(id) {
     currentDraggedTask = id;
-    console.log(id);
-    putData();
+    console.log('startDragging called with id:', id);
+    console.log('currentDraggedTask set to:', currentDraggedTask);
 }
 
 
@@ -244,11 +242,11 @@ function allowDrop(ev) {
 
 let test = [];
 
-function moveTo(category) {
+async function moveTo(category) {
     test[currentDraggedTask]['category'] = category;
-    console.log(test[currentDraggedTask]['category'])
-    console.log(category)
+    await putData(category);
     updateHTML();
+    currentDraggedTask = null; 
 }
 
 
@@ -267,13 +265,34 @@ function closeDialogTask() {
     document.getElementById('dialog').classList.add('d_none');
 }
 
-async function putData(path = "") {
-    let response = await fetch(`${firebaseUrl}.json`);
-    let responseToJson = await response.json();
-    
-    let user = localStorage.getItem('userKey');
-    let pathUser = responseToJson['registered'][user];
-    let tasks = pathUser['tasks'];
+async function putData(category) {
+    try {
+        let response = await fetch(`${firebaseUrl}.json`);
+        let responseToJson = await response.json();
+        
+        let user = localStorage.getItem('userKey');
+        let pathUser = responseToJson['registered'][user];
+        let tasks = pathUser['tasks'];
 
-    console.log(tasks[currentDraggedTask])
+        tasks[currentDraggedTask]['category'] = category;
+        await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
+        
+        console.log(tasks[currentDraggedTask]['category']);
+        window.location.reload()
+        
+    } catch (error) {
+        console.error('Fehler beim Aktualisieren der Daten:', error);
+    }
+
+}
+
+async function dataUser(path = "", data = {}) {
+    let response = await fetch(firebaseUrl + path + ".json", {
+        method: "PATCH",  
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    return await response.json();
 }
