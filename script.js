@@ -3,6 +3,7 @@ let taskContacts = [];
 let subtasks = [];
 let prio = '';
 let prioImg = '';
+const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
 function init() {
     includeHTML();
@@ -12,9 +13,6 @@ function init() {
     renderContactsAddTask();
     renderTaskBoard();
 }
-
-const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
-
 
 async function loadData(path = "") {
     const response = await fetch(firebaseUrl + ".json");
@@ -114,7 +112,6 @@ async function addNewTask(event) {
     let categoryElement = document.getElementById('select');
     let categoryText = categoryElement.selectedOptions[0].text;
     
-
     let task = {
         'category': 'todo',
         'title': title,
@@ -267,14 +264,12 @@ async function renderTaskBoard() {
         console.log(tasks)
         test = tasks;
     
-
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
             let id = task['category']
             
             document.getElementById(id).innerHTML += generateTodoHTML(task, i);
             
-
         let conatctsContent = document.getElementById(`taskContacts${i}`)
         for (let j = 0; j < task['taskContacts'].length; j++) {
             let contacts = task['taskContacts'][j];
