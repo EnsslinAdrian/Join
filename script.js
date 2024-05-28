@@ -198,7 +198,7 @@ function generateContactHtml(contact, i, color) {
     let initials = contactName.split(' ').map(word => word[0]).join('');
 
     return `
-  <div class="contact-card">
+  <div onclick="showContact(${i})" class="contact-card">
   <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
@@ -209,6 +209,16 @@ function generateContactHtml(contact, i, color) {
 </div>
   `;
 }
+
+// function showContact(i) {
+//     let container = document.getElementById('show-contact-container');
+//     container.innerHTML = `
+//     <div>
+//     ${i}
+//     </div>
+//     `;
+// }
+
 
 async function renderContactsAddTask() {
     if (window.location.pathname.endsWith("add_task.html")) {
