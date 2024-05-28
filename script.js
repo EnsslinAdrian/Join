@@ -15,6 +15,7 @@ function init() {
 
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
+
 async function loadData(path = "") {
     const response = await fetch(firebaseUrl + ".json");
     const responseToJson = await response.json();
