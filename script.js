@@ -190,14 +190,27 @@ function generateContactHtml(contact, i, color) {
   `;
 }
 
-// function showContact(i) {
-//     let container = document.getElementById('show-contact-container');
-//     container.innerHTML = `
-//     <div>
-//     ${i}
-//     </div>
-//     `;
-// }
+function showContact(contact, i) {
+    let container = document.getElementById('show-contact-container');
+    container.innerHTML = '';
+    container.innerHTML = `
+    <div>
+    ${i}
+    <div class="edit-contact">
+        <div onclick="openEditPopup()">
+            <img src="assets/img/edit.svg">Edit 
+        </div>
+        <div>
+            <img src="assets/img/delete.svg">Delete
+        </div>
+    </div>
+    <h2>Contact Information</h2>
+        <b>Email</b>
+        <a>${contact['email']}</a>
+        <b>Phone</b>
+    </div>
+    `;
+}
 
 async function renderContactsAddTask() {
     if (window.location.pathname.endsWith("add_task.html")) {
