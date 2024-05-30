@@ -19,8 +19,8 @@ body {
 }
 
 .board_container {
-    padding-left: 10px;
-    max-width: 1300px;
+    display: flex;
+    flex-direction: column;
 }
 
 .inputfield-container {

@@ -1,12 +1,11 @@
 body {
     margin: 0;
     display: flex;
-    justify-content: center;
 }
 
 .content-container {
     display: flex;
-    width: 1688px;
+    max-width: 1688px;
     background: #F6F7F8;
     margin-left: 230px;
 }
@@ -16,6 +15,7 @@ body {
     flex-direction: column;
     flex-grow: 1;
     min-height: 100vh;
+    width: 1688px;
 }
 
 header {
