@@ -18,6 +18,11 @@ body {
     padding-right: 64px;
 }
 
+.board_container {
+    padding-left: 10px;
+    max-width: 1300px;
+}
+
 .inputfield-container {
     border: 1px solid lightgray;
     border-radius: 8px;
@@ -86,6 +91,7 @@ p {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    max-width: 260px;
 }
 
 .task-card {

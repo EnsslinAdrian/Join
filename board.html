@@ -26,8 +26,8 @@
         </div>
     </div>
     <div class="content-container">
-        <div w3-include-html="./assets/templates/boardMenu.html"></div>
         <div class="main-content">
+            <div w3-include-html="./assets/templates/boardMenu.html"></div>
             <header>
                 <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
                 <p class="header-description">Kanban Project Management Tool</p>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </header>
-            <div>
+            <div class="board_container">
                 <div class="board-header">
                     <h1>Board</h1>
                     <div class="board-header-right">
@@ -72,32 +72,34 @@
                         <p>Done</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="tasks-container">
-                <div class="task-columns" id="todo" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')"
-                    ondragover="allowDrop(event); highlight('todo')">
-                    <div class="no-task" draggable="true">
-                        No tasks To do
+                <div class="tasks-container">
+                    <div class="task-columns" id="todo" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')"
+                        ondragover="allowDrop(event); highlight('todo')">
+                        <div class="no-task" draggable="true">
+                            No tasks To do
+                        </div>
+                    </div>
+                    <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
+                        ondragleave="removeHighlight('in-progress')"
+                        ondragover="allowDrop(event); highlight('in-progress')">
+                    </div>
+                    <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
+                        ondragleave="removeHighlight('await-feedback')"
+                        ondragover="allowDrop(event); highlight('await-feedback')">
+                    </div>
+                    <div class="task-columns" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+                        ondragover="allowDrop(event); highlight('done')">
                     </div>
                 </div>
-                <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
-                    ondragleave="removeHighlight('in-progress')"
-                    ondragover="allowDrop(event); highlight('in-progress')">
-                </div>
-                <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
-                    ondragleave="removeHighlight('await-feedback')"
-                    ondragover="allowDrop(event); highlight('await-feedback')">
-                </div>
-                <div class="task-columns" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
-                    ondragover="allowDrop(event); highlight('done')">
+
+
+                <div id="add-task-popup" class="add-task-popup d-none">
+
                 </div>
             </div>
-
-
-            <div id="add-task-popup" class="add-task-popup d-none">
-
-            </div>
+        </div>
+    </div>
 
 </body>
 
