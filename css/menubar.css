@@ -7,15 +7,15 @@ body {
     display: flex;
     max-width: 1688px;
     background: #F6F7F8;
-    margin-left: 230px;
+    width: 1920px;
 }
 
 .main-content {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    margin-left: 232px;
     min-height: 100vh;
-    width: 1688px;
 }
 
 header {
@@ -78,7 +78,6 @@ header {
     justify-content: space-between;
     position: fixed;
     left: 0;
-    z-index: 1000;
 }
 
 .logo {
