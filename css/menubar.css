@@ -170,6 +170,10 @@ a {
         z-index: 10;
     }
 
+    .content-container {
+        margin-left: 0;
+    }
+
     .main-content {
         margin-left: 0;
         height: auto;

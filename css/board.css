@@ -21,7 +21,6 @@ body {
 .board_container {
     display: flex;
     flex-direction: column;
-    
 }
 
 .inputfield-container {
@@ -270,6 +269,9 @@ justify-content: space-between;
 }
 
 @media (max-width: 1370px) {
+    .tasks-container {
+        margin-right: 80px;
+    }
     
 }
 
