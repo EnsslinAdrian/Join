@@ -30,6 +30,18 @@ body {
     align-items: center;
 }
 
+.inputfield-container-mobile {
+    border: 1px solid #D1D1D1;
+    border-radius: 8px;
+    margin-right: 40px;
+    margin-left: 64px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 45px;
+    display: none;
+}
+
 .inputfield {
     border: none;
     width: 200px;
@@ -337,9 +349,6 @@ h2 {
 }
 
 @media (max-width: 920px) {
-    .inputfield-container {
-        display: none;
-    }
 
     .btn {
         margin-left: 0 !important;
@@ -354,13 +363,35 @@ h2 {
     }
 }
 
-@media (max-width: 855px) {
+@media (max-width: 885px) {
+    .inputfield-container {
+        display: none;
+    }
+
+    .inputfield-container-mobile {
+        display: flex;
+        margin-left: 64px;
+    }
+
+    .input-icon {
+        margin-inline-start: auto;
+    }
+}
+
+@media (max-width: 872px) {
     .scrollable_part {
         width: 500px;
     }
 }
 
-@media (max-width: 805px) {
+@media(max-width: 848px) {
+    .board-btn {
+        height: 35px;
+        padding: 0 7px !important;
+    }
+}
+
+@media (max-width: 824px) {
     .scrollable_part {
         width: 450px;
     }
@@ -373,13 +404,22 @@ h2 {
         margin-right: 10px;
     }
 
+    .board-header-right {
+        padding-right: 16px;
+    }
+
     .board-header {
         padding-top: 50px;
-        padding-left: 10px;
+        padding-left: 16px;
     }
 
     .scrollable_part {
         width: 610px;
+    }
+
+    .inputfield-container-mobile {
+        margin-right: 16px;
+        margin-left: 16px;
     }
 }
 
@@ -427,7 +467,8 @@ h2 {
     }
 
     .board-header {
-        justify-content: space-around;
+        justify-content: space-between;
+        margin-right: 16px;
     }
 
     .board-header-right {
