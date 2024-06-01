@@ -50,8 +50,9 @@
                             </div>
                         </div>
                         <div>
-                            <button onclick="openAddTask()" class="btn board-btn"><p>Add Task</p><img
-                                    src="assets/img/plus-symbol.svg"></button>
+                            <button onclick="openAddTask()" class="btn board-btn">
+                                <p>Add Task</p><img src="assets/img/plus-symbol.svg">
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -61,10 +62,12 @@
                             <p>To do</p>
                             <button onclick="openAddTask()" class="list-btn">+</button>
                         </div>
-                        <div class="task-columns" id="todo" ondrop="moveTo('todo')"
-                            ondragleave="removeHighlight('todo')" ondragover="allowDrop(event); highlight('todo')">
-                            <div class="no-task" draggable="true">
-                                No tasks To do
+                        <div class="scrollable_part">
+                            <div class="task-columns" id="todo" ondrop="moveTo('todo')"
+                                ondragleave="removeHighlight('todo')" ondragover="allowDrop(event); highlight('todo')">
+                                <div class="no-task" draggable="true">
+                                    No tasks To do
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -73,9 +76,11 @@
                             <p>In progress</p>
                             <button onclick="openAddTask()" class="list-btn">+</button>
                         </div>
-                        <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
-                            ondragleave="removeHighlight('in-progress')"
-                            ondragover="allowDrop(event); highlight('in-progress')">
+                        <div class="scrollable_part">
+                            <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
+                                ondragleave="removeHighlight('in-progress')"
+                                ondragover="allowDrop(event); highlight('in-progress')">
+                            </div>
                         </div>
                     </div>
                     <div class="task_content">
@@ -83,17 +88,21 @@
                             <p>Await feedback</p>
                             <button onclick="openAddTask()" class="list-btn">+</button>
                         </div>
-                        <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
-                            ondragleave="removeHighlight('await-feedback')"
-                            ondragover="allowDrop(event); highlight('await-feedback')">
+                        <div class="scrollable_part">
+                            <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
+                                ondragleave="removeHighlight('await-feedback')"
+                                ondragover="allowDrop(event); highlight('await-feedback')">
+                            </div>
                         </div>
                     </div>
                     <div class="task_content">
                         <div class="list-item">
                             <p>Done</p>
                         </div>
-                        <div class="task-columns" id="done" ondrop="moveTo('done')"
-                            ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')">
+                        <div class="scrollable_part">
+                            <div class="task-columns" id="done" ondrop="moveTo('done')"
+                                ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')">
+                            </div>
                         </div>
                     </div>
                 </div>
