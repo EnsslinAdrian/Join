@@ -15,7 +15,7 @@ body {
     display: flex;
     align-items: center;
     gap: 32px;
-    padding-right: 64px;
+    padding-right: 40px;
 }
 
 .board_container {
@@ -111,7 +111,7 @@ p {
 
 .task-card {
     box-sizing: border-box;
-    max-width: 260px;
+    width: 260px;
     border-radius: 24px;
     padding: 16px;
     border: 1px;
@@ -316,11 +316,23 @@ h2 {
     .task-card {
         margin-right: 20px;
     }
+
+    .scrollable_part {
+        overflow-y: hidden;
+        overflow-x: auto;
+        width: 700px;
+    }
 }
 
 @media (max-width: 1010px) {
     .board-btn p {
         display: none;
+    }
+}
+
+@media (max-width: 998px) {
+    .scrollable_part {
+        width: 600px;
     }
 }
 
@@ -336,7 +348,24 @@ h2 {
     .board-btn {
         padding: 12px 16px 12px 16px !important;
     }
+
+    .scrollable_part {
+        width: 550px;
+    }
 }
+
+@media (max-width: 855px) {
+    .scrollable_part {
+        width: 500px;
+    }
+}
+
+@media (max-width: 805px) {
+    .scrollable_part {
+        width: 450px;
+    }
+}
+
 
 @media (max-width: 768px) {
     .tasks-container {
@@ -350,8 +379,43 @@ h2 {
     }
 
     .scrollable_part {
-        overflow-y: hidden;
-        overflow-x: auto;
+        width: 610px;
+    }
+}
+
+@media (max-width: 630px) {
+    .scrollable_part {
+        width: 500px;
+    }
+}
+
+@media (max-width: 524px) {
+    .scrollable_part {
+        width: 440px;
+    }
+}
+
+@media (max-width: 470px) {
+    .scrollable_part {
+        width: 400px;
+    }
+}
+
+@media (max-width: 460px) {
+    .scrollable_part {
+        width: 350px;
+    }
+}
+
+@media (max-width: 380px) {
+    .scrollable_part {
+        width: 300px;
+    }
+}
+
+@media (max-width: 363px) {
+    .scrollable_part {
+        width: 280px;
     }
 }
 
