@@ -37,8 +37,6 @@ async function checkUser(event) {
             localStorage.setItem('userKey', key);
 
             if (user.email === email && user.password === password) {
-                console.log('Passwort richtig');
-                console.log('Hallo ' + user.name);
                 localStorage.setItem('username', user.name)
                 window.location.href = "summary.html";
                 userFound = true;
@@ -48,7 +46,7 @@ async function checkUser(event) {
     }
 
     if (!userFound) {
-        console.log('Passwort falsch oder Benutzer nicht gefunden');
+        document.getElementById('loginAnswer').innerHTML = 'Passwort falsch oder Benutzer nicht gefunden';
     }
 }
 
@@ -79,7 +77,7 @@ function registration(event) {
     let confirmPassword = document.getElementById('confirmPassword');
 
     if (password.value !== confirmPassword.value) {
-        alert("Passwörter stimmen nicht überein");
+        document.getElementById('signAnswer').innerHTML = 'Passwörter stimmen nicht überein';
         return;
     }
 
