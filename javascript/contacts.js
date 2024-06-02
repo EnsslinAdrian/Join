@@ -64,7 +64,7 @@ function closePopup() {
     }, { once: true });
 }
 
-function openEditPopup() {
+function openEditPopup(name, email, phone, initials, color) {
     let container = document.getElementById('edit-contact-popup');
     container.classList.remove('d-none');
     container.classList.remove('slide-out');
@@ -81,7 +81,9 @@ function openEditPopup() {
 <div class="right-side">
     <div class="right-side-icon">
         <div class="popup-icon">
-            <img src="assets/img/contacts/person.svg">
+            <div style="background-color: ${color};" class="contact-icon-big">
+                <span>${initials}</span>
+            </div>
         </div>
     </div>
     <div class="inputfields">
@@ -110,6 +112,10 @@ function openEditPopup() {
 
 </div>
     `;
+
+    document.getElementById('contactName').value = name;
+    document.getElementById('contactEmail').value = email;
+    document.getElementById('contactPhone').value = phone;
 
 }
 

@@ -194,7 +194,7 @@ function showContact(name, email, phone, initials, color) {
     let container = document.getElementById('show-contact-container');
     container.innerHTML = '';
     container.innerHTML = `
-    <div class="show-contact">
+    <div class="show-contact slide-in">
     <div class="show-contact-header">
         <div style="background-color: ${color};" class="contact-icon-big">
             <span>${initials}</span>
@@ -204,7 +204,7 @@ function showContact(name, email, phone, initials, color) {
                 ${name}
             </div>
             <div class="contact-settings">
-                <div class="edit-contact" onclick="openEditPopup()">
+                <div class="edit-contact" onclick="openEditPopup('${name}', '${email}', '${phone}', '${initials}', '${color}')">
                     <img src="assets/img/edit.svg">Edit 
                 </div>
                 <div class="del-contact">
