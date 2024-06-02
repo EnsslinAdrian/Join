@@ -140,7 +140,7 @@ async function addNewTask(event) {
         },
         body: JSON.stringify(user),
     });
-    clearTask();
+    window.location.href = 'board.html';
 }
 
 function getRandomColor() {
