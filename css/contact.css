@@ -239,6 +239,7 @@ a {
     height: 42.67px;
 }
 
+.delete-button,
 .cancel-button {
     color: #2a3647;
     background-color: white;
@@ -251,6 +252,7 @@ a {
     gap: 8px;
 }
 
+.delete-button:hover,
 .cancel-button:hover {
     cursor: pointer;
     color: rgb(64, 171, 226);

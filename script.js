@@ -195,14 +195,12 @@ function showContact(name, email, phone, initials, color) {
     let contactContainer = document.getElementById('contact-container');
     let rightContent = document.querySelector('.right-content');
     let addIcon = document.getElementById('new-contact-icon');
-    let editIcon = document.getElementById('edit-contact-icon');
 
     container.innerHTML = '';
     container.classList.add('active');
     contactContainer.classList.add('active');
     rightContent.classList.add('active');
     addIcon.classList.add('active');
-    editIcon.classList.add('active');
 
     container.innerHTML = `
     <div class="show-contact slide-in">
@@ -223,7 +221,7 @@ function showContact(name, email, phone, initials, color) {
                 </div>
         </div>
     </div>
-        </div>
+        </div> 
             <div class="show-contact-informations">
                 <h2 class="h2">Contact Information</h2>
                 <div class="email-and-phone">
@@ -235,8 +233,13 @@ function showContact(name, email, phone, initials, color) {
                     <a>${phone}</a>
                 </div>
             </div>
+            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup('${name}', '${email}', '${phone}', '${initials}', '${color}')">
+                <img src="assets/img/contacts/more_vert.svg">
+            </div>
     </div>
     `;
+    let editIcon = document.getElementById('edit-contact-icon');
+    editIcon.classList.add('active');
 }
 
 async function renderContactsAddTask() {
