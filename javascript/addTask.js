@@ -78,10 +78,17 @@ function closeAllSelect(elmnt) {
 document.addEventListener("click", closeAllSelect);
 
 
-function toggleAssigned() {
-  document.getElementById('assignedContainer').classList.toggle('d-none');
-  document.getElementById('selectedContact').classList.toggle('selected-contact');
-  document.getElementById('selectedContact').classList.toggle('d-none');
+function closeAssigned() {
+  document.getElementById('assignedContainer').classList.add('d-none');
+  document.getElementById('selectedContact').classList.add('selected-contact');
+  document.getElementById('selectedContact').classList.add('d-none');
+}
+
+function openAssigned(event) {
+  event.stopPropagation(); // Verhindert, dass das Click-Event weitergeleitet wird
+  document.getElementById('assignedContainer').classList.remove('d-none');
+  document.getElementById('selectedContact').classList.remove('selected-contact');
+  document.getElementById('selectedContact').classList.remove('d-none');
 }
 
 function clearTask() {
@@ -185,6 +192,7 @@ function addNewSubtasks() {
       }
   }
 }
+
 
 function renderAddTaskContactInitials() {
   let content = document.getElementById('selectedContact');
