@@ -178,7 +178,7 @@ function generateContactHtml(contact, i, color) {
     let initials = contactName.split(' ').map(word => word[0]).join('');
 
     return `
-  <div onclick="showContact(${i})" class="contact-card">
+  <div id="showContact${i}" onclick="showContact('${contact.name}','${contact.email}', '${contact.phone}', '${initials}', '${contact.color}')" class="contact-card">
   <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
@@ -190,24 +190,40 @@ function generateContactHtml(contact, i, color) {
   `;
 }
 
-function showContact(contact, i) {
+function showContact(name, email, phone, initials, color) {
     let container = document.getElementById('show-contact-container');
     container.innerHTML = '';
     container.innerHTML = `
-    <div>
-    ${i}
-    <div class="edit-contact">
-        <div onclick="openEditPopup()">
-            <img src="assets/img/edit.svg">Edit 
+    <div class="show-contact">
+    <div class="show-contact-header">
+        <div style="background-color: ${color};" class="contact-icon-big">
+            <span>${initials}</span>
         </div>
-        <div>
-            <img src="assets/img/delete.svg">Delete
+        <div class="name-and-edit">
+            <div class="contact-name">
+                ${name}
+            </div>
+            <div class="contact-settings">
+                <div class="edit-contact" onclick="openEditPopup()">
+                    <img src="assets/img/edit.svg">Edit 
+                </div>
+                <div class="del-contact">
+                    <img src="assets/img/delete.svg">Delete
+                </div>
         </div>
     </div>
-    <h2>Contact Information</h2>
-        <b>Email</b>
-        <a>${contact['email']}</a>
-        <b>Phone</b>
+        </div>
+            <div class="show-contact-informations">
+                <h2 class="h2">Contact Information</h2>
+                <div class="email-and-phone">
+                    <b>Email</b>
+                    <a>${email}</a>
+                </div>
+                <div class="email-and-phone">
+                    <b>Phone</b>
+                    <a>${phone}</a>
+                </div>
+            </div>
     </div>
     `;
 }

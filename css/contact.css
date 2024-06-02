@@ -76,6 +76,29 @@ h2 {
     margin-bottom: 21px;
 }
 
+.contact-icon-big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 47px;
+    font-weight: 500;
+    height: 120px;
+    width: 120px;
+}
+
+.contact-name {
+    font-size: 47px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.name-and-edit {
+    padding-left: 54px;
+    gap: 16px;
+}
+
 .contact {
     display: flex;
     flex-direction: column;
@@ -253,10 +276,47 @@ a {
     top: 24px;
 }
 
+.show-contact {
+    margin-top: 32px;
+    padding-left: 55px;
+}
+
+.show-contact-header {
+    display: flex;
+    margin-bottom: 32px;
+}
+
+.show-contact-informations {
+    display: flex;
+    flex-direction: column;
+}
+
+.h2 {
+    padding-bottom: 16px;
+}
+
+.contact-settings {
+    display: flex;
+    cursor: pointer;
+    gap: 16px;
+}
+
+.email-and-phone {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
 .edit-contact {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    gap: 4px;
+}
+
+.del-contact {
+    display: flex;
+    align-items: center;
 }
 
 @media (max-width: 1325px) {
