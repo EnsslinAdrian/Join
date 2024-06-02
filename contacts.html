@@ -35,12 +35,12 @@
             <div class="display-flex">
                 <div class="contact-container" id="contact-container">
                     <div class="contact-list">
-                        <button onclick="addNewContact()" class="btn new-contact">Add new contact<img
+                        <button onclick="openAddNewContact()" class="btn new-contact">Add new contact<img
                                 src="assets/img/contacts/person_add.svg"></button>
 
-                        <div>
+                        <!-- <div>
                             <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                        </div>
+                        </div> -->
 
                         <div class="contact-list-items" id="contactContainer">
 
@@ -50,11 +50,15 @@
                 </div>
                 <div class="right-content">
                     <div class="contacts-headline">
-                        <h1>Contacts</h1>
+                        <div class="headline-close">
+                            <h1>Contacts</h1>
+                            <img onclick="clearShowContactContainer()" class="close-show-contact" src="assets/img/contacts/bluearrow.svg">
+                        </div>
                         <div class="parting-line"></div>
                         <h2>Better with a team</h2>
+
                     </div>
-                    <div id="show-contact-container">
+                    <div id="show-contact-container" class="show-contact-container">
                         
                     </div>
                 </div>
@@ -64,6 +68,12 @@
 
             <div id="add-contact-popup" class="add-contact-popup d-none"></div>
 
+            <div id="new-contact-icon" class="new-contact-icon d-none" onclick="openAddNewContact()">
+                <img src="assets/img/contacts/person_add.svg">
+            </div>
+            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup()">
+                <img src="assets/img/contacts/more_vert.svg">
+            </div>
 </body>
 
 </html>

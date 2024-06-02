@@ -119,6 +119,7 @@ p {
     width: 100%;
     max-width: 260px;
     margin-top: 12px;
+    min-height: 100px;
 }
 
 .task-card {
@@ -334,6 +335,10 @@ h2 {
         overflow-x: auto;
         width: 700px;
         color: transparent;
+    }
+
+    .add-task-buttons {
+        width: 100%;
     }
 }
 
