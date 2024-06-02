@@ -309,3 +309,18 @@ async function renderTaskBoard() {
     }
 }
 
+async function newContact() {
+    let name = document.getElementById('contactName');
+    let email = document.getElementById('contactEmail');
+    let phone = document.getElementById('contactPhone');
+    let initialsBgColor = getRandomColor();
+
+    let contact = {
+        'name': name.value,
+        'email': email.value,
+        'phone': phone.value,
+        'color': initialsBgColor
+    }
+
+    postUser('contacts', contact);
+};
