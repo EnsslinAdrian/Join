@@ -119,6 +119,7 @@ p {
     width: 100%;
     max-width: 260px;
     margin-top: 12px;
+    min-height: 100px;
 }
 
 .task-card {
