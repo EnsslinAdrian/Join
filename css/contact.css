@@ -375,8 +375,48 @@ a {
 
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1220px) {
+    .contact-container {
+        margin-left: 100px;
+    }
 
+    .name-and-edit {
+        padding-left: 16px;
+    }
+
+    .close-show-contact {
+        display: block;
+    }
+
+    .headline-close {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 1120px) {
+    .display-flex {
+        justify-content: center;
+    }
+
+    .right-content {
+        display: none;
+    }
+
+    .contact-container {
+        margin-left: 0;
+        box-shadow: none;
+    }
+
+    .contact-container.active {
+        display: none;
+    }
+
+    .right-content.active {
+        display: block;
+    }
 }
 
 @media (max-width: 1055px) {
