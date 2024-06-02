@@ -36,7 +36,7 @@ function openAddNewContact() {
                 <img class="input-icon" src="assets/img/mail.svg">
             </div>
             <div class="input-container">
-                <input id="contactPhone" class="input" placeholder="Phone" type="number" required>
+                <input id="contactPhone" class="input" placeholder="Phone" type="text" required>
                 <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
@@ -102,11 +102,11 @@ function openEditPopup(name, email, phone, initials, color) {
                 <img class="input-icon" src="assets/img/mail.svg">
             </div>
             <div class="input-container">
-            <input id="contactPhone" class="input" placeholder="Phone" type="number" required>
+            <input id="contactPhone" class="input" placeholder="Phone" type="text" required>
             <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
-            <button onclick="closePopup()" class="cancel-button">Delete<img
+            <button onclick="closePopup()" class="delete-button">Delete<img
                 src="assets/img/add_task/close.svg"></button>
             <button onclick="saveEditedContact()" class="btn">Save<img
                     src="assets/img/add_task/check.svg"></button>
