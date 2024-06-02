@@ -1,4 +1,4 @@
-function addNewContact() {
+function OpenAddNewContact() {
     let container = document.getElementById('add-contact-popup');
     container.classList.remove('d-none');
     container.classList.remove('slide-out');

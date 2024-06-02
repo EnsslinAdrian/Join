@@ -192,7 +192,15 @@ function generateContactHtml(contact, i, color) {
 
 function showContact(name, email, phone, initials, color) {
     let container = document.getElementById('show-contact-container');
+
+    let contactContainer = document.getElementById('contact-container');
+    let rightContent = document.querySelector('.right-content');
+
+    // Leeren des Containers und Hinzufügen der 'active'-Klasse
     container.innerHTML = '';
+    container.classList.add('active');
+    contactContainer.classList.add('active');
+    rightContent.classList.add('active');
     container.innerHTML = `
     <div class="show-contact slide-in">
     <div class="show-contact-header">
@@ -307,5 +315,16 @@ async function renderTaskBoard() {
         }
         }
     }
+}
+
+function clearShowContactContainer() {
+    let contactContainer = document.getElementById('contact-container');
+    let showContactContainer = document.getElementById('show-contact-container');
+    let rightContent = document.querySelector('.right-content');
+
+    showContactContainer.innerHTML = '';
+    showContactContainer.classList.remove('active');
+    contactContainer.classList.remove('active');
+    rightContent.classList.remove('active');
 }
 
