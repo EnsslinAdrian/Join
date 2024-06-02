@@ -192,15 +192,18 @@ function generateContactHtml(contact, i, color) {
 
 function showContact(name, email, phone, initials, color) {
     let container = document.getElementById('show-contact-container');
-
     let contactContainer = document.getElementById('contact-container');
     let rightContent = document.querySelector('.right-content');
+    let addIcon = document.getElementById('new-contact-icon');
+    let editIcon = document.getElementById('edit-contact-icon');
 
-    // Leeren des Containers und Hinzufügen der 'active'-Klasse
     container.innerHTML = '';
     container.classList.add('active');
     contactContainer.classList.add('active');
     rightContent.classList.add('active');
+    addIcon.classList.add('active');
+    editIcon.classList.add('active');
+
     container.innerHTML = `
     <div class="show-contact slide-in">
     <div class="show-contact-header">
@@ -321,10 +324,29 @@ function clearShowContactContainer() {
     let contactContainer = document.getElementById('contact-container');
     let showContactContainer = document.getElementById('show-contact-container');
     let rightContent = document.querySelector('.right-content');
+    let addIcon = document.getElementById('new-contact-icon');
+    let editIcon = document.getElementById('edit-contact-icon');
 
     showContactContainer.innerHTML = '';
     showContactContainer.classList.remove('active');
     contactContainer.classList.remove('active');
     rightContent.classList.remove('active');
+    addIcon.classList.remove('active');
+    editIcon.classList.remove('active');
 }
 
+async function newContact() {
+    let name = document.getElementById('contactName');
+    let email = document.getElementById('contactEmail');
+    let phone = document.getElementById('contactPhone');
+    let initialsBgColor = getRandomColor();
+
+    let contact = {
+        'name': name.value,
+        'email': email.value,
+        'phone': phone.value,
+        'color': initialsBgColor
+    }
+
+    postUser('contacts', contact);
+};

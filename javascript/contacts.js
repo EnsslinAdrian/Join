@@ -1,4 +1,4 @@
-function OpenAddNewContact() {
+function openAddNewContact() {
     let container = document.getElementById('add-contact-popup');
     container.classList.remove('d-none');
     container.classList.remove('slide-out');
@@ -22,21 +22,22 @@ function OpenAddNewContact() {
             <img src="assets/img/contacts/person.svg">
         </div>
     </div>
-    <div class="inputfields">
+    <div>
         <div class="close-button">
             <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
         </div>
+        <form class="inputfields">
             <div class="input-container">
-                <input id="contactName" class="input" placeholder="Name" type="text">
+                <input id="contactName" class="input" placeholder="Name" type="text" required>
                 <img class="input-icon" src="assets/img/person.svg">
             </div>
             <div class="input-container">
-                <input id="contactEmail" class="input" placeholder="Email" type="text">
+                <input id="contactEmail" class="input" placeholder="Email" type="email" required>
                 <img class="input-icon" src="assets/img/mail.svg">
             </div>
             <div class="input-container">
-            <input id="contactPhone" class="input" placeholder="Phone" type="text">
-            <img class="input-icon" src="assets/img/contacts/call.svg">
+                <input id="contactPhone" class="input" placeholder="Phone" type="number" required>
+                <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
             <button onclick="closePopup()" class="cancel-button">Cancel<img
@@ -44,6 +45,7 @@ function OpenAddNewContact() {
             <button onclick="newContact()" class="btn">Create Contact<img
                     src="assets/img/add_task/check.svg"></button>
         </div>
+        </form>
     </div>
 
 </div>
@@ -86,28 +88,30 @@ function openEditPopup(name, email, phone, initials, color) {
             </div>
         </div>
     </div>
-    <div class="inputfields">
+    <div>
         <div class="close-button">
             <img class="close-popup" onclick="closeEditPopup()" src="assets/img/add_task/close.svg">
         </div>
+        <form class="inputfields">
             <div class="input-container">
-                <input id="contactName" class="input" placeholder="Name" type="text">
+                <input id="contactName" class="input" placeholder="Name" type="text" required>
                 <img class="input-icon" src="assets/img/person.svg">
             </div>
             <div class="input-container">
-                <input id="contactEmail" class="input" placeholder="Email" type="text">
+                <input id="contactEmail" class="input" placeholder="Email" type="email" required>
                 <img class="input-icon" src="assets/img/mail.svg">
             </div>
             <div class="input-container">
-            <input id="contactPhone" class="input" placeholder="Phone" type="text">
+            <input id="contactPhone" class="input" placeholder="Phone" type="number" required>
             <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
             <button onclick="closePopup()" class="cancel-button">Delete<img
                 src="assets/img/add_task/close.svg"></button>
-            <button onclick="newContact()" class="btn">Save<img
+            <button onclick="saveEditedContact()" class="btn">Save<img
                     src="assets/img/add_task/check.svg"></button>
         </div>
+        </form>
     </div>
 
 </div>
