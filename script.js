@@ -375,6 +375,3 @@ function questLogin() {
   window.location.href = 'summary.html';
 }
 
-function renderGuestTasks() {
-    
-}
