@@ -204,7 +204,7 @@ function showContact(name, email, phone, initials, color) {
     <div class="show-contact slide-in">
     <div class="show-contact-header">
         <div style="background-color: ${color};" class="contact-icon-big">
-            <span>${initials}</span>
+            <span class="icon-initials">${initials}</span>
         </div>
         <div class="name-and-edit">
             <div class="contact-name">

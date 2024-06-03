@@ -78,13 +78,14 @@ function openEditPopup(name, email, phone, initials, color) {
     <div class="popup-headline">
         <img class="popup-logo" src="assets/img/contacts/logo.svg">
         <h1>Edit Contact</h1>
+        <img class="underline" src="assets/img/contacts/contacts-underline.svg">
     </div>
 </div>
 <div class="right-side">
     <div class="right-side-icon">
         <div class="popup-icon">
             <div style="background-color: ${color};" class="contact-icon-big">
-                <span>${initials}</span>
+                <span class="icon-initials">${initials}</span>
             </div>
         </div>
     </div>
