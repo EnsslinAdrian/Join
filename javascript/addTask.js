@@ -81,14 +81,14 @@ document.addEventListener("click", closeAllSelect);
 function closeAssigned() {
   document.getElementById('assignedContainer').classList.add('d-none');
   document.getElementById('selectedContact').classList.add('selected-contact');
-  document.getElementById('selectedContact').classList.add('d-none');
+  document.getElementById('selectedContact').classList.remove('d-none');
 }
 
 function openAssigned(event) {
-  event.stopPropagation(); // Verhindert, dass das Click-Event weitergeleitet wird
+  event.stopPropagation();
   document.getElementById('assignedContainer').classList.remove('d-none');
   document.getElementById('selectedContact').classList.remove('selected-contact');
-  document.getElementById('selectedContact').classList.remove('d-none');
+  document.getElementById('selectedContact').classList.add('d-none');
 }
 
 function clearTask() {

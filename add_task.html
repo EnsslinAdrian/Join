@@ -89,9 +89,7 @@
             max-width: 95%;
             height: auto;
             display: flex;
-            flex-wrap: nowrap;
-            overflow-x: scroll;
-            scrollbar-width: none;
+            flex-wrap: wrap;    
             padding: 5px;
         }
 
@@ -173,7 +171,7 @@
                             <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
 
                             </div>
-                            <div class="selected-contact " id="selectedContact"></div>
+                            <div class="selected-contact d-none" id="selectedContact"></div>
                     </div>
 
                     <div class="add-task-between-line"></div>
@@ -206,7 +204,7 @@
                         </div>
                         <p>Subtasks</p>
                         <div class="subtasks-container">
-                            <input id="subtask" placeholder="Add new subtask">
+                            <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
                             <div class="subtasks-button">
                                 <button onclick="addNewSubtasks()" type="button">+</button>
                             </div>
