@@ -132,6 +132,8 @@ p {
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    margin-right: 16px;
+    margin-left: 16px;
 }
 
 .input_login_field img {
@@ -429,6 +431,14 @@ input[type="checkbox"]:hover {
             content: url(../assets/img/logo.svg);
         }
     }
+
+    .input_field_mail {
+        width: 330px;
+    }
+
+    .input_field_password {
+        width: 330px;
+    }
 }
 
 @media(max-width: 400px) {
@@ -478,5 +488,13 @@ input[type="checkbox"]:hover {
 
     input[type="password"]:focus {
         background-position: 201px 9px;
+    }
+
+    .input_field_mail {
+        width: 230px;
+    }
+
+    .input_field_password {
+        width: 230px;
     }
 }
