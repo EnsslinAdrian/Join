@@ -119,7 +119,7 @@ p {
     width: 100%;
     max-width: 260px;
     margin-top: 12px;
-    min-height: 100px;
+    height: 700px;
 }
 
 .task-card {
@@ -306,6 +306,12 @@ h2 {
     justify-content: space-between;
 }
 
+.scrollable_part {
+    height: 700px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
 }
@@ -328,6 +334,7 @@ h2 {
 
     .task-columns {
         flex-direction: row;
+        height: auto;
     }
 
     .task-card {
@@ -339,6 +346,7 @@ h2 {
         overflow-x: auto;
         width: 700px;
         color: transparent;
+        height: auto;
     }
 
     .add-task-buttons {

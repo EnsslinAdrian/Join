@@ -10,6 +10,10 @@
     padding-left: 76px;
 }
 
+.name_icon {
+    margin: 10px 0 0 0;
+}
+
 .back_to_login {
     width: 15px;
     height: 15px;
@@ -78,6 +82,7 @@ input[type="text"] {
     .logo_image img {
         height: 78px;
     }
+
     .sign_up_container {
         margin-top: 25px;
     }
@@ -100,7 +105,11 @@ input[type="text"] {
     }
 }
 
-@media(max-width: 400px) {
+@media(max-width: 500px) {
+    .main_login_content {
+        max-width: 270px;
+    }
+
     .sign_up_header {
         padding-left: 20px !important;
         margin: 0;
@@ -116,5 +125,26 @@ input[type="text"] {
 
     .back_to_login img {
         height: 19px;
+    }
+
+    input {
+        width: 230px !important;
+    }
+
+    .input_field_mail {
+        width: 230px !important;
+    }
+
+    .input_field_password {
+        width: 230px !important;
+    }
+
+    .accept_privacy_policy input {
+        margin: 0;
+        max-width: fit-content;
+    }
+
+    .accept_privacy_policy p {
+        margin-left: 10px;
     }
 }
