@@ -2,6 +2,7 @@ body {
     margin: 0;
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 }
 
 .content-container {
@@ -61,11 +62,12 @@ header {
     justify-content: center;
 }
 
-.profil-initials p {
+.profil-initials {
     color: #29ABE2;
     font-weight: 800;
     font-size: 24px;
     font-family: 'Inter';
+    cursor: pointer;
 }
 
 .menubar-section {
@@ -147,6 +149,41 @@ a {
 
 .protection-container a:hover {
     color: #29ABE2;
+}
+
+.popup-logout {
+width: 150px;
+height: 140px;
+color: white;
+background-color: #2A3647;
+position: absolute;
+right: 20px;
+top: 96px;
+border-radius: 20px 0px 20px 20px;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+padding-bottom: 10px;
+padding-top: 10px;
+}
+
+.popup-logout a {
+text-decoration: none;
+color: white;
+font-family: 'Inter';
+padding: 5px;
+width: 110px;
+text-align: center;
+transition: all 225ms ease-in-out;
+}
+
+.popup-logout a:hover {
+    background-color: #3f4f66;
+}
+
+.popup-help {
+display: none
 }
 
 @media (max-width: 900px) {
@@ -245,12 +282,11 @@ a {
         display: none;
     }
 
-    .profil-initials p {
+    .profil-initials  {
         color: #29ABE2;
         font-weight: 800;
         font-size: 16px;
         font-family: 'Open Sans';
-        margin-bottom: 1px;
         margin-left: 1px;
     }
 
@@ -270,4 +306,35 @@ a {
         height: 80px;
     }
 
+    .popup-help {
+        display: block;
+        }
+
+        .popup-logout {
+            width: 150px;
+            height: 140px;
+            color: white;
+            background-color: #2A3647;
+            position: absolute;
+            right: 20px;
+            top: 96px;
+            transform: translateX(200px); /* Horizontal translation */
+            transition: transform 225ms ease-in-out; /* Apply transition on transform property */
+            border-radius: 20px 0px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        
+        .popup-logout-mobile {
+            transform: translateX(0); /* Bring back to original position */
+        }
+        
+        .d-none {
+            display: none;
+        }
+        
 }

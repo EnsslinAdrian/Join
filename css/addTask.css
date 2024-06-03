@@ -263,6 +263,125 @@ color: red;
 color: red;
 }
 
+.assigned-search {
+    width: 95%;
+    text-align: start;
+    height: 36px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0;
+    color: grey;
+    border: 1px solid lightgray;
+    background-color: white;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.assigned-contacts-container {
+    width: 95%;
+    background-color: rgb(253, 255, 255);
+    height: 300px;
+    position: relative;
+    overflow-y: scroll;
+}
+
+.assigned-contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.contact-name {
+    display: flex;
+    align-items: center;
+}
+
+.assigned-contact:hover {
+    background-color: rgba(128, 128, 128, 0.219);
+}
+
+.click-contact-bg {
+    background-color: rgba(128, 128, 128, 0.219);
+}
+
+.assigned-contact p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.assigned-initials {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.d-none {
+    display: none;
+}
+
+.checkbox {
+    width: auto;
+}
+
+.selected-contact {
+    width: 95%;
+    max-width: 95%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;    
+    padding: 5px;
+}
+
+.urgent {
+    background-color: #FF3D00;
+    color: white;
+}
+
+.medium {
+    background-color: #FFA800;
+    color: white;
+}
+
+.low {
+    background-color: #7AE229;
+    color: white;
+}
+
+.subtasks-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.subtasks-container input {
+    border: 0;
+    width: 85%;
+    outline: none;
+}
+
+.subtasks-button button {
+    border: 0;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: white;
+}
+
+.subtasks-button button:hover {
+    background-color: rgb(230, 227, 227);
+}
+
 @media (max-width: 1300px) {
     p {
         font-size: 16px;

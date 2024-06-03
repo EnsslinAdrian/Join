@@ -351,3 +351,18 @@ async function newContact() {
 
     postUser('contacts', contact);
 };
+
+function openProfilPopup() {
+    const popup = document.getElementById('popupLogout');
+    if (popup.classList.contains('d-none')) {
+        popup.classList.remove('d-none');
+        setTimeout(() => {
+            popup.classList.add('popup-logout-mobile');
+        }, 10); // Small delay to ensure the class is applied correctly
+    } else {
+        popup.classList.remove('popup-logout-mobile');
+        popup.addEventListener('transitionend', () => {
+            popup.classList.add('d-none');
+        }, { once: true });
+    }
+}
