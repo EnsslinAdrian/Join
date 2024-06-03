@@ -73,8 +73,8 @@ function registration(event) {
 
     let name = document.getElementById('name');
     let email = document.getElementById('email');
-    let password = document.getElementById('password');
-    let confirmPassword = document.getElementById('confirmPassword');
+    let password = document.getElementById('loginPassword');
+    let confirmPassword = document.getElementById('confirmLoginPassword');
 
     if (password.value !== confirmPassword.value) {
         document.getElementById('signAnswer').innerHTML = 'Passwörter stimmen nicht überein';
