@@ -303,10 +303,6 @@ a {
     padding-left: 55px;
 }
 
-.show-contact-container {
-    display: none;
-}
-
 .show-contact-container.active {
     display: block;
 }
@@ -347,10 +343,6 @@ a {
 .del-contact {
     display: flex;
     align-items: center;
-}
-
-.close-show-contact {
-    display: none;
 }
 
 @media (max-width: 1325px) {
@@ -418,6 +410,7 @@ a {
         justify-content: center;
     }
 
+    .contact-container.active,
     .right-content {
         display: none;
     }
@@ -425,10 +418,6 @@ a {
     .contact-container {
         margin-left: 0;
         box-shadow: none;
-    }
-
-    .contact-container.active {
-        display: none;
     }
 
     .right-content.active {
@@ -481,6 +470,8 @@ a {
 }
 
 @media (max-width: 768px) {
+    .close-popup,
+    .right-content,
     .contact-container.active {
         display: none;
     }
@@ -496,10 +487,6 @@ a {
         cursor: pointer;
     }
 
-    .right-content {
-        display: none;
-    }
-
     .right-content.active {
         display: flex;
         flex-direction: column;
@@ -513,6 +500,7 @@ a {
         align-items: flex-start;
     }
 
+    .inputfields,
     .show-contact {
         padding-left: 0;
     }
@@ -576,20 +564,12 @@ a {
         top: -15%;
     }
 
-    .inputfields {
-        padding-left: 0;
-    }
-
     .input {
         width: 330px;
     }
 
     .buttons {
         justify-content: center;
-    }
-
-    .close-popup {
-        display: none;
     }
 
     .responsive-close {
@@ -605,29 +585,18 @@ a {
         margin-bottom: 0;
     }
 
-    .contact-settings {
-        display: none;
-    }
-
+    .new-contact-icon.active,
+    .edit-contact-icon,
+    .contact-settings,
     .new-contact {
         display: none;
     }
 
+    .edit-contact-icon.active,
     .new-contact-icon {
         display: flex;
     }
 
-    .new-contact-icon.active {
-        display: none;
-    }
-
-    .edit-contact-icon {
-        display: none;
-    }
-
-    .edit-contact-icon.active {
-        display: flex;
-    }
     .edit-contact-popup,
     .add-contact-popup {
         flex-direction: column;
@@ -657,10 +626,6 @@ a {
         font-size: 20px;
     }
 
-    .popup-logo {
-        display: none;
-    }
-
     .right-side {
         flex-direction: column;
         box-sizing: border-box;
@@ -675,6 +640,8 @@ a {
         top: -15%;
     }
 
+    .cancel-button,
+    .popup-logo, 
     .close-button {
         display: none;
     }
@@ -695,10 +662,6 @@ a {
         justify-content: center;
     }
 
-    .cancel-button {
-        display: none;
-    }
-
     .popup-icon,
     .contact-icon-big {
         height: 90px;
@@ -714,21 +677,35 @@ a {
     .name-and-edit {
         padding-left: 8px;
     }
-}
 
-@media (max-width: 370px) {
     .edit-contact-popup,
     .add-contact-popup {
-        height: 450px;
-        width: 270px;
+        height: 760px;
+        width: 350px;
     }
 
     .input {
-        width: 60%;
+        width: 280px;
     }
+}
 
+@media (max-width: 370px) {
     .underline {
         display: none;
+    }
+
+    .edit-contact-popup,
+    .add-contact-popup {
+        height: 500px;
+        width: 300px;
+    }
+
+    .right-side {
+        height: 70%;
+    }
+
+    .input {
+        width: 200px;
     }
 
     .contact-container {
