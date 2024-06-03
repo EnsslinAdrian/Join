@@ -1,8 +1,8 @@
 let registered = [];
 let taskContacts = [];
 let subtasks = [];
-let prio = '';
-let prioImg = '';
+let prio = 'Medium';
+let prioImg = './assets/img/add_task/result.svg';
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
 function init() {
@@ -37,8 +37,6 @@ async function checkUser(event) {
             localStorage.setItem('userKey', key);
 
             if (user.email === email && user.password === password) {
-                console.log('Passwort richtig');
-                console.log('Hallo ' + user.name);
                 localStorage.setItem('username', user.name)
                 window.location.href = "summary.html";
                 userFound = true;
@@ -48,7 +46,7 @@ async function checkUser(event) {
     }
 
     if (!userFound) {
-        console.log('Passwort falsch oder Benutzer nicht gefunden');
+        document.getElementById('loginAnswer').innerHTML = 'Passwort falsch oder Benutzer nicht gefunden';
     }
 }
 
@@ -79,7 +77,7 @@ function registration(event) {
     let confirmPassword = document.getElementById('confirmPassword');
 
     if (password.value !== confirmPassword.value) {
-        alert("Passwörter stimmen nicht überein");
+        document.getElementById('signAnswer').innerHTML = 'Passwörter stimmen nicht überein';
         return;
     }
 
@@ -142,7 +140,7 @@ async function addNewTask(event) {
         },
         body: JSON.stringify(user),
     });
-    clearTask();
+    window.location.href = 'board.html';
 }
 
 function getRandomColor() {
@@ -192,15 +190,16 @@ function generateContactHtml(contact, i, color) {
 
 function showContact(name, email, phone, initials, color) {
     let container = document.getElementById('show-contact-container');
-
     let contactContainer = document.getElementById('contact-container');
     let rightContent = document.querySelector('.right-content');
+    let addIcon = document.getElementById('new-contact-icon');
 
-    // Leeren des Containers und Hinzufügen der 'active'-Klasse
     container.innerHTML = '';
     container.classList.add('active');
     contactContainer.classList.add('active');
     rightContent.classList.add('active');
+    addIcon.classList.add('active');
+
     container.innerHTML = `
     <div class="show-contact slide-in">
     <div class="show-contact-header">
@@ -220,7 +219,7 @@ function showContact(name, email, phone, initials, color) {
                 </div>
         </div>
     </div>
-        </div>
+        </div> 
             <div class="show-contact-informations">
                 <h2 class="h2">Contact Information</h2>
                 <div class="email-and-phone">
@@ -232,8 +231,13 @@ function showContact(name, email, phone, initials, color) {
                     <a>${phone}</a>
                 </div>
             </div>
+            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup('${name}', '${email}', '${phone}', '${initials}', '${color}')">
+                <img src="assets/img/contacts/more_vert.svg">
+            </div>
     </div>
     `;
+    let editIcon = document.getElementById('edit-contact-icon');
+    editIcon.classList.add('active');
 }
 
 async function renderContactsAddTask() {
@@ -321,10 +325,44 @@ function clearShowContactContainer() {
     let contactContainer = document.getElementById('contact-container');
     let showContactContainer = document.getElementById('show-contact-container');
     let rightContent = document.querySelector('.right-content');
+    let addIcon = document.getElementById('new-contact-icon');
+    let editIcon = document.getElementById('edit-contact-icon');
 
     showContactContainer.innerHTML = '';
     showContactContainer.classList.remove('active');
     contactContainer.classList.remove('active');
     rightContent.classList.remove('active');
+    addIcon.classList.remove('active');
+    editIcon.classList.remove('active');
 }
 
+async function newContact() {
+    let name = document.getElementById('contactName');
+    let email = document.getElementById('contactEmail');
+    let phone = document.getElementById('contactPhone');
+    let initialsBgColor = getRandomColor();
+
+    let contact = {
+        'name': name.value,
+        'email': email.value,
+        'phone': phone.value,
+        'color': initialsBgColor
+    }
+
+    postUser('contacts', contact);
+};
+
+function openProfilPopup() {
+    const popup = document.getElementById('popupLogout');
+    if (popup.classList.contains('d-none')) {
+        popup.classList.remove('d-none');
+        setTimeout(() => {
+            popup.classList.add('popup-logout-mobile');
+        }, 10); // Small delay to ensure the class is applied correctly
+    } else {
+        popup.classList.remove('popup-logout-mobile');
+        popup.addEventListener('transitionend', () => {
+            popup.classList.add('d-none');
+        }, { once: true });
+    }
+}

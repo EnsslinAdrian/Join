@@ -32,6 +32,26 @@ body {
     width: 352px;
 }
 
+.edit-contact-icon,
+.new-contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    background-color: #2A3647;
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+}
+
+.edit-contact-icon:hover,
+.new-contact-icon:hover {
+    background-color: rgb(64, 171, 226);
+}
+
 .contacts-headline {
     display: flex;
     align-items: center;
@@ -219,6 +239,7 @@ a {
     height: 42.67px;
 }
 
+.delete-button,
 .cancel-button {
     color: #2a3647;
     background-color: white;
@@ -231,6 +252,7 @@ a {
     gap: 8px;
 }
 
+.delete-button:hover,
 .cancel-button:hover {
     cursor: pointer;
     color: rgb(64, 171, 226);
@@ -582,6 +604,26 @@ a {
 }
 
 @media (max-width: 570px) {
+    .new-contact {
+        display: none;
+    }
+
+    .new-contact-icon {
+        display: flex;
+    }
+
+    .new-contact-icon.active {
+        display: none;
+    }
+
+    .edit-contact-icon {
+        display: none;
+    }
+
+    .edit-contact-icon.active {
+        display: flex;
+    }
+
     .contacts-headline {
         width: 450px;
     }
@@ -655,5 +697,13 @@ a {
 
     .cancel-button {
         display: none;
+    }
+}
+
+@media (max-width: 320px) {
+    .edit-contact-popup,
+    .add-contact-popup {
+        height: 350px;
+        width: 200px;
     }
 }

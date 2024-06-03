@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +15,6 @@
     <script src="./javascript/contacts.js"></script>
     <script src="./javascript/template.js"></script>
 </head>
-
 <body onload="init()">
     <div class="content-container">
         <div w3-include-html="./assets/templates/contactsMenu.html"></div>
@@ -25,9 +23,15 @@
                 <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
                 <p class="header-description">Kanban Project Management Tool</p>
                 <div class="help-profil-container">
-                    <img src="./assets/img/help.png" alt="Help">
-                    <div class="profil-initials">
-                        <p id="initials">G</p>
+                    <a href="help.html"><img src="./assets/img/help.png" alt="Help"></a>
+                    <div class="profil-initials" onclick="openProfilPopup()">
+                        <span id="initials">G</span>
+                    </div>
+                    <div class="popup-logout d-none" id="popupLogout">
+                        <a class="popup-help" href="help.html">Help</a>
+                        <a href="legal_notice.html">Legal Notice</a>
+                        <a href="privacy_policy.html">Privacy Police</a>
+                        <a href="index.html">Log out</a>
                     </div>
                 </div>
             </header>
@@ -35,12 +39,12 @@
             <div class="display-flex">
                 <div class="contact-container" id="contact-container">
                     <div class="contact-list">
-                        <button onclick="OpenAddNewContact()" class="btn new-contact">Add new contact<img
+                        <button onclick="openAddNewContact()" class="btn new-contact">Add new contact<img
                                 src="assets/img/contacts/person_add.svg"></button>
 
-                        <div>
+                        <!-- <div>
                             <img src="assets/img/contacts/contact-seperator.svg" alt="">
-                        </div>
+                        </div> -->
 
                         <div class="contact-list-items" id="contactContainer">
 
@@ -68,6 +72,8 @@
 
             <div id="add-contact-popup" class="add-contact-popup d-none"></div>
 
+            <div id="new-contact-icon" class="new-contact-icon d-none" onclick="openAddNewContact()">
+                <img src="assets/img/contacts/person_add.svg">
+            </div>
 </body>
-
 </html>
