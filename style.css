@@ -120,6 +120,11 @@ input:focus::placeholder {
     transform: translateX(150%);
 }
 
+.answer-message {
+font-size: 14px;
+color: red;
+}
+
 @media (max-width: 1300px) {
     .impressum-content {
         width: 100%;

@@ -1,8 +1,8 @@
 let registered = [];
 let taskContacts = [];
 let subtasks = [];
-let prio = '';
-let prioImg = '';
+let prio = 'Medium';
+let prioImg = './assets/img/add_task/result.svg';
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
 function init() {
@@ -37,8 +37,6 @@ async function checkUser(event) {
             localStorage.setItem('userKey', key);
 
             if (user.email === email && user.password === password) {
-                console.log('Passwort richtig');
-                console.log('Hallo ' + user.name);
                 localStorage.setItem('username', user.name)
                 window.location.href = "summary.html";
                 userFound = true;
@@ -48,7 +46,7 @@ async function checkUser(event) {
     }
 
     if (!userFound) {
-        console.log('Passwort falsch oder Benutzer nicht gefunden');
+        document.getElementById('loginAnswer').innerHTML = 'Passwort falsch oder Benutzer nicht gefunden';
     }
 }
 
@@ -79,7 +77,7 @@ function registration(event) {
     let confirmPassword = document.getElementById('confirmPassword');
 
     if (password.value !== confirmPassword.value) {
-        alert("Passwörter stimmen nicht überein");
+        document.getElementById('signAnswer').innerHTML = 'Passwörter stimmen nicht überein';
         return;
     }
 
@@ -111,7 +109,7 @@ async function addNewTask(event) {
     let date = document.getElementById('date').value;
     let categoryElement = document.getElementById('select');
     let categoryText = categoryElement.selectedOptions[0].text;
-    
+
     let task = {
         'category': 'todo',
         'title': title,
@@ -142,7 +140,7 @@ async function addNewTask(event) {
         },
         body: JSON.stringify(user),
     });
-    clearTask();
+    window.location.href = 'board.html';
 }
 
 function getRandomColor() {
@@ -306,19 +304,19 @@ async function renderTaskBoard() {
         let tasks = path['tasks'];
         console.log(tasks)
         test = tasks;
-    
+
         for (let i = 0; i < tasks.length; i++) {
             let task = tasks[i];
             let id = task['category']
-            
-            document.getElementById(id).innerHTML += generateTodoHTML(task, i);
-            
-        let conatctsContent = document.getElementById(`taskContacts${i}`)
-        for (let j = 0; j < task['taskContacts'].length; j++) {
-            let contacts = task['taskContacts'][j];
 
-        conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-        }
+            document.getElementById(id).innerHTML += generateTodoHTML(task, i);
+
+            let conatctsContent = document.getElementById(`taskContacts${i}`)
+            for (let j = 0; j < task['taskContacts'].length; j++) {
+                let contacts = task['taskContacts'][j];
+
+                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+            }
         }
     }
 }
@@ -353,3 +351,23 @@ async function newContact() {
 
     postUser('contacts', contact);
 };
+
+function openProfilPopup() {
+    const popup = document.getElementById('popupLogout');
+    popup.classList.toggle('d-none');
+    popup.classList.toggle('popup-logout-mobile');
+}
+
+function logOut() {
+    const keysToRemove = ['userKey', 'username'];
+
+    keysToRemove.forEach(key => {
+        localStorage.removeItem(key);
+    });
+
+    window.location.href = 'index.html';
+}
+
+function questLogin() {
+  
+}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./css/fonts.css">
-    <script src="login.js"></script>
+    <script src="./javascript/login.js"></script>
     <title>JOIN</title>
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.png">
 
@@ -35,8 +35,15 @@
                 </div>
                 <form onsubmit="checkUser(event)">
                     <div class="input_login_field">
-                        <input id="loginEmail" type="email" required class="mail_icon" placeholder=" Email">
-                        <input id="loginPassword" type="password" required class="lock_icon" placeholder=" Password">
+                        <div class="input_field_mail" id="input_field_mail">
+                            <input id="loginEmail" type="email" required placeholder=" Email">
+                            <img src="./assets/img/mail.svg" alt="">
+                        </div>
+                        <div class="input_field_password" id="input_field_password">
+                            <input id="loginPassword" type="password" class="password_field" required placeholder=" Password">
+                            <img onclick="showPassword()" class="visibility-off-toggle" id="visibility-off-toggle">
+                            <img onclick="showPasswordNot()" class="visibility-toggle d_none" id="visibility-toggle">
+                        </div>
                     </div>
                     <div class="remember_me">
                         <input type="checkbox">
@@ -44,7 +51,7 @@
                     </div>
                     <div class="login_buttons">
                         <button class="btn_login">Log in</button>
-                        <button class="btn_guest_login">Guest Log in</button>
+                        <button type="button" onclick="questLogin()" class="btn_guest_login">Guest Log in</button>
                     </div>
                 </form>
             </div>
