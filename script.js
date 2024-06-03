@@ -1,8 +1,8 @@
 let registered = [];
 let taskContacts = [];
 let subtasks = [];
-let prio = '';
-let prioImg = '';
+let prio = 'Medium';
+let prioImg = './assets/img/add_task/result.svg';
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
 function init() {
