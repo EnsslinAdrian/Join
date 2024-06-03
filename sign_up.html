@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./css/sign_up.css">
     <link rel="stylesheet" href="./css/login.css">
+    <script src="./javascript/login.js"></script>
+    <script src="./javascript/sign_up.js"></script>
 
 </head>
 
@@ -35,9 +37,26 @@
             <form id="registrationForm" onsubmit="registration(event)">
                 <div class="input_login_field">
                     <input id="name" type="text" required class="name_icon" placeholder="Name">
-                    <input id="email" type="email" required class="mail_icon" placeholder="Email">
-                    <input id="password" type="password" required class="lock_icon" placeholder="Password">
-                    <input id="confirmPassword" type="password" required class="lock_icon" placeholder="Confirm Password">
+                    <div class="input_login_field">
+                        <div class="input_field_mail" id="input_field_mail">
+                            <input id="loginEmail" type="email" required placeholder=" Email">
+                            <img src="./assets/img/mail.svg" alt="">
+                        </div>
+                        <div class="input_field_password" id="input_field_password">
+                            <input id="loginPassword" type="password" class="password_field" required
+                                placeholder=" Password">
+                            <img onclick="showPassword()" class="visibility-off-toggle" id="visibility-off-toggle">
+                            <img onclick="showPasswordNot()" class="visibility-toggle d_none" id="visibility-toggle">
+                        </div>
+                        <div class="input_field_password" id="input_field_password">
+                            <input id="confirmLoginPassword" type="password" class="password_field" required
+                                placeholder="Confirm Password">
+                            <img onclick="showConfirmedPassword()" class="visibility-off-toggle"
+                                id="visibility-cofirm-password-off">
+                            <img onclick="showConfirmedPasswordNot()" class="visibility-toggle d_none"
+                                id="visibility-cofirm-password">
+                        </div>
+                    </div>
                     <p class="answer-message" id="signAnswer"></p>
                 </div>
                 <div class="accept_privacy_policy">
