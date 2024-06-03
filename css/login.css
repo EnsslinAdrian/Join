@@ -131,6 +131,11 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 16px;
+}
+
+.input_login_field img {
+    margin-right: 13px;
 }
 
 .input_login_field:hover {
@@ -188,11 +193,15 @@ p {
 input[type="email"] {
     outline: none;
     letter-spacing: 0.05em;
+    display: flex;
+    align-self: center;
 }
 
 input[type="password"] {
     outline: none;
     letter-spacing: 0.05em;
+    display: flex;
+    align-self: center;
 }
 
 input[type="password"]:focus {
@@ -203,18 +212,78 @@ input[type="password"]:focus {
 
 ::placeholder {
     color: lightgray;
-    padding-left: 7px;
     font-size: 14px;
 }
 
-.mail_icon {
-    background: url("/assets/img/mail.svg") no-repeat;
-    background-position: 300px 8.5px;
+.input_field_mail input{
+    color: grey;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: none;
 }
 
-.lock_icon {
-    background: url("/assets/img/lock.svg") no-repeat;
-    background-position: 303px 6px;
+.input_field_password input {
+    color: grey;
+    border: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+.input_field_mail {
+    display: flex;
+    height: 26px;
+    max-width: 330px;
+    padding: 5px;
+    border-radius: 8px;
+    color: grey;
+    border: 1px solid lightgray;
+    text-indent: 10px;
+}
+
+.input_field_password {
+    display: flex;
+    height: 26px;
+    max-width: 330px;
+    padding: 5px;
+    border-radius: 8px;
+    color: grey;
+    border: 1px solid lightgray;
+    text-indent: 10px;
+}
+
+.visibility-off-toggle {
+    content: url("../assets/img/lock.svg");
+    width: 24px; 
+    height: 24px; 
+    cursor: pointer;
+    margin-right: 9px;
+}
+
+
+.visibility-toggle {
+    content: url("../assets/img/visibility.svg");
+    width: 24px; 
+    height: 24px; 
+    cursor: pointer;
+    margin-right: 9px;
+}
+
+.d_none {
+    display: none;
+}
+
+.password_field:focus + .visibility-off-toggle {
+    content: url("../assets/img/visibility_off.svg");
+    margin-top: 2px;
+    display: block;
+}
+
+.password_field:focus + .visibility-toggle {
+    content: url("../assets/img/visibility.svg");
+    margin-top: 2px;
+    display: block;
 }
 
 input[type="checkbox"]:hover {
