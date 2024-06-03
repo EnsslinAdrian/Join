@@ -295,27 +295,29 @@ function addContactTask(contactName, initials, i, color) {
 }
 
 async function renderTaskBoard() {
-    if (window.location.pathname.endsWith("board.html")) {
-        let response = await fetch(`${firebaseUrl}.json`);
-        let responseToJson = await response.json();
+    if (localStorage.getItem('username') !== 'Guest') {
+        if (window.location.pathname.endsWith("board.html")) {
+            let response = await fetch(`${firebaseUrl}.json`);
+            let responseToJson = await response.json();
 
-        let user = localStorage.getItem('userKey');
-        let path = responseToJson['registered'][user];
-        let tasks = path['tasks'];
-        console.log(tasks)
-        test = tasks;
+            let user = localStorage.getItem('userKey');
+            let path = responseToJson['registered'][user];
+            let tasks = path['tasks'];
+            console.log(tasks);
+            test = tasks;
 
-        for (let i = 0; i < tasks.length; i++) {
-            let task = tasks[i];
-            let id = task['category']
+            for (let i = 0; i < tasks.length; i++) {
+                let task = tasks[i];
+                let id = task['category'];
 
-            document.getElementById(id).innerHTML += generateTodoHTML(task, i);
+                document.getElementById(id).innerHTML += generateTodoHTML(task, i);
 
-            let conatctsContent = document.getElementById(`taskContacts${i}`)
-            for (let j = 0; j < task['taskContacts'].length; j++) {
-                let contacts = task['taskContacts'][j];
+                let contactsContent = document.getElementById(`taskContacts${i}`);
+                for (let j = 0; j < task['taskContacts'].length; j++) {
+                    let contacts = task['taskContacts'][j];
 
-                conatctsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+                    contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+                }
             }
         }
     }
@@ -369,5 +371,10 @@ function logOut() {
 }
 
 function questLogin() {
-  
+  localStorage.setItem('username', 'Guest');
+  window.location.href = 'summary.html';
+}
+
+function renderGuestTasks() {
+    
 }
