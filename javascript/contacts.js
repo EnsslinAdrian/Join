@@ -106,7 +106,7 @@ function openEditPopup(name, email, phone, initials, color) {
             <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
-            <button onclick="closePopup()" class="delete-button">Delete<img
+            <button onclick="deleteContact()" class="delete-button">Delete<img
                 src="assets/img/add_task/close.svg"></button>
             <button onclick="saveEditedContact()" class="btn">Save<img
                     src="assets/img/add_task/check.svg"></button>

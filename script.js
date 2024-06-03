@@ -178,7 +178,7 @@ function generateContactHtml(contact, i, color) {
     let initials = contactName.split(' ').map(word => word[0]).join('');
 
     return `
-  <div id="showContact${i}" onclick="showContact('${contact.name}','${contact.email}', '${contact.phone}', '${initials}', '${contact.color}')" class="contact-card">
+  <div id="showContact${i}" onclick="showContact('${contact.name}','${contact.email}', '${contact.phone}', '${initials}', '${contact.color}',)" class="contact-card">
   <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
@@ -216,7 +216,7 @@ function showContact(name, email, phone, initials, color) {
                 <div class="edit-contact" onclick="openEditPopup('${name}', '${email}', '${phone}', '${initials}', '${color}')">
                     <img src="assets/img/edit.svg">Edit 
                 </div>
-                <div class="del-contact">
+                <div class="del-contact" onclick="deleteContact()">
                     <img src="assets/img/delete.svg">Delete
                 </div>
         </div>
