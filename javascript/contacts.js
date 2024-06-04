@@ -66,7 +66,10 @@ function closePopup() {
     }, { once: true });
 }
 
-function openEditPopup(name, email, phone, initials, color) {
+function openEditPopup(contactJson) {
+    let contact = JSON.parse(decodeURIComponent(contactJson));
+    let contactName = contact['name'];
+    let initials = contactName.split(' ').map(word => word[0]).join('');
     let container = document.getElementById('edit-contact-popup');
     container.classList.remove('d-none');
     container.classList.remove('slide-out');
@@ -84,7 +87,7 @@ function openEditPopup(name, email, phone, initials, color) {
 <div class="right-side">
     <div class="right-side-icon">
         <div class="popup-icon">
-            <div style="background-color: ${color};" class="contact-icon-big">
+            <div style="background-color: ${contact['color']};" class="contact-icon-big">
                 <span class="icon-initials">${initials}</span>
             </div>
         </div>
@@ -118,9 +121,9 @@ function openEditPopup(name, email, phone, initials, color) {
 </div>
     `;
 
-    document.getElementById('contactName').value = name;
-    document.getElementById('contactEmail').value = email;
-    document.getElementById('contactPhone').value = phone;
+    document.getElementById('contactName').value = contact['name'];
+    document.getElementById('contactEmail').value = contact['email'];
+    document.getElementById('contactPhone').value = contact['phone'];
 
 }
 

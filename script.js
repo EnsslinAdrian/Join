@@ -166,17 +166,18 @@ async function renderContacts(path = "") {
             let contact = contactsArray[i];
             let initialsBgColor = getRandomColor();
 
-            content.innerHTML += generateContactHtml(contact, i, initialsBgColor);
+            content.innerHTML += generateContactHtml(contact, i);
         }
     }
 }
 
-function generateContactHtml(contact, i, color) {
+function generateContactHtml(contact, i) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
+    let contactStr = encodeURIComponent(JSON.stringify(contact));
 
     return `
-  <div id="showContact${i}" onclick="showContact('${contact.name}','${contact.email}', '${contact.phone}', '${initials}', '${contact.color}',)" class="contact-card">
+  <div id="showContact${i}" onclick="showContact('${contactStr}', ${i})" class="contact-card">
   <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
@@ -188,7 +189,11 @@ function generateContactHtml(contact, i, color) {
   `;
 }
 
-function showContact(name, email, phone, initials, color) {
+function showContact(contactStr, i) {
+    let contact = JSON.parse(decodeURIComponent(contactStr));
+    let contactName = contact['name'];
+    let contactJson = encodeURIComponent(JSON.stringify(contact));
+    let initials = contactName.split(' ').map(word => word[0]).join('');
     let container = document.getElementById('show-contact-container');
     let contactContainer = document.getElementById('contact-container');
     let rightContent = document.querySelector('.right-content');
@@ -203,15 +208,15 @@ function showContact(name, email, phone, initials, color) {
     container.innerHTML = `
     <div class="show-contact slide-in">
     <div class="show-contact-header">
-        <div style="background-color: ${color};" class="contact-icon-big">
+        <div style="background-color: ${contact['color']};" class="contact-icon-big">
             <span class="icon-initials">${initials}</span>
         </div>
         <div class="name-and-edit">
             <div class="contact-name">
-                ${name}
+                ${contact['name']}
             </div>
             <div class="contact-settings">
-                <div class="edit-contact" onclick="openEditPopup('${name}', '${email}', '${phone}', '${initials}', '${color}')">
+                <div class="edit-contact" onclick="openEditPopup('${contactJson}')">
                     <img src="assets/img/edit.svg">Edit 
                 </div>
                 <div class="del-contact" onclick="deleteContact()">
@@ -224,14 +229,14 @@ function showContact(name, email, phone, initials, color) {
                 <h2 class="h2">Contact Information</h2>
                 <div class="email-and-phone">
                     <b>Email</b>
-                    <a>${email}</a>
+                    <a>${contact['email']}</a>
                 </div>
                 <div class="email-and-phone">
                     <b>Phone</b>
-                    <a>${phone}</a>
+                    <a>${contact['phone']}</a>
                 </div>
             </div>
-            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup('${name}', '${email}', '${phone}', '${initials}', '${color}')">
+            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup())">
                 <img src="assets/img/contacts/more_vert.svg">
             </div>
     </div>
