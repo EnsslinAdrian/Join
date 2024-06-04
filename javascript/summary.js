@@ -82,7 +82,6 @@ async function renderSummaryTasks() {
     let pathUser = responseToJson['registered'][user];
     let tasks = pathUser['tasks'];
 
-    console.log(tasks);
     document.getElementById('allTask').innerHTML = tasks.length;
 
     let categoryCounts = {
@@ -106,7 +105,35 @@ async function renderSummaryTasks() {
     document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
     document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
     document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
+} else {
+renderSummaryGuestTasks();
 }
+}
+
+function renderSummaryGuestTasks() {
+    document.getElementById('allTask').innerHTML = guestTasks.length;
+
+    let categoryCounts = {
+        'todo': 0,
+        'in-progress': 0,
+        'done': 0,
+        'await-feedback': 0
+    };
+
+    for (let i = 0; i < guestTasks.length; i++) {
+        let task = guestTasks[i];
+        let category = task['category'];
+        if (categoryCounts.hasOwnProperty(category)) {
+            categoryCounts[category]++;
+        } else {
+            categoryCounts[category] = 1;
+        }
+    }
+
+    document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
+    document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
+    document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
+    document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
 }
 
 renderSummaryTasks();
