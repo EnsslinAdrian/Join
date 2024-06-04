@@ -190,7 +190,9 @@ function updateTodo() {
         const todoElement = todo[i];
         document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
     }
+
 }
+
 
 
 function updateInProgress() {
@@ -246,7 +248,7 @@ async function moveTo(category) {
     test[currentDraggedTask]['category'] = category;
     await putData(category);
     updateHTML();
-    currentDraggedTask = null; 
+    currentDraggedTask = null;
 }
 
 
@@ -269,17 +271,17 @@ async function putData(category) {
     try {
         let response = await fetch(`${firebaseUrl}.json`);
         let responseToJson = await response.json();
-        
+
         let user = localStorage.getItem('userKey');
         let pathUser = responseToJson['registered'][user];
         let tasks = pathUser['tasks'];
 
         tasks[currentDraggedTask]['category'] = category;
         await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
-        
+
         console.log(tasks[currentDraggedTask]['category']);
         window.location.reload()
-        
+
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Daten:', error);
     }
@@ -288,7 +290,7 @@ async function putData(category) {
 
 async function dataUser(path = "", data = {}) {
     let response = await fetch(firebaseUrl + path + ".json", {
-        method: "PATCH",  
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
