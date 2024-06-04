@@ -22,7 +22,8 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/add_task/result.svg',
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
     'subtasks': 'Erstellen, Stylen'
 },
 
@@ -49,7 +50,8 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/add_task/result.svg',
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
     'subtasks': 'Erstellen, Stylen'
 },
 
@@ -76,7 +78,8 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/add_task/result.svg',
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
     'subtasks': 'Erstellen, Stylen'
 },
 
@@ -103,7 +106,8 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/add_task/result.svg',
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
     'subtasks': 'Erstellen, Stylen'
 },
 
@@ -130,7 +134,8 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/add_task/result.svg',
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
     'subtasks': 'Erstellen, Stylen'
 },
 

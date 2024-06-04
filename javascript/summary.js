@@ -75,39 +75,76 @@ renderResponsivSummary();
 
 async function renderSummaryTasks() {
     if (localStorage.getItem('username') !== 'Guest') {
-    let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json')
-    let responseToJson = await response.json();
+        let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
+        let responseToJson = await response.json();
 
-    let user = localStorage.getItem('userKey');
-    let pathUser = responseToJson['registered'][user];
-    let tasks = pathUser['tasks'];
+        let user = localStorage.getItem('userKey');
+        let pathUser = responseToJson['registered'][user];
+        let tasks = pathUser['tasks'];
 
-    document.getElementById('allTask').innerHTML = tasks.length;
+        document.getElementById('allTask').innerHTML = tasks.length;
 
-    let categoryCounts = {
-        'todo': 0,
-        'in-progress': 0,
-        'done': 0,
-        'await-feedback': 0
-    };
+        let categoryCounts = {
+            'todo': 0,
+            'in-progress': 0,
+            'done': 0,
+            'await-feedback': 0
+        };
 
-    for (let i = 0; i < tasks.length; i++) {
-        let task = tasks[i];
-        let category = task['category'];
-        if (categoryCounts.hasOwnProperty(category)) {
-            categoryCounts[category]++;
-        } else {
-            categoryCounts[category] = 1;
+        let closestDateTask = null;
+        let closestDateDiff = Infinity;
+        let today = new Date();
+
+        for (let i = 0; i < tasks.length; i++) {
+            let task = tasks[i];
+            let category = task['category'];
+            let taskDateStr = task['date'];
+            
+            let taskDate = parseDate(taskDateStr);
+            let dateDiff = Math.abs((taskDate - today) / (1000 * 60 * 60 * 24));
+
+            if (dateDiff < closestDateDiff) {
+                closestDateDiff = dateDiff;
+                closestDateTask = task;
+            }
+
+            if (categoryCounts.hasOwnProperty(category)) {
+                categoryCounts[category]++;
+            } else {
+                categoryCounts[category] = 1;
+            }
         }
-    }
 
-    document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
-    document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
-    document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
-    document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
-} else {
-renderSummaryGuestTasks();
+        document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
+        document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
+        document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
+        document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
+
+        if (closestDateTask) {
+            document.getElementById('upComingPrioImg').src = closestDateTask['prioImg'];
+            document.getElementById('upComingPrio').innerHTML = closestDateTask['prio'];
+            document.getElementById('upComingDate').innerHTML = closestDateTask['date'];
+        }
+        
+    } else {
+        renderSummaryGuestTasks();
+    }
 }
+
+// Helper function to parse date strings in different formats
+function parseDate(dateStr) {
+    let parts;
+    if (dateStr.includes('-')) {
+        // Format: YYYY-MM-DD
+        parts = dateStr.split('-');
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+    } else if (dateStr.includes('.')) {
+        // Format: DD.MM.YYYY
+        parts = dateStr.split('.');
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    } else {
+        throw new Error("Unrecognized date format: " + dateStr);
+    }
 }
 
 function renderSummaryGuestTasks() {
@@ -120,9 +157,24 @@ function renderSummaryGuestTasks() {
         'await-feedback': 0
     };
 
+    let closestDateTask = null;
+    let closestDateDiff = Infinity;
+    let today = new Date();
+
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
         let category = task['category'];
+        let taskDateStr = task['date'];
+
+        let taskDate = parseDate(taskDateStr);
+        let dateDiff = Math.abs((taskDate - today) / (1000 * 60 * 60 * 24));
+
+        if (dateDiff < closestDateDiff) {
+            closestDateDiff = dateDiff;
+            closestDateTask = task;
+            console.log(task)
+        }
+
         if (categoryCounts.hasOwnProperty(category)) {
             categoryCounts[category]++;
         } else {
@@ -134,6 +186,12 @@ function renderSummaryGuestTasks() {
     document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
     document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
     document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
+
+    if (closestDateTask) {
+        document.getElementById('upComingPrioImg').src = closestDateTask['prioImg'];
+        document.getElementById('upComingPrio').innerHTML = closestDateTask['prio'];
+        document.getElementById('upComingDate').innerHTML = closestDateTask['date'];
+    }
 }
 
 renderSummaryTasks();
