@@ -122,25 +122,35 @@ async function addNewTask(event) {
         'taskContacts': taskContacts
     };
 
-    let userKey = localStorage.getItem('userKey');
+    if (localStorage.getItem('username') !== 'Guest') {
+        let userKey = localStorage.getItem('userKey');
 
-    const response = await fetch(`${firebaseUrl}/registered/${userKey}.json`);
-    const user = await response.json();
+        const response = await fetch(`${firebaseUrl}/registered/${userKey}.json`);
+        const user = await response.json();
 
-    if (!user.tasks) {
-        user.tasks = [];
+        if (!user.tasks) {
+            user.tasks = [];
+        }
+
+        user.tasks.push(task);
+
+        await fetch(`${firebaseUrl}/registered/${userKey}.json`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        });
+        window.location.href = 'board.html';
+    } else {
+        let guestTasks = localStorage.getItem('guestTasks') ? JSON.parse(localStorage.getItem('guestTasks')) : [];
+
+        guestTasks.push(task);
+
+        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+
+        window.location.href = 'board.html';
     }
-
-    user.tasks.push(task);
-
-    await fetch(`${firebaseUrl}/registered/${userKey}.json`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-    });
-    window.location.href = 'board.html';
 }
 
 function getRandomColor() {
@@ -300,8 +310,8 @@ function addContactTask(contactName, initials, i, color) {
 }
 
 async function renderTaskBoard() {
-        if (window.location.pathname.endsWith("board.html")) {
-            if (localStorage.getItem('username') !== 'Guest') {
+    if (window.location.pathname.endsWith("board.html")) {
+        if (localStorage.getItem('username') !== 'Guest') {
             let response = await fetch(`${firebaseUrl}.json`);
             let responseToJson = await response.json();
 
@@ -324,10 +334,12 @@ async function renderTaskBoard() {
                     contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
                 }
             }
-        } 
-        renderGuestTaskBoard();
+        } else {
+            renderGuestTaskBoard();
+        }
     }
 }
+
 
 function clearShowContactContainer() {
     let contactContainer = document.getElementById('contact-container');

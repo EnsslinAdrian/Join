@@ -97,7 +97,7 @@ function generateTodoHTML(element, i) {
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
         <div class="task-card" onclick="openDialogTask(${i})">
             <div class="task-card-type">
-                <div class="type-bg" style="background-color: ${element['taskcolor']};">${element['taskCategory']}</div>
+                <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
             </div>
             <h2>${element['title']}</h2>
             <p class="task-description">${element['description']}</p>
@@ -133,18 +133,18 @@ async function openDialogTask(i) {
 function showTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = '';
-    taskDetails.innerHTML = generateTaskDetails(task);
+    taskDetails.innerHTML = generateTaskDetails(task, i);
 
     let content = document.getElementById(`contacts${i}`);
     
     for (let j = 0; j < task['taskContacts'].length; j++) {
         let contact = task['taskContacts'][j];
-        content.innerHTML += `<p>${contact['initials']}</p>`;
+        content.innerHTML += `<p class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</p>`;
     }
 }
 
 
-function generateTaskDetails(task) {
+function generateTaskDetails(task, i) {
     return /*html*/`
     <div class="task-card-type">
          <div class="type-bg">${task['taskCategory']}</div>
@@ -162,7 +162,7 @@ function generateTaskDetails(task) {
         </div>
         <div>
             <p>Assigned To:</p>
-            <div id="contacts${i}"></div>
+            <div id="contacts${i}" class="openTaskContacts"></div>
         </div>
         <div>
             <p>Subtasks</p>
