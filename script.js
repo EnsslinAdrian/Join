@@ -295,8 +295,8 @@ function addContactTask(contactName, initials, i, color) {
 }
 
 async function renderTaskBoard() {
-    if (localStorage.getItem('username') !== 'Guest') {
         if (window.location.pathname.endsWith("board.html")) {
+            if (localStorage.getItem('username') !== 'Guest') {
             let response = await fetch(`${firebaseUrl}.json`);
             let responseToJson = await response.json();
 
@@ -319,7 +319,8 @@ async function renderTaskBoard() {
                     contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
                 }
             }
-        }
+        } 
+        renderGuestTaskBoard();
     }
 }
 

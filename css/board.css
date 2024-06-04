@@ -224,6 +224,7 @@ h2 {
     font-weight: 400;
     height: 30px;
     width: 30px;
+    margin-right: 10px;
 }
 
 .add-task-popup {
@@ -303,7 +304,6 @@ h2 {
 .taskContacts {
     display: flex;
     width: 70%;
-    justify-content: space-between;
 }
 
 .scrollable_part {
@@ -314,6 +314,10 @@ h2 {
 
 ::-webkit-scrollbar {
     width: 0px;
+}
+
+.openTaskContacts {
+display: flex;
 }
 
 @media (max-width: 1530px) {
