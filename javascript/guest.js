@@ -1,6 +1,6 @@
 let guestTasks = [
 {
-    'category': 'todo',
+    'category': 'in-progress',
     'taskCategory': 'User Story',
     'title': 'Header',
     'description': 'Header Template erstellen',
@@ -24,7 +24,115 @@ let guestTasks = [
     ],
     'prioImg': './assets/img/add_task/result.svg',
     'subtasks': 'Erstellen, Stylen'
-}
+},
+
+{
+    'category': 'in-progress',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/add_task/result.svg',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'await-feedback',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/add_task/result.svg',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'await-feedback',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/add_task/result.svg',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'done',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/add_task/result.svg',
+    'subtasks': 'Erstellen, Stylen'
+},
 
 ];
 
