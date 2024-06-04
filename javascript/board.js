@@ -126,48 +126,54 @@ async function openDialogTask(i) {
 
 
     document.getElementById('dialog').classList.remove('d_none');
-    showTaskDetails(tasks[i])
+    showTaskDetails(tasks[i], i)
 }
 
 
-function showTaskDetails(task) {
+function showTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = '';
     taskDetails.innerHTML = generateTaskDetails(task);
+
+    let content = document.getElementById(`contacts${i}`);
+    
+    for (let j = 0; j < task['taskContacts'].length; j++) {
+        let contact = task['taskContacts'][j];
+        content.innerHTML += `<p>${contact['initials']}</p>`;
+    }
 }
 
 
 function generateTaskDetails(task) {
     return /*html*/`
-    <div id="taskDetails">
-        <div class="task-card-type">
-             <div class="type-bg">${task['taskCategory']}</div>
+    <div class="task-card-type">
+         <div class="type-bg">${task['taskCategory']}</div>
+    </div>
+    <div class="header_task_details">
+        <h1>${task['title']}</h1>
+        <p class="task-description">${task['description']}</p>
+    </div>
+    <div class="task_details_information">
+        <div>
+            <p>Due date:</p><p>${task['date']}</p>
         </div>
-        <div class="header_task_details">
-            <h1>${task['title']}</h1>
-            <p class="task-description">${task['description']}</p>
+        <div>
+            <p>Priority</p><img src="${task['prioImg']}" alt="">
         </div>
-        <div class="task_details_information">
-            <div>
-                <p>Due date:</p><p>${task['date']}</p>
-            </div>
-            <div>
-                <p>Priority</p><img src="${task['prioImg']}" alt="">
-            </div>
-            <div>
-                <p>Assigned To:</p><p>${task['taskContacts']}</p>
-            </div>
-            <div>
-                <p>Subtasks</p>
-                <p>${task['subtasks']}</p>
-            </div>
-            <footer class="details_delete_edit">
-                <img src="../assets/img/delete.svg" alt="">
-                <p>Delete</p>|
-                <img src="../assets/img/edit.svg" alt="">
-                <p>Edit</p>
-            </footer>
+        <div>
+            <p>Assigned To:</p>
+            <div id="contacts${i}"></div>
         </div>
+        <div>
+            <p>Subtasks</p>
+            <p>${task['subtasks']}</p>
+        </div>
+        <footer class="details_delete_edit">
+            <img src="../assets/img/delete.svg" alt="">
+            <p>Delete</p>|
+            <img src="../assets/img/edit.svg" alt="">
+            <p>Edit</p>
+        </footer>
     </div>
     `;
 }
@@ -245,10 +251,24 @@ function allowDrop(ev) {
 let test = [];
 
 async function moveTo(category) {
+<<<<<<< HEAD
     test[currentDraggedTask]['category'] = category;
     await putData(category);
     updateHTML();
     currentDraggedTask = null;
+=======
+    if (localStorage.getItem('username') !== 'Guest') {
+        test[currentDraggedTask]['category'] = category;
+        await putData(category);
+        updateHTML();
+        currentDraggedTask = null;
+    } else {
+        guestTasks[currentDraggedTask]['category'] = category;
+        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+        currentDraggedTask = null; 
+        updateHTML();
+    }
+>>>>>>> 0ea0404642a08ebd58704c35b42ef8df5b86e82a
 }
 
 
