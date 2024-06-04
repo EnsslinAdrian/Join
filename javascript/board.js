@@ -251,12 +251,6 @@ function allowDrop(ev) {
 let test = [];
 
 async function moveTo(category) {
-<<<<<<< HEAD
-    test[currentDraggedTask]['category'] = category;
-    await putData(category);
-    updateHTML();
-    currentDraggedTask = null;
-=======
     if (localStorage.getItem('username') !== 'Guest') {
         test[currentDraggedTask]['category'] = category;
         await putData(category);
@@ -268,7 +262,6 @@ async function moveTo(category) {
         currentDraggedTask = null; 
         updateHTML();
     }
->>>>>>> 0ea0404642a08ebd58704c35b42ef8df5b86e82a
 }
 
 
