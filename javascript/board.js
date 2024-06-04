@@ -196,7 +196,9 @@ function updateTodo() {
         const todoElement = todo[i];
         document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
     }
+
 }
+
 
 
 function updateInProgress() {
@@ -249,6 +251,12 @@ function allowDrop(ev) {
 let test = [];
 
 async function moveTo(category) {
+<<<<<<< HEAD
+    test[currentDraggedTask]['category'] = category;
+    await putData(category);
+    updateHTML();
+    currentDraggedTask = null;
+=======
     if (localStorage.getItem('username') !== 'Guest') {
         test[currentDraggedTask]['category'] = category;
         await putData(category);
@@ -260,6 +268,7 @@ async function moveTo(category) {
         currentDraggedTask = null; 
         updateHTML();
     }
+>>>>>>> 0ea0404642a08ebd58704c35b42ef8df5b86e82a
 }
 
 
@@ -282,17 +291,17 @@ async function putData(category) {
     try {
         let response = await fetch(`${firebaseUrl}.json`);
         let responseToJson = await response.json();
-        
+
         let user = localStorage.getItem('userKey');
         let pathUser = responseToJson['registered'][user];
         let tasks = pathUser['tasks'];
 
         tasks[currentDraggedTask]['category'] = category;
         await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
-        
+
         console.log(tasks[currentDraggedTask]['category']);
         window.location.reload()
-        
+
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Daten:', error);
     }
@@ -301,7 +310,7 @@ async function putData(category) {
 
 async function dataUser(path = "", data = {}) {
     let response = await fetch(firebaseUrl + path + ".json", {
-        method: "PATCH",  
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
