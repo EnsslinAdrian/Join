@@ -74,6 +74,7 @@ window.addEventListener('resize', renderResponsivSummary);
 renderResponsivSummary();
 
 async function renderSummaryTasks() {
+    if (localStorage.getItem('username') !== 'Guest') {
     let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json')
     let responseToJson = await response.json();
 
@@ -105,6 +106,7 @@ async function renderSummaryTasks() {
     document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
     document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
     document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
+}
 }
 
 renderSummaryTasks();
