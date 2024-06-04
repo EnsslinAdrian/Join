@@ -44,8 +44,6 @@ async function renderGuestTaskBoard() {
             }
         }
     
-
-
 function generateGuestTodoHTML(element, i) {
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">

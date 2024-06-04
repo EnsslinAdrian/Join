@@ -380,4 +380,3 @@ function questLogin() {
   localStorage.setItem('username', 'Guest');
   window.location.href = 'summary.html';
 }
-
