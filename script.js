@@ -17,6 +17,11 @@ function init() {
     renderTaskBoard();
 }
 
+async function loadData(path = "") {
+    const response = await fetch(firebaseUrl + ".json");
+    const responseToJson = await response.json();
+}
+
 /**
  * This function checks if the user's login data is correct
  * 
