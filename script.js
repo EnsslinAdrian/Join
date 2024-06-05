@@ -5,6 +5,9 @@ let prio = 'Medium';
 let prioImg = './assets/img/add_task/result.svg';
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
+/**
+ * This is the onload function to render and start all functions when the page reloads
+ */
 function init() {
     includeHTML();
     loadData();
@@ -19,6 +22,11 @@ async function loadData(path = "") {
     const responseToJson = await response.json();
 }
 
+/**
+ * This function checks if the user's login data is correct
+ * 
+ * @param {string} event - prevents the page from reloading when the submit action is triggered
+ */
 async function checkUser(event) {
     event.preventDefault();
 
@@ -50,12 +58,22 @@ async function checkUser(event) {
     }
 }
 
+/**
+ * This function takes the stored username, splits the words, and retrieves the first letter of each word to form the initials
+ */
 function initials() {
     let userName = localStorage.getItem('username');
     let initials = userName.split(' ').map(word => word[0]).join('');
     document.getElementById('initials').innerHTML = initials;
 }
 
+/**
+ * Sends a POST request to the specified Firebase path with the provided data.
+ * 
+ * @param {string} path - The path to append to the Firebase URL.
+ * @param {Object} data - The data to be sent in the POST request.
+ * @returns {Promise<Object>} The JSON response from the Firebase server.
+ */
 async function postUser(path = "", data = {}) {
     let response = await fetch(firebaseUrl + path + ".json", {
 
@@ -68,6 +86,13 @@ async function postUser(path = "", data = {}) {
     return responseToJson = await response.json();
 }
 
+/**
+ * Handles the user registration process by preventing the default form submission,
+ * validating the input fields, and sending a POST request to store the user data.
+ * 
+ * @param {Event} event - The event object representing the form submission event.
+ * @returns {void}
+ */
 function registration(event) {
     event.preventDefault();
 
@@ -101,6 +126,13 @@ function registration(event) {
     confirmPassword.value = "";
 }
 
+/**
+ * Handles the addition of a new task by preventing the default form submission,
+ * collecting task details, and storing the task either in Firebase for registered users
+ * or in localStorage for guest users.
+ * 
+ * @param {Event} event - The event object representing the form submission event.
+ */
 async function addNewTask(event) {
     event.preventDefault();
 
@@ -153,6 +185,11 @@ async function addNewTask(event) {
     }
 }
 
+/**
+ * Generates a random background color for the initials of each contact.
+ * 
+ * @returns {string} A randomly generated hex color code.
+ */
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -162,6 +199,14 @@ function getRandomColor() {
     return color;
 }
 
+/**
+ * Fetches and renders contacts from the specified path in the Firebase database.
+ * If the current page is contacts.html, it updates the contact container with
+ * the fetched contact data.
+ * 
+ * @param {string} path - The path to append to the Firebase URL for fetching contacts.
+ * @returns {Promise<void>}
+ */
 async function renderContacts(path = "") {
     if (window.location.pathname.endsWith("contacts.html")) {
         let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
@@ -181,6 +226,13 @@ async function renderContacts(path = "") {
     }
 }
 
+/**
+ * Generates the HTML for a contact card.
+ * 
+ * @param {Object} contact - The contact object containing the contact details.
+ * @param {number} i - The index of the contact in the contact list.
+ * @returns {string} The generated HTML string for the contact card.
+ */
 function generateContactHtml(contact, i) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
@@ -255,19 +307,9 @@ function showContact(contactStr, i) {
     editIcon.classList.add('active');
 }
 
-// async function deleteContact(contactJson, i) {
-//     let contact = JSON.parse(decodeURIComponent(contactJson));
-
-//     let response = await fetch(`${firebaseUrl}/contacts/${contactId}.json`, {
-
-//         method: "DELETE",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     });
-//     }
-
-
+/**
+ * Renders the contacts on the addTask page for the "Assigned to" section. 
+ */
 async function renderContactsAddTask() {
     if (window.location.pathname.endsWith("add_task.html")) {
         let response = await fetch(firebaseUrl + '.json');
@@ -287,6 +329,14 @@ async function renderContactsAddTask() {
     }
 }
 
+/**
+ * Generates the HTML for a contact card to be displayed on the task assignment section.
+ * 
+ * @param {Object} contact - The contact object containing the contact details.
+ * @param {number} i - The index of the contact in the contact list.
+ * @param {string} color - The background color for the contact's initials.
+ * @returns {string} The generated HTML string for the contact card in the task assignment section.
+ */
 function generateTaskContactHtml(contact, i, color) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
@@ -301,6 +351,14 @@ function generateTaskContactHtml(contact, i, color) {
     `;
 }
 
+/**
+ * This function creates a new contact and stores it in the database.
+ * 
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} i - The index of the contact in the contact list.
+ * @param {string} color - The background color for the contact's initials.
+ */
 function addContactTask(contactName, initials, i, color) {
     let newTaskContact = {
         'initials': initials,
@@ -322,6 +380,10 @@ function addContactTask(contactName, initials, i, color) {
     renderAddTaskContactInitials();
 }
 
+/**
+ * This function renders the created and stored tasks from the database 
+ * for registered users or from localStorage for guest users.
+ */
 async function renderTaskBoard() {
     if (window.location.pathname.endsWith("board.html")) {
         if (localStorage.getItem('username') !== 'Guest') {
@@ -401,6 +463,10 @@ function logOut() {
     window.location.href = 'index.html';
 }
 
+/**
+ * This function sets a keyword with the name 'Guest' in localStorage when logging in as a guest user,
+ * and then redirects to summary.html.
+ */
 function questLogin() {
   localStorage.setItem('username', 'Guest');
   window.location.href = 'summary.html';

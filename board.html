@@ -16,7 +16,7 @@
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
     <script src="javascript/board.js"></script>
-    <script src="guest.js"></script>
+    <script src="./javascript/guest.js"></script>
 </head>
 
 <body onload="init();">
@@ -76,16 +76,14 @@
                             <p>To do</p>
                             <button onclick="openAddTask()" class="list-btn">+</button>
                         </div>
+                        <div class="no-task" id="noTasksTodo">
+                            No tasks to do
+                        </div>
                         <div class="scrollable_part">
-                            <div class="no-task" id="noTasksTodo">
-                                No tasks to do
+                            <div class="task-columns" id="todo" ondrop="moveTo('todo')"
+                                ondragleave="removeHighlight('todo')" ondragover="allowDrop(event); highlight('todo')">
                             </div>
-                            <div class="allTasks">
-                                <div class="task-columns" id="todo" ondrop="moveTo('todo')"
-                                    ondragleave="removeHighlight('todo')"
-                                    ondragover="allowDrop(event); highlight('todo')">
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="task_content">
@@ -93,15 +91,13 @@
                             <p>In progress</p>
                             <button onclick="openAddTask()" class="list-btn">+</button>
                         </div>
+                        <div class="no-task" id="noTasksInProgress">
+                            No tasks in progress
+                        </div>
                         <div class="scrollable_part">
-                            <div class="no-task" id="noTasksInProgress">
-                                No tasks in progress
-                            </div>
-                            <div class="allTasks">
-                                <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
-                                    ondragleave="removeHighlight('in-progress')"
-                                    ondragover="allowDrop(event); highlight('in-progress')">
-                                </div>
+                            <div class="task-columns" id="in-progress" ondrop="moveTo('in-progress')"
+                                ondragleave="removeHighlight('in-progress')"
+                                ondragover="allowDrop(event); highlight('in-progress')">
                             </div>
                         </div>
                     </div>
@@ -110,15 +106,13 @@
                             <p>Await feedback</p>
                             <button onclick="openAddTask()" class="list-btn">+</button>
                         </div>
+                        <div class="no-task" id="noTasksAwaitFeedback">
+                            No tasks await feedback
+                        </div>
                         <div class="scrollable_part">
-                            <div class="no-task" id="noTasksAwaitFeedback">
-                                No tasks await feedback
-                            </div>
-                            <div class="allTasks">
-                                <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
-                                    ondragleave="removeHighlight('await-feedback')"
-                                    ondragover="allowDrop(event); highlight('await-feedback')">
-                                </div>
+                            <div class="task-columns" id="await-feedback" ondrop="moveTo('await-feedback')"
+                                ondragleave="removeHighlight('await-feedback')"
+                                ondragover="allowDrop(event); highlight('await-feedback')">
                             </div>
                         </div>
                     </div>
@@ -126,16 +120,14 @@
                         <div class="list-item">
                             <p>Done</p>
                         </div>
-                        <div class="scrollable_part">
                             <div class="no-task" id="noTasksDone">
                                 No tasks done
                             </div>
-                            <div class="allTasks">
+                            <div class="scrollable_part">
                                 <div class="task-columns" id="done" ondrop="moveTo('done')"
                                     ondragleave="removeHighlight('done')"
                                     ondragover="allowDrop(event); highlight('done')">
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>

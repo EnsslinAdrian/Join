@@ -261,6 +261,7 @@ async function moveTo(category) {
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
         currentDraggedTask = null; 
         updateHTML();
+        window.location.reload();
     }
 }
 

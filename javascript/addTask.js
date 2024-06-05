@@ -77,13 +77,20 @@ function closeAllSelect(elmnt) {
 
 document.addEventListener("click", closeAllSelect);
 
-
+/**
+ * This function closes the pop-up window for contacts in the "Assigned to" section.
+ */
 function closeAssigned() {
   document.getElementById('assignedContainer').classList.add('d-none');
   document.getElementById('selectedContact').classList.add('selected-contact');
   document.getElementById('selectedContact').classList.remove('d-none');
 }
 
+/**
+ * This function opens the pop-up window for contacts in the "Assigned to" section.
+ * 
+ * @param {Event} event - The event object representing the user interaction.
+ */
 function openAssigned(event) {
   event.stopPropagation();
   document.getElementById('assignedContainer').classList.remove('d-none');
@@ -91,6 +98,9 @@ function openAssigned(event) {
   document.getElementById('selectedContact').classList.add('d-none');
 }
 
+/**
+ * This function clears the content of all entered fields in the task form.
+ */
 function clearTask() {
   document.getElementById('title').value = '';
   document.getElementById('description').value = '';
@@ -108,6 +118,10 @@ function clearTask() {
   renderSubtasksList();
 }
 
+/**
+ * This function saves the priority text as a variable (in this case the string 'Urgent') 
+ * and the corresponding image. It updates the UI to reflect the selected priority.
+ */
 function taskUrgent() {
   prio = 'Urgent';
   prioImg = './assets/img/add_task/arrowsTop.svg';
@@ -119,6 +133,10 @@ function taskUrgent() {
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
 }
 
+/**
+ * This function saves the priority text as a variable (in this case the string 'Medium') 
+ * and the corresponding image. It updates the UI to reflect the selected priority.
+ */
 function taskMedium() {
   prio = 'Medium';
   prioImg = './assets/img/add_task/result.svg';
@@ -130,6 +148,10 @@ function taskMedium() {
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
 }
 
+/**
+ * This function saves the priority text as a variable (in this case the string 'Low') 
+ * and the corresponding image. It updates the UI to reflect the selected priority.
+ */
 function taskLow() {
   prio = 'Low';
   prioImg = './assets/img/add_task/arrowsButtom.svg';
@@ -141,6 +163,11 @@ function taskLow() {
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
 }
 
+/**
+ * This function filters the contacts for the "Assigned to" section in the pop-up window.
+ * 
+ * @param {string} path - The path to append to the Firebase URL for fetching contacts.
+ */
 async function filterContacts(path = '') {
   let response = await fetch(`${firebaseUrl}.json`);
   let responseToJson = await response.json();
@@ -170,6 +197,15 @@ async function filterContacts(path = '') {
   }
 }
 
+/**
+ * Generates the HTML for a contact card to be displayed in the search results for the "Assigned to" section.
+ * 
+ * @param {Object} contact - The contact object containing the contact details.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} initialsBgColor - The background color for the contact's initials.
+ * @param {number} i - The index of the contact in the contact list.
+ * @returns {string} The generated HTML string for the contact card in the search results.
+ */
 function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
   return `
   <div class="assigned-contact" id="contactTask${i}">
@@ -182,6 +218,9 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
   `;
 }
 
+/**
+ * This function generates a new subtask and adds it to the list of subtasks.
+ */
 function addNewSubtasks() {
   let subtask = document.getElementById('subtask');
   if (subtasks.length < 2) {
@@ -193,7 +232,9 @@ function addNewSubtasks() {
   }
 }
 
-
+/**
+ * This function renders the initials for the contacts in the "Assigned to" section.
+ */
 function renderAddTaskContactInitials() {
   let content = document.getElementById('selectedContact');
   content.innerHTML = "";
@@ -203,10 +244,19 @@ function renderAddTaskContactInitials() {
   }
 }
 
+/**
+ * Generates the HTML for displaying the initials of a contact in the "Assigned to" section.
+ * 
+ * @param {Object} contact - The contact object containing the contact details.
+ * @returns {string} The generated HTML string for the contact's initials.
+ */
 function generateAddTaskContactInitialsHTML(contact) {
   return `<div style="background-color: ${contact['color']};" class="assigned-initials">${contact['initials']}</div>`;
 }
 
+/**
+ * This function renders the created subtasks and displays them in the content area.
+ */
 function renderSubtasksList() {
   let content = document.getElementById('subtasksList');
   content.innerHTML = '';
