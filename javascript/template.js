@@ -1,3 +1,8 @@
+/**
+ * Includes HTML content from external files into the current HTML document.
+ * Searches for elements with the attribute "w3-include-html", makes an HTTP request to fetch the content,
+ * and inserts it into the element. Recursively processes all such elements.
+ */
 function includeHTML() {
     var z, i, elmnt, file, xhttp;
     /* Loop through a collection of all HTML elements: */

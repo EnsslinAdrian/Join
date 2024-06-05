@@ -14,6 +14,7 @@
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
+    <script src="./javascript/guest.js"></script>
 
 </head>
 
@@ -70,18 +71,18 @@
 
                         <div class="urgent-dashboard">
                             <div class="display-flex align-items">
-                                <img class="double-arrows" src="./assets/img/summary/double_arrows.svg"
+                                <img class="double-arrows" id="upComingPrioImg" src="./assets/img/summary/double_arrows.svg"
                                     alt="Double Arrows">
                                 <div class="task-current-conatiner">
                                     <p class="task-current-number">1</p>
-                                    <p>Urgent</p>
+                                    <p id="upComingPrio">Urgent</p>
                                 </div>
                             </div>
 
                             <div class="between-line"></div>
 
                             <div class="date-text-container">
-                                <p class="date-text">October 16, 2022</p>
+                                <p class="date-text" id="upComingDate">October 16, 2022</p>
                                 <p class="deadline-text">Upcoming Deadline</p>
                             </div>
                         </div>
@@ -107,7 +108,7 @@
                     </section>
 
                     <section class="greeting-container" id="greeting">
-                        <h3>Good morning,</h3>
+                        <h3 id="greetingTime">Good morning,</h3>
                         <h2 id="greetingUserName">Sofia Müller</h2>
                     </section>
                 </div>

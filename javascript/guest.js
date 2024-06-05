@@ -1,4 +1,5 @@
 let guestTasks = [
+<<<<<<< HEAD
     {
         'category': 'in-progress',
         'taskCategory': 'User Story',
@@ -133,9 +134,154 @@ let guestTasks = [
         'prioImg': './assets/img/add_task/result.svg',
         'subtasks': 'Erstellen, Stylen'
     },
+=======
+{
+    'category': 'in-progress',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'in-progress',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'await-feedback',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'await-feedback',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
+    'subtasks': 'Erstellen, Stylen'
+},
+
+{
+    'category': 'done',
+    'taskCategory': 'User Story',
+    'title': 'Header',
+    'description': 'Header Template erstellen',
+    'date': '16.08.2024',
+    'taskContacts': [
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        },
+        {
+            'color': '#8128EE',
+            'initials': 'AM',
+            'name': 'Anton Mayer'
+        }
+    ],
+    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prio': 'Urgent',
+    'subtasks': 'Erstellen, Stylen'
+},
+>>>>>>> c5f327a56290304af9dcdc01e072c4d2892151ff
 
 ];
 
+/**
+ * Renders the task board for guest users by iterating over guest tasks
+ * and generating the HTML for each task.
+ */
 async function renderGuestTaskBoard() {
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
@@ -149,9 +295,19 @@ async function renderGuestTaskBoard() {
 
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
+<<<<<<< HEAD
     }
 }
 
+=======
+
+/**
+ * Generates the HTML for a guest user's task card on the board page.
+ * 
+ * @param {Object} element - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
+>>>>>>> c5f327a56290304af9dcdc01e072c4d2892151ff
 function generateGuestTodoHTML(element, i) {
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -175,12 +331,22 @@ function generateGuestTodoHTML(element, i) {
     `;
 }
 
-
+/**
+ * Opens the task dialog for a guest user's task and shows the detailed view.
+ * 
+ * @param {number} i - The index of the task in the guest task list.
+ */
 function openDialogGuestTask(i) {
     document.getElementById('dialog').classList.remove('d_none');
     showGuestTaskDetails(guestTasks[i], i);
 }
 
+/**
+ * Displays the detailed view of a guest user's task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the guest task list.
+ */
 function showGuestTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = '';
@@ -195,7 +361,12 @@ function showGuestTaskDetails(task, i) {
     }
 }
 
-
+/**
+ * Generates the HTML for displaying the detailed view of a guest user's task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the guest task list.
+ */
 function generateGuestTaskDetails(task, i) {
     return /*html*/`
     <div class="task-card-type">
@@ -232,7 +403,10 @@ function generateGuestTaskDetails(task, i) {
     `;
 }
 
-
+/**
+ * Updates the HTML content for the task board by calling functions
+ * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
+ */
 function updateHTML() {
     updateTodo();
     updateInProgress();
@@ -240,7 +414,10 @@ function updateHTML() {
     updateDone();
 }
 
-
+/**
+ * Updates the HTML content for the "ToDo" section by filtering tasks
+ * with the category 'todo' and generating their HTML.
+ */
 function updateTodo() {
     let todo = guestTasks.filter(t => t['category'] == 'todo');
     document.getElementById('todo').innerHTML = '';
@@ -256,6 +433,10 @@ function updateTodo() {
     }
 }
 
+/**
+ * Updates the HTML content for the "In Progress" section by filtering tasks
+ * with the category 'in-progress' and generating their HTML.
+ */
 function updateInProgress() {
     let inProgress = guestTasks.filter(t => t['category'] == 'in-progress');
     document.getElementById('in-progress').innerHTML = '';
@@ -271,6 +452,10 @@ function updateInProgress() {
     }
 }
 
+/**
+ * Updates the HTML content for the "Await-feedback" section by filtering tasks
+ * with the category 'await-feedback' and generating their HTML.
+ */
 function updateAwaitFeedback() {
     let awaitFeedback = guestTasks.filter(t => t['category'] == 'await-feedback');
     document.getElementById('await-feedback').innerHTML = '';
@@ -286,6 +471,10 @@ function updateAwaitFeedback() {
     }
 }
 
+/**
+ * Updates the HTML content for the "Done" section by filtering tasks
+ * with the category 'done' and generating their HTML.
+ */
 function updateDone() {
     let done = guestTasks.filter(t => t['category'] == 'done');
     document.getElementById('done').innerHTML = '';
@@ -301,10 +490,19 @@ function updateDone() {
     }
 }
 
+/**
+ * Starts the dragging process for a task.
+ * 
+ * @param {number} i - The ID of the task being dragged.
+ */
 function startDragging(i) {
     currentDraggedTask = i;
 }
 
+/**
+ * Checks if there are guest tasks stored in localStorage.
+ * If they exist, parses and assigns them to the guestTasks variable.
+ */
 if (localStorage.getItem('guestTasks')) {
     guestTasks = JSON.parse(localStorage.getItem('guestTasks'));
 }
