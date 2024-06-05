@@ -1,157 +1,157 @@
 let guestTasks = [
-{
-    'category': 'in-progress',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/result.svg',
-    'subtasks': 'Erstellen, Stylen'
-},
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/result.svg',
+        'subtasks': 'Erstellen, Stylen'
+    },
 
-{
-    'category': 'in-progress',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/result.svg',
-    'subtasks': 'Erstellen, Stylen'
-},
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/result.svg',
+        'subtasks': 'Erstellen, Stylen'
+    },
 
-{
-    'category': 'await-feedback',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/result.svg',
-    'subtasks': 'Erstellen, Stylen'
-},
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/result.svg',
+        'subtasks': 'Erstellen, Stylen'
+    },
 
-{
-    'category': 'await-feedback',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/result.svg',
-    'subtasks': 'Erstellen, Stylen'
-},
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/result.svg',
+        'subtasks': 'Erstellen, Stylen'
+    },
 
-{
-    'category': 'done',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/result.svg',
-    'subtasks': 'Erstellen, Stylen'
-},
+    {
+        'category': 'done',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/result.svg',
+        'subtasks': 'Erstellen, Stylen'
+    },
 
 ];
 
 async function renderGuestTaskBoard() {
-            for (let i = 0; i < guestTasks.length; i++) {
-                let task = guestTasks[i];
-                let id = task['category'];
-                
-                document.getElementById(id).innerHTML += generateGuestTodoHTML(task, i);
+    for (let i = 0; i < guestTasks.length; i++) {
+        let task = guestTasks[i];
+        let id = task['category'];
 
-                let contactsContent = document.getElementById(`taskContacts${i}`);
-                for (let j = 0; j < task['taskContacts'].length; j++) {
-                    let contacts = task['taskContacts'][j];
+        document.getElementById(id).innerHTML += generateGuestTodoHTML(task, i);
 
-                    contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-                }
-            }
+        let contactsContent = document.getElementById(`taskContacts${i}`);
+        for (let j = 0; j < task['taskContacts'].length; j++) {
+            let contacts = task['taskContacts'][j];
+
+            contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
-    
+    }
+}
+
 function generateGuestTodoHTML(element, i) {
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -187,13 +187,13 @@ function showGuestTaskDetails(task, i) {
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
 
     let content = document.getElementById(`contacts${i}`);
-    
-    
-        for (let j = 0; j < task['taskContacts'].length; j++) {
-            let contact = task['taskContacts'][j];
-            content.innerHTML += `<p class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</p>`;
-        }
+
+
+    for (let j = 0; j < task['taskContacts'].length; j++) {
+        let contact = task['taskContacts'][j];
+        content.innerHTML += `<p class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</p>`;
     }
+}
 
 
 function generateGuestTaskDetails(task, i) {
@@ -206,19 +206,21 @@ function generateGuestTaskDetails(task, i) {
         <p class="task-description">${task['description']}</p>
     </div>
     <div class="task_details_information">
-        <div>
-            <p>Due date:</p><p>${task['date']}</p>
+        <div class="task_dateils_date">
+            <span>Due date:</span><p>${task['date']}</p>
         </div>
-        <div>
-            <p>Priority</p><img src="${task['prioImg']}" alt="">
+        <div class="task_details_priority">
+            <span>Priority:</span><img src="${task['prioImg']}" alt="">
         </div>
-        <div>
-            <p>Assigned To:</p>
-            <div id="contacts${i}" class="openTaskContacts"></div>
+        <div class="task_details_assigned_to">
+            <span>Assigned To:</span>
+            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
         </div>
-        <div>
-            <p>Subtasks</p>
-            <p>${task['subtasks']}</p>
+        <div class="task_details_subtasks">
+            <span>Subtasks</span>
+            <div class="task_details_subtask">
+                <p>${task['subtasks']}</p>
+            </div>        
         </div>
         <footer class="details_delete_edit">
             <img src="../assets/img/delete.svg" alt="">

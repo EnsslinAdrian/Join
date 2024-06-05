@@ -136,10 +136,29 @@ function showTaskDetails(task, i) {
     taskDetails.innerHTML = generateTaskDetails(task, i);
 
     let content = document.getElementById(`contacts${i}`);
-    
+
     for (let j = 0; j < task['taskContacts'].length; j++) {
         let contact = task['taskContacts'][j];
-        content.innerHTML += `<p class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</p>`;
+        content.innerHTML += `
+        <div class="arrange_assigned_to_contacts">
+            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+            <p> ${contact['name']}</p>
+        </div>
+        `;
+    }
+    
+    let subtasks = document.getElementById(`task_subtasks`);
+    subtasks.innerHTML='';
+
+    for (let k = 0; k < task['subtasks'].length; k++) {
+        let subtask = task['subtasks'][k];
+        console.log(subtask);
+        subtasks.innerHTML += `
+        <div id="single_subtask">
+            <input type="checkbox">
+            <p>${subtask}</p>
+        </div>
+        `;
     }
 }
 
@@ -151,22 +170,23 @@ function generateTaskDetails(task, i) {
     </div>
     <div class="header_task_details">
         <h1>${task['title']}</h1>
-        <p class="task-description">${task['description']}</p>
+        <h2 class="task-description">${task['description']}</h2>
     </div>
     <div class="task_details_information">
-        <div>
-            <p>Due date:</p><p>${task['date']}</p>
+        <div class="task_details_date">
+            <span>Due date:</span><p>${task['date']}</p>
         </div>
-        <div>
-            <p>Priority</p><img src="${task['prioImg']}" alt="">
+        <div class="task_details_priority">
+            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
         </div>
-        <div>
-            <p>Assigned To:</p>
-            <div id="contacts${i}" class="openTaskContacts"></div>
+        <div class="task_details_assigned_to">
+            <span>Assigned To:</span>
+            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
         </div>
-        <div>
-            <p>Subtasks</p>
-            <p>${task['subtasks']}</p>
+        <div class="task_details_subtasks">
+            <span>Subtasks</span>
+            <div class="task_details_subtask" id="task_subtasks">
+            </div>
         </div>
         <footer class="details_delete_edit">
             <img src="../assets/img/delete.svg" alt="">
@@ -259,7 +279,7 @@ async function moveTo(category) {
     } else {
         guestTasks[currentDraggedTask]['category'] = category;
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        currentDraggedTask = null; 
+        currentDraggedTask = null;
         updateHTML();
     }
 }
