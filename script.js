@@ -229,7 +229,7 @@ function showContact(contactStr, i) {
                 <div class="edit-contact" onclick="openEditPopup('${contactJson}')">
                     <img src="assets/img/edit.svg">Edit 
                 </div>
-                <div class="del-contact" onclick="deleteContact()">
+                <div class="del-contact" onclick="deleteContact('${contactJson}', ${i})">
                     <img src="assets/img/delete.svg">Delete
                 </div>
         </div>
@@ -246,7 +246,7 @@ function showContact(contactStr, i) {
                     <a>${contact['phone']}</a>
                 </div>
             </div>
-            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup())">
+            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup('${contactJson}')">
                 <img src="assets/img/contacts/more_vert.svg">
             </div>
     </div>
@@ -254,6 +254,19 @@ function showContact(contactStr, i) {
     let editIcon = document.getElementById('edit-contact-icon');
     editIcon.classList.add('active');
 }
+
+// async function deleteContact(contactJson, i) {
+//     let contact = JSON.parse(decodeURIComponent(contactJson));
+
+//     let response = await fetch(`${firebaseUrl}/contacts/${contactId}.json`, {
+
+//         method: "DELETE",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//     });
+//     }
+
 
 async function renderContactsAddTask() {
     if (window.location.pathname.endsWith("add_task.html")) {
