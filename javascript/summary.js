@@ -34,6 +34,19 @@ function greetingUser() {
     let userName = localStorage.getItem('username');
     let name = document.getElementById('greetingUserName');
     name.innerHTML = userName;
+
+ let currentHour = new Date().getHours();
+    let greetingMessage;
+
+    if (currentHour < 12) {
+        greetingMessage = "Good morning";
+    } else if (currentHour < 18) {
+        greetingMessage = "Good afternoon";
+    } else {
+        greetingMessage = "Good evening";
+    }
+
+    document.getElementById('greetingTime').innerHTML = greetingMessage;
 }
 
 greetingUser();
@@ -136,7 +149,14 @@ async function renderSummaryTasks() {
         if (closestDateTask) {
             document.getElementById('upComingPrioImg').src = closestDateTask['prioImg'];
             document.getElementById('upComingPrio').innerHTML = closestDateTask['prio'];
-            document.getElementById('upComingDate').innerHTML = closestDateTask['date'];
+
+            let formattedDate = new Date(closestDateTask['date']).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById('upComingDate').innerHTML = formattedDate;
         }
         
     } else {
@@ -160,7 +180,7 @@ function parseDate(dateStr) {
     } else {
         throw new Error("Unrecognized date format: " + dateStr);
     }
-}
+} 
 
 /**
  * Renders the summary of tasks for guest users by updating task counts and the nearest upcoming task information on the summary page.
