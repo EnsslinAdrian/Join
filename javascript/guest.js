@@ -1,5 +1,4 @@
 let guestTasks = [
-<<<<<<< HEAD
 {
     'category': 'in-progress',
     'taskCategory': 'User Story',
@@ -139,142 +138,6 @@ let guestTasks = [
     'prio': 'Urgent',
     'subtasks': 'Erstellen, Stylen'
 },
-=======
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/result.svg',
-        'subtasks': 'Erstellen, Stylen'
-    },
-
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/result.svg',
-        'subtasks': 'Erstellen, Stylen'
-    },
-
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/result.svg',
-        'subtasks': 'Erstellen, Stylen'
-    },
-
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/result.svg',
-        'subtasks': 'Erstellen, Stylen'
-    },
-
-    {
-        'category': 'done',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/result.svg',
-        'subtasks': 'Erstellen, Stylen'
-    },
->>>>>>> 3def35d92b9c2f0f84ed8aea63f2e5962df5eff0
 
 ];
 
@@ -304,10 +167,6 @@ async function renderGuestTaskBoard() {
     }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3def35d92b9c2f0f84ed8aea63f2e5962df5eff0
 
 /**
  * Generates the HTML for a guest user's task card on the board page.
