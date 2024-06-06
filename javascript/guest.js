@@ -141,6 +141,12 @@ let guestTasks = [
  * and generating the HTML for each task.
  */
 async function renderGuestTaskBoard() {
+
+    document.getElementById('todo').innerHTML = '';
+    document.getElementById('in-progress').innerHTML = '';
+    document.getElementById('await-feedback').innerHTML = '';
+    document.getElementById('done').innerHTML = '';
+
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
         let id = task['category'];
