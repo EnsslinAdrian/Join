@@ -325,7 +325,7 @@ async function moveTo(category) {
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
         currentDraggedTask = null;
         updateHTML();
-        window.location.reload();
+        renderGuestTaskBoard();
     }
 }
 
@@ -374,7 +374,7 @@ async function putData(category) {
         await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
 
         console.log(tasks[currentDraggedTask]['category']);
-        window.location.reload()
+        renderTaskBoard()
 
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Daten:', error);

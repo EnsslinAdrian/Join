@@ -54,14 +54,14 @@
 
                 <div class="task-dashboard-section">
                     <section class="task-dashboard-container" id="summaryTaskDashboard">
-                        <div class="todos-done-dashboard" id="todosContainer">
+                        <div class="todos-done-dashboard" id="todosContainer" onclick="pathToBoard()">
                             <img id="pen" src="./assets/img/summary/pen.svg" alt="Pen">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number" id="todoSummary">0</p>
                                 <p class="task-current-dodo-done">To-do</p>
                             </div>
                         </div>
-                        <div class="todos-done-dashboard" id="doneContainer">
+                        <div class="todos-done-dashboard" id="doneContainer" onclick="pathToBoard()">
                             <img id="chop" src="./assets/img/summary/chop.svg" alt="Chop">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number" id="doneSummary">0</p>
@@ -69,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="urgent-dashboard">
+                        <div class="urgent-dashboard" onclick="pathToBoard()">
                             <div class="display-flex align-items">
                                 <img class="double-arrows" id="upComingPrioImg" src="./assets/img/summary/double_arrows.svg"
                                     alt="Double Arrows">
@@ -87,19 +87,19 @@
                             </div>
                         </div>
 
-                        <div class="tasks-feedback-dashboard">
+                        <div class="tasks-feedback-dashboard" onclick="pathToBoard()">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number" id="allTask">0</p>
                                 <p class="task-current-name">Task in Board</p>
                             </div>
                         </div>
-                        <div class="tasks-feedback-dashboard">
+                        <div class="tasks-feedback-dashboard" onclick="pathToBoard()">
                             <div class="task-current-conatiner">
                                 <p class="task-current-number" id="inProgressSummary">0</p>
                                 <p class="task-current-name">Task in Progress</p>
                             </div>
                         </div>
-                        <div class="tasks-feedback-dashboard">
+                        <div class="tasks-feedback-dashboard" onclick="pathToBoard()">
                             <div>
                                 <p class="task-current-number" id="awaitingSummary">0</p>
                                 <p class="task-current-name">Awaiting Feedback</p>

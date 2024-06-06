@@ -233,3 +233,7 @@ function renderSummaryGuestTasks() {
 }
 
 renderSummaryTasks();
+
+function pathToBoard() {
+  window.location.href = 'board.html';
+}
