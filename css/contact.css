@@ -65,6 +65,7 @@ body {
     width: 352px;
     padding: 15px 24px 15px 24px;
     gap: 35px;
+    border-radius: 16px;
 }
 
 .contact-card:hover {
@@ -343,6 +344,29 @@ a {
 .del-contact {
     display: flex;
     align-items: center;
+}
+
+.notification {
+    justify-content: center;
+    align-items: center;
+    background-color: #2B3647;
+    border-radius: 16px;
+    color: white;
+    width: 326px;
+    height: 74px;
+    font-size: 20px;
+    font-weight: 400;
+    display: none;
+    margin-left: 55px;
+    margin-top: 150px;
+    position: fixed;
+    transition: right 0.5s ease;
+    transform: translateX(100%);
+}
+
+.notification.show {
+    display: flex;
+    transform: translateX(0);    
 }
 
 @media (max-width: 1325px) {

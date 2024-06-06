@@ -42,7 +42,7 @@ function openAddNewContact() {
         <div class="buttons">
             <button onclick="closePopup()" class="cancel-button">Cancel<img
                 src="assets/img/add_task/close.svg"></button>
-            <button onclick="newContact()" class="btn">Create Contact<img
+            <button type="button" onclick="newContact()" class="btn">Create Contact<img
                     src="assets/img/add_task/check.svg"></button>
         </div>
         </form>

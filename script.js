@@ -241,7 +241,7 @@ function generateContactHtml(contact, id, index) {
     let contactStr = encodeURIComponent(JSON.stringify(contact));
 
     return `
-  <div id="showContact${id}" onclick="showContact('${contactStr}', '${id}', '${index}')" class="contact-card">
+  <div id="showContact${id}" onclick="showContact('${contactStr}', '${id}', '${index}'); changeBgColor('showContact${id}')" class="contact-card">
   <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
@@ -320,7 +320,6 @@ async function deleteContact(contactJson, id, index) {
         },
     });
     if (response.ok) {
-        // Optionally remove the contact card from the DOM
         document.getElementById(`showContact${id}`).remove();
         clearShowContactDetails();
         document.getElementById('edit-contact-popup').classList.add('d-none');
@@ -377,6 +376,20 @@ function generateTaskContactHtml(contact, i, color) {
     <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}' ,'${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
     </div>
     `;
+}
+
+function changeBgColor(contact) {
+    let contacts = document.querySelectorAll('.contact-card');
+    contacts.forEach(contact => {
+        contact.style.backgroundColor = '';
+        contact.style.color = '';
+    });
+
+    let clickedContact = document.getElementById(contact);
+    if (clickedContact) {
+        clickedContact.style.backgroundColor = '#2B3647'; 
+        clickedContact.style.color = 'white';
+    }
 }
 
 /**
@@ -477,8 +490,29 @@ async function newContact() {
         'color': initialsBgColor
     }
 
-    postUser('contacts', contact);
-};
+    await postUser('contacts', contact);
+    renderContacts();
+    showNotification();
+    showContact(JSON.stringify(contact), '', '');
+    closeAddNewContact();
+}
+
+function showNotification() {
+    let notification = document.getElementById('notification');
+    notification.classList.add('slide-in')
+    notification.classList.add('show');
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 2000);
+}
+
+function closeAddNewContact() {
+    let container = document.getElementById('add-contact-popup');
+    container.classList.add('slide-out');
+    container.addEventListener('transitionend', function() { 
+        addClassDnone(container);
+    }, { once: true });
+}
 
 function openProfilPopup() {
     const popup = document.getElementById('popupLogout');
