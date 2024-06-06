@@ -26,14 +26,36 @@ doneContainer.addEventListener('mouseleave', function () {
     doneImage.src = chopOriginalSrc;
 });
 
+/**
+ * Greets the user by displaying their username stored in localStorage.
+ * Retrieves the username and updates the HTML content of the specified element.
+ */
 function greetingUser() {
     let userName = localStorage.getItem('username');
     let name = document.getElementById('greetingUserName');
     name.innerHTML = userName;
+
+ let currentHour = new Date().getHours();
+    let greetingMessage;
+
+    if (currentHour < 12) {
+        greetingMessage = "Good morning";
+    } else if (currentHour < 18) {
+        greetingMessage = "Good afternoon";
+    } else {
+        greetingMessage = "Good evening";
+    }
+
+    document.getElementById('greetingTime').innerHTML = greetingMessage;
 }
 
 greetingUser();
 
+/**
+ * Renders a responsive summary view based on the window width.
+ * If the window width is less than or equal to 1200 pixels, it shows
+ * a greeting and hides other elements temporarily.
+ */
 function renderResponsivSummary() {
     if (isRendering) return;
     isRendering = true;
@@ -73,6 +95,10 @@ window.addEventListener('resize', renderResponsivSummary);
 
 renderResponsivSummary();
 
+/**
+ * Renders the summary of tasks for the logged-in user by fetching task data from the Firebase database.
+ * Updates the task counts and the nearest upcoming task information on the summary page.
+ */
 async function renderSummaryTasks() {
     if (localStorage.getItem('username') !== 'Guest') {
         let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
@@ -123,7 +149,14 @@ async function renderSummaryTasks() {
         if (closestDateTask) {
             document.getElementById('upComingPrioImg').src = closestDateTask['prioImg'];
             document.getElementById('upComingPrio').innerHTML = closestDateTask['prio'];
-            document.getElementById('upComingDate').innerHTML = closestDateTask['date'];
+
+            let formattedDate = new Date(closestDateTask['date']).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById('upComingDate').innerHTML = formattedDate;
         }
         
     } else {
@@ -131,7 +164,9 @@ async function renderSummaryTasks() {
     }
 }
 
-// Helper function to parse date strings in different formats
+/**
+ * Helper function to parse date strings in different formats 
+ */
 function parseDate(dateStr) {
     let parts;
     if (dateStr.includes('-')) {
@@ -145,8 +180,11 @@ function parseDate(dateStr) {
     } else {
         throw new Error("Unrecognized date format: " + dateStr);
     }
-}
+} 
 
+/**
+ * Renders the summary of tasks for guest users by updating task counts and the nearest upcoming task information on the summary page.
+ */
 function renderSummaryGuestTasks() {
     document.getElementById('allTask').innerHTML = guestTasks.length;
 
@@ -195,3 +233,7 @@ function renderSummaryGuestTasks() {
 }
 
 renderSummaryTasks();
+
+function pathToBoard() {
+  window.location.href = 'board.html';
+}

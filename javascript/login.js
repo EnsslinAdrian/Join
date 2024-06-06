@@ -1,3 +1,8 @@
+/**
+ * Toggles the visibility of the password input field.
+ * Switches the password input type from 'password' to 'text',
+ * and updates the visibility icons accordingly.
+ */
 function showPassword() {
     let showPassword = document.getElementById('visibility-off-toggle');
     let showPasswordNot = document.getElementById('visibility-toggle');
@@ -7,7 +12,11 @@ function showPassword() {
     document.getElementById('loginPassword').type = 'text';
 }
 
-
+/**
+ * Toggles the visibility of the password input field.
+ * Switches the password input type from 'text' back to 'password',
+ * and updates the visibility icons accordingly.
+ */
 function showPasswordNot() {
     let showPassword = document.getElementById('visibility-off-toggle');
     let showPasswordNot = document.getElementById('visibility-toggle');

@@ -91,7 +91,12 @@ function cancelAddTask() {
     }, { once: true });
 }
 
-
+/**
+ * This function generates the HTML for a task card on the board page.
+ * 
+ * @param {Object} element - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
 function generateTodoHTML(element, i) {
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
@@ -115,7 +120,11 @@ function generateTodoHTML(element, i) {
     `;
 }
 
-
+/**
+ * This function opens the task window with a detailed view.
+ * 
+ * @param {number} i - The index of the task in the task list.
+ */
 async function openDialogTask(i) {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
@@ -129,21 +138,51 @@ async function openDialogTask(i) {
     showTaskDetails(tasks[i], i)
 }
 
+/**
+ * Displays the detailed view of a task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
 
+ */
 function showTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = '';
     taskDetails.innerHTML = generateTaskDetails(task, i);
 
     let content = document.getElementById(`contacts${i}`);
-    
+
     for (let j = 0; j < task['taskContacts'].length; j++) {
         let contact = task['taskContacts'][j];
-        content.innerHTML += `<p class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</p>`;
+        content.innerHTML += `
+        <div class="arrange_assigned_to_contacts">
+            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+            <p> ${contact['name']}</p>
+        </div>
+        `;
+    }
+    
+    let subtasks = document.getElementById(`task_subtasks`);
+    subtasks.innerHTML='';
+
+    for (let k = 0; k < task['subtasks'].length; k++) {
+        let subtask = task['subtasks'][k];
+        console.log(subtask);
+        subtasks.innerHTML += `
+        <div id="single_subtask">
+            <input type="checkbox">
+            <p>${subtask}</p>
+        </div>
+        `;
     }
 }
 
-
+/**
+ * Generates the HTML for displaying the detailed view of a task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
 function generateTaskDetails(task, i) {
     return /*html*/`
     <div class="task-card-type">
@@ -151,22 +190,23 @@ function generateTaskDetails(task, i) {
     </div>
     <div class="header_task_details">
         <h1>${task['title']}</h1>
-        <p class="task-description">${task['description']}</p>
+        <h2 class="task-description">${task['description']}</h2>
     </div>
     <div class="task_details_information">
-        <div>
-            <p>Due date:</p><p>${task['date']}</p>
+        <div class="task_details_date">
+            <span>Due date:</span><p>${task['date']}</p>
         </div>
-        <div>
-            <p>Priority</p><img src="${task['prioImg']}" alt="">
+        <div class="task_details_priority">
+            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
         </div>
-        <div>
-            <p>Assigned To:</p>
-            <div id="contacts${i}" class="openTaskContacts"></div>
+        <div class="task_details_assigned_to">
+            <span>Assigned To:</span>
+            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
         </div>
-        <div>
-            <p>Subtasks</p>
-            <p>${task['subtasks']}</p>
+        <div class="task_details_subtasks">
+            <span>Subtasks</span>
+            <div class="task_details_subtask" id="task_subtasks">
+            </div>
         </div>
         <footer class="details_delete_edit">
             <img src="../assets/img/delete.svg" alt="">
@@ -178,7 +218,10 @@ function generateTaskDetails(task, i) {
     `;
 }
 
-
+/**
+ * Updates the HTML content for the task board by calling functions
+ * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
+ */
 function updateHTML() {
     updateTodo();
     updateInProgress();
@@ -186,7 +229,10 @@ function updateHTML() {
     updateDone();
 }
 
-
+/**
+ * Updates the HTML content for the "ToDo" section by filtering tasks
+ * with the category 'todo' and generating their HTML.
+ */
 function updateTodo() {
     let todo = test.filter(t => t['category'] == 'todo');
 
@@ -199,8 +245,10 @@ function updateTodo() {
 
 }
 
-
-
+/**
+ * Updates the HTML content for the "In Progress" section by filtering tasks
+ * with the category 'in-progress' and generating their HTML.
+ */
 function updateInProgress() {
     let inProgress = test.filter(t => t['category'] == 'in-progress');
 
@@ -212,7 +260,10 @@ function updateInProgress() {
     }
 }
 
-
+/**
+ * Updates the HTML content for the "Await-feedback" section by filtering tasks
+ * with the category 'await-feedback' and generating their HTML.
+ */
 function updateAwaitFeedback() {
     let awaitFeedback = test.filter(t => t['category'] == 'await-feedback');
 
@@ -224,7 +275,10 @@ function updateAwaitFeedback() {
     }
 }
 
-
+/**
+ * Updates the HTML content for the "Done" section by filtering tasks
+ * with the category 'done' and generating their HTML.
+ */
 function updateDone() {
     let done = test.filter(t => t['category'] == 'done');
 
@@ -236,20 +290,30 @@ function updateDone() {
     }
 }
 
-
+/**
+ * Starts the dragging process for a task.
+ * 
+ * @param {number} id - The ID of the task being dragged.
+ */
 function startDragging(id) {
     currentDraggedTask = id;
-    console.log('startDragging called with id:', id);
-    console.log('currentDraggedTask set to:', currentDraggedTask);
 }
 
-
+/**
+ * Allows a drop event by preventing the default handling of the event.
+ * 
+ * @param {Event} ev - The event object representing the dragover event.
+ */
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
-let test = [];
 
+/**
+ * Moves the currently dragged task to a new category and updates the data.
+ * 
+ * @param {string} category - The new category to move the task to.
+ */
 async function moveTo(category) {
     if (localStorage.getItem('username') !== 'Guest') {
         test[currentDraggedTask]['category'] = category;
@@ -259,28 +323,44 @@ async function moveTo(category) {
     } else {
         guestTasks[currentDraggedTask]['category'] = category;
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        currentDraggedTask = null; 
+        currentDraggedTask = null;
         updateHTML();
-        window.location.reload();
+        renderGuestTaskBoard();
     }
 }
 
-
+/**
+ * Highlights a specified element by adding a CSS class.
+ * 
+ * @param {string} id - The ID of the element to be highlighted.
+ */
 function highlight(id) {
     document.getElementById(id).classList.add('drag_area_hightlight');
 }
 
+/**
+ * Removes the highlight from a specified element by removing a CSS class.
+ * 
+ * @param {string} id - The ID of the element from which the highlight should be removed.
 
+ */
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag_area_hightlight');
 }
 
 
-
+/**
+ * Closes the task dialog by adding a CSS class to hide it.
+ */
 function closeDialogTask() {
     document.getElementById('dialog').classList.add('d_none');
 }
 
+/**
+ * Updates the category of the currently dragged task in the database and reloads the page.
+ * 
+ * @param {string} category - The new category to update the task to.
+ */
 async function putData(category) {
     try {
         let response = await fetch(`${firebaseUrl}.json`);
@@ -294,7 +374,7 @@ async function putData(category) {
         await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
 
         console.log(tasks[currentDraggedTask]['category']);
-        window.location.reload()
+        renderTaskBoard()
 
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Daten:', error);
@@ -302,6 +382,12 @@ async function putData(category) {
 
 }
 
+/**
+ * Sends a PATCH request to update user data at the specified path in the Firebase database.
+ * 
+ * @param {string} path - The path to append to the Firebase URL for updating data.
+ * @param {Object} data - The data to be sent in the PATCH request.
+ */
 async function dataUser(path = "", data = {}) {
     let response = await fetch(firebaseUrl + path + ".json", {
         method: "PATCH",

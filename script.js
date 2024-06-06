@@ -424,6 +424,11 @@ async function renderTaskBoard() {
             console.log(tasks);
             test = tasks;
 
+            document.getElementById('todo').innerHTML = '';
+            document.getElementById('in-progress').innerHTML = '';
+            document.getElementById('await-feedback').innerHTML = '';
+            document.getElementById('done').innerHTML = '';
+
             for (let i = 0; i < tasks.length; i++) {
                 let task = tasks[i];
                 let id = task['category'];
