@@ -1,5 +1,4 @@
 let guestTasks = [
-<<<<<<< HEAD
     {
         'category': 'in-progress',
         'taskCategory': 'User Story',
@@ -134,147 +133,6 @@ let guestTasks = [
         'prioImg': './assets/img/add_task/result.svg',
         'subtasks': 'Erstellen, Stylen'
     },
-=======
-{
-    'category': 'in-progress',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
-    'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
-},
-
-{
-    'category': 'in-progress',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
-    'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
-},
-
-{
-    'category': 'await-feedback',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
-    'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
-},
-
-{
-    'category': 'await-feedback',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
-    'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
-},
-
-{
-    'category': 'done',
-    'taskCategory': 'User Story',
-    'title': 'Header',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
-    'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
-},
->>>>>>> c5f327a56290304af9dcdc01e072c4d2892151ff
 
 ];
 
@@ -295,11 +153,10 @@ async function renderGuestTaskBoard() {
 
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
-<<<<<<< HEAD
     }
 }
 
-=======
+
 
 /**
  * Generates the HTML for a guest user's task card on the board page.
@@ -307,7 +164,6 @@ async function renderGuestTaskBoard() {
  * @param {Object} element - The task object containing the task details.
  * @param {number} i - The index of the task in the task list.
  */
->>>>>>> c5f327a56290304af9dcdc01e072c4d2892151ff
 function generateGuestTodoHTML(element, i) {
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
