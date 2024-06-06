@@ -217,29 +217,31 @@ async function renderContacts(path = "") {
         let contactsArray = Object.values(contacts);
         content.innerHTML = "";
 
-        for (let i = 0; i < contactsArray.length; i++) {
-            let contact = contactsArray[i];
+        for (let key in contacts) {
+            let contact = contacts[key];
+            contact.id = key;
             let initialsBgColor = getRandomColor();
 
-            content.innerHTML += generateContactHtml(contact, i);
+            content.innerHTML += generateContactHtml(contact, key, contactsArray.indexOf(contact));
         }
     }
+
 }
 
 /**
  * Generates the HTML for a contact card.
  * 
  * @param {Object} contact - The contact object containing the contact details.
- * @param {number} i - The index of the contact in the contact list.
+ * @param {number} index - The index of the contact in the contact list.
  * @returns {string} The generated HTML string for the contact card.
  */
-function generateContactHtml(contact, i) {
+function generateContactHtml(contact, id, index) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
     let contactStr = encodeURIComponent(JSON.stringify(contact));
 
     return `
-  <div id="showContact${i}" onclick="showContact('${contactStr}', ${i})" class="contact-card">
+  <div id="showContact${id}" onclick="showContact('${contactStr}', '${id}', '${index}')" class="contact-card">
   <div style="background-color: ${contact['color']};" class="contact-icon">
       <span>${initials}</span>
   </div>
@@ -251,7 +253,7 @@ function generateContactHtml(contact, i) {
   `;
 }
 
-function showContact(contactStr, i) {
+function showContact(contactStr, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactStr));
     let contactName = contact['name'];
     let contactJson = encodeURIComponent(JSON.stringify(contact));
@@ -278,10 +280,10 @@ function showContact(contactStr, i) {
                 ${contact['name']}
             </div>
             <div class="contact-settings">
-                <div class="edit-contact" onclick="openEditPopup('${contactJson}')">
+                <div class="edit-contact" onclick="openEditPopup('${contactJson}', '${id}', '${index}')">
                     <img src="assets/img/edit.svg">Edit 
                 </div>
-                <div class="del-contact" onclick="deleteContact('${contactJson}', ${i})">
+                <div class="del-contact" onclick="deleteContact('${contactJson}', '${id}', '${index}')">
                     <img src="assets/img/delete.svg">Delete
                 </div>
         </div>
@@ -298,13 +300,39 @@ function showContact(contactStr, i) {
                     <a>${contact['phone']}</a>
                 </div>
             </div>
-            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup('${contactJson}')">
+            <div id="edit-contact-icon" class="edit-contact-icon d-none" onclick="openEditPopup('${contactJson}', '${id}', '${index}')">
                 <img src="assets/img/contacts/more_vert.svg">
             </div>
     </div>
     `;
     let editIcon = document.getElementById('edit-contact-icon');
     editIcon.classList.add('active');
+}
+
+async function deleteContact(contactJson, id, index) {
+    let contact = JSON.parse(decodeURIComponent(contactJson));
+
+    let response = await fetch(`${firebaseUrl}/contacts/${id}.json`, {
+
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    if (response.ok) {
+        // Optionally remove the contact card from the DOM
+        document.getElementById(`showContact${id}`).remove();
+        clearShowContactDetails();
+        document.getElementById('edit-contact-popup').classList.add('d-none');
+    } else {
+        console.error('Fehler beim Löschen des Kontakts:', response.statusText);
+    }
+}
+
+function clearShowContactDetails() {
+    let showContactContainer = document.getElementById('show-contact-container');
+    showContactContainer.innerHTML = '';
+    showContactContainer.classList.remove('active');
 }
 
 /**

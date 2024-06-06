@@ -66,7 +66,7 @@ function closePopup() {
     }, { once: true });
 }
 
-function openEditPopup(contactJson) {
+function openEditPopup(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
@@ -110,7 +110,7 @@ function openEditPopup(contactJson) {
             <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
-            <button onclick="deleteContact()" class="delete-button">Delete<img
+            <button type="button" onclick="deleteContact('${contactJson}', '${id}', '${index}')" class="delete-button">Delete<img
                 src="assets/img/add_task/close.svg"></button>
             <button onclick="saveEditedContact()" class="btn">Save<img
                     src="assets/img/add_task/check.svg"></button>
