@@ -73,14 +73,14 @@ function renderResponsivSummary() {
 
         setTimeout(() => {
             greet.classList.remove('d-none');
-        }, 1000);
+        }, 100);
 
         setTimeout(() => {
             greet.classList.add('d-none');
             headlineResponsiv.classList.remove('d-none');
             taskDashboard.classList.remove('d-none');
             isRendering = false;
-        }, 3000);
+        }, 1500);
 
     } else {
         headline.classList.remove('d-none');

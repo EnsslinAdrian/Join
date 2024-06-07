@@ -164,6 +164,12 @@ h3 {
 width: 25%;
 }
 
+.margin-left-top-summary {
+    margin-left: 96px;
+    margin-top: 50px;
+    height: 80vh;
+}
+
 @media (max-width: 1050px) {
     .task-dashboard-section {
         display: flex;
@@ -264,6 +270,10 @@ width: 25%;
         width: 70%;
         height: auto;
         margin-top: 30px;
+    }
+
+    .margin-left-top-summary {
+        margin-left: 20px;
     }
 
     .todos-done-dashboard {
