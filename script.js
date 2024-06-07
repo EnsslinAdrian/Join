@@ -523,14 +523,13 @@ async function newContact() {
     await postUser('contacts', contact);
     await renderContacts();
     showNotification();
-    changeBgColor(contact);
+    // changeBgColor(contact); muss noch hinzugefügt werden
     showContact(JSON.stringify(contact), '', '');
-    closeAddNewContact();
+    closeAddNewContact();    
 }
 
 function showNotification() {
     let notification = document.getElementById('notification');
-    notification.classList.add('slide-out')
     notification.classList.add('show');
     setTimeout(() => {
         notification.classList.remove('show');

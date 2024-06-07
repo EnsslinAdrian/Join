@@ -357,6 +357,7 @@ a {
     font-size: 20px;
     font-weight: 400;
     display: none;
+    position: fixed;
     margin-left: 55px;
     margin-top: 150px;
 }
