@@ -288,7 +288,7 @@ function showContact(contactStr, id, index) {
                 <div class="edit-contact" onclick="openEditPopup('${contactJson}', '${id}', '${index}')">
                     <img src="assets/img/edit.svg">Edit 
                 </div>
-                <div class="del-contact" id="deleteContact" onclick="deleteContact('${contactJson}', '${id}', '${index}')">
+                <div class="del-contact" onclick="deleteContact('${contactJson}', '${id}', '${index}')">
                     <img src="assets/img/delete.svg">Delete
                 </div>
         </div>
@@ -526,12 +526,11 @@ async function newContact() {
     }
 
     await postUser('contacts', contact);
-    renderContacts();
-    closeAddNewContact();  
+    await renderContacts(); 
     showNotification();
-    // changeBgColor(contact);
+    changeBgColor(contact);
     showContact(JSON.stringify(contact), '', '');
-      
+    closeAddNewContact(); 
 }
 
 function showNotification() {
