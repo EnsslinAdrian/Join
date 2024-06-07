@@ -328,6 +328,36 @@ async function deleteContact(contactJson, id, index) {
     }
 }
 
+async function saveEditedContact(contactJson, id, index) {
+    let contact = JSON.parse(decodeURIComponent(contactJson));
+    let newName = document.getElementById('contactName').value;
+    let newEmail = document.getElementById('contactEmail').value;
+    let newPhone = document.getElementById('contactPhone').value;
+
+    let updatedContact = {
+        'name': newName,
+        'email': newEmail,
+        'phone': newPhone,
+        'color': contact['color']
+    };
+
+    let response = await fetch(`${firebaseUrl}/contacts/${id}.json`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedContact),
+    });
+
+    if (response.ok) {
+        await renderContacts();
+        closeEditPopup();
+        showContact(JSON.stringify(updatedContact), id, index);
+    } else {
+        console.error('Fehler beim Speichern des bearbeiteten Kontakts:', response.statusText);
+    }
+}
+
 function clearShowContactDetails() {
     let showContactContainer = document.getElementById('show-contact-container');
     showContactContainer.innerHTML = '';
@@ -491,15 +521,16 @@ async function newContact() {
     }
 
     await postUser('contacts', contact);
-    renderContacts();
+    await renderContacts();
     showNotification();
+    changeBgColor(contact);
     showContact(JSON.stringify(contact), '', '');
     closeAddNewContact();
 }
 
 function showNotification() {
     let notification = document.getElementById('notification');
-    notification.classList.add('slide-in')
+    notification.classList.add('slide-out')
     notification.classList.add('show');
     setTimeout(() => {
         notification.classList.remove('show');

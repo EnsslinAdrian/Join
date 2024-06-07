@@ -359,14 +359,10 @@ a {
     display: none;
     margin-left: 55px;
     margin-top: 150px;
-    position: fixed;
-    transition: right 0.5s ease;
-    transform: translateX(100%);
 }
 
 .notification.show {
     display: flex;
-    transform: translateX(0);    
 }
 
 @media (max-width: 1325px) {

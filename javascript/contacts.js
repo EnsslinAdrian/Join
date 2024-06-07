@@ -112,7 +112,7 @@ function openEditPopup(contactJson, id, index) {
         <div class="buttons">
             <button type="button" onclick="deleteContact('${contactJson}', '${id}', '${index}')" class="delete-button">Delete<img
                 src="assets/img/add_task/close.svg"></button>
-            <button onclick="saveEditedContact()" class="btn">Save<img
+            <button type="button" onclick="saveEditedContact('${contactJson}', '${id}', '${index}')" class="btn">Save<img
                     src="assets/img/add_task/check.svg"></button>
         </div>
         </form>
