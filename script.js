@@ -237,6 +237,7 @@ async function renderContacts(path = "") {
  */
 function generateContactHtml(contact, id, index) {
     let contactName = contact['name'];
+    if(contactName) {
     let initials = contactName.split(' ').map(word => word[0]).join('');
     let contactStr = encodeURIComponent(JSON.stringify(contact));
 
@@ -251,6 +252,10 @@ function generateContactHtml(contact, id, index) {
   </div>
 </div>
   `;
+    } else {
+        console.error("Fehler: Der Name des Kontakts ist undefiniert.");
+        return '';
+    }
 }
 
 function showContact(contactStr, id, index) {
