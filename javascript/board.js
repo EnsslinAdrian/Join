@@ -419,8 +419,6 @@ async function compareTasks(searchedTask) {
         let taskTitle = tasks[i]['title'].toLowerCase();
         let taskDescription = tasks[i]['description'].toLowerCase();
 
-        console.log(taskTitle, taskDescription);
-
         let taskElement = document.querySelector(`.todo[data-index='${i}']`);
 
         if (taskElement) {
