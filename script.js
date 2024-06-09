@@ -517,19 +517,21 @@ async function newContact() {
     let email = document.getElementById('contactEmail');
     let phone = document.getElementById('contactPhone');
     let initialsBgColor = getRandomColor();
-
+    
     let contact = {
         'name': name.value,
         'email': email.value,
         'phone': phone.value,
         'color': initialsBgColor
     }
+    let newContactResponse = await postUser('contacts', contact);
+    let newContactId = newContactResponse.name;
+    let newContactIndex = Array.from(document.querySelectorAll('.contact-card')).findIndex(contact => contact.id === `showContact${newContactId}`);
 
-    await postUser('contacts', contact);
-    await renderContacts(); 
+    await renderContacts();
+    showContact(JSON.stringify(contact), newContactId, newContactIndex); 
     showNotification();
-    changeBgColor(contact);
-    showContact(JSON.stringify(contact), '', '');
+    changeBgColor();
     closeAddNewContact(); 
 }
 
