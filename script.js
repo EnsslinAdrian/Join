@@ -220,12 +220,10 @@ async function renderContacts(path = "") {
         for (let key in contacts) {
             let contact = contacts[key];
             contact.id = key;
-            let initialsBgColor = getRandomColor();
 
             content.innerHTML += generateContactHtml(contact, key, contactsArray.indexOf(contact));
         }
     }
-
 }
 
 /**
@@ -531,7 +529,7 @@ async function newContact() {
     await renderContacts();
     showContact(JSON.stringify(contact), newContactId, newContactIndex); 
     showNotification();
-    changeBgColor();
+    changeBgColor(`showContact${newContactId}`);
     closeAddNewContact(); 
 }
 
