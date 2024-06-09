@@ -442,7 +442,7 @@ async function compareTasks(searchedTask) {
         let taskElement = document.querySelector(`.todo[data-index='${i}']`);
 
         if (taskElement) {
-            if (taskTitle === searchedTask || taskDescription === searchedTask) {
+            if (searchedTask === "" || taskTitle.includes(searchedTask) || taskDescription.includes(searchedTask)) {
                 taskElement.style.display = "block";
             } else {
                 taskElement.style.display = "none";
