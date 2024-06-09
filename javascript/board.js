@@ -171,7 +171,6 @@ function showTaskDetails(task, i) {
 
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
-        console.log(subtask);
         subtasks.innerHTML += `
         <div id="single_subtask">
             <input type="checkbox">
@@ -383,7 +382,6 @@ async function putData(category) {
         tasks[currentDraggedTask]['category'] = category;
         await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
 
-        console.log(tasks[currentDraggedTask]['category']);
         renderTaskBoard()
 
     } catch (error) {
@@ -413,7 +411,6 @@ async function dataUser(path = "", data = {}) {
 async function filterTasks() {
     let searchedTask = document.getElementById('inputField').value.toLowerCase();
     await compareTasks(searchedTask);
-    console.log(searchedTask);
 }
 
 
