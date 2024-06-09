@@ -173,7 +173,12 @@ p {
 .task-card-type {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     color: white;
+}
+
+.task-card-type img {
+    cursor: pointer;
 }
 
 .type-bg {
@@ -638,9 +643,10 @@ p {
     margin-bottom: 20px;
 }
 
-.header_task_details h2 {
-    margin-bottom: 20px;
+.header_task_details p {
+    margin-bottom: 28px;
     color: black;
+    font-size: 25px !important;
 }
 
 .details_delete_edit {

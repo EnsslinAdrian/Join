@@ -24,7 +24,7 @@ let guestTasks = [
     ],
     'prioImg': './assets/img/summary/double_arrows.svg',
     'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
+    'subtasks': ['Erstellen','Stylen']
 },
 
 {
@@ -52,7 +52,7 @@ let guestTasks = [
     ],
     'prioImg': './assets/img/summary/double_arrows.svg',
     'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
+    'subtasks': ['Erstellen','Stylen']
 },
 
 {
@@ -80,7 +80,7 @@ let guestTasks = [
     ],
     'prioImg': './assets/img/summary/double_arrows.svg',
     'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
+    'subtasks': ['Erstellen','Stylen']
 },
 
 {
@@ -108,7 +108,7 @@ let guestTasks = [
     ],
     'prioImg': './assets/img/summary/double_arrows.svg',
     'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
+    'subtasks': ['Erstellen','Stylen']
 },
 
 {
@@ -136,7 +136,7 @@ let guestTasks = [
     ],
     'prioImg': './assets/img/summary/double_arrows.svg',
     'prio': 'Urgent',
-    'subtasks': 'Erstellen, Stylen'
+    'subtasks': ['Erstellen','Stylen']
 },
 
 ];
@@ -223,7 +223,25 @@ function showGuestTaskDetails(task, i) {
 
     for (let j = 0; j < task['taskContacts'].length; j++) {
         let contact = task['taskContacts'][j];
-        content.innerHTML += `<p class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</p>`;
+        content.innerHTML += `
+        <div class="arrange_assigned_to_contacts">
+            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+            <p> ${contact['name']}</p>
+        </div>
+        `;
+    }
+
+    let subtasks = document.getElementById(`task_subtasks`);
+    subtasks.innerHTML='';
+
+    for (let k = 0; k < task['subtasks'].length; k++) {
+        let subtask = task['subtasks'][k];
+        subtasks.innerHTML += `
+        <div id="single_subtask">
+            <input type="checkbox">
+            <p>${subtask}</p>
+        </div>
+        `;
     }
 }
 
@@ -237,17 +255,18 @@ function generateGuestTaskDetails(task, i) {
     return /*html*/`
     <div class="task-card-type">
          <div class="type-bg">${task['taskCategory']}</div>
+         <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
     </div>
     <div class="header_task_details">
         <h1>${task['title']}</h1>
         <p class="task-description">${task['description']}</p>
     </div>
     <div class="task_details_information">
-        <div class="task_dateils_date">
+        <div class="task_details_date">
             <span>Due date:</span><p>${task['date']}</p>
         </div>
         <div class="task_details_priority">
-            <span>Priority:</span><img src="${task['prioImg']}" alt="">
+            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
         </div>
         <div class="task_details_assigned_to">
             <span>Assigned To:</span>
@@ -255,9 +274,8 @@ function generateGuestTaskDetails(task, i) {
         </div>
         <div class="task_details_subtasks">
             <span>Subtasks</span>
-            <div class="task_details_subtask">
-                <p>${task['subtasks']}</p>
-            </div>        
+            <div class="task_details_subtask" id="task_subtasks">
+            </div>
         </div>
         <footer class="details_delete_edit">
             <img src="../assets/img/delete.svg" alt="">

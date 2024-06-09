@@ -161,9 +161,9 @@ function showTaskDetails(task, i) {
         </div>
         `;
     }
-    
+
     let subtasks = document.getElementById(`task_subtasks`);
-    subtasks.innerHTML='';
+    subtasks.innerHTML = '';
 
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
@@ -187,10 +187,11 @@ function generateTaskDetails(task, i) {
     return /*html*/`
     <div class="task-card-type">
          <div class="type-bg">${task['taskCategory']}</div>
+         <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
     </div>
     <div class="header_task_details">
         <h1>${task['title']}</h1>
-        <h2 class="task-description">${task['description']}</h2>
+        <p class="task-description">${task['description']}</p>
     </div>
     <div class="task_details_information">
         <div class="task_details_date">
@@ -397,4 +398,33 @@ async function dataUser(path = "", data = {}) {
         body: JSON.stringify(data),
     });
     return await response.json();
+}
+
+
+async function filterTasks() {
+    let searchedTask = document.getElementById('inputField').value.toLowerCase();
+    await compareTasks(searchedTask);
+    console.log(searchedTask);
+}
+
+
+async function compareTasks(searchedTask) {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    let user = localStorage.getItem('userKey');
+    let pathUser = responseToJson['registered'][user];
+    let tasks = pathUser['tasks'];
+    console.log(tasks);
+
+    let allTasks = document.querySelectorAll('.task-card');
+
+    for (let i = 0; i < tasks.length; i++) {
+        let taskTitle = tasks[i]['title'].querySelector('.header_task_details h1:first-child').textContent.toLowerCase();
+        let taskDescription = tasks[i]['description'].querySelector('.header_task_details h2:first-child').textContent.toLowerCase();
+        if (taskTitle.includes(searchedTask) || taskDescription.includes(searchedTask)) {
+            tasks[i].style.display = "block";
+        } else {
+            tasks[i].style.display = "none";
+        }
+    }
 }
