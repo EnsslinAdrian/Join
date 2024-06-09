@@ -6,6 +6,10 @@ body {
     display: none;
 }
 
+.todo {
+    touch-action: auto;
+}
+
 .board-header {
     display: flex;
     align-items: center;
@@ -225,12 +229,13 @@ p {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    border: 1px solid white;
     color: white !important;
     font-size: 12px;
     font-weight: 400;
     height: 30px;
     width: 30px;
-    margin-right: 10px;
+    margin-right: -8px;
     margin-top: 16px;
     margin-bottom: 16px;
 }

@@ -1,10 +1,13 @@
 let currentDraggedTask = null;
 
 function openAddTask() {
-    let container = document.getElementById('add-task-popup');
-    container.classList.remove('slide-out');
-    container.classList.remove('d-none');
-    container.innerHTML = `
+    if (window.matchMedia("(max-width: 1100px)").matches) {
+        window.location.href = 'add_task.html';
+    } else {
+        let container = document.getElementById('add-task-popup');
+        container.classList.remove('slide-out');
+        container.classList.remove('d-none');
+        container.innerHTML = `
     <div class="padding-top">
     <div class="popup-headline">
         <h1>Add Task</h1>
@@ -76,6 +79,7 @@ function openAddTask() {
     </div>
 </form>
 `;
+    }
 }
 
 function closeAddTask() {
