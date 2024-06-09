@@ -456,6 +456,10 @@ span {
     font-size: 14px;
 }
 
+.all_categories {
+    text-align: end;
+}
+
 @media (max-width: 1530px) {
     .tasks-container {
         margin-left: 30px;

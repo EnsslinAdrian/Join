@@ -194,13 +194,15 @@ function generateTaskDetails(task, i) {
     <div class="task-card-type-details">
         <div class="type-bg type-of-task">${task['taskCategory']}</div>
         <div class="close_and_change">
-            <div id="show-categories" class="show_categories">
-                <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
+            <div class="all_categories">
+                <div id="show-categories" class="show_categories">
+                    <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
+                </div>
                 <div id="move-to-options" class="move_to_options d_none">
-                    <p onclick="moveToTodo(${i})">To do</p>
-                    <p onclick="moveToProgress(${i})">In progress</p>
-                    <p onclick="moveToFeedback(${i})">Await feedback</p>
-                    <p onclick="moveToDone(${i})">Done</p>
+                    <p onclick="moveToTodo('todo')">To do</p>
+                    <p onclick="moveToProgress('in-progress')">In progress</p>
+                    <p onclick="moveToFeedback('await-feedback')">Await feedback</p>
+                    <p onclick="moveToDone('done')">Done</p>
                 </div>
             </div>
             <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
@@ -469,12 +471,6 @@ function showCategories() {
 function possibleOptions() {
     return /*html*/`
     <img onclick="dontShowCategories()" id="showCategories" src="../assets/img/pull-up.svg" alt="">
-    <div id="move-to-options" class="move_to_options d_none">
-        <p onclick="moveToTodo()">To do</p>
-        <p onclick="moveToProgress()">In progress</p>
-        <p onclick="moveToFeedback()">Await feedback</p>
-        <p onclick="moveToDone()">Done</p>
-    </div>   
     `;
 }
 
@@ -489,12 +485,6 @@ function dontShowCategories() {
 function hideOptions() {
     return /*html*/`
     <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
-    <div id="move-to-options" class="move_to_options d_none">
-        <p onclick="moveToTodo()">To do</p>
-        <p onclick="moveToProgress()">In progress</p>
-        <p onclick="moveToFeedback()">Await feedback</p>
-        <p onclick="moveToDone()">Done</p>
-    </div>    
     `;
 }
 
