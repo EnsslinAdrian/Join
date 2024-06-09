@@ -324,7 +324,7 @@ p {
 
 .arrange_assigned_to_contacts p {
     margin-bottom: 0;
-    margin-left: 8px;
+    margin-left: 20px;
     font-weight: lighter;
 }
 
@@ -666,5 +666,18 @@ p {
 }
 
 .details_delete_edit img {
-    height: 20px;
+    height: 34px;
+    margin-top: 4px;
+}
+
+.delete_task {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit_task {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

@@ -214,10 +214,15 @@ function generateTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <img src="../assets/img/delete.svg" alt="">
-            <p>Delete</p>|
-            <img src="../assets/img/edit.svg" alt="">
-            <p>Edit</p>
+            <div class="delete_task" onclick="deleteTask(${i})">
+                <img src="../assets/img/delete.svg" alt="">
+                <p>Delete</p>
+            </div>
+            <p>|</p>
+            <div class="edit_task" onclick="editTask(${i})">
+                <img src="../assets/img/edit.svg" alt="">
+                <p>Edit</p>
+            </div>
         </footer>
     </div>
     `;

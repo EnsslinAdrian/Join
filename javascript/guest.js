@@ -176,7 +176,7 @@ async function renderGuestTaskBoard() {
  */
 function generateGuestTodoHTML(element, i) {
     return /*html*/`
-    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
+    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogGuestTask(${i})">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
@@ -278,10 +278,15 @@ function generateGuestTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <img src="../assets/img/delete.svg" alt="">
-            <p>Delete</p>|
-            <img src="../assets/img/edit.svg" alt="">
-            <p>Edit</p>
+            <div class="delete_task" onclick="deleteTask(${i})"> <!--richtige Funktion einfügen um Task zu löschen--> 
+                <img src="../assets/img/delete.svg" alt="">
+                <p>Delete</p>
+            </div>
+            <p>|</p>
+            <div class="edit_task" onclick="editTask(${i})"> <!--richtige Funktion einfügen um Task zu bearbeiten--> 
+                <img src="../assets/img/edit.svg" alt="">
+                <p>Edit</p>
+            </div>
         </footer>
     </div>
     `;
