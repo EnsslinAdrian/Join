@@ -452,6 +452,12 @@ async function compareTasks(searchedTask) {
 }
 
 
+async function filterTasksMobile() {
+    let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
+    await compareTasks(searchedTask);
+}
+
+
 function showCategories() {
     let showOptionsToChange = document.getElementById('show-categories');
     showOptionsToChange.innerHTML = possibleOptions();
