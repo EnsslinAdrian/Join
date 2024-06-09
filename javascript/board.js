@@ -99,7 +99,7 @@ function cancelAddTask() {
  */
 function generateTodoHTML(element, i) {
     return /*html*/`
-    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo">
+    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogTask(${i})">
             <div class="task-card-type">
                 <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
@@ -414,17 +414,22 @@ async function compareTasks(searchedTask) {
     let user = localStorage.getItem('userKey');
     let pathUser = responseToJson['registered'][user];
     let tasks = pathUser['tasks'];
-    console.log(tasks);
-
-    let allTasks = document.querySelectorAll('.task-card');
 
     for (let i = 0; i < tasks.length; i++) {
-        let taskTitle = tasks[i]['title'].querySelector('.header_task_details h1:first-child').textContent.toLowerCase();
-        let taskDescription = tasks[i]['description'].querySelector('.header_task_details h2:first-child').textContent.toLowerCase();
-        if (taskTitle.includes(searchedTask) || taskDescription.includes(searchedTask)) {
-            tasks[i].style.display = "block";
-        } else {
-            tasks[i].style.display = "none";
+        let taskTitle = tasks[i]['title'].toLowerCase();
+        let taskDescription = tasks[i]['description'].toLowerCase();
+
+        console.log(taskTitle, taskDescription);
+
+        let taskElement = document.querySelector(`.todo[data-index='${i}']`);
+
+        if (taskElement) {
+            if (taskTitle === searchedTask || taskDescription === searchedTask) {
+                taskElement.style.display = "block";
+            } else {
+                taskElement.style.display = "none";
+            }
         }
     }
 }
+
