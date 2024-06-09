@@ -1,5 +1,8 @@
 let currentDraggedTask = null;
 
+let progress = "in-progress";
+let feedback = "await-feedback";
+
 function openAddTask() {
     if (window.matchMedia("(max-width: 1100px)").matches) {
         window.location.href = 'add_task.html';
@@ -112,7 +115,7 @@ function generateTodoHTML(element, i) {
             <p class="task-description">${element['description']}</p>
             <div class="progress">
                 <div class="progress-bar"></div>
-                    ${element['subtasks']} Subtasks
+                    <span>${element['subtasks']} Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
@@ -188,9 +191,20 @@ function showTaskDetails(task, i) {
  */
 function generateTaskDetails(task, i) {
     return /*html*/`
-    <div class="task-card-type">
-         <div class="type-bg">${task['taskCategory']}</div>
-         <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
+    <div class="task-card-type-details">
+        <div class="type-bg type-of-task">${task['taskCategory']}</div>
+        <div class="close_and_change">
+            <div id="show-categories" class="show_categories">
+                <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
+                <div id="move-to-options" class="move_to_options d_none">
+                    <p onclick="moveTo(todo)">To do</p>
+                    <p onclick="moveTo(progress)">In progress</p>
+                    <p onclick="moveTo(feedback)">Await feedback</p>
+                    <p onclick="moveTo(done)">Done</p>
+                </div>
+            </div>
+            <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
+        </div>
     </div>
     <div class="header_task_details">
         <h1>${task['title']}</h1>
@@ -437,3 +451,43 @@ async function compareTasks(searchedTask) {
     }
 }
 
+
+function showCategories() {
+    let showOptionsToChange = document.getElementById('show-categories');
+    showOptionsToChange.innerHTML = possibleOptions();
+    document.getElementById('move-to-options').classList.remove('d_none');
+}
+
+
+
+function possibleOptions() {
+    return /*html*/`
+    <img onclick="dontShowCategories()" id="showCategories" src="../assets/img/pull-up.svg" alt="">
+    <div id="move-to-options" class="move_to_options d_none">
+        <p>To do</p>
+        <p>In progress</p>
+        <p>Await feedback</p>
+        <p>Done</p>
+    </div>   
+    `;
+}
+
+
+function dontShowCategories() {
+    let showOptionsToChange = document.getElementById('show-categories');
+    showOptionsToChange.innerHTML = hideOptions();
+    document.getElementById('move-to-options').classList.add('d_none');
+}
+
+
+function hideOptions() {
+    return /*html*/`
+    <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
+    <div id="move-to-options" class="move_to_options d_none">
+        <p>To do</p>
+        <p>In progress</p>
+        <p>Await feedback</p>
+        <p>Done</p>
+    </div>   
+    `;
+}

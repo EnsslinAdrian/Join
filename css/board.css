@@ -10,6 +10,10 @@ body {
     touch-action: auto;
 }
 
+h2 {
+    color: black !important;
+}
+
 .board-header {
     display: flex;
     align-items: center;
@@ -179,10 +183,22 @@ p {
     align-items: center;
     justify-content: space-between;
     color: white;
+    display: ruby-text;
+    text-align: left;
 }
 
 .task-card-type img {
     cursor: pointer;
+}
+
+.task-card-type-details {
+    display: flex;
+    color: white;
+    justify-content: space-between;
+}
+
+.type-of-task {
+    height: max-content;
 }
 
 .type-bg {
@@ -203,6 +219,10 @@ p {
     width: 100px;
     height: 10px;
     border-radius: 10px;
+}
+
+span {
+    color: black;
 }
 
 .board-btn {
@@ -253,6 +273,24 @@ p {
     transition: transform 0.5s ease-in-out;
 }
 
+.close_and_change {
+    display: flex;
+}
+
+.close_and_change img {
+    margin-left: 15px;
+    position: relative;
+    flex-direction: column;
+    padding: 8px;
+    height: 13px;
+}
+
+.close_and_change img:hover {
+    background-color: #D1D1D1;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
 .task_details_information span {
     font-size: 24px;
     color: #2A3647;
@@ -298,12 +336,12 @@ p {
     height: 40px;
 }
 
-#single_subtask input{
+#single_subtask input {
     width: 23px;
     margin: 10px 20px 3px 35px;
 }
 
-.task_details_subtask p{
+.task_details_subtask p {
     display: flex;
     flex-direction: column;
 }
@@ -410,6 +448,14 @@ p {
     flex-direction: column;
 }
 
+.show_categories {
+    display: none;
+}
+
+.show_categories p {
+    font-size: 14px;
+}
+
 @media (max-width: 1530px) {
     .tasks-container {
         margin-left: 30px;
@@ -446,7 +492,18 @@ p {
         overflow-x: auto;
         width: 900px;
         color: transparent;
-        height: 280px;
+        height: 310px;
+    }
+    
+    .show_categories {
+        display: block;
+        text-align: end;
+    }
+
+    .move_to_options p:hover {
+        position: relative;
+        color: black;
+        cursor: pointer;
     }
 
     .add-task-buttons {
@@ -502,6 +559,7 @@ p {
 
     .scrollable_part {
         width: 550px;
+        height: 330px;
     }
 }
 
