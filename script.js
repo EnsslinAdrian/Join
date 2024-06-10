@@ -207,62 +207,6 @@ function getRandomColor() {
  * @param {string} path - The path to append to the Firebase URL for fetching contacts.
  * @returns {Promise<void>}
  */
-// async function renderContacts(path = "") {
-//     if (window.location.pathname.endsWith("contacts.html")) {
-//         let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
-//         let responseToJson = await response.json();
-
-//         let content = document.getElementById('contactContainer');
-//         let contacts = responseToJson.contacts;
-//         let contactsArray = Object.values(contacts);
-//         content.innerHTML = "";
-
-//         for (let key in contacts) {
-//             let contact = contacts[key];
-//             contact.id = key;
-
-//             content.innerHTML += generateContactHtml(contact, key, contactsArray.indexOf(contact));
-//         }
-//     }
-// }
-
-// async function renderContacts(path = "") {
-//     if (window.location.pathname.endsWith("contacts.html")) {
-//         let response = await fetch(firebaseUrl + '.json');
-//         let responseToJson = await response.json();
-
-//         let content = document.getElementById('contactContainer');
-//         let contacts = responseToJson.contacts;
-//         let contactsArray = Object.values(contacts);
-
-//         // Sort contactsArray alphabetically by name
-//         contactsArray.sort((a, b) => a.name.localeCompare(b.name));
-
-//         content.innerHTML = "";
-
-//         let currentLetter = "";
-//         for (let contact of contactsArray) {
-//             let key = Object.keys(contacts).find(k => contacts[k] === contact);
-//             contact.id = key;
-
-//             let firstLetter = contact.name.charAt(0).toUpperCase();
-//             if (firstLetter !== currentLetter) {
-//                 if (currentLetter !== "") {
-//                     // Add separator after each group except the first one
-//                     content.innerHTML += `
-//                     <div>
-//                         <img src="assets/img/contacts/contact-seperator.svg" alt="">
-//                     </div>`;
-//                 }
-//                 currentLetter = firstLetter;
-//                 content.innerHTML += `<h2>${currentLetter}</h2>`;
-//             }
-
-//             content.innerHTML += generateContactHtml(contact, key, contactsArray.indexOf(contact));
-//         }
-//     }
-// }
-
 async function renderContacts(path = "") {
     if (window.location.pathname.endsWith("contacts.html")) {
         let response = await fetch(firebaseUrl + '.json');
@@ -425,8 +369,8 @@ async function saveEditedContact(contactJson, id, index) {
 
     if (response.ok) {
         await renderContacts();
-        closeEditPopup();
         showContact(JSON.stringify(updatedContact), id, index);
+        closeEditPopup();
     } else {
         console.error('Fehler beim Speichern des bearbeiteten Kontakts:', response.statusText);
     }
