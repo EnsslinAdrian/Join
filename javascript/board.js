@@ -226,10 +226,10 @@ function generateTaskDetails(task, i) {
                     <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
                 </div>
                 <div id="move-to-options" class="move_to_options d_none">
-                    <p onclick="moveToTodo('todo')">To do</p>
-                    <p onclick="moveToProgress('in-progress')">In progress</p>
-                    <p onclick="moveToFeedback('await-feedback')">Await feedback</p>
-                    <p onclick="moveToDone('done')">Done</p>
+                    <p onclick="moveTo('todo')">To do</p>
+                    <p onclick="moveTo('in-progress')">In progress</p>
+                    <p onclick="moveTo('await-feedback')">Await feedback</p>
+                    <p onclick="moveTo('done')">Done</p>
                 </div>
             </div>
             <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
@@ -513,24 +513,4 @@ function hideOptions() {
     return /*html*/`
     <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
     `;
-}
-
-
-function moveToTodo(i) {
-    console.log('move to todo', i);
-}
-
-
-function moveToProgress(i) {
-    console.log('move to in progress', i);
-}
-
-
-function moveToFeedback(i) {
-    console.log('move to await feedback', i);
-}
-
-
-function moveToDone(i) {
-    console.log('move to done', i);
 }
