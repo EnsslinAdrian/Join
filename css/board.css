@@ -222,7 +222,7 @@ p {
 }
 
 .progress-bar-content {
-    width: 50%;
+    width: 0%;
     height: 10px;
     border-radius: 10px;
     background-color: #0038FF;
@@ -337,13 +337,13 @@ span {
     margin-bottom: 30px;
 }
 
-#single_subtask {
+.single_subtask {
     display: flex;
     align-items: center;
     height: 40px;
 }
 
-#single_subtask input {
+.single_subtask input {
     width: 23px;
     margin: 10px 20px 3px 35px;
 }

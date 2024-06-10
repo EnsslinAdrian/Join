@@ -105,7 +105,6 @@ function cancelAddTask() {
  * @param {number} i - The index of the task in the task list.
  */
 function generateTodoHTML(element, i) {
-    let allSubtasks = element['subtasks'];
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogTask(${i})">
@@ -116,7 +115,7 @@ function generateTodoHTML(element, i) {
             <p class="task-description">${element['description']}</p>
             <div class="progress" id="progress">
                 <div class="progress-bar">
-                    <div class="progress-bar-content" id="progress-bar-content"></div>
+                    <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
                 <span>Subtasks</span>
             </div>
@@ -179,8 +178,8 @@ function showTaskDetails(task, i) {
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
         subtasks.innerHTML += `
-        <div id="single_subtask" class="single_subtask">
-            <input onclick="updateProgressBar()" class="subtask-checkbox" type="checkbox">
+        <div id="single_subtask_${i}_${k}" class="single_subtask">
+            <input onclick="updateProgressBar(${i})" class="subtask-checkbox" type="checkbox">
             <p>${subtask}</p>
         </div>
         `;
@@ -188,13 +187,13 @@ function showTaskDetails(task, i) {
 }
 
 
-function updateProgressBar() {
-    let allSubtasks = document.querySelectorAll('.single_subtask input[type="checkbox"]').length;
-    let completedSubtasks = document.querySelectorAll('.single_subtask input[type="checkbox"]:checked').length;
+function updateProgressBar(i) {
+    let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
+    let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
 
     console.log(allSubtasks, completedSubtasks);
 
-    let checkboxes = document.querySelectorAll('.subtask-checkbox');
+    let checkboxes = document.querySelectorAll(`#task_subtasks .subtask-checkbox`);
     let checkedCount = 0;
     checkboxes.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -203,9 +202,13 @@ function updateProgressBar() {
     });
 
     let progress = (checkedCount / checkboxes.length) * 100;
-    let progressBarContent = document.getElementById('progress-bar-content');
-    progressBarContent.style.width = progress + '%';
+    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+    
+    if (progressBarContent) { 
+        progressBarContent.style.width = progress + '%';
+    }
 }
+
 
 /**
  * Generates the HTML for displaying the detailed view of a task.
