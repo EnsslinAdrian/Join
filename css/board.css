@@ -216,9 +216,16 @@ p {
 
 .progress-bar {
     background-color: #F4F4F4;
-    width: 100px;
+    width: 120px;
     height: 10px;
     border-radius: 10px;
+}
+
+.progress-bar-content {
+    width: 50%;
+    height: 10px;
+    border-radius: 10px;
+    background-color: #0038FF;
 }
 
 span {

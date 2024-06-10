@@ -105,6 +105,7 @@ function cancelAddTask() {
  * @param {number} i - The index of the task in the task list.
  */
 function generateTodoHTML(element, i) {
+    let allSubtasks = element['subtasks'];
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogTask(${i})">
@@ -113,9 +114,11 @@ function generateTodoHTML(element, i) {
             </div>
             <h2>${element['title']}</h2>
             <p class="task-description">${element['description']}</p>
-            <div class="progress">
-                <div class="progress-bar"></div>
-                    <span>${element['subtasks']} Subtasks</span>
+            <div class="progress" id="progress">
+                <div class="progress-bar">
+                    <div class="progress-bar-content" id="progress-bar-content"></div>
+                </div>
+                <span>Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
@@ -140,9 +143,10 @@ async function openDialogTask(i) {
     let path = responseToJson['registered'][user];
     let tasks = path['tasks'];
 
-
     document.getElementById('dialog').classList.remove('d_none');
     showTaskDetails(tasks[i], i)
+
+    updateProgressBar()
 }
 
 /**
@@ -175,12 +179,32 @@ function showTaskDetails(task, i) {
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
         subtasks.innerHTML += `
-        <div id="single_subtask">
-            <input type="checkbox">
+        <div id="single_subtask" class="single_subtask">
+            <input onclick="updateProgressBar()" class="subtask-checkbox" type="checkbox">
             <p>${subtask}</p>
         </div>
         `;
     }
+}
+
+
+function updateProgressBar() {
+    let allSubtasks = document.querySelectorAll('.single_subtask input[type="checkbox"]').length;
+    let completedSubtasks = document.querySelectorAll('.single_subtask input[type="checkbox"]:checked').length;
+
+    console.log(allSubtasks, completedSubtasks);
+
+    let checkboxes = document.querySelectorAll('.subtask-checkbox');
+    let checkedCount = 0;
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            checkedCount++;
+        }
+    });
+
+    let progress = (checkedCount / checkboxes.length) * 100;
+    let progressBarContent = document.getElementById('progress-bar-content');
+    progressBarContent.style.width = progress + '%';
 }
 
 /**
