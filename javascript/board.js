@@ -120,7 +120,7 @@ function generateTodoHTML(element, i) {
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
                 </div>
-                <img src="assets/img/Vector.svg">
+                <img src="${element['prioImg']}">
             </div>
         </div>
     </div>
@@ -191,8 +191,6 @@ function showTaskDetails(task, i) {
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
-
-    console.log(allSubtasks, completedSubtasks);
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
