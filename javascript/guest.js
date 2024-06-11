@@ -22,9 +22,12 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prioImg': './assets/img/add_task/arrowsTop.svg',
     'prio': 'Urgent',
-    'subtasks': ['Erstellen','Stylen']
+    'subtasks': [
+        {'title': 'Erstellen', 'state': false},
+        {'title': 'Stylen', 'state': false}
+    ]
 },
 
 {
@@ -50,9 +53,12 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prioImg': './assets/img/add_task/arrowsTop.svg',
     'prio': 'Urgent',
-    'subtasks': ['Erstellen','Stylen']
+    'subtasks': [
+        {'title': 'Erstellen', 'state': false},
+        {'title': 'Stylen', 'state': false}
+    ]
 },
 
 {
@@ -78,9 +84,12 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prioImg': './assets/img/add_task/arrowsTop.svg',
     'prio': 'Urgent',
-    'subtasks': ['Erstellen','Stylen']
+    'subtasks': [
+        {'title': 'Erstellen', 'state': false},
+        {'title': 'Stylen', 'state': false}
+    ]
 },
 
 {
@@ -106,9 +115,12 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prioImg': './assets/img/add_task/arrowsTop.svg',
     'prio': 'Urgent',
-    'subtasks': ['Erstellen','Stylen']
+    'subtasks': [
+        {'title': 'Erstellen', 'state': false},
+        {'title': 'Stylen', 'state': false}
+    ]
 },
 
 {
@@ -134,9 +146,12 @@ let guestTasks = [
             'name': 'Anton Mayer'
         }
     ],
-    'prioImg': './assets/img/summary/double_arrows.svg',
+    'prioImg': './assets/img/add_task/arrowsTop.svg',
     'prio': 'Urgent',
-    'subtasks': ['Erstellen','Stylen']
+    'subtasks': [
+        {'title': 'Erstellen', 'state': false},
+        {'title': 'Stylen', 'state': false}
+    ]
 },
 
 ];
@@ -178,19 +193,21 @@ function generateGuestTodoHTML(element, i) {
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogGuestTask(${i})">
-            <div class="task-card-type">
+        <div class="task-card-type">
                 <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
             </div>
             <h2>${element['title']}</h2>
             <p class="task-description">${element['description']}</p>
-            <div class="progress">
-                <div class="progress-bar"></div>
-                    ${element['subtasks']} Subtasks
+            <div class="progress" id="progress">
+                <div class="progress-bar">
+                    <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
+                </div>
+                <span>Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
                 </div>
-                <img src="assets/img/Vector.svg">
+                <img src="${element['prioImg']}">
             </div>
         </div>
     </div>
@@ -236,10 +253,11 @@ function showGuestTaskDetails(task, i) {
 
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
+        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
         subtasks.innerHTML += `
-        <div id="single_subtask">
-            <input type="checkbox">
-            <p>${subtask}</p>
+        <div id="single_subtask_${i}_${k}" class="single_subtask">
+            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+            <p>${subtask['title']}</p>
         </div>
         `;
     }
@@ -253,9 +271,11 @@ function showGuestTaskDetails(task, i) {
  */
 function generateGuestTaskDetails(task, i) {
     return /*html*/`
-    <div class="task-card-type">
-         <div class="type-bg">${task['taskCategory']}</div>
-         <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
+    <div class="task-card-type-details">
+        <div class="type-bg type-of-task">${task['taskCategory']}</div>
+        <div class="close_and_change">
+            <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
+        </div>
     </div>
     <div class="header_task_details">
         <h1>${task['title']}</h1>
@@ -278,12 +298,12 @@ function generateGuestTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask(${i})"> <!--richtige Funktion einfügen um Task zu löschen--> 
+            <div class="delete_task" onclick="deleteTask(${i})">
                 <img src="../assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
             <p>|</p>
-            <div class="edit_task" onclick="editTask(${i})"> <!--richtige Funktion einfügen um Task zu bearbeiten--> 
+            <div class="edit_task" onclick="editTask(${i})">
                 <img src="../assets/img/edit.svg" alt="">
                 <p>Edit</p>
             </div>

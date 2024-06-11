@@ -158,6 +158,8 @@ function showTaskDetails(task, i) {
     taskDetails.innerHTML = '';
     taskDetails.innerHTML = generateTaskDetails(task, i);
 
+    renderCheckbox(i);
+
     let content = document.getElementById(`contacts${i}`);
 
     for (let j = 0; j < task['taskContacts'].length; j++) {
@@ -179,7 +181,7 @@ function showTaskDetails(task, i) {
         subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
             <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-            <p>${subtask}</p>
+            <p>${subtask['title']}</p>
         </div>
         `;
     }
@@ -194,24 +196,88 @@ function updateProgressBar(i) {
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-    
-    if (progressBarContent) { 
+
+    if (progressBarContent) {
         progressBarContent.style.width = progress + '%';
     }
 }
 
 
-function saveCheckboxState(taskIndex, subtaskIndex) {
+async function saveCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     if (!checkboxStates[taskIndex]) {
         checkboxStates[taskIndex] = {};
     }
-    checkboxStates[taskIndex][subtaskIndex] = checkbox.checked;
+
+    let isChecked = checkbox.checked;
+    checkboxStates[taskIndex][subtaskIndex] = isChecked;
+
+    let userKey = localStorage.getItem('userKey');
+    let path = `registered/${userKey}/tasks/${taskIndex}/subtasks/${subtaskIndex}`;
+    let data = { state: isChecked };
+    await dataUser(path, data);
+}
+
+async function updateAllProgressBars() {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    let userKey = localStorage.getItem('userKey');
+
+    let tasks = responseToJson['registered'][userKey]['tasks'];
+
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+        let subtasks = task['subtasks'];
+
+        let allSubtasks = subtasks.length;
+        let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+
+        let progress = (completedSubtasks / allSubtasks) * 100;
+        let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+
+        if (progressBarContent) {
+            progressBarContent.style.width = progress + '%';
+        }
+    }
 }
 
 
 function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
+}
+
+async function renderCheckbox(taskIndex) {
+    let subtasksContainer = document.getElementById('task_subtasks');
+    if (!subtasksContainer) {
+        console.error('task_subtasks element not found');
+        return;
+    }
+
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    let userKey = localStorage.getItem('userKey');
+
+    let tasks = responseToJson['registered'][userKey]['tasks'];
+    subtasksContainer.innerHTML = '';
+
+    if (tasks[taskIndex]) {
+        let task = tasks[taskIndex];
+        let subtasks = task['subtasks'];
+
+        for (let j = 0; j < subtasks.length; j++) {
+            let subtask = subtasks[j];
+            let isChecked = subtask['state'] ? 'checked' : '';
+            let subtaskHTML = `
+                <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
+                    <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+                    <p>${subtask['title']}</p>
+                </div>
+            `;
+            subtasksContainer.innerHTML += subtaskHTML;
+        }
+
+        updateProgressBar(taskIndex);
+    }
 }
 
 
@@ -433,13 +499,13 @@ async function putData(category) {
  * @param {string} path - The path to append to the Firebase URL for updating data.
  * @param {Object} data - The data to be sent in the PATCH request.
  */
-async function dataUser(path = "", data = {}) {
+async function dataUser(path = "", data = {}, method = "PATCH") {
     let response = await fetch(firebaseUrl + path + ".json", {
-        method: "PATCH",
+        method: method,
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: method === "PATCH" ? JSON.stringify(data) : null,
     });
     return await response.json();
 }

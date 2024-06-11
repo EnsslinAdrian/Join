@@ -222,14 +222,18 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
  * This function generates a new subtask and adds it to the list of subtasks.
  */
 function addNewSubtasks() {
-  let subtask = document.getElementById('subtask');
-  if (subtasks.length < 2) {
-      if (subtask.value.length >= 1) {
-          subtasks.push(subtask.value);
-          subtask.value = '';
-          renderSubtasksList();
-      }
-  }
+    let subtaskInput = document.getElementById('subtask');
+    if (subtasks.length < 2) {
+        if (subtaskInput.value.length >= 1) {
+            let newSubtask = {
+                'title': subtaskInput.value,
+                'state': false
+            };
+            subtasks.push(newSubtask);
+            subtaskInput.value = '';
+            renderSubtasksList();
+        }
+    }
 }
 
 /**
@@ -262,6 +266,7 @@ function renderSubtasksList() {
   content.innerHTML = '';
   for (let i = 0; i < subtasks.length; i++) {
       let subtask = subtasks[i];
-      content.innerHTML += `<li>${subtask}</li>`;
+      content.innerHTML += `<li>${subtask.title}</li>`;
   }
 }
+

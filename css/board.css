@@ -176,6 +176,7 @@ p {
 .task-card-bottom {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .task-card-type {
@@ -188,7 +189,7 @@ p {
 }
 
 .task-card-type img {
-    cursor: pointer;
+    z-index: 999;
 }
 
 .task-card-type-details {

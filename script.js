@@ -482,7 +482,6 @@ async function renderTaskBoard() {
             let user = localStorage.getItem('userKey');
             let path = responseToJson['registered'][user];
             let tasks = path['tasks'];
-            console.log(tasks);
             test = tasks;
 
             document.getElementById('todo').innerHTML = '';
@@ -501,8 +500,10 @@ async function renderTaskBoard() {
                     let contacts = task['taskContacts'][j];
 
                     contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-                }
+                } 
             }
+            await updateAllProgressBars();
+            
         } else {
             renderGuestTaskBoard();
         }
