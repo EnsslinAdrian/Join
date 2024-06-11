@@ -226,17 +226,6 @@ function generateTaskDetails(task, i) {
     <div class="task-card-type-details">
         <div class="type-bg type-of-task">${task['taskCategory']}</div>
         <div class="close_and_change">
-            <div class="all_categories">
-                <div id="show-categories" class="show_categories">
-                    <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
-                </div>
-                <div id="move-to-options" class="move_to_options d_none">
-                    <p onclick="moveTo('todo')">To do</p>
-                    <p onclick="moveTo('in-progress')">In progress</p>
-                    <p onclick="moveTo('await-feedback')">Await feedback</p>
-                    <p onclick="moveTo('done')">Done</p>
-                </div>
-            </div>
             <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
         </div>
     </div>
@@ -300,7 +289,6 @@ function updateTodo() {
         const todoElement = todo[i];
         document.getElementById('todo').innerHTML += generateTodoHTML(todoElement);
     }
-
 }
 
 /**
@@ -490,33 +478,4 @@ async function compareTasks(searchedTask) {
 async function filterTasksMobile() {
     let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
     await compareTasks(searchedTask);
-}
-
-
-function showCategories() {
-    let showOptionsToChange = document.getElementById('show-categories');
-    showOptionsToChange.innerHTML = possibleOptions();
-    document.getElementById('move-to-options').classList.remove('d_none');
-}
-
-
-
-function possibleOptions() {
-    return /*html*/`
-    <img onclick="dontShowCategories()" id="showCategories" src="../assets/img/pull-up.svg" alt="">
-    `;
-}
-
-
-function dontShowCategories() {
-    let showOptionsToChange = document.getElementById('show-categories');
-    showOptionsToChange.innerHTML = hideOptions();
-    document.getElementById('move-to-options').classList.add('d_none');
-}
-
-
-function hideOptions() {
-    return /*html*/`
-    <img onclick="showCategories()" id="showCategories" src="../assets/img/arrow_drop_down.svg" alt="">
-    `;
 }
