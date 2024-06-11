@@ -1,8 +1,5 @@
 let currentDraggedTask = null;
 
-let progress = "in-progress";
-let feedback = "await-feedback";
-
 function openAddTask() {
     if (window.matchMedia("(max-width: 1100px)").matches) {
         window.location.href = 'add_task.html';
@@ -280,6 +277,8 @@ function updateHTML() {
     updateAwaitFeedback();
     updateDone();
 }
+
+let test = []; 
 
 /**
  * Updates the HTML content for the "ToDo" section by filtering tasks
