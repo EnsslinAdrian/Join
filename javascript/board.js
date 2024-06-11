@@ -1,4 +1,5 @@
 let currentDraggedTask = null;
+let checkboxStates = {};
 
 function openAddTask() {
     if (window.matchMedia("(max-width: 1100px)").matches) {
@@ -142,7 +143,7 @@ async function openDialogTask(i) {
     document.getElementById('dialog').classList.remove('d_none');
     showTaskDetails(tasks[i], i)
 
-    updateProgressBar()
+    updateProgressBar(i);
 }
 
 /**
@@ -174,13 +175,16 @@ function showTaskDetails(task, i) {
 
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
+        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
         subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${i})" class="subtask-checkbox" type="checkbox">
+            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask}</p>
         </div>
         `;
     }
+
+    updateProgressBar(i);
 }
 
 
@@ -190,20 +194,26 @@ function updateProgressBar(i) {
 
     console.log(allSubtasks, completedSubtasks);
 
-    let checkboxes = document.querySelectorAll(`#task_subtasks .subtask-checkbox`);
-    let checkedCount = 0;
-    checkboxes.forEach((checkbox) => {
-        if (checkbox.checked) {
-            checkedCount++;
-        }
-    });
-
-    let progress = (checkedCount / checkboxes.length) * 100;
+    let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
     
     if (progressBarContent) { 
         progressBarContent.style.width = progress + '%';
     }
+}
+
+
+function saveCheckboxState(taskIndex, subtaskIndex) {
+    let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
+    if (!checkboxStates[taskIndex]) {
+        checkboxStates[taskIndex] = {};
+    }
+    checkboxStates[taskIndex][subtaskIndex] = checkbox.checked;
+}
+
+
+function isSubtaskChecked(taskIndex, subtaskIndex) {
+    return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
 }
 
 
@@ -278,7 +288,6 @@ function updateHTML() {
     updateDone();
 }
 
-let test = []; 
 
 /**
  * Updates the HTML content for the "ToDo" section by filtering tasks
