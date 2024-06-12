@@ -89,6 +89,7 @@ function openAddTask() {
     }
 }
 
+
 function closeAddTask() {
     let container = document.getElementById('add-task-popup');
     container.classList.add('d-none');
