@@ -198,7 +198,6 @@ function showTaskDetails(task, i) {
     updateProgressBar(i);
 }
 
-
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
@@ -210,7 +209,6 @@ function updateProgressBar(i) {
         progressBarContent.style.width = progress + '%';
     }
 }
-
 
 async function saveCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
@@ -249,7 +247,6 @@ async function updateAllProgressBars() {
         }
     }
 }
-
 
 function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
@@ -649,4 +646,9 @@ async function compareTasks(searchedTask) {
             }
         }
     }
+}
+
+async function filterTasksMobile() {
+    let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
+    await compareTasks(searchedTask);
 }
