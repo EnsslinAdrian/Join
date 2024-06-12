@@ -433,6 +433,8 @@ span {
 
 .padding-top {
     padding-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .taskContacts {
@@ -466,6 +468,14 @@ span {
 
 .all_categories {
     text-align: end;
+}
+
+.margin-left-top {
+    margin: 0 !important;
+}
+
+.add-task-section input {
+    margin-left: 0 !important;
 }
 
 @media (max-width: 1530px) {
@@ -639,11 +649,47 @@ span {
     .scrollable_part {
         width: 500px;
     }
+
+    .add-task-popup {
+        width: 300px;
+        height: 1000px;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 524px) {
     .scrollable_part {
         width: 440px;
+    }
+
+    .header_task_details h1 {
+        font-size: 40px !important;
+    }
+
+    .task_details_information span {
+        font-size: 20px;
+    }
+
+    .task_details_information p {
+        font-size: 20px;
+    }
+
+    .margin-left-top h1 {
+        font-size: 40px;
+    }
+
+    .add-task-section p {
+        font-size: 12px;
+    }
+
+    .dialog {
+        margin: 20px;
+    }
+
+    .details_delete_edit {
+        justify-content: center !important;
+        padding: 30px;
     }
 }
 
@@ -668,6 +714,10 @@ span {
 @media (max-width: 363px) {
     .scrollable_part {
         width: 280px;
+    }
+
+    .details_delete_edit {
+        width: 160px;
     }
 }
 

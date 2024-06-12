@@ -10,78 +10,85 @@ function openAddTask() {
         container.classList.remove('d-none');
         container.innerHTML = `
     <div class="padding-top">
-    <div class="popup-headline">
-        <h1>Add Task</h1>
-        <div class="close-popup">
-            <img onclick="closeAddTask()" src="assets/img/add_task/close.svg">
-        </div>
-    </div>
-    <div class="add-task-section">
+    <div class="margin-left-top" onclick="closeAssigned()">
+                <h1>Add Task</h1>
+                <!-- anfang -->
+                <div class="add-task-section">
 
-        <div class="add-task-titel-container">
-            <form action="">
-            <p>Titel<span class="color-red">*</span></p>
-            <input required class="margin-buttom" type="text" placeholder="Enter a title">
-            <p>Description</p>
-            <textarea class="margin-buttom" name="" id="" placeholder="Enter a Description"></textarea>
-            <p>Assigned to</p>
-            <div class="custom-select" style="width:100%;">
-                <select>
-                  <option value="0">Select car:</option>
-                  <option class="assigned-conainer" value="1">
-                <div class="assigned-circle-name">SM</div>
-                 <p>Sofia Müller</p>
-                 
-                  </option>
-                </select>
-              </div>
-        </div>
+                    <div class="add-task-titel-container">
+                        <form onsubmit="addNewTask(event)" action="">
+                            <p>Titel<span class="color-red">*</span></p>
+                            <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
+                            <p>Description</p>
+                            <textarea id="description" class="margin-buttom" name="" id=""
+                                placeholder="Enter a Description"></textarea>
 
-        <div class="add-task-between-line"></div>
+                            <p>Assigned to</p>
+                            <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                                placeholder="Select contacts to assign">
+                            <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
 
-        <div class="add-task-date-container">
-            <p>Due date<span class="color-red">*</span></p>
-            <input required class="margin-buttom" type="date">
-            <p>Prio</p>
-            <div class="margin-buttom add-task-prio prio-gap">
-                <div class="prio-selection-urgent">
-                    <span>Urgent</span> 
-                    <img class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                            </div>
+                            <div class="selected-contact d-none" id="selectedContact"></div>
+                    </div>
+
+                    <div class="add-task-between-line"></div>
+
+                    <div class="add-task-date-container">
+                        <p>Due date<span class="color-red">*</span></p>
+                        <input id="date" required class="margin-buttom" type="date">
+                        <p>Prio</p>
+                        <div class="margin-buttom add-task-prio">
+                            <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
+                                <span>Urgent</span>
+                                <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                            </div>
+                            <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
+                                <span>Medium </span>
+                                <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
+                            </div>
+                            <div class="prio-selection-low" onclick="taskLow()" id="low">
+                                <span>Low</span>
+                                <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                            </div>
+                        </div>
+                        <p>Category<span class="color-red">*</span></p>
+                        <div class="custom-select" style="width:100%;">
+                            <select id="select">
+                                <option value="0">Select task category</option>
+                                <option value="1">Technical Task</option>
+                                <option value="2">User Story</option>
+                            </select>
+                        </div>
+                        <p>Subtasks</p>
+                        <div class="subtasks-container">
+                            <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                            <div class="subtasks-button">
+                                <button onclick="addNewSubtasks()" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="subtasks-list">
+                            <ul id="subtasksList"></ul>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="prio-selection-medium">
-                    <span>Medium</span> 
-                    <img class="prio-icons" src="./assets/img/add_task/result.svg">
+
+                <div class="send-add-task-buttons">
+                    <p class="required-text"><span class="color-red">*</span>This field is required</p>
+                    <div class="buttons">
+                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img
+                                src="assets/img/add_task/close.svg"></button>
+                        <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
+                    </div>
                 </div>
-                <div class="prio-selection-low">
-                    <span>Low</span> 
-                    <img class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                </div>
+                </form>
+                <!-- ende -->
             </div>
-            <p>Category<span class="color-red">*</span></p>
-            <div class="custom-select" style="width:100%;">
-                <select>
-                  <option value="0">Select car:</option>
-                  <option value="1">Audi</option>
-                  <option value="2">BMW</option>
-                </select>
-              </div>
-            <p>Subtasks</p>
-            <input type="text" name="" id="">
-        </div>
-
-    </div>
-
-    <div class="add-task-buttons">
-        <p class="required-text"><span class="color-red">*</span>This field is required</p>
-        <div class="popup-buttons">
-            <button onclick="cancelAddTask()" class="clear-button">Cancel <img src="assets/img/add_task/close.svg"></button>
-            <button class="btn" onsubmit="">Create Task <img src="assets/img/add_task/check.svg"></button>
-        </div>
-    </div>
-</form>
 `;
     }
 }
+
 
 function closeAddTask() {
     let container = document.getElementById('add-task-popup');
