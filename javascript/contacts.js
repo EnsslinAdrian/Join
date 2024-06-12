@@ -131,7 +131,7 @@ function closeEditPopup() {
     let container = document.getElementById('edit-contact-popup');
     container.classList.add('slide-out');
     container.addEventListener('transitionend', function() { 
-        addClassDnone();
+        container.classList.add('d-none');
     }, { once: true });
 }
 

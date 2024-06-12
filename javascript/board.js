@@ -8,85 +8,87 @@ function openAddTask() {
         let container = document.getElementById('add-task-popup');
         container.classList.remove('slide-out');
         container.classList.remove('d-none');
-        container.innerHTML = `
-    <div class="padding-top">
-    <div class="margin-left-top" onclick="closeAssigned()">
-                <h1>Add Task</h1>
-                <!-- anfang -->
-                <div class="add-task-section">
-
-                    <div class="add-task-titel-container">
-                        <form onsubmit="addNewTask(event)" action="">
-                            <p>Titel<span class="color-red">*</span></p>
-                            <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
-                            <p>Description</p>
-                            <textarea id="description" class="margin-buttom" name="" id=""
-                                placeholder="Enter a Description"></textarea>
-
-                            <p>Assigned to</p>
-                            <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                                placeholder="Select contacts to assign">
-                            <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
-
-                            </div>
-                            <div class="selected-contact d-none" id="selectedContact"></div>
-                    </div>
-
-                    <div class="add-task-between-line"></div>
-
-                    <div class="add-task-date-container">
-                        <p>Due date<span class="color-red">*</span></p>
-                        <input id="date" required class="margin-buttom" type="date">
-                        <p>Prio</p>
-                        <div class="margin-buttom add-task-prio">
-                            <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
-                                <span>Urgent</span>
-                                <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
-                            </div>
-                            <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
-                                <span>Medium </span>
-                                <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
-                            </div>
-                            <div class="prio-selection-low" onclick="taskLow()" id="low">
-                                <span>Low</span>
-                                <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                            </div>
-                        </div>
-                        <p>Category<span class="color-red">*</span></p>
-                        <div class="custom-select" style="width:100%;">
-                            <select id="select">
-                                <option value="0">Select task category</option>
-                                <option value="1">Technical Task</option>
-                                <option value="2">User Story</option>
-                            </select>
-                        </div>
-                        <p>Subtasks</p>
-                        <div class="subtasks-container">
-                            <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                            <div class="subtasks-button">
-                                <button onclick="addNewSubtasks()" type="button">+</button>
-                            </div>
-                        </div>
-                        <div class="subtasks-list">
-                            <ul id="subtasksList"></ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="send-add-task-buttons">
-                    <p class="required-text"><span class="color-red">*</span>This field is required</p>
-                    <div class="buttons">
-                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img
-                                src="assets/img/add_task/close.svg"></button>
-                        <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
-                    </div>
-                </div>
-                </form>
-                <!-- ende -->
-            </div>
-`;
+        container.innerHTML = generateAddTaskHtml();
     }
+}
+
+function generateAddTaskHtml() {
+    return `
+    <div>
+    <h1>Add Task</h1>
+    <!-- anfang -->
+    <div class="add-task-section">
+
+        <div class="add-task-titel-container">
+            <form onsubmit="addNewTask(event)" action="">
+                <p>Titel<span class="color-red">*</span></p>
+                <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
+                <p>Description</p>
+                <textarea id="description" class="margin-buttom" name="" id=""
+                    placeholder="Enter a Description"></textarea>
+
+                <p>Assigned to</p>
+                <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                    placeholder="Select contacts to assign">
+                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
+
+                </div>
+                <div class="selected-contact d-none" id="selectedContact"></div>
+        </div>
+
+        <div class="add-task-between-line"></div>
+
+        <div class="add-task-date-container">
+            <p>Due date<span class="color-red">*</span></p>
+            <input id="date" required class="margin-buttom" type="date">
+            <p>Prio</p>
+            <div class="margin-buttom add-task-prio">
+                <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
+                    <span>Urgent</span>
+                    <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                </div>
+                <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
+                    <span>Medium </span>
+                    <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
+                </div>
+                <div class="prio-selection-low" onclick="taskLow()" id="low">
+                    <span>Low</span>
+                    <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                </div>
+            </div>
+            <p>Category<span class="color-red">*</span></p>
+            <div class="custom-select" style="width:100%;">
+                <select id="select">
+                    <option value="0">Select task category</option>
+                    <option value="1">Technical Task</option>
+                    <option value="2">User Story</option>
+                </select>
+            </div>
+            <p>Subtasks</p>
+            <div class="subtasks-container">
+                <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                <div class="subtasks-button">
+                    <button onclick="addNewSubtasks()" type="button">+</button>
+                </div>
+            </div>
+            <div class="subtasks-list">
+                <ul id="subtasksList"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="send-add-task-buttons">
+        <p class="required-text"><span class="color-red">*</span>This field is required</p>
+        <div class="buttons">
+            <button onclick="clearTask()" type="button" class="clear-button">Clear <img
+                    src="assets/img/add_task/close.svg"></button>
+            <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
+        </div>
+    </div>
+    </form>
+    </div>
+    `;
 }
 
 
@@ -295,6 +297,7 @@ async function renderCheckbox(taskIndex) {
  * @param {number} i - The index of the task in the task list.
  */
 function generateTaskDetails(task, i) {
+    let taskJson = encodeURIComponent(JSON.stringify(task));
     return /*html*/`
     <div class="task-card-type-details">
         <div class="type-bg type-of-task">${task['taskCategory']}</div>
@@ -323,16 +326,117 @@ function generateTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask(${i})">
+            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i})">
                 <img src="../assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
             <p>|</p>
-            <div class="edit_task" onclick="editTask(${i})">
+            <div class="edit_task" onclick="editTask('${taskJson}', '${i}')">
                 <img src="../assets/img/edit.svg" alt="">
                 <p>Edit</p>
             </div>
         </footer>
+    </div>
+    `;
+}
+
+async function deleteTask(taskJson, i) {
+    let task = JSON.parse(decodeURIComponent(taskJson));
+    let personalId = localStorage.getItem('userKey');
+    console.log(i);
+    // let response = await fetch(`${task}`, {
+
+    //     method: "DELETE",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    // });
+    // if (response.ok) {
+        
+    // } else {
+    //     console.error('Fehler beim Löschen der Task:', response.statusText);
+    // }
+}
+
+async function editTask(taskJson, i) {
+    let task = JSON.parse(decodeURIComponent(taskJson));
+    console.log(task);
+    let container = document.getElementById('taskDetails');
+    container.innerHTML = '';
+    container.innerHTML = generateEditPopup(task);
+    document.getElementById('title').value = task['title'];
+    document.getElementById('description').value = task['description'];
+    document.getElementById('date').value = task['date'];
+    // document.getElementById('title').value = task['title'];
+}
+
+function generateEditPopup(task) {
+    return `
+    <div>
+    <div class="add-task-section-edit">
+
+        <div class="add-task-titel-container-edit">
+            <form onsubmit="saveEditedTask()" action="">
+                <p>Titel<span class="color-red">*</span></p>
+                <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
+                <p>Description</p>
+                <textarea id="description" class="margin-buttom" name="" id=""
+                    placeholder="Enter a Description"></textarea>
+
+                <p>Assigned to</p>
+                <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                    placeholder="Select contacts to assign">
+                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
+
+                </div>
+                <div class="selected-contact d-none" id="selectedContact"></div>
+        </div>
+        <div class="add-task-date-container-edit">
+            <p>Due date<span class="color-red">*</span></p>
+            <input id="date" required class="margin-buttom" type="date">
+            <p>Prio</p>
+            <div class="margin-buttom add-task-prio">
+                <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
+                    <span>Urgent</span>
+                    <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                </div>
+                <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
+                    <span>Medium </span>
+                    <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
+                </div>
+                <div class="prio-selection-low" onclick="taskLow()" id="low">
+                    <span>Low</span>
+                    <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                </div>
+            </div>
+            <p>Category<span class="color-red">*</span></p>
+            <div class="custom-select" style="width:100%;">
+                <select id="select">
+                    <option value="0">Select task category</option>
+                    <option value="1">Technical Task</option>
+                    <option value="2">User Story</option>
+                </select>
+            </div>
+            <p>Subtasks</p>
+            <div class="subtasks-container">
+                <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                <div class="subtasks-button">
+                    <button onclick="addNewSubtasks()" type="button">+</button>
+                </div>
+            </div>
+            <div class="subtasks-list">
+                <ul id="subtasksList"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="send-add-task-buttons">
+        <div class="buttons">
+            <button class="btn">OK<img src="assets/img/add_task/check.svg"></button>
+        </div>
+    </div>
+    </form>
     </div>
     `;
 }
@@ -545,10 +649,4 @@ async function compareTasks(searchedTask) {
             }
         }
     }
-}
-
-
-async function filterTasksMobile() {
-    let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
-    await compareTasks(searchedTask);
 }

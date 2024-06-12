@@ -381,6 +381,20 @@ color: red;
     background-color: rgb(230, 227, 227);
 }
 
+.add-task-section-edit {
+    display: flex;
+    margin-top: 48px;
+    flex-direction: column;
+}
+
+.add-task-titel-container-edit {
+    width: 100%;
+}
+
+.add-task-date-container-edit {
+    width: 100%;
+}
+
 @media (max-width: 1300px) {
     p {
         font-size: 16px;
