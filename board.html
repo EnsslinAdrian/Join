@@ -17,6 +17,7 @@
     <script src="script.js"></script>
     <script src="javascript/board.js"></script>
     <script src="./javascript/guest.js"></script>
+    <script src="./javascript/addTask.js"></script>
     <script src="node_modules/drag-drop-touch/DragDropTouch.js"></script>
 </head>
 
@@ -65,7 +66,8 @@
                     </div>
                 </div>
                 <div class="inputfield-container-mobile">
-                    <input onkeyup="filterTasksMobile()" class="inputfield" id="inputFieldMobile" placeholder="Find Task">
+                    <input onkeyup="filterTasksMobile()" class="inputfield" id="inputFieldMobile"
+                        placeholder="Find Task">
                     <div class="input-icon">
                         <img src="assets/img/vertical-line.svg">
                         <img src="./assets/img/search.png">
@@ -121,18 +123,16 @@
                         <div class="list-item">
                             <p>Done</p>
                         </div>
-                            <div class="no-task" id="noTasksDone">
-                                No tasks done
+                        <div class="no-task" id="noTasksDone">
+                            No tasks done
+                        </div>
+                        <div class="scrollable_part">
+                            <div class="task-columns" id="done" ondrop="moveTo('done')"
+                                ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')">
                             </div>
-                            <div class="scrollable_part">
-                                <div class="task-columns" id="done" ondrop="moveTo('done')"
-                                    ondragleave="removeHighlight('done')"
-                                    ondragover="allowDrop(event); highlight('done')">
-                                </div>
                         </div>
                     </div>
                 </div>
-
 
                 <div id="add-task-popup" class="add-task-popup d-none">
 
