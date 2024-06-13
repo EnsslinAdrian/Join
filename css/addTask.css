@@ -395,6 +395,45 @@ color: red;
     width: 100%;
 }
 
+.edit-subtask-container {
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'inter';
+    height: 25px;
+    }
+
+    .subtask-edit-svg {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    display: none;
+    }
+
+    .subtask-edit-svg img{
+     cursor: pointer;
+        }
+
+    .subtask-edit-line {
+    width: 2px;
+    height: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #00000059;
+    }
+
+.edit-subtask-container:hover {
+    background-color: #d6e2f3;
+}
+
+.edit-subtask-container:hover > .subtask-edit-svg {
+    display: flex;
+}
+
 @media (max-width: 1300px) {
     p {
         font-size: 16px;

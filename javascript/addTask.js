@@ -237,6 +237,40 @@ function addNewSubtasks() {
 }
 
 /**
+ * This function renders the created subtasks and displays them in the content area.
+ */
+function renderSubtasksList() {
+  let content = document.getElementById('subtasksList');
+  content.innerHTML = '';
+  for (let i = 0; i < subtasks.length; i++) {
+      let subtask = subtasks[i];
+      content.innerHTML += generateSubtaskHtml(subtask, i);
+  }
+}
+
+function generateSubtaskHtml(subtask, i) {
+  return `
+  <div class="edit-subtask-container" id="subtaskEditContainer${i}">
+    <li contenteditable="true" onblur="updateSubtaskTitle(${i}, this.innerText)">${subtask.title}</li>
+    <div class="subtask-edit-svg" id="subtaskSvg">
+      <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
+      <div class="subtask-edit-line"></div>
+      <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
+    </div>
+  </div>
+  `;
+}
+
+function updateSubtaskTitle(index, newTitle) {
+  subtasks[index].title = newTitle; // Aktualisiere den Titel im Array
+}
+
+function deleteSubtask(i) {
+  subtasks.splice(i, 1); // Verwende das globale 'subtasks' Array
+  renderSubtasksList();
+}
+
+/**
  * This function renders the initials for the contacts in the "Assigned to" section.
  */
 function renderAddTaskContactInitials() {
@@ -258,15 +292,4 @@ function generateAddTaskContactInitialsHTML(contact) {
   return `<div style="background-color: ${contact['color']};" class="assigned-initials">${contact['initials']}</div>`;
 }
 
-/**
- * This function renders the created subtasks and displays them in the content area.
- */
-function renderSubtasksList() {
-  let content = document.getElementById('subtasksList');
-  content.innerHTML = '';
-  for (let i = 0; i < subtasks.length; i++) {
-      let subtask = subtasks[i];
-      content.innerHTML += `<li>${subtask.title}</li>`;
-  }
-}
 
