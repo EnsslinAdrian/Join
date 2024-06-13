@@ -251,7 +251,7 @@ function renderSubtasksList() {
 function generateSubtaskHtml(subtask, i) {
   return `
   <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-    <li contenteditable="true" onblur="updateSubtaskTitle(${i}, this.innerText)">${subtask.title}</li>
+    <li id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
     <div class="subtask-edit-svg" id="subtaskSvg">
       <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
       <div class="subtask-edit-line"></div>
@@ -261,8 +261,16 @@ function generateSubtaskHtml(subtask, i) {
   `;
 }
 
-function updateSubtaskTitle(index, newTitle) {
-  subtasks[index].title = newTitle; // Aktualisiere den Titel im Array
+function editSubtask(i) {
+  let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
+  subtaskTitle.contentEditable = "true";
+  subtaskTitle.focus();
+}
+
+function saveSubtaskTitle(i) {
+  let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
+  subtasks[i].title = subtaskTitle.innerText; // Aktualisiere den Titel im Array
+  subtaskTitle.contentEditable = "false";
 }
 
 function deleteSubtask(i) {
