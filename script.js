@@ -491,6 +491,7 @@ async function renderTaskBoard() {
                 let id = task['category'];
 
                 document.getElementById(id).innerHTML += generateTodoHTML(task, i);
+                updateProgressBar(i);
 
                 let contactsContent = document.getElementById(`taskContacts${i}`);
                 for (let j = 0; j < task['taskContacts'].length; j++) {
