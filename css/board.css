@@ -124,6 +124,10 @@ p {
     width: 260px;
 }
 
+.drag_area_hightlight {
+    border: 1px dashed grey;
+}
+
 .task-columns {
     display: flex;
     flex-direction: column;
@@ -132,6 +136,7 @@ p {
     max-width: 260px;
     margin-top: 12px;
     height: 700px;
+    padding: 4px;
 }
 
 .task-card {
@@ -163,7 +168,7 @@ p {
     padding: 16px;
     font-size: 16px;
     font-weight: 400;
-    margin-top: -585px;
+    margin-top: -575px;    ;
     margin-left: 7px;
     position: absolute;
 }
