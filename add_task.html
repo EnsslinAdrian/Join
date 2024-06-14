@@ -45,12 +45,13 @@
                     <div class="add-task-titel-container">
                         <form onsubmit="addNewTask(event)" action="">
                             <p>Titel<span class="color-red">*</span></p>
-                            <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
-                            <p>Description</p>
-                            <textarea id="description" class="margin-buttom" name="" id=""
-                                placeholder="Enter a Description"></textarea>
+                            <input onkeydown="checkTitelLength()" id="title" required type="text" placeholder="Enter a title">
+                            <span id="titelLengthMessage"></span>
+                            <p style="margin-top: 32px;">Description</p>
+                            <textarea id="description" placeholder="Enter a Description" onkeydown="checkDescriptionLength()"></textarea>
+                            <span id="descriptionLengthMessage"></span>
 
-                            <p>Assigned to</p>
+                            <p style="margin-top: 32px;">Assigned to</p>
                             <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
                                 placeholder="Select contacts to assign">
                             <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
@@ -89,7 +90,7 @@
                         </div>
                         <p>Subtasks</p>
                         <div class="subtasks-container">
-                            <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                            <input onkeydown="checkSubtasksLength()" id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
                             <div class="subtasks-button">
                                 <button onclick="addNewSubtasks()" type="button">+</button>
                             </div>

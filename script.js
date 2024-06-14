@@ -176,11 +176,8 @@ async function addNewTask(event) {
         window.location.href = 'board.html';
     } else {
         let guestTasks = localStorage.getItem('guestTasks') ? JSON.parse(localStorage.getItem('guestTasks')) : [];
-
         guestTasks.push(task);
-
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-
         window.location.href = 'board.html';
     }
 }

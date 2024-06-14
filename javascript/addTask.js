@@ -251,7 +251,7 @@ function renderSubtasksList() {
 function generateSubtaskHtml(subtask, i) {
   return `
   <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-    <li id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
+    <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
     <div class="subtask-edit-svg" id="subtaskSvg">
       <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
       <div class="subtask-edit-line"></div>
@@ -300,4 +300,48 @@ function generateAddTaskContactInitialsHTML(contact) {
   return `<div style="background-color: ${contact['color']};" class="assigned-initials">${contact['initials']}</div>`;
 }
 
+function checkDescriptionLength() {
+  let description = document.getElementById('description').value;
+
+  if (description.length > 300) {
+    document.getElementById('description').value = description.substring(0, 300);
+    document.getElementById('descriptionLengthMessage').innerHTML = `Sie haben ${description.length} Zeichen von Maximal 300`;
+    document.getElementById('descriptionLengthMessage').style.color = 'red';
+  } else {
+    document.getElementById('descriptionLengthMessage').innerHTML = `Sie haben ${description.length} Zeichen von Maximal 300`;
+    document.getElementById('descriptionLengthMessage').style.color = 'green';
+
+  }
+}
+
+function checkTitelLength() {
+  let description = document.getElementById('title').value;
+
+  if (description.length > 30) {
+    document.getElementById('title').value = description.substring(0, 30);
+    document.getElementById('titelLengthMessage').innerHTML = `Sie haben ${description.length} Zeichen von Maximal 30`;
+    document.getElementById('titelLengthMessage').style.color = 'red';
+  } else {
+    document.getElementById('titelLengthMessage').innerHTML = `Sie haben ${description.length} Zeichen von Maximal 30`;
+    document.getElementById('titelLengthMessage').style.color = 'green';
+
+  }
+}
+
+function checkSubtasksLength() {
+  let description = document.getElementById('subtask').value;
+
+  if (description.length > 40) {
+    document.getElementById('subtask').value = description.substring(0, 40);
+    document.getElementById('subtask').value = description.substring(0, 40);
+  } 
+}
+
+function checkSubtasksEditLength(i) {
+  let description = document.getElementById(`subtaskTitle${i}`).innerHTML;
+
+  if (description.length > 40) {
+    document.getElementById(`subtaskTitle${i}`).innerHTML = description.substring(0, 40);
+  } 
+}
 
