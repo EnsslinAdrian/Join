@@ -508,8 +508,9 @@ span {
     .task-columns {
         flex-direction: row;
         height: 280px;
-        width: 900px;
         padding: 4px;
+        max-width: -webkit-fill-available;
+        border-radius: 24px;
     }
 
     .task-card {
