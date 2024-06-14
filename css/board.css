@@ -452,6 +452,7 @@ span {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    width: 273px;
 }
 
 ::-webkit-scrollbar {
@@ -507,6 +508,7 @@ span {
         flex-direction: row;
         height: 280px;
         width: 900px;
+        padding: 4px;
     }
 
     .task-card {
