@@ -559,6 +559,7 @@ async function moveTo(category) {
         updateHTML();
         renderGuestTaskBoard();
     }
+    removeHighlight(category);
 }
 
 /**

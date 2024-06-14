@@ -125,7 +125,8 @@ p {
 }
 
 .drag_area_hightlight {
-    border: 1px dashed grey;
+    border: 1px dashed lightgrey;
+    border-radius: 24px;
 }
 
 .task-columns {
