@@ -70,6 +70,10 @@ header {
     cursor: pointer;
 }
 
+.profil-initials span {
+    color: #29ABE2 !important;
+}
+
 .menubar-section {
     background-color: #2A3647;
     width: 232px;

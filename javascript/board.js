@@ -119,7 +119,7 @@ function generateTodoHTML(element, i) {
                 <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
             </div>
             <h2>${element['title']}</h2>
-            <p class="task-description">${element['description']}</p>
+            <p class="task-description shorter_description">${element['description']}</p>
             <div class="progress" id="progress">
                 <div class="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
@@ -187,6 +187,7 @@ function showTaskDetails(task, i) {
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
         let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
+
         subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
             <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
