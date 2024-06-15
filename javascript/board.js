@@ -124,7 +124,7 @@ function generateTodoHTML(element, i) {
                 <div class="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
-                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
+                <span>Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
@@ -195,17 +195,12 @@ function showTaskDetails(task, i) {
         `;
     }
 
-    updateAllProgressBars();
     updateProgressBar(i);
 }
-
 
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
-
-    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
@@ -214,7 +209,6 @@ function updateProgressBar(i) {
         progressBarContent.style.width = progress + '%';
     }
 }
-
 
 async function saveCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
@@ -246,19 +240,13 @@ async function updateAllProgressBars() {
         let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
 
         let progress = (completedSubtasks / allSubtasks) * 100;
-
-        let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-
         let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
 
         if (progressBarContent) {
             progressBarContent.style.width = progress + '%';
         }
-
     }
 }
-
 
 function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
@@ -335,7 +323,7 @@ function generateTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i}')">
+            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i})">
                 <img src="../assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
@@ -361,7 +349,7 @@ async function deleteTask(taskJson, i) {
     //     },
     // });
     // if (response.ok) {
-
+        
     // } else {
     //     console.error('Fehler beim Löschen der Task:', response.statusText);
     // }
@@ -559,7 +547,6 @@ async function moveTo(category) {
         updateHTML();
         renderGuestTaskBoard();
     }
-    removeHighlight(category);
 }
 
 /**
@@ -660,7 +647,6 @@ async function compareTasks(searchedTask) {
         }
     }
 }
-
 
 async function filterTasksMobile() {
     let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();

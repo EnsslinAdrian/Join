@@ -28,15 +28,15 @@ function openAddNewContact() {
         </div>
         <form class="inputfields">
             <div class="input-container">
-                <input id="contactName" class="input" placeholder="Name" type="text" required>
+                <input id="contact-Name" class="input" placeholder="Name" type="text" required>
                 <img class="input-icon" src="assets/img/person.svg">
             </div>
             <div class="input-container">
-                <input id="contactEmail" class="input" placeholder="Email" type="email" required>
+                <input id="contact-Email" class="input" placeholder="Email" type="email" required>
                 <img class="input-icon" src="assets/img/mail.svg">
             </div>
             <div class="input-container">
-                <input id="contactPhone" class="input" placeholder="Phone" type="text" required>
+                <input id="contact-Phone" class="input" placeholder="Phone" type="text" required>
                 <img class="input-icon" src="assets/img/contacts/call.svg">
             </div>                                    
         <div class="buttons">
