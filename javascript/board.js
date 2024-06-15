@@ -216,8 +216,8 @@ function updateProgressBar(i) {
     }
 }
 
-
 async function saveCheckboxState(taskIndex, subtaskIndex) {
+    if (localStorage.getItem('username') !== 'Guest') {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     if (!checkboxStates[taskIndex]) {
         checkboxStates[taskIndex] = {};
@@ -230,6 +230,24 @@ async function saveCheckboxState(taskIndex, subtaskIndex) {
     let path = `registered/${userKey}/tasks/${taskIndex}/subtasks/${subtaskIndex}`;
     let data = { state: isChecked };
     await dataUser(path, data);
+}
+saveCheckboxStateGuest(taskIndex, subtaskIndex);
+}
+
+function saveCheckboxStateGuest(taskIndex, subtaskIndex) {
+    let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
+    let isChecked = checkbox.checked;
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
+
+    if (!guestTasks[taskIndex]) {
+        return;
+    }
+
+    if (!guestTasks[taskIndex].subtasks[subtaskIndex]) {
+        return;
+    }
+    guestTasks[taskIndex].subtasks[subtaskIndex].state = isChecked;
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
 }
 
 async function updateAllProgressBars() {

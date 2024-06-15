@@ -2,7 +2,7 @@ let guestTasks = [
 {
     'category': 'in-progress',
     'taskCategory': 'User Story',
-    'title': 'Header',
+    'title': 'Header1',
     'description': 'Header Template erstellen',
     'date': '16.08.2024',
     'taskContacts': [
@@ -33,7 +33,7 @@ let guestTasks = [
 {
     'category': 'in-progress',
     'taskCategory': 'User Story',
-    'title': 'Header',
+    'title': 'Header2',
     'description': 'Header Template erstellen',
     'date': '16.08.2024',
     'taskContacts': [
@@ -64,7 +64,7 @@ let guestTasks = [
 {
     'category': 'await-feedback',
     'taskCategory': 'User Story',
-    'title': 'Header',
+    'title': 'Header3',
     'description': 'Header Template erstellen',
     'date': '16.08.2024',
     'taskContacts': [
@@ -95,7 +95,7 @@ let guestTasks = [
 {
     'category': 'await-feedback',
     'taskCategory': 'User Story',
-    'title': 'Header',
+    'title': 'Header4',
     'description': 'Header Template erstellen',
     'date': '16.08.2024',
     'taskContacts': [
@@ -126,7 +126,7 @@ let guestTasks = [
 {
     'category': 'done',
     'taskCategory': 'User Story',
-    'title': 'Header',
+    'title': 'Header5',
     'description': 'Header Template erstellen',
     'date': '16.08.2024',
     'taskContacts': [
@@ -197,12 +197,12 @@ function generateGuestTodoHTML(element, i) {
                 <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
             </div>
             <h2>${element['title']}</h2>
-            <p class="task-description">${element['description']}</p>
+            <p class="task-description shorter_description">${element['description']}</p>
             <div class="progress" id="progress">
                 <div class="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
-                <span>Subtasks</span>
+                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
