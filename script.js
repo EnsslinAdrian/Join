@@ -345,6 +345,7 @@ async function deleteContact(contactJson, id, index) {
 
 async function saveEditedContact(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
+    console.log(contact);
     let newName = document.getElementById('contactName').value;
     let newEmail = document.getElementById('contactEmail').value;
     let newPhone = document.getElementById('contactPhone').value;
@@ -525,9 +526,9 @@ function clearShowContactContainer() {
 }
 
 async function newContact() {
-    let name = document.getElementById('contactName');
-    let email = document.getElementById('contactEmail');
-    let phone = document.getElementById('contactPhone');
+    let name = document.getElementById('contact-Name');
+    let email = document.getElementById('contact-Email');
+    let phone = document.getElementById('contact-Phone');
     let initialsBgColor = getRandomColor();
     
     let contact = {
