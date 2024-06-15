@@ -177,6 +177,13 @@ p {
 .task-description {
     font-weight: 400;
     font-size: 16px !important;
+    height: auto;
+}
+
+.shorter_description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .task-card-bottom {
@@ -766,10 +773,14 @@ span {
 
 .dialog {
     width: 400px;
+    height: 80vh;
     background-color: white;
     border: 1 px solid lightgray;
     border-radius: 25px;
     padding: 45px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
 }
 
 .header_task_details h1 {
