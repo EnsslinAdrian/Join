@@ -200,6 +200,7 @@ function showTaskDetails(task, i) {
         }
     }
 
+
 updateAllProgressBars();
 updateProgressBar(i);
 }
@@ -252,6 +253,10 @@ async function updateAllProgressBars() {
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         let subtasks = task['subtasks'];
+
+        if (subtasks.length === 0) {
+            document.getElementById('').innerHTML = 
+        }
 
         let allSubtasks = subtasks.length;
         let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
