@@ -357,7 +357,7 @@ a {
     font-size: 20px;
     font-weight: 400;
     display: none;
-    position: fixed;
+    position: absolute;
     margin-left: 55px;
     margin-top: 150px;
 }
@@ -369,6 +369,22 @@ a {
 .register-letter {
     font-size: 20px;
     padding-top: 8px;
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Klasse für die Animation */
+.slide-in-right {
+    animation: slideInRight 0.5s ease-in-out;
 }
 
 @media (max-width: 1325px) {
@@ -432,6 +448,10 @@ a {
 }
 
 @media (max-width: 1120px) {
+    .notification {
+        bottom: 150px;
+    }
+
     .display-flex {
         justify-content: center;
     }
@@ -496,6 +516,10 @@ a {
 }
 
 @media (max-width: 768px) {
+    .notification {
+        margin-left: 0;
+    }
+
     .close-popup,
     .right-content,
     .contact-container.active {
@@ -711,6 +735,11 @@ a {
     }
 
     .input {
+        width: 280px;
+    }
+
+    .notification {
+        bottom: 200px;
         width: 280px;
     }
 }

@@ -1,3 +1,26 @@
+async function newContact() {
+    let name = document.getElementById('contact-Name');
+    let email = document.getElementById('contact-Email');
+    let phone = document.getElementById('contact-Phone');
+    let initialsBgColor = getRandomColor();
+    
+    let contact = {
+        'name': name.value,
+        'email': email.value,
+        'phone': phone.value,
+        'color': initialsBgColor
+    }
+    let newContactResponse = await postUser('contacts', contact);
+    let newContactId = newContactResponse.name;
+    let newContactIndex = Array.from(document.querySelectorAll('.contact-card')).findIndex(contact => contact.id === `showContact${newContactId}`);
+
+    await renderContacts();
+    closeAddNewContact(); 
+    showContact(JSON.stringify(contact), newContactId, newContactIndex); 
+    showNotification();
+    changeBgColor(`showContact${newContactId}`);
+}
+
 function openAddNewContact() {
     let container = document.getElementById('add-contact-popup');
     container.classList.remove('d-none');
@@ -121,12 +144,19 @@ function showContact(contactStr, id, index) {
     let contactContainer = document.getElementById('contact-container');
     let rightContent = document.querySelector('.right-content');
     let addIcon = document.getElementById('new-contact-icon');
+    
     container.innerHTML = '';
-    container.classList.add('active');
+    container.classList.remove('active');
+
+    container.classList.add('slide-in-right');
+    setTimeout(() => {
+        container.classList.add('active');
+        container.innerHTML = getShowContactTemplate(contact, initials, contactJson, id, index);
+    }, 0);
+    
     contactContainer.classList.add('active');
     rightContent.classList.add('active');
     addIcon.classList.add('active');
-    container.innerHTML = getShowContactTemplate(contact, initials, contactJson, id, index);
     let editIcon = document.getElementById('edit-contact-icon');
     editIcon.classList.add('active');
 }
@@ -135,16 +165,45 @@ async function deleteContact(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
 
     let response = await fetch(`${firebaseUrl}/contacts/${id}.json`, {
-
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
         },
     });
+
     if (response.ok) {
-        document.getElementById(`showContact${id}`).remove();
+        let contactElement = document.getElementById(`showContact${id}`);
+        let contactContainer = document.getElementById('contactContainer');
+        let firstLetter = contact.name.charAt(0).toUpperCase();
+        contactElement.remove();
         clearShowContactDetails();
-        document.getElementById('edit-contact-popup').classList.add('d-none');
+        let remainingContacts = Array.from(contactContainer.getElementsByClassName('contact-card')).filter(card => 
+            card.querySelector('.name').textContent.charAt(0).toUpperCase() === firstLetter
+        );
+        if (remainingContacts.length === 0) {
+            let registerLetterElements = Array.from(contactContainer.getElementsByClassName('register-letter'));
+            for (let registerLetterElement of registerLetterElements) {
+                if (registerLetterElement.textContent === firstLetter) {
+                    let separatorElement = registerLetterElement.nextElementSibling;
+                    registerLetterElement.remove();
+                    if (separatorElement && separatorElement.tagName === 'DIV' && separatorElement.querySelector('img')) {
+                        separatorElement.remove();
+                    }
+                    break;
+                }
+            }
+        }
+        let showContactContainer = document.getElementById('show-contact-container');
+        showContactContainer.innerHTML = '';
+        showContactContainer.classList.remove('active');
+        let contactContainerWrapper = document.getElementById('contact-container');
+        contactContainerWrapper.classList.remove('active');
+        let rightContent = document.querySelector('.right-content');
+        rightContent.classList.remove('active');
+        let addIcon = document.getElementById('new-contact-icon');
+        addIcon.classList.remove('active');
+        let editIcon = document.getElementById('edit-contact-icon');
+        editIcon.classList.remove('active');
     } else {
         console.error('Fehler beim Löschen des Kontakts:', response.statusText);
     }
@@ -152,7 +211,6 @@ async function deleteContact(contactJson, id, index) {
 
 async function saveEditedContact(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
-    console.log(contact);
     let newName = document.getElementById('contactName').value;
     let newEmail = document.getElementById('contactEmail').value;
     let newPhone = document.getElementById('contactPhone').value;
