@@ -121,10 +121,10 @@ function generateTodoHTML(element, i) {
             <h2>${element['title']}</h2>
             <p class="task-description shorter_description">${element['description']}</p>
             <div class="progress" id="progress">
-                <div class="progress-bar">
+                <div class="progress-bar" id="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
-                <span>Subtasks</span>
+                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
@@ -188,20 +188,29 @@ function showTaskDetails(task, i) {
         let subtask = task['subtasks'][k];
         let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
 
-        subtasks.innerHTML += `
+        if (subtask['title'] === 0) {
+            document.getElementById('progress').innerHTML = '';
+        } else {
+            subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
             <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask['title']}</p>
         </div>
         `;
+        }
     }
 
-    updateProgressBar(i);
+updateAllProgressBars();
+updateProgressBar(i);
 }
+
 
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
+
+    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
@@ -211,8 +220,8 @@ function updateProgressBar(i) {
     }
 }
 
+
 async function saveCheckboxState(taskIndex, subtaskIndex) {
-    if (localStorage.getItem('username') !== 'Guest') {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     if (!checkboxStates[taskIndex]) {
         checkboxStates[taskIndex] = {};
@@ -226,24 +235,12 @@ async function saveCheckboxState(taskIndex, subtaskIndex) {
     let data = { state: isChecked };
     await dataUser(path, data);
 }
-saveCheckboxStateGuest(taskIndex, subtaskIndex);
+
+
+function saveCheckboxStateGuest(i) {
+
 }
 
-function saveCheckboxStateGuest(taskIndex, subtaskIndex) {
-    let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
-    let isChecked = checkbox.checked;
-    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-
-    if (!guestTasks[taskIndex]) {
-        return;
-    }
-
-    if (!guestTasks[taskIndex].subtasks[subtaskIndex]) {
-        return;
-    }
-    guestTasks[taskIndex].subtasks[subtaskIndex].state = isChecked;
-    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-}
 
 async function updateAllProgressBars() {
     let response = await fetch(`${firebaseUrl}.json`);
@@ -260,13 +257,19 @@ async function updateAllProgressBars() {
         let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
 
         let progress = (completedSubtasks / allSubtasks) * 100;
+
+        let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+
         let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
 
         if (progressBarContent) {
             progressBarContent.style.width = progress + '%';
         }
+
     }
 }
+
 
 function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
@@ -337,13 +340,13 @@ function generateTaskDetails(task, i) {
             <span>Assigned To:</span>
             <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
         </div>
-        <div class="task_details_subtasks">
+        <div class="task_details_subtasks" id="task_details_subtasks">
             <span>Subtasks</span>
             <div class="task_details_subtask" id="task_subtasks">
             </div>
         </div>
         <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i})">
+            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i}')">
                 <img src="../assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
@@ -369,7 +372,7 @@ async function deleteTask(taskJson, i) {
     //     },
     // });
     // if (response.ok) {
-        
+
     // } else {
     //     console.error('Fehler beim Löschen der Task:', response.statusText);
     // }
@@ -567,6 +570,7 @@ async function moveTo(category) {
         updateHTML();
         renderGuestTaskBoard();
     }
+    removeHighlight(category);
 }
 
 /**
@@ -667,6 +671,7 @@ async function compareTasks(searchedTask) {
         }
     }
 }
+
 
 async function filterTasksMobile() {
     let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();

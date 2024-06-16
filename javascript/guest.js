@@ -1,158 +1,158 @@
 let guestTasks = [
-{
-    'category': 'in-progress',
-    'taskCategory': 'User Story',
-    'title': 'Header1',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/arrowsTop.svg',
-    'prio': 'Urgent',
-    'subtasks': [
-        {'title': 'Erstellen', 'state': false},
-        {'title': 'Stylen', 'state': false}
-    ]
-},
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Header1',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
 
-{
-    'category': 'in-progress',
-    'taskCategory': 'User Story',
-    'title': 'Header2',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/arrowsTop.svg',
-    'prio': 'Urgent',
-    'subtasks': [
-        {'title': 'Erstellen', 'state': false},
-        {'title': 'Stylen', 'state': false}
-    ]
-},
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Header2',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
 
-{
-    'category': 'await-feedback',
-    'taskCategory': 'User Story',
-    'title': 'Header3',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/arrowsTop.svg',
-    'prio': 'Urgent',
-    'subtasks': [
-        {'title': 'Erstellen', 'state': false},
-        {'title': 'Stylen', 'state': false}
-    ]
-},
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Header3',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
 
-{
-    'category': 'await-feedback',
-    'taskCategory': 'User Story',
-    'title': 'Header4',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/arrowsTop.svg',
-    'prio': 'Urgent',
-    'subtasks': [
-        {'title': 'Erstellen', 'state': false},
-        {'title': 'Stylen', 'state': false}
-    ]
-},
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Header4',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
 
-{
-    'category': 'done',
-    'taskCategory': 'User Story',
-    'title': 'Header5',
-    'description': 'Header Template erstellen',
-    'date': '16.08.2024',
-    'taskContacts': [
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        },
-        {
-            'color': '#8128EE',
-            'initials': 'AM',
-            'name': 'Anton Mayer'
-        }
-    ],
-    'prioImg': './assets/img/add_task/arrowsTop.svg',
-    'prio': 'Urgent',
-    'subtasks': [
-        {'title': 'Erstellen', 'state': false},
-        {'title': 'Stylen', 'state': false}
-    ]
-},
+    {
+        'category': 'done',
+        'taskCategory': 'User Story',
+        'title': 'Header5',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
 
 ];
 
@@ -180,6 +180,8 @@ async function renderGuestTaskBoard() {
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
     }
+
+    updateAllGuestsProgressBars();
 }
 
 
@@ -222,6 +224,7 @@ function generateGuestTodoHTML(element, i) {
 function openDialogGuestTask(i) {
     document.getElementById('dialog').classList.remove('d_none');
     showGuestTaskDetails(guestTasks[i], i);
+    updateProgressBar(i);
 }
 
 /**
@@ -234,6 +237,8 @@ function showGuestTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = '';
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
+
+    renderGuestCheckbox(i);
 
     let content = document.getElementById(`contacts${i}`);
 
@@ -249,19 +254,97 @@ function showGuestTaskDetails(task, i) {
     }
 
     let subtasks = document.getElementById(`task_subtasks`);
-    subtasks.innerHTML='';
+    subtasks.innerHTML = '';
 
     for (let k = 0; k < task['subtasks'].length; k++) {
         let subtask = task['subtasks'][k];
-        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
+        let isChecked = subtask['state'] ? 'checked' : '';
+
         subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+            <input onclick="updateProgressBar(${i}); saveGuestCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask['title']}</p>
         </div>
         `;
     }
+
+    updateAllGuestsProgressBars();
+    updateProgressBar(i);
 }
+
+
+function renderGuestCheckbox(taskIndex) {
+    let subtasksContainer = document.getElementById('task_subtasks');
+    if (!subtasksContainer) {
+        console.error('task_subtasks element not found');
+        return;
+    }
+
+    let task = guestTasks[taskIndex];
+    let subtasks = task['subtasks'];
+
+    subtasksContainer.innerHTML = '';
+
+    for (let j = 0; j < subtasks.length; j++) {
+        let subtask = subtasks[j];
+        let isChecked = subtask['state'] ? 'checked' : '';
+        let subtaskHTML = `
+            <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
+                <input onclick="updateProgressBar(${taskIndex}); saveGuestCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+                <p>${subtask['title']}</p>
+            </div>
+        `;
+        subtasksContainer.innerHTML += subtaskHTML;
+    }
+
+    updateProgressBar(taskIndex);
+}
+
+
+function saveGuestCheckboxState(taskIndex, subtaskIndex) {
+    let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
+    let isChecked = checkbox.checked;
+
+    guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
+
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    updateProgressBar(taskIndex);
+}
+
+
+function updateAllGuestsProgressBars() {
+        for (let i = 0; i < guestTasks.length; i++) {
+            let task = guestTasks[i];
+            let subtasks = task['subtasks'];
+    
+            if (subtasks.length > 0) {
+                let allSubtasks = subtasks.length;
+                let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+    
+                let progress = (completedSubtasks / allSubtasks) * 100;
+    
+                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+                if (subtasksAmount) {
+                    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+                }
+    
+                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+                if (progressBarContent) {
+                    progressBarContent.style.width = progress + '%';
+                }
+            } else {
+                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+                if (subtasksAmount) {
+                    subtasksAmount.innerHTML = '0/0 Subtasks';
+                }
+                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+                if (progressBarContent) {
+                    progressBarContent.style.width = '0%';
+                }
+            }
+        }
+    }
+
 
 /**
  * Generates the HTML for displaying the detailed view of a guest user's task.
@@ -292,7 +375,7 @@ function generateGuestTaskDetails(task, i) {
             <span>Assigned To:</span>
             <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
         </div>
-        <div class="task_details_subtasks">
+        <div class="task_details_subtasks" id="task_details_subtasks">
             <span>Subtasks</span>
             <div class="task_details_subtask" id="task_subtasks">
             </div>

@@ -15,6 +15,9 @@ function init() {
     renderContacts();
     renderContactsAddTask();
     renderTaskBoard();
+    renderGuestTaskBoard();
+    updateAllGuestsProgressBars();
+    updateProgressBar();
 }
 
 async function loadData(path = "") {
