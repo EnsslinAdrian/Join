@@ -17,7 +17,6 @@ function init() {
     renderTaskBoard();
     renderGuestTaskBoard();
     updateAllGuestsProgressBars();
-    updateProgressBar();
 }
 
 async function loadData(path = "") {
