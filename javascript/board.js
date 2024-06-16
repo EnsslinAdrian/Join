@@ -254,10 +254,6 @@ async function updateAllProgressBars() {
         let task = tasks[i];
         let subtasks = task['subtasks'];
 
-        if (subtasks.length === 0) {
-            document.getElementById('').innerHTML = 
-        }
-
         let allSubtasks = subtasks.length;
         let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
 
