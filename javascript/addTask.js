@@ -268,9 +268,17 @@ function editSubtask(i) {
 }
 
 function saveSubtaskTitle(i) {
-  let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
-  subtasks[i].title = subtaskTitle.innerText; // Aktualisiere den Titel im Array
-  subtaskTitle.contentEditable = "false";
+  if (subtasks && i >= 0 && i < subtasks.length) {
+    let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
+    if (subtaskTitle) {
+      subtasks[i].title = subtaskTitle.innerText;
+      subtaskTitle.contentEditable = "false";
+    } else {
+      console.error("Element mit ID subtaskTitle" + i + " existiert nicht im DOM.");
+    }
+  } else {
+    console.error("subtasks Array ist nicht definiert oder der Index " + i + " ist außerhalb der Grenzen.");
+  }
 }
 
 function deleteSubtask(i) {
