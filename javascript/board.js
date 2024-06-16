@@ -389,14 +389,33 @@ async function editTask(taskJson, i) {
     document.getElementById('title').value = task['title'];
     document.getElementById('description').value = task['description'];
     document.getElementById('date').value = task['date'];
-
-    // Setzt die Task-Kategorie korrekt im Dropdown-Menü
     document.getElementById('select').innerHTML = generateSelectOptions(task['taskCategory']);
+    
+    // Wichtig: Sicherstellen, dass subtasks global gesetzt werden
+    subtasks = task['subtasks'] || [];  // Fallback auf leeres Array, falls nicht definiert
 
-    // Rendert die Subtasks und Kontakte neu
     renderSubtasks(task['subtasks']);
-    taskContacts = task['taskContacts']; // Laden der Kontakte aus dem Task
+    taskContacts = task['taskContacts'];
     renderAddTaskContactInitials();
+    setPriority(task['prio']);
+}
+
+function setPriority(prio) {
+    switch (prio) {
+        case 'Urgent':
+            taskUrgent();
+            break;
+        case 'Medium':
+            taskMedium();
+            break;
+        case 'Low':
+            taskLow();
+            break;
+        default:
+            console.log('Unbekannte Priorität:', prio);
+            // Optional: Standardmäßig auf Medium setzen oder keine Aktion ausführen
+            break;
+    }
 }
 
 // Generiert die HTML-Optionen für das Kategorie-Dropdown basierend auf den gespeicherten Daten
@@ -451,22 +470,54 @@ function generateSubtaskHtml(subtask, i) {
     `;
 }
 
-// Funktion zum Aktualisieren der Task-Daten in Firebase
-async function updateTask(taskId, taskData) {
-    const response = await fetch(`${firebaseUrl}/tasks/${taskId}.json`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(taskData)
-    });
-
-    if (!response.ok) {
-        throw new Error('Fehler beim Aktualisieren des Tasks');
+async function saveEditedTask() {
+    const userKey = localStorage.getItem('userKey'); // oder eine andere Methode, um den Benutzerschlüssel zu erhalten
+    const taskIdElement = document.getElementById('taskId');
+    if (!taskIdElement || !userKey) {
+        alert('Task-ID oder Benutzer-ID ist nicht verfügbar. Kann Task nicht aktualisieren.');
+        return;
     }
+    const taskId = taskIdElement.value;
 
-    return await response.json();
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const date = document.getElementById('date').value;
+    const taskCategory = document.getElementById('select').value;
+    const priority = prio; // Stelle sicher, dass `prio` irgendwo in deinem Code gesetzt wird
+
+    const updatedTask = {
+        title,
+        description,
+        date,
+        taskCategory,
+        priority,
+        subtasks, // Stelle sicher, dass `subtasks` korrekt ist
+        taskContacts // Stelle sicher, dass `taskContacts` korrekt ist
+    };
+
+    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${taskId}.json`; // Korrekte URL
+
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedTask)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Fehler beim Aktualisieren des Tasks. Status: ${response.status}`);
+        }
+
+        alert('Task erfolgreich aktualisiert!');
+    } catch (error) {
+        console.error('Fehler beim Speichern der Task-Änderungen: ', error);
+        alert('Fehler beim Speichern der Änderungen: ' + error.message);
+    }
 }
+
+
 
 function toggleAssigned(event) {
     event.stopPropagation();
@@ -492,7 +543,7 @@ async function renderContactsBoardPage() {
         let response = await fetch(firebaseUrl + '.json');
         let responseToJson = await response.json();
 
-        let content = document.getElementById('selectedContact'); // Korrekte ID verwenden
+        let content = document.getElementById('assignedContainer'); // Korrekte ID verwenden
         content.innerHTML = '';  // Inhalte zunächst leeren
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
@@ -513,13 +564,17 @@ async function renderContactsBoardPage() {
 function generateBoardTaskContactHtml(contact, i, color) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
+
+    // Prüfen, ob der Kontakt bereits hinzugefügt wurde
+    let isContactAdded = taskContacts.some(c => c.name === contactName);
+
     return `
     <div class="assigned-contact" id="contactTask${i}">
-    <div class="contact-name">
-    <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
-    <p>${contact['name']}</p>
-    </div>
-    <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}' ,'${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
+        <div class="contact-name">
+            <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
+            <p>${contactName}</p>
+        </div>
+        <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}', '${initials}', ${i}, '${color}')" class="checkbox" type="checkbox" ${isContactAdded ? 'checked' : ''}>
     </div>
     `;
 }
@@ -528,73 +583,68 @@ function generateBoardTaskContactHtml(contact, i, color) {
 function generateEditPopup(task) {
     return `
     <div>
-    <div class="add-task-section-edit">
-
-        <div class="add-task-titel-container-edit">
-            <form onsubmit="saveEditedTask()" action="">
-                <p>Titel<span class="color-red">*</span></p>
-                <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
-                <p>Description</p>
-                <textarea id="description" class="margin-buttom" name="" id=""
-                    placeholder="Enter a Description"></textarea>
-
-                <p>Assigned to</p>
-                <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                    placeholder="Select contacts to assign">
-                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
-
-                </div>
-                <div class="selected-contact d-none" id="selectedContact"></div>
-        </div>
-        <div class="add-task-date-container-edit">
-            <p>Due date<span class="color-red">*</span></p>
-            <input id="date" required class="margin-buttom" type="date">
-            <p>Prio</p>
-            <div class="margin-buttom add-task-prio">
-                <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
-                    <span>Urgent</span>
-                    <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
-                </div>
-                <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
-                    <span>Medium </span>
-                    <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
-                </div>
-                <div class="prio-selection-low" onclick="taskLow()" id="low">
-                    <span>Low</span>
-                    <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                </div>
+        <div class="add-task-section-edit">
+            <div class="add-task-titel-container-edit">
+                <form action="">
+                    <input type="hidden" id="taskId" value="${task.id}"> <!-- Fügt die Task-ID hier ein -->
+                    <p>Titel<span class="color-red">*</span></p>
+                    <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
+                    <p>Description</p>
+                    <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
+                    <p>Assigned to</p>
+                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                        placeholder="Select contacts to assign">
+                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
+                    <div class="selected-contact d-none" id="selectedContact"></div>
             </div>
-            <p>Category<span class="color-red">*</span></p>
-            <div class="custom-select-board" style="width:100%;">
-                <select id="select">
-                    <option value="0">Select task category</option>
-                    <option value="1">Technical Task</option>
-                    <option value="2">User Story</option>
-                </select>
-            </div>
-            <p>Subtasks</p>
-            <div class="subtasks-container">
-                <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                <div class="subtasks-button">
-                    <button onclick="addNewSubtasks()" type="button">+</button>
+            <div class="add-task-date-container-edit">
+                <p>Due date<span class="color-red">*</span></p>
+                <input id="date" required class="margin-buttom" type="date" value="${task.date}">
+                <p>Prio</p>
+                <div class="margin-buttom add-task-prio">
+                    <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
+                        <span>Urgent</span>
+                        <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                    </div>
+                    <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
+                        <span>Medium</span>
+                        <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
+                    </div>
+                    <div class="prio-selection-low" onclick="taskLow()" id="low">
+                        <span>Low</span>
+                        <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                    </div>
                 </div>
-            </div>
-         <div class="subtasks-list">
-                <ul id="subtasksList"></ul>
+                <p>Category<span class="color-red">*</span></p>
+                <div class="custom-select-board" style="width:100%;">
+                    <select id="select">
+                        <option value="0">Select task category</option>
+                        <option value="1">Technical Task</option>
+                        <option value="2">User Story</option>
+                    </select>
+                </div>
+                <p>Subtasks</p>
+                <div class="subtasks-container">
+                    <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                    <div class="subtasks-button">
+                        <button onclick="addNewSubtasks()" type="button">+</button>
+                    </div>
+                </div>
+                <div class="subtasks-list">
+                    <ul id="subtasksList"></ul>
+                </div>
             </div>
         </div>
-
-    </div>
-
-    <div class="send-add-task-buttons">
-        <div class="buttons">
-            <button class="btn">OK<img src="assets/img/add_task/check.svg"></button>
+        <div class="send-add-task-buttons">
+            <div class="buttons">
+                <button type="button" class="btn" onclick="saveEditedTask()">OK<img src="assets/img/add_task/check.svg"></button>
+            </div>
         </div>
-    </div>
-    </form>
+        </form>
     </div>
     `;
 }
+
 
 /**
  * Updates the HTML content for the task board by calling functions
