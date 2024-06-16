@@ -57,7 +57,7 @@ function generateAddTaskHtml() {
                 </div>
             </div>
             <p>Category<span class="color-red">*</span></p>
-            <div class="custom-select" style="width:100%;">
+            <div class="custom-select-board" style="width:100%;">
                 <select id="select">
                     <option value="0">Select task category</option>
                     <option value="1">Technical Task</option>
@@ -378,17 +378,152 @@ async function deleteTask(taskJson, i) {
     // }
 }
 
+// Die Hauptfunktion zum Bearbeiten eines Tasks
 async function editTask(taskJson, i) {
     let task = JSON.parse(decodeURIComponent(taskJson));
-    console.log(task);
     let container = document.getElementById('taskDetails');
     container.innerHTML = '';
+
     container.innerHTML = generateEditPopup(task);
+
     document.getElementById('title').value = task['title'];
     document.getElementById('description').value = task['description'];
     document.getElementById('date').value = task['date'];
-    // document.getElementById('title').value = task['title'];
+
+    // Setzt die Task-Kategorie korrekt im Dropdown-Menü
+    document.getElementById('select').innerHTML = generateSelectOptions(task['taskCategory']);
+
+    // Rendert die Subtasks und Kontakte neu
+    renderSubtasks(task['subtasks']);
+    taskContacts = task['taskContacts']; // Laden der Kontakte aus dem Task
+    renderAddTaskContactInitials();
 }
+
+// Generiert die HTML-Optionen für das Kategorie-Dropdown basierend auf den gespeicherten Daten
+function generateSelectOptions(selectedCategory) {
+    const categories = {
+        '0': 'Select task category',
+        '1': 'Technical Task',
+        '2': 'User Story'
+    };
+    return Object.keys(categories).map(key =>
+        `<option value="${key}" ${key === selectedCategory.toString() ? 'selected' : ''}>${categories[key]}</option>`
+    ).join('');
+}
+
+// Rendert die Kontakte in den 'selectedContact' Container
+function renderAddTaskContactInitials() {
+    let content = document.getElementById('selectedContact');
+    content.innerHTML = ""; // Löscht den aktuellen Inhalt des Containers
+
+    if (taskContacts.length > 0) {
+        taskContacts.forEach(contact => {
+            content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+        });
+    } else {
+        console.log('Keine Kontakte zu rendern.');
+    }
+}
+
+function generateAddTaskContactInitialsHTML(contact) {
+    return `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
+}
+
+function renderSubtasks(subtasks) {
+    let subtasksList = document.getElementById('subtasksList');
+    subtasksList.innerHTML = ''; // Löscht vorhandene Subtasks im Element
+
+    subtasks.forEach((subtask, index) => {
+        subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
+    });
+}
+
+function generateSubtaskHtml(subtask, i) {
+    return `
+    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
+        <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
+        <div class="subtask-edit-svg" id="subtaskSvg">
+            <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
+            <div class="subtask-edit-line"></div>
+            <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
+        </div>
+    </div>
+    `;
+}
+
+// Funktion zum Aktualisieren der Task-Daten in Firebase
+async function updateTask(taskId, taskData) {
+    const response = await fetch(`${firebaseUrl}/tasks/${taskId}.json`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(taskData)
+    });
+
+    if (!response.ok) {
+        throw new Error('Fehler beim Aktualisieren des Tasks');
+    }
+
+    return await response.json();
+}
+
+function toggleAssigned(event) {
+    event.stopPropagation();
+  
+    let assignedContainer = document.getElementById('assignedContainer');
+    let selectedContact = document.getElementById('selectedContact');
+  
+    // Umschalten der Sichtbarkeit des Containers
+    assignedContainer.classList.toggle('d-none');
+    selectedContact.classList.toggle('selected-contact');
+    selectedContact.classList.toggle('d-none');
+
+    // Prüfen, ob das Container jetzt sichtbar ist
+    if (!assignedContainer.classList.contains('d-none')) {
+        // Das Container ist jetzt sichtbar, also laden wir die Kontakte
+        renderContactsBoardPage();
+    }
+}
+
+
+async function renderContactsBoardPage() {
+    if (window.location.pathname.endsWith("board.html")) {
+        let response = await fetch(firebaseUrl + '.json');
+        let responseToJson = await response.json();
+
+        let content = document.getElementById('selectedContact'); // Korrekte ID verwenden
+        content.innerHTML = '';  // Inhalte zunächst leeren
+        let contacts = responseToJson.contacts;
+        let contactsArray = Object.values(contacts);
+
+        for (let i = 0; i < contactsArray.length; i++) {
+            let contact = contactsArray[i];
+            let initialsBgColor = getRandomColor(); // Stellen Sie sicher, dass diese Funktion existiert
+
+            // Annahme: generateBoardTaskContactHtml existiert und generiert korrekte HTML
+            content.innerHTML += generateBoardTaskContactHtml(contact, i, initialsBgColor);
+        }
+
+        // Stellen Sie sicher, dass das Element sichtbar ist, falls es versteckt sein sollte
+        content.classList.remove('d-none');
+    }
+}
+
+function generateBoardTaskContactHtml(contact, i, color) {
+    let contactName = contact['name'];
+    let initials = contactName.split(' ').map(word => word[0]).join('');
+    return `
+    <div class="assigned-contact" id="contactTask${i}">
+    <div class="contact-name">
+    <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
+    <p>${contact['name']}</p>
+    </div>
+    <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}' ,'${initials}', ${i}, '${color}')" class="checkbox" type="checkbox">
+    </div>
+    `;
+}
+
 
 function generateEditPopup(task) {
     return `
@@ -404,7 +539,7 @@ function generateEditPopup(task) {
                     placeholder="Enter a Description"></textarea>
 
                 <p>Assigned to</p>
-                <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
                     placeholder="Select contacts to assign">
                 <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
 
@@ -430,7 +565,7 @@ function generateEditPopup(task) {
                 </div>
             </div>
             <p>Category<span class="color-red">*</span></p>
-            <div class="custom-select" style="width:100%;">
+            <div class="custom-select-board" style="width:100%;">
                 <select id="select">
                     <option value="0">Select task category</option>
                     <option value="1">Technical Task</option>
@@ -444,7 +579,7 @@ function generateEditPopup(task) {
                     <button onclick="addNewSubtasks()" type="button">+</button>
                 </div>
             </div>
-            <div class="subtasks-list">
+         <div class="subtasks-list">
                 <ul id="subtasksList"></ul>
             </div>
         </div>
