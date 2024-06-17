@@ -1,3 +1,4 @@
+if (typeof guestTasks === 'undefined') {
 let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [
     {
         'category': 'in-progress',
@@ -150,7 +151,7 @@ let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [
         ]
     }
 ];
-
+}
 
 /**
  * Renders the task board for guest users by iterating over guest tasks

@@ -102,6 +102,11 @@ renderResponsivSummary();
 async function renderSummaryTasks() {
     if (localStorage.getItem('username') !== 'Guest') {
         let tasks = await fetchUserTasks();
+
+        if (!Array.isArray(tasks)) {
+            tasks = [];
+        }
+
         updateTaskCount(tasks.length);
 
         let categoryCounts = countTaskCategories(tasks);
@@ -219,6 +224,9 @@ function updateClosestDateTask(task) {
         document.getElementById('upComingDate').innerHTML = formattedDate;
     } else {
         document.getElementById('upComingDate').innerHTML = 'Keine bevorstehenden Aufgaben';
+        document.getElementById('prioCurrent').innerHTML = '0';
+        document.getElementById('upComingPrio').innerHTML = '';
+        document.getElementById('upComingPrioImg').classList.add('d-none');
     }
 }
 

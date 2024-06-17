@@ -308,17 +308,19 @@ async function renderTaskBoard() {
 
             let user = localStorage.getItem('userKey');
             let path = responseToJson['registered'][user];
-            let tasks = path['tasks'];
-            test = tasks;
+            let tasks = path ? path['tasks'] : [];
 
+            // Clear existing tasks in the UI
             document.getElementById('todo').innerHTML = '';
             document.getElementById('in-progress').innerHTML = '';
             document.getElementById('await-feedback').innerHTML = '';
             document.getElementById('done').innerHTML = '';
 
-            renderTasks(tasks);
-
-            await updateAllProgressBars();
+            // Render tasks if they exist
+            if (Array.isArray(tasks) && tasks.length > 0) {
+                renderTasks(tasks);
+                await updateAllProgressBars();
+            }
         } else {
             renderGuestTaskBoard();
         }
@@ -330,18 +332,27 @@ async function renderTaskBoard() {
  * @param {Array} tasks - The list of tasks to render.
  */
 function renderTasks(tasks) {
+    // Überprüfen, ob tasks definiert ist und ein Array ist
+    if (!Array.isArray(tasks) || tasks.length === 0) {
+        return; // Beenden der Funktion, wenn keine Aufgaben vorhanden sind
+    }
+
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         let id = task['category'];
 
-        document.getElementById(id).innerHTML += generateTodoHTML(task, i);
-        updateProgressBar(i);
+        if (document.getElementById(id)) {
+            document.getElementById(id).innerHTML += generateTodoHTML(task, i);
+            
 
-        let contactsContent = document.getElementById(`taskContacts${i}`);
-        for (let j = 0; j < task['taskContacts'].length; j++) {
-            let contacts = task['taskContacts'][j];
+            let contactsContent = document.getElementById(`taskContacts${i}`);
+            if (contactsContent) {
+                for (let j = 0; j < task['taskContacts'].length; j++) {
+                    let contacts = task['taskContacts'][j];
 
-            contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+                    contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+                }
+            }
         }
     }
 }
