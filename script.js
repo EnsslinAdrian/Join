@@ -136,13 +136,30 @@ function registration(event) {
 async function addNewTask(event) {
     event.preventDefault();
 
+    let task = collectTaskDetails();
+
+    if (localStorage.getItem('username') !== 'Guest') {
+        await saveTaskToFirebase(task);
+    } else {
+        saveTaskToLocalStorage(task);
+    }
+
+    window.location.href = 'board.html';
+}
+
+/**
+ * Collects the details of the task from the form inputs.
+ * 
+ * @returns {Object} The task object with collected details.
+ */
+function collectTaskDetails() {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('date').value;
     let categoryElement = document.getElementById('select');
     let categoryText = categoryElement.selectedOptions[0].text;
 
-    let task = {
+    return {
         'category': 'todo',
         'title': title,
         'description': description,
@@ -153,33 +170,43 @@ async function addNewTask(event) {
         'subtasks': subtasks,
         'taskContacts': taskContacts
     };
+}
 
-    if (localStorage.getItem('username') !== 'Guest') {
-        let userKey = localStorage.getItem('userKey');
+/**
+ * Saves the task to Firebase for registered users.
+ * 
+ * @param {Object} task - The task object to be saved.
+ */
+async function saveTaskToFirebase(task) {
+    let userKey = localStorage.getItem('userKey');
 
-        const response = await fetch(`${firebaseUrl}/registered/${userKey}.json`);
-        const user = await response.json();
+    const response = await fetch(`${firebaseUrl}/registered/${userKey}.json`);
+    const user = await response.json();
 
-        if (!user.tasks) {
-            user.tasks = [];
-        }
-
-        user.tasks.push(task);
-
-        await fetch(`${firebaseUrl}/registered/${userKey}.json`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-        });
-        window.location.href = 'board.html';
-    } else {
-        let guestTasks = localStorage.getItem('guestTasks') ? JSON.parse(localStorage.getItem('guestTasks')) : [];
-        guestTasks.push(task);
-        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        window.location.href = 'board.html';
+    if (!user.tasks) {
+        user.tasks = [];
     }
+
+    user.tasks.push(task);
+
+    await fetch(`${firebaseUrl}/registered/${userKey}.json`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+    });
+}
+
+/**
+ * Saves the task to localStorage for guest users.
+ * 
+ * @param {Object} task - The task object to be saved.
+ */
+function saveTaskToLocalStorage(task) {
+    let guestTasks = localStorage.getItem('guestTasks') ? JSON.parse(localStorage.getItem('guestTasks')) : [];
+    guestTasks.push(task);
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
 }
 
 /**
@@ -289,24 +316,32 @@ async function renderTaskBoard() {
             document.getElementById('await-feedback').innerHTML = '';
             document.getElementById('done').innerHTML = '';
 
-            for (let i = 0; i < tasks.length; i++) {
-                let task = tasks[i];
-                let id = task['category'];
+            renderTasks(tasks);
 
-                document.getElementById(id).innerHTML += generateTodoHTML(task, i);
-                updateProgressBar(i);
-
-                let contactsContent = document.getElementById(`taskContacts${i}`);
-                for (let j = 0; j < task['taskContacts'].length; j++) {
-                    let contacts = task['taskContacts'][j];
-
-                    contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
-                } 
-            }
             await updateAllProgressBars();
-            
         } else {
             renderGuestTaskBoard();
+        }
+    }
+}
+
+/**
+ * This function renders the tasks into their respective categories.
+ * @param {Array} tasks - The list of tasks to render.
+ */
+function renderTasks(tasks) {
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+        let id = task['category'];
+
+        document.getElementById(id).innerHTML += generateTodoHTML(task, i);
+        updateProgressBar(i);
+
+        let contactsContent = document.getElementById(`taskContacts${i}`);
+        for (let j = 0; j < task['taskContacts'].length; j++) {
+            let contacts = task['taskContacts'][j];
+
+            contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
     }
 }
