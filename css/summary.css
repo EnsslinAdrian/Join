@@ -147,6 +147,10 @@ h3 {
     transition: opacity 1s ease-in-out, visibility 0s 1s;
 }
 
+.hedline-container-responsiv {
+margin-left: 10px;
+}
+
 .hedline-container-responsiv p {
     font-family: 'Inter';
     font-size: 27px;
@@ -304,6 +308,8 @@ width: 25%;
         width: 100%;
         height: auto;
         margin-top: 30px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .margin-left-top-summary {
