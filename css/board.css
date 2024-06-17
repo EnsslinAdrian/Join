@@ -701,6 +701,7 @@ span {
 
     .dialog {
         margin: 20px;
+        padding: 10px !important;
     }
 
     .details_delete_edit {
