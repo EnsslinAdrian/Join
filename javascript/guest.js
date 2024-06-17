@@ -1,3 +1,160 @@
+let guestTasks = [
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#5E7CE2',
+                'initials': 'LW',
+                'name': 'Laura Weiß'
+            },
+            {
+                'color': '#FF5733',
+                'initials': 'JD',
+                'name': 'Johann Dreher'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
+
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Footer-Probleme',
+        'description': 'Footer-Links funktionieren nicht',
+        'date': '20.08.2024',
+        'taskContacts': [
+            {
+                'color': '#FF5733',
+                'initials': 'JS',
+                'name': 'Julia Schmidt'
+            },
+            {
+                'color': '#C70039',
+                'initials': 'TH',
+                'name': 'Thomas Hoffmann'
+            },
+            {
+                'color': '#FFC300',
+                'initials': 'MM',
+                'name': 'Mia Müller'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Identifizieren', 'state': false },
+            { 'title': 'Beheben', 'state': false }
+        ]
+    },
+
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Navigation optimieren',
+        'description': 'Navigationselemente verbessern',
+        'date': '25.08.2024',
+        'taskContacts': [
+            {
+                'color': '#28A745',
+                'initials': 'SK',
+                'name': 'Stefan König'
+            },
+            {
+                'color': '#17A2B8',
+                'initials': 'AB',
+                'name': 'Anna Bauer'
+            },
+            {
+                'color': '#FFC107',
+                'initials': 'FR',
+                'name': 'Felix Richter'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsMiddle.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Analysieren', 'state': false },
+            { 'title': 'Designen', 'state': false }
+        ]
+    },
+
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Dark Mode hinzufügen',
+        'description': 'Dark Mode für die Website implementieren',
+        'date': '30.08.2024',
+        'taskContacts': [
+            {
+                'color': '#343A40',
+                'initials': 'RB',
+                'name': 'Robert Braun'
+            },
+            {
+                'color': '#007BFF',
+                'initials': 'CK',
+                'name': 'Clara Klein'
+            },
+            {
+                'color': '#6C757D',
+                'initials': 'PH',
+                'name': 'Paul Hartmann'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Konzept erstellen', 'state': false },
+            { 'title': 'Implementieren', 'state': false }
+        ]
+    },
+
+    {
+        'category': 'done',
+        'taskCategory': 'User Story',
+        'title': 'API-Dokumentation aktualisieren',
+        'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
+        'date': '05.09.2024',
+        'taskContacts': [
+            {
+                'color': '#6610F2',
+                'initials': 'LB',
+                'name': 'Lena Becker'
+            },
+            {
+                'color': '#E83E8C',
+                'initials': 'TS',
+                'name': 'Timo Schulz'
+            },
+            {
+                'color': '#28A745',
+                'initials': 'JK',
+                'name': 'Julia Krause'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsBottom.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Schreiben', 'state': true },
+            { 'title': 'Überprüfen', 'state': true }
+        ]
+    }
+];
+
 /**
  * Renders the task board for guest users by iterating over guest tasks
  * and generating the HTML for each task.
@@ -81,25 +238,12 @@ function showGuestTaskDetails(task, i) {
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
 
     renderGuestCheckbox(i);
-    renderGuestTaskContacts(task['taskContacts'], i);
-    renderGuestSubtasks(task['subtasks'], i);
 
-    updateAllGuestsProgressBars();
-    updateProgressBar(i);
-}
+    let content = document.getElementById(`contacts${i}`);
 
-/**
- * Renders the contacts for a guest task.
- * 
- * @param {Array} contacts - The list of contacts.
- * @param {number} taskId - The index of the task.
- */
-function renderGuestTaskContacts(contacts, taskId) {
-    let content = document.getElementById(`contacts${taskId}`);
-    content.innerHTML = '';
 
-    for (let j = 0; j < contacts.length; j++) {
-        let contact = contacts[j];
+    for (let j = 0; j < task['taskContacts'].length; j++) {
+        let contact = task['taskContacts'][j];
         content.innerHTML += `
         <div class="arrange_assigned_to_contacts">
             <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
@@ -107,29 +251,24 @@ function renderGuestTaskContacts(contacts, taskId) {
         </div>
         `;
     }
-}
 
-/**
- * Renders the subtasks for a guest task.
- * 
- * @param {Array} subtasks - The list of subtasks.
- * @param {number} taskId - The index of the task.
- */
-function renderGuestSubtasks(subtasks, taskId) {
-    let subtasksContainer = document.getElementById(`task_subtasks`);
-    subtasksContainer.innerHTML = '';
+    let subtasks = document.getElementById(`task_subtasks`);
+    subtasks.innerHTML = '';
 
-    for (let k = 0; k < subtasks.length; k++) {
-        let subtask = subtasks[k];
+    for (let k = 0; k < task['subtasks'].length; k++) {
+        let subtask = task['subtasks'][k];
         let isChecked = subtask['state'] ? 'checked' : '';
 
-        subtasksContainer.innerHTML += `
-        <div id="single_subtask_${taskId}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${taskId}); saveGuestCheckboxState(${taskId}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+        subtasks.innerHTML += `
+        <div id="single_subtask_${i}_${k}" class="single_subtask">
+            <input onclick="updateProgressBar(${i}); saveGuestCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask['title']}</p>
         </div>
         `;
     }
+
+    updateAllGuestsProgressBars();
+    updateProgressBar(i);
 }
 
 
@@ -163,10 +302,6 @@ function renderGuestCheckbox(taskIndex) {
 
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
-    if (!checkbox) {
-        console.error('Checkbox not found for taskIndex:', taskIndex, 'subtaskIndex:', subtaskIndex);
-        return;
-    }
     let isChecked = checkbox.checked;
 
     guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
@@ -176,64 +311,38 @@ function saveGuestCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
-/**
- * Updates the progress bars for all guest tasks.
- */
 function updateAllGuestsProgressBars() {
-    for (let i = 0; i < guestTasks.length; i++) {
-        updateGuestProgressBar(i, guestTasks[i]);
+        for (let i = 0; i < guestTasks.length; i++) {
+            let task = guestTasks[i];
+            let subtasks = task['subtasks'];
+    
+            if (subtasks.length > 0) {
+                let allSubtasks = subtasks.length;
+                let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+    
+                let progress = (completedSubtasks / allSubtasks) * 100;
+    
+                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+                if (subtasksAmount) {
+                    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+                }
+    
+                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+                if (progressBarContent) {
+                    progressBarContent.style.width = progress + '%';
+                }
+            } else {
+                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+                if (subtasksAmount) {
+                    subtasksAmount.innerHTML = '0/0 Subtasks';
+                }
+                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+                if (progressBarContent) {
+                    progressBarContent.style.width = '0%';
+                }
+            }
+        }
     }
-}
-
-/**
- * Updates the progress bar for a single guest task.
- * 
- * @param {number} index - The index of the task in the guest task list.
- * @param {Object} task - The task object containing the task details.
- */
-function updateGuestProgressBar(index, task) {
-    let subtasks = task['subtasks'];
-
-    if (subtasks.length > 0) {
-        let allSubtasks = subtasks.length;
-        let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-
-        let progress = (completedSubtasks / allSubtasks) * 100;
-
-        updateGuestSubtasksAmount(index, completedSubtasks, allSubtasks);
-        updateGuestProgressBarContent(index, progress);
-    } else {
-        updateGuestSubtasksAmount(index, 0, 0);
-        updateGuestProgressBarContent(index, 0);
-    }
-}
-
-/**
- * Updates the HTML element showing the amount of completed subtasks.
- * 
- * @param {number} index - The index of the task in the guest task list.
- * @param {number} completed - The number of completed subtasks.
- * @param {number} total - The total number of subtasks.
- */
-function updateGuestSubtasksAmount(index, completed, total) {
-    let subtasksAmount = document.getElementById(`completed-subtasks-${index}`);
-    if (subtasksAmount) {
-        subtasksAmount.innerHTML = `${completed}/${total} Subtasks`;
-    }
-}
-
-/**
- * Updates the width of the progress bar content.
- * 
- * @param {number} index - The index of the task in the guest task list.
- * @param {number} progress - The progress percentage.
- */
-function updateGuestProgressBarContent(index, progress) {
-    let progressBarContent = document.getElementById(`progress-bar-content-${index}`);
-    if (progressBarContent) {
-        progressBarContent.style.width = progress + '%';
-    }
-}
 
 
 /**
@@ -283,6 +392,17 @@ function generateGuestTaskDetails(task, i) {
         </footer>
     </div>
     `;
+}
+
+/**
+ * Updates the HTML content for the task board by calling functions
+ * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
+ */
+function updateHTML() {
+    updateTodo();
+    updateInProgress();
+    updateAwaitFeedback();
+    updateDone();
 }
 
 /**
