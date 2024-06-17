@@ -1,5 +1,6 @@
 let currentDraggedTask = null;
 let checkboxStates = {};
+let currentTaskId;
 
 function openAddTask() {
     if (window.matchMedia("(max-width: 1100px)").matches) {
@@ -11,86 +12,6 @@ function openAddTask() {
         container.innerHTML = generateAddTaskHtml();
     }
 }
-
-function generateAddTaskHtml() {
-    return `
-    <div>
-    <h1>Add Task</h1>
-    <!-- anfang -->
-    <div class="add-task-section">
-
-        <div class="add-task-titel-container">
-            <form onsubmit="addNewTask(event)" action="">
-                <p>Titel<span class="color-red">*</span></p>
-                <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
-                <p>Description</p>
-                <textarea id="description" class="margin-buttom" name="" id=""
-                    placeholder="Enter a Description"></textarea>
-
-                <p>Assigned to</p>
-                <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                    placeholder="Select contacts to assign">
-                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
-
-                </div>
-                <div class="selected-contact d-none" id="selectedContact"></div>
-        </div>
-
-        <div class="add-task-between-line"></div>
-
-        <div class="add-task-date-container">
-            <p>Due date<span class="color-red">*</span></p>
-            <input id="date" required class="margin-buttom" type="date">
-            <p>Prio</p>
-            <div class="margin-buttom add-task-prio">
-                <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
-                    <span>Urgent</span>
-                    <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
-                </div>
-                <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
-                    <span>Medium </span>
-                    <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
-                </div>
-                <div class="prio-selection-low" onclick="taskLow()" id="low">
-                    <span>Low</span>
-                    <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                </div>
-            </div>
-            <p>Category<span class="color-red">*</span></p>
-            <div class="custom-select-board" style="width:100%;">
-                <select id="select">
-                    <option value="0">Select task category</option>
-                    <option value="1">Technical Task</option>
-                    <option value="2">User Story</option>
-                </select>
-            </div>
-            <p>Subtasks</p>
-            <div class="subtasks-container">
-                <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                <div class="subtasks-button">
-                    <button onclick="addNewSubtasks()" type="button">+</button>
-                </div>
-            </div>
-            <div class="subtasks-list">
-                <ul id="subtasksList"></ul>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="send-add-task-buttons">
-        <p class="required-text"><span class="color-red">*</span>This field is required</p>
-        <div class="buttons">
-            <button onclick="clearTask()" type="button" class="clear-button">Clear <img
-                    src="assets/img/add_task/close.svg"></button>
-            <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
-        </div>
-    </div>
-    </form>
-    </div>
-    `;
-}
-
 
 function closeAddTask() {
     let container = document.getElementById('add-task-popup');
@@ -105,36 +26,6 @@ function cancelAddTask() {
     }, { once: true });
 }
 
-/**
- * This function generates the HTML for a task card on the board page.
- * 
- * @param {Object} element - The task object containing the task details.
- * @param {number} i - The index of the task in the task list.
- */
-function generateTodoHTML(element, i) {
-    return /*html*/`
-    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
-        <div class="task-card" onclick="openDialogTask(${i})">
-            <div class="task-card-type">
-                <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
-            </div>
-            <h2>${element['title']}</h2>
-            <p class="task-description shorter_description">${element['description']}</p>
-            <div class="progress" id="progress">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
-                </div>
-                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
-            </div>
-            <div class="task-card-bottom">
-                <div class="taskContacts" id="taskContacts${i}">
-                </div>
-                <img src="${element['prioImg']}">
-            </div>
-        </div>
-    </div>
-    `;
-}
 
 /**
  * This function opens the task window with a detailed view.
@@ -160,7 +51,6 @@ async function openDialogTask(i) {
  * 
  * @param {Object} task - The task object containing the task details.
  * @param {number} i - The index of the task in the task list.
-
  */
 function showTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
@@ -168,43 +58,47 @@ function showTaskDetails(task, i) {
     taskDetails.innerHTML = generateTaskDetails(task, i);
 
     renderCheckbox(i);
+    renderTaskContacts(task['taskContacts'], i);
+    renderTaskSubtasks(task['subtasks'], i);
 
-    let content = document.getElementById(`contacts${i}`);
-
-    for (let j = 0; j < task['taskContacts'].length; j++) {
-        let contact = task['taskContacts'][j];
-        content.innerHTML += `
-        <div class="arrange_assigned_to_contacts">
-            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
-            <p> ${contact['name']}</p>
-        </div>
-        `;
-    }
-
-    let subtasks = document.getElementById(`task_subtasks`);
-    subtasks.innerHTML = '';
-
-    for (let k = 0; k < task['subtasks'].length; k++) {
-        let subtask = task['subtasks'][k];
-        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
-
-        if (subtask['title'] === 0) {
-            document.getElementById('progress').innerHTML = '';
-        } else {
-            subtasks.innerHTML += `
-        <div id="single_subtask_${i}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-            <p>${subtask['title']}</p>
-        </div>
-        `;
-        }
-    }
-
-
-updateAllProgressBars();
-updateProgressBar(i);
+    updateAllProgressBars();
+    updateProgressBar(i);
 }
 
+/**
+ * Renders the contacts for a task.
+ * 
+ * @param {Array} contacts - The list of contacts.
+ * @param {number} taskId - The index of the task.
+ */
+function renderTaskContacts(contacts, taskId) {
+    let content = document.getElementById(`contacts${taskId}`);
+    content.innerHTML = '';
+
+    for (let j = 0; j < contacts.length; j++) {
+        let contact = contacts[j];
+        content.innerHTML += generateContactHtml(contact);
+    }
+}
+
+
+/**
+ * Renders the subtasks for a task.
+ * 
+ * @param {Array} subtasks - The list of subtasks.
+ * @param {number} taskId - The index of the task.
+ */
+function renderTaskSubtasks(subtasks, taskId) {
+    let subtasksContainer = document.getElementById(`task_subtasks`);
+    subtasksContainer.innerHTML = '';
+
+    for (let k = 0; k < subtasks.length; k++) {
+        let subtask = subtasks[k];
+        let isChecked = isSubtaskChecked(taskId, k) ? 'checked' : '';
+
+        subtasksContainer.innerHTML += generateSubtaskHtml(subtask, isChecked, taskId, k);
+    }
+}
 
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
@@ -238,36 +132,70 @@ async function saveCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
-function saveCheckboxStateGuest(i) {
-
+/**
+ * Updates the progress bars for all tasks.
+ */
+async function updateAllProgressBars() {
+    let tasks = await fetchUserTasks();
+    tasks.forEach((task, index) => {
+        updateProgressBarForTask(task, index);
+    });
 }
 
-
-async function updateAllProgressBars() {
+/**
+ * Fetches the tasks of the logged-in user from the database.
+ * 
+ * @returns {Array} The list of tasks.
+ */
+async function fetchUserTasks() {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
     let userKey = localStorage.getItem('userKey');
+    return responseToJson['registered'][userKey]['tasks'];
+}
 
-    let tasks = responseToJson['registered'][userKey]['tasks'];
+/**
+ * Updates the progress bar for a single task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} index - The index of the task in the task list.
+ */
+function updateProgressBarForTask(task, index) {
+    let subtasks = task['subtasks'];
 
-    for (let i = 0; i < tasks.length; i++) {
-        let task = tasks[i];
-        let subtasks = task['subtasks'];
+    let allSubtasks = subtasks.length;
+    let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
 
-        let allSubtasks = subtasks.length;
-        let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+    let progress = (completedSubtasks / allSubtasks) * 100;
 
-        let progress = (completedSubtasks / allSubtasks) * 100;
+    updateSubtasksAmount(index, completedSubtasks, allSubtasks);
+    updateProgressBarContent(index, progress);
+}
 
-        let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+/**
+ * Updates the HTML element showing the amount of completed subtasks.
+ * 
+ * @param {number} index - The index of the task in the task list.
+ * @param {number} completed - The number of completed subtasks.
+ * @param {number} total - The total number of subtasks.
+ */
+function updateSubtasksAmount(index, completed, total) {
+    let subtasksAmount = document.getElementById(`completed-subtasks-${index}`);
+    if (subtasksAmount) {
+        subtasksAmount.innerHTML = `${completed}/${total} Subtasks`;
+    }
+}
 
-        let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-
-        if (progressBarContent) {
-            progressBarContent.style.width = progress + '%';
-        }
-
+/**
+ * Updates the width of the progress bar content.
+ * 
+ * @param {number} index - The index of the task in the task list.
+ * @param {number} progress - The progress percentage.
+ */
+function updateProgressBarContent(index, progress) {
+    let progressBarContent = document.getElementById(`progress-bar-content-${index}`);
+    if (progressBarContent) {
+        progressBarContent.style.width = progress + '%';
     }
 }
 
@@ -276,6 +204,11 @@ function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
 }
 
+/**
+ * Renders the checkboxes for the subtasks of a specific task.
+ * 
+ * @param {number} taskIndex - The index of the task in the task list.
+ */
 async function renderCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -283,101 +216,66 @@ async function renderCheckbox(taskIndex) {
         return;
     }
 
-    let response = await fetch(`${firebaseUrl}.json`);
-    let responseToJson = await response.json();
-    let userKey = localStorage.getItem('userKey');
-
-    let tasks = responseToJson['registered'][userKey]['tasks'];
+    let tasks = await fetchUserTasks();
     subtasksContainer.innerHTML = '';
 
     if (tasks[taskIndex]) {
-        let task = tasks[taskIndex];
-        let subtasks = task['subtasks'];
-
-        for (let j = 0; j < subtasks.length; j++) {
-            let subtask = subtasks[j];
-            let isChecked = subtask['state'] ? 'checked' : '';
-            let subtaskHTML = `
-                <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
-                    <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-                    <p>${subtask['title']}</p>
-                </div>
-            `;
-            subtasksContainer.innerHTML += subtaskHTML;
-        }
-
+        renderSubtasksCheckboxes(tasks[taskIndex]['subtasks'], taskIndex);
         updateProgressBar(taskIndex);
     }
 }
 
+/**
+ * Fetches the tasks of the logged-in user from the database.
+ * 
+ * @returns {Array} The list of tasks.
+ */
+async function fetchUserTasks() {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    let userKey = localStorage.getItem('userKey');
+    return responseToJson['registered'][userKey]['tasks'];
+}
 
 /**
- * Generates the HTML for displaying the detailed view of a task.
+ * Renders the checkboxes for the subtasks of a specific task.
  * 
- * @param {Object} task - The task object containing the task details.
- * @param {number} i - The index of the task in the task list.
+ * @param {Array} subtasks - The list of subtasks.
+ * @param {number} taskIndex - The index of the task in the task list.
  */
-function generateTaskDetails(task, i) {
-    let taskJson = encodeURIComponent(JSON.stringify(task));
-    return /*html*/`
-    <div class="task-card-type-details">
-        <div class="type-bg type-of-task">${task['taskCategory']}</div>
-        <div class="close_and_change">
-            <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
-        </div>
-    </div>
-    <div class="header_task_details">
-        <h1>${task['title']}</h1>
-        <p class="task-description">${task['description']}</p>
-    </div>
-    <div class="task_details_information">
-        <div class="task_details_date">
-            <span>Due date:</span><p>${task['date']}</p>
-        </div>
-        <div class="task_details_priority">
-            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
-        </div>
-        <div class="task_details_assigned_to">
-            <span>Assigned To:</span>
-            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
-        </div>
-        <div class="task_details_subtasks" id="task_details_subtasks">
-            <span>Subtasks</span>
-            <div class="task_details_subtask" id="task_subtasks">
-            </div>
-        </div>
-        <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i}')">
-                <img src="../assets/img/delete.svg" alt="">
-                <p>Delete</p>
-            </div>
-            <p>|</p>
-            <div class="edit_task" onclick="editTask('${taskJson}', '${i}')">
-                <img src="../assets/img/edit.svg" alt="">
-                <p>Edit</p>
-            </div>
-        </footer>
-    </div>
-    `;
+function renderSubtasksCheckboxes(subtasks, taskIndex) {
+    let subtasksContainer = document.getElementById('task_subtasks');
+
+    for (let j = 0; j < subtasks.length; j++) {
+        let subtask = subtasks[j];
+        let isChecked = subtask['state'] ? 'checked' : '';
+        subtasksContainer.innerHTML += generateSubtaskCheckboxHtml(subtask, isChecked, taskIndex, j);
+    }
 }
+
 
 async function deleteTask(taskJson, i) {
-    let task = JSON.parse(decodeURIComponent(taskJson));
     let personalId = localStorage.getItem('userKey');
-    console.log(i);
-    // let response = await fetch(`${task}`, {
+    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
+    console.log('URL für den DELETE-Aufruf:', url);
 
-    //     method: "DELETE",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    // });
-    // if (response.ok) {
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE'
+        });
 
-    // } else {
-    //     console.error('Fehler beim Löschen der Task:', response.statusText);
-    // }
+        if (!response.ok) {
+            const errorText = await response.text(); 
+            console.error('Fehler beim Löschen des Tasks:', response.status, errorText);
+            throw new Error(`Fehler beim Löschen des Tasks. Status: ${response.status}, Antwort: ${errorText}`);
+        }
+        window.location.reload();
+    } catch (error) {
+        console.error('Fehler beim Löschen des Tasks:', error);
+        alert('Fehler beim Löschen des Tasks: ' + error.message);
+    }
 }
+
 
 // Die Hauptfunktion zum Bearbeiten eines Tasks
 async function editTask(taskJson, i) {
@@ -385,15 +283,15 @@ async function editTask(taskJson, i) {
     let container = document.getElementById('taskDetails');
     container.innerHTML = '';
 
-    container.innerHTML = generateEditPopup(task);
+    container.innerHTML = generateEditPopup(task, i);
+    currentTaskId = i;
 
     document.getElementById('title').value = task['title'];
     document.getElementById('description').value = task['description'];
     document.getElementById('date').value = task['date'];
     document.getElementById('select').innerHTML = generateSelectOptions(task['taskCategory']);
     
-    // Wichtig: Sicherstellen, dass subtasks global gesetzt werden
-    subtasks = task['subtasks'] || [];  // Fallback auf leeres Array, falls nicht definiert
+    subtasks = task['subtasks'] || []; 
 
     renderSubtasks(task['subtasks']);
     taskContacts = task['taskContacts'];
@@ -414,12 +312,10 @@ function setPriority(prio) {
             break;
         default:
             console.log('Unbekannte Priorität:', prio);
-            // Optional: Standardmäßig auf Medium setzen oder keine Aktion ausführen
             break;
     }
 }
 
-// Generiert die HTML-Optionen für das Kategorie-Dropdown basierend auf den gespeicherten Daten
 function generateSelectOptions(selectedCategory) {
     const categories = {
         '0': 'Select task category',
@@ -431,10 +327,9 @@ function generateSelectOptions(selectedCategory) {
     ).join('');
 }
 
-// Rendert die Kontakte in den 'selectedContact' Container
 function renderAddTaskContactInitials() {
     let content = document.getElementById('selectedContact');
-    content.innerHTML = ""; // Löscht den aktuellen Inhalt des Containers
+    content.innerHTML = ""; 
 
     if (taskContacts.length > 0) {
         taskContacts.forEach(contact => {
@@ -451,74 +346,60 @@ function generateAddTaskContactInitialsHTML(contact) {
 
 function renderSubtasks(subtasks) {
     let subtasksList = document.getElementById('subtasksList');
-    subtasksList.innerHTML = ''; // Löscht vorhandene Subtasks im Element
+    subtasksList.innerHTML = ''; 
 
     subtasks.forEach((subtask, index) => {
         subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
     });
 }
 
-function generateSubtaskHtml(subtask, i) {
-    return `
-    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-        <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
-        <div class="subtask-edit-svg" id="subtaskSvg">
-            <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
-            <div class="subtask-edit-line"></div>
-            <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
-        </div>
-    </div>
-    `;
-}
-
-async function saveEditedTask() {
-    const userKey = localStorage.getItem('userKey'); // oder eine andere Methode, um den Benutzerschlüssel zu erhalten
-    const taskIdElement = document.getElementById('taskId');
-    if (!taskIdElement || !userKey) {
-        alert('Task-ID oder Benutzer-ID ist nicht verfügbar. Kann Task nicht aktualisieren.');
+async function saveEditedTask(i) {
+    const userKey = localStorage.getItem('userKey');
+    if (!userKey) {
+        console.log("Kein Benutzer-Schlüssel verfügbar.");
         return;
     }
-    const taskId = taskIdElement.value;
 
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const date = document.getElementById('date').value;
-    const taskCategory = document.getElementById('select').value;
-    const priority = prio; // Stelle sicher, dass `prio` irgendwo in deinem Code gesetzt wird
-
-    const updatedTask = {
-        title,
-        description,
-        date,
-        taskCategory,
-        priority,
-        subtasks, // Stelle sicher, dass `subtasks` korrekt ist
-        taskContacts // Stelle sicher, dass `taskContacts` korrekt ist
-    };
-
-    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${taskId}.json`; // Korrekte URL
+    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${i}.json`;
 
     try {
-        const response = await fetch(url, {
-            method: 'PUT',
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('date').value;
+        const taskCategoryElement = document.getElementById('select');
+        const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
+        const priorityElement = document.getElementById('priority');
+        const priority = priorityElement ? priorityElement.value : 'Medium';
+
+        const updatedTask = {
+            title,
+            description,
+            date,
+            taskCategory,
+            priority
+        };
+
+        console.log('Updated Task:', updatedTask);
+
+        const updateResponse = await fetch(url, {
+            method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedTask)
         });
 
-        if (!response.ok) {
-            throw new Error(`Fehler beim Aktualisieren des Tasks. Status: ${response.status}`);
+        if (updateResponse.ok) {
+            console.log('Update Response:', await updateResponse.json());
+            window.location.reload();
+        } else {
+            console.log("Update fehlgeschlagen. Antwortstatus: ", updateResponse.status);
+            return;
         }
-
-        alert('Task erfolgreich aktualisiert!');
     } catch (error) {
-        console.error('Fehler beim Speichern der Task-Änderungen: ', error);
-        alert('Fehler beim Speichern der Änderungen: ' + error.message);
+        console.error('Fehler beim Aktualisieren des Tasks:', error);
     }
 }
-
-
 
 function toggleAssigned(event) {
     event.stopPropagation();
@@ -526,14 +407,11 @@ function toggleAssigned(event) {
     let assignedContainer = document.getElementById('assignedContainer');
     let selectedContact = document.getElementById('selectedContact');
   
-    // Umschalten der Sichtbarkeit des Containers
     assignedContainer.classList.toggle('d-none');
     selectedContact.classList.toggle('selected-contact');
     selectedContact.classList.toggle('d-none');
 
-    // Prüfen, ob das Container jetzt sichtbar ist
     if (!assignedContainer.classList.contains('d-none')) {
-        // Das Container ist jetzt sichtbar, also laden wir die Kontakte
         renderContactsBoardPage();
     }
 }
@@ -544,106 +422,19 @@ async function renderContactsBoardPage() {
         let response = await fetch(firebaseUrl + '.json');
         let responseToJson = await response.json();
 
-        let content = document.getElementById('assignedContainer'); // Korrekte ID verwenden
-        content.innerHTML = '';  // Inhalte zunächst leeren
+        let content = document.getElementById('assignedContainer');
+        content.innerHTML = ''; 
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
         for (let i = 0; i < contactsArray.length; i++) {
             let contact = contactsArray[i];
-            let initialsBgColor = getRandomColor(); // Stellen Sie sicher, dass diese Funktion existiert
+            let initialsBgColor = getRandomColor(); 
 
-            // Annahme: generateBoardTaskContactHtml existiert und generiert korrekte HTML
             content.innerHTML += generateBoardTaskContactHtml(contact, i, initialsBgColor);
         }
-
-        // Stellen Sie sicher, dass das Element sichtbar ist, falls es versteckt sein sollte
         content.classList.remove('d-none');
     }
-}
-
-function generateBoardTaskContactHtml(contact, i, color) {
-    let contactName = contact['name'];
-    let initials = contactName.split(' ').map(word => word[0]).join('');
-
-    // Prüfen, ob der Kontakt bereits hinzugefügt wurde
-    let isContactAdded = taskContacts.some(c => c.name === contactName);
-
-    return `
-    <div class="assigned-contact" id="contactTask${i}">
-        <div class="contact-name">
-            <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
-            <p>${contactName}</p>
-        </div>
-        <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}', '${initials}', ${i}, '${color}')" class="checkbox" type="checkbox" ${isContactAdded ? 'checked' : ''}>
-    </div>
-    `;
-}
-
-
-function generateEditPopup(task) {
-    return `
-    <div>
-        <div class="add-task-section-edit">
-            <div class="add-task-titel-container-edit">
-                <form action="">
-                    <input type="hidden" id="taskId" value="${task.id}"> <!-- Fügt die Task-ID hier ein -->
-                    <p>Titel<span class="color-red">*</span></p>
-                    <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
-                    <p>Description</p>
-                    <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
-                    <p>Assigned to</p>
-                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                        placeholder="Select contacts to assign">
-                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact d-none" id="selectedContact"></div>
-            </div>
-            <div class="add-task-date-container-edit">
-                <p>Due date<span class="color-red">*</span></p>
-                <input id="date" required class="margin-buttom" type="date" value="${task.date}">
-                <p>Prio</p>
-                <div class="margin-buttom add-task-prio">
-                    <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
-                        <span>Urgent</span>
-                        <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
-                    </div>
-                    <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
-                        <span>Medium</span>
-                        <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
-                    </div>
-                    <div class="prio-selection-low" onclick="taskLow()" id="low">
-                        <span>Low</span>
-                        <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                    </div>
-                </div>
-                <p>Category<span class="color-red">*</span></p>
-                <div class="custom-select-board" style="width:100%;">
-                    <select id="select">
-                        <option value="0">Select task category</option>
-                        <option value="1">Technical Task</option>
-                        <option value="2">User Story</option>
-                    </select>
-                </div>
-                <p>Subtasks</p>
-                <div class="subtasks-container">
-                    <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                    <div class="subtasks-button">
-                        <button onclick="addNewSubtasks()" type="button">+</button>
-                    </div>
-                </div>
-                <div class="subtasks-list">
-                    <ul id="subtasksList"></ul>
-                </div>
-            </div>
-        </div>
-        <div class="send-add-task-buttons">
-            <div class="buttons">
-                <button type="button" class="btn" onclick="saveEditedTask()">OK<img src="assets/img/add_task/check.svg"></button>
-            </div>
-        </div>
-        </form>
-    </div>
-    `;
 }
 
 

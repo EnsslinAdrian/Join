@@ -101,71 +101,132 @@ renderResponsivSummary();
  */
 async function renderSummaryTasks() {
     if (localStorage.getItem('username') !== 'Guest') {
-        let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
-        let responseToJson = await response.json();
+        let tasks = await fetchUserTasks();
+        updateTaskCount(tasks.length);
 
-        let user = localStorage.getItem('userKey');
-        let pathUser = responseToJson['registered'][user];
-        let tasks = pathUser['tasks'];
+        let categoryCounts = countTaskCategories(tasks);
+        updateCategoryCounts(categoryCounts);
 
-        document.getElementById('allTask').innerHTML = tasks.length;
-
-        let categoryCounts = {
-            'todo': 0,
-            'in-progress': 0,
-            'done': 0,
-            'await-feedback': 0
-        };
-
-        let closestDateTask = null;
-        let closestDateDiff = Infinity;
-        let today = new Date();
-
-        for (let i = 0; i < tasks.length; i++) {
-            let task = tasks[i];
-            let category = task['category'];
-            let taskDateStr = task['date'];
-            
-            let taskDate = parseDate(taskDateStr);
-            let dateDiff = Math.abs((taskDate - today) / (1000 * 60 * 60 * 24));
-
-            if (dateDiff < closestDateDiff) {
-                closestDateDiff = dateDiff;
-                closestDateTask = task;
-            }
-
-            if (categoryCounts.hasOwnProperty(category)) {
-                categoryCounts[category]++;
-            } else {
-                categoryCounts[category] = 1;
-            }
-        }
-
-        document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
-        document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
-        document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
-        document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
-
-        if (closestDateTask) {
-            document.getElementById('upComingPrioImg').src = closestDateTask['prioImg'];
-            document.getElementById('upComingPrio').innerHTML = closestDateTask['prio'];
-
-            let formattedDate = new Date(closestDateTask['date']).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            document.getElementById('upComingDate').innerHTML = formattedDate;
-        }
-        
+        let closestDateTask = findClosestDateTask(tasks);
+        updateClosestDateTask(closestDateTask);
     } else {
         renderSummaryGuestTasks();
     }
 }
 
 /**
- * Helper function to parse date strings in different formats 
+ * Fetches the tasks of the logged-in user from the database.
+ * 
+ * @returns {Array} The list of tasks.
+ */
+async function fetchUserTasks() {
+    let response = await fetch('https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/' + '.json');
+    let responseToJson = await response.json();
+
+    let user = localStorage.getItem('userKey');
+    let pathUser = responseToJson['registered'][user];
+    return pathUser['tasks'];
+}
+
+/**
+ * Updates the total task count in the HTML.
+ * 
+ * @param {number} count - The total number of tasks.
+ */
+function updateTaskCount(count) {
+    document.getElementById('allTask').innerHTML = count;
+}
+
+/**
+ * Counts the tasks in different categories.
+ * 
+ * @param {Array} tasks - The list of tasks.
+ * @returns {Object} The counts of tasks in each category.
+ */
+function countTaskCategories(tasks) {
+    let categoryCounts = {
+        'todo': 0,
+        'in-progress': 0,
+        'done': 0,
+        'await-feedback': 0
+    };
+
+    for (let i = 0; i < tasks.length; i++) {
+        let category = tasks[i]['category'];
+        if (categoryCounts.hasOwnProperty(category)) {
+            categoryCounts[category]++;
+        } else {
+            categoryCounts[category] = 1;
+        }
+    }
+
+    return categoryCounts;
+}
+
+/**
+ * Finds the task with the closest due date.
+ * 
+ * @param {Array} tasks - The list of tasks.
+ * @returns {Object} The task with the closest due date.
+ */
+function findClosestDateTask(tasks) {
+    let closestDateTask = null;
+    let closestDateDiff = Infinity;
+    let today = new Date();
+
+    for (let i = 0; i < tasks.length; i++) {
+        let taskDateStr = tasks[i]['date'];
+        let taskDate = parseDate(taskDateStr);
+        let dateDiff = Math.abs((taskDate - today) / (1000 * 60 * 60 * 24));
+
+        if (dateDiff < closestDateDiff) {
+            closestDateDiff = dateDiff;
+            closestDateTask = tasks[i];
+        }
+    }
+
+    return closestDateTask;
+}
+
+/**
+ * Updates the HTML with the counts of tasks in each category.
+ * 
+ * @param {Object} categoryCounts - The counts of tasks in each category.
+ */
+function updateCategoryCounts(categoryCounts) {
+    document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
+    document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
+    document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
+    document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
+}
+
+/**
+ * Updates the HTML with the task having the closest due date.
+ * 
+ * @param {Object} task - The task with the closest due date.
+ */
+function updateClosestDateTask(task) {
+    if (task) {
+        document.getElementById('upComingPrioImg').src = task['prioImg'];
+        document.getElementById('upComingPrio').innerHTML = task['prio'];
+
+        let formattedDate = new Date(task['date']).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        document.getElementById('upComingDate').innerHTML = formattedDate;
+    } else {
+        document.getElementById('upComingDate').innerHTML = 'Keine bevorstehenden Aufgaben';
+    }
+}
+
+/**
+ * Parses a date string in the format 'DD.MM.YYYY' or 'YYYY-MM-DD' into a Date object.
+ * 
+ * @param {string} dateStr - The date string to parse.
+ * @returns {Date} The parsed Date object.
  */
 function parseDate(dateStr) {
     let parts;
@@ -180,56 +241,19 @@ function parseDate(dateStr) {
     } else {
         throw new Error("Unrecognized date format: " + dateStr);
     }
-} 
+}
 
 /**
  * Renders the summary of tasks for guest users by updating task counts and the nearest upcoming task information on the summary page.
  */
 function renderSummaryGuestTasks() {
-    document.getElementById('allTask').innerHTML = guestTasks.length;
+    updateTaskCount(guestTasks.length);
 
-    let categoryCounts = {
-        'todo': 0,
-        'in-progress': 0,
-        'done': 0,
-        'await-feedback': 0
-    };
+    let categoryCounts = countTaskCategories(guestTasks);
+    updateCategoryCounts(categoryCounts);
 
-    let closestDateTask = null;
-    let closestDateDiff = Infinity;
-    let today = new Date();
-
-    for (let i = 0; i < guestTasks.length; i++) {
-        let task = guestTasks[i];
-        let category = task['category'];
-        let taskDateStr = task['date'];
-
-        let taskDate = parseDate(taskDateStr);
-        let dateDiff = Math.abs((taskDate - today) / (1000 * 60 * 60 * 24));
-
-        if (dateDiff < closestDateDiff) {
-            closestDateDiff = dateDiff;
-            closestDateTask = task;
-            console.log(task)
-        }
-
-        if (categoryCounts.hasOwnProperty(category)) {
-            categoryCounts[category]++;
-        } else {
-            categoryCounts[category] = 1;
-        }
-    }
-
-    document.getElementById('todoSummary').innerHTML = categoryCounts['todo'];
-    document.getElementById('inProgressSummary').innerHTML = categoryCounts['in-progress'];
-    document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
-    document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
-
-    if (closestDateTask) {
-        document.getElementById('upComingPrioImg').src = closestDateTask['prioImg'];
-        document.getElementById('upComingPrio').innerHTML = closestDateTask['prio'];
-        document.getElementById('upComingDate').innerHTML = closestDateTask['date'];
-    }
+    let closestDateTask = findClosestDateTask(guestTasks);
+    updateClosestDateTask(closestDateTask);
 }
 
 renderSummaryTasks();

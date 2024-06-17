@@ -169,32 +169,64 @@ function taskLow() {
  * @param {string} path - The path to append to the Firebase URL for fetching contacts.
  */
 async function filterContacts(path = '') {
+  let contacts = await fetchContacts(path);
+  let filteredContacts = filterContactsBySearch(contacts);
+  renderFilteredContacts(filteredContacts);
+}
+
+/**
+* Fetches the contacts from Firebase.
+* 
+* @param {string} path - The path to append to the Firebase URL for fetching contacts.
+* @returns {Array} The array of contacts.
+*/
+async function fetchContacts(path) {
   let response = await fetch(`${firebaseUrl}.json`);
   let responseToJson = await response.json();
+  return Object.values(responseToJson.contacts);
+}
 
-  let contacts = responseToJson.contacts;
-  let contactsArray = Object.values(contacts);
-
+/**
+* Filters the contacts based on the search query.
+* 
+* @param {Array} contacts - The array of contacts.
+* @returns {Array} The array of filtered contacts.
+*/
+function filterContactsBySearch(contacts) {
   let search = document.getElementById('assignedSearch').value.toLowerCase();
+  return contacts.filter(contact => contact.name.toLowerCase().includes(search));
+}
 
+/**
+* Renders the filtered contacts in the "Assigned to" section.
+* 
+* @param {Array} contacts - The array of filtered contacts.
+*/
+function renderFilteredContacts(contacts) {
   let content = document.getElementById('assignedContainer');
   content.innerHTML = '';
 
-  for (let i = 0; i < contactsArray.length; i++) {
-      let contact = contactsArray[i];
-      let contactName = contact.name.toLowerCase();
+  for (let i = 0; i < contacts.length; i++) {
+      let contact = contacts[i];
+      let initials = getInitials(contact.name);
+      let initialsBgColor = getRandomColor();
 
-      if (contactName.includes(search)) {
-          let initials = contact.name.split(' ').map(word => word[0]).join('');
-          let initialsBgColor = getRandomColor();
-          if (search.length == 0) {
-              renderContactsAddTask();
-          } else {
-
-              content.innerHTML += generateContactsSearchHtml(contact, initials, initialsBgColor, i);
-          }
-      }
+      content.innerHTML += generateContactsSearchHtml(contact, initials, initialsBgColor, i);
   }
+
+  if (document.getElementById('assignedSearch').value.length === 0) {
+      renderContactsAddTask();
+  }
+}
+
+/**
+* Gets the initials of a contact name.
+* 
+* @param {string} name - The name of the contact.
+* @returns {string} The initials of the contact.
+*/
+function getInitials(name) {
+  return name.split(' ').map(word => word[0]).join('');
 }
 
 /**

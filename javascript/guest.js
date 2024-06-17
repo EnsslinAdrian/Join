@@ -1,161 +1,3 @@
-let guestTasks = [
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Header1',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Header2',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Header3',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Header4',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-
-    {
-        'category': 'done',
-        'taskCategory': 'User Story',
-        'title': 'Header5',
-        'description': 'Header Template erstellen',
-        'date': '16.08.2024',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-
-];
-
 /**
  * Renders the task board for guest users by iterating over guest tasks
  * and generating the HTML for each task.
@@ -239,12 +81,25 @@ function showGuestTaskDetails(task, i) {
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
 
     renderGuestCheckbox(i);
+    renderGuestTaskContacts(task['taskContacts'], i);
+    renderGuestSubtasks(task['subtasks'], i);
 
-    let content = document.getElementById(`contacts${i}`);
+    updateAllGuestsProgressBars();
+    updateProgressBar(i);
+}
 
+/**
+ * Renders the contacts for a guest task.
+ * 
+ * @param {Array} contacts - The list of contacts.
+ * @param {number} taskId - The index of the task.
+ */
+function renderGuestTaskContacts(contacts, taskId) {
+    let content = document.getElementById(`contacts${taskId}`);
+    content.innerHTML = '';
 
-    for (let j = 0; j < task['taskContacts'].length; j++) {
-        let contact = task['taskContacts'][j];
+    for (let j = 0; j < contacts.length; j++) {
+        let contact = contacts[j];
         content.innerHTML += `
         <div class="arrange_assigned_to_contacts">
             <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
@@ -252,24 +107,29 @@ function showGuestTaskDetails(task, i) {
         </div>
         `;
     }
+}
 
-    let subtasks = document.getElementById(`task_subtasks`);
-    subtasks.innerHTML = '';
+/**
+ * Renders the subtasks for a guest task.
+ * 
+ * @param {Array} subtasks - The list of subtasks.
+ * @param {number} taskId - The index of the task.
+ */
+function renderGuestSubtasks(subtasks, taskId) {
+    let subtasksContainer = document.getElementById(`task_subtasks`);
+    subtasksContainer.innerHTML = '';
 
-    for (let k = 0; k < task['subtasks'].length; k++) {
-        let subtask = task['subtasks'][k];
+    for (let k = 0; k < subtasks.length; k++) {
+        let subtask = subtasks[k];
         let isChecked = subtask['state'] ? 'checked' : '';
 
-        subtasks.innerHTML += `
-        <div id="single_subtask_${i}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${i}); saveGuestCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+        subtasksContainer.innerHTML += `
+        <div id="single_subtask_${taskId}_${k}" class="single_subtask">
+            <input onclick="updateProgressBar(${taskId}); saveGuestCheckboxState(${taskId}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask['title']}</p>
         </div>
         `;
     }
-
-    updateAllGuestsProgressBars();
-    updateProgressBar(i);
 }
 
 
@@ -312,38 +172,64 @@ function saveGuestCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
+/**
+ * Updates the progress bars for all guest tasks.
+ */
 function updateAllGuestsProgressBars() {
-        for (let i = 0; i < guestTasks.length; i++) {
-            let task = guestTasks[i];
-            let subtasks = task['subtasks'];
-    
-            if (subtasks.length > 0) {
-                let allSubtasks = subtasks.length;
-                let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-    
-                let progress = (completedSubtasks / allSubtasks) * 100;
-    
-                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-                if (subtasksAmount) {
-                    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-                }
-    
-                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-                if (progressBarContent) {
-                    progressBarContent.style.width = progress + '%';
-                }
-            } else {
-                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-                if (subtasksAmount) {
-                    subtasksAmount.innerHTML = '0/0 Subtasks';
-                }
-                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-                if (progressBarContent) {
-                    progressBarContent.style.width = '0%';
-                }
-            }
-        }
+    for (let i = 0; i < guestTasks.length; i++) {
+        updateGuestProgressBar(i, guestTasks[i]);
     }
+}
+
+/**
+ * Updates the progress bar for a single guest task.
+ * 
+ * @param {number} index - The index of the task in the guest task list.
+ * @param {Object} task - The task object containing the task details.
+ */
+function updateGuestProgressBar(index, task) {
+    let subtasks = task['subtasks'];
+
+    if (subtasks.length > 0) {
+        let allSubtasks = subtasks.length;
+        let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+
+        let progress = (completedSubtasks / allSubtasks) * 100;
+
+        updateGuestSubtasksAmount(index, completedSubtasks, allSubtasks);
+        updateGuestProgressBarContent(index, progress);
+    } else {
+        updateGuestSubtasksAmount(index, 0, 0);
+        updateGuestProgressBarContent(index, 0);
+    }
+}
+
+/**
+ * Updates the HTML element showing the amount of completed subtasks.
+ * 
+ * @param {number} index - The index of the task in the guest task list.
+ * @param {number} completed - The number of completed subtasks.
+ * @param {number} total - The total number of subtasks.
+ */
+function updateGuestSubtasksAmount(index, completed, total) {
+    let subtasksAmount = document.getElementById(`completed-subtasks-${index}`);
+    if (subtasksAmount) {
+        subtasksAmount.innerHTML = `${completed}/${total} Subtasks`;
+    }
+}
+
+/**
+ * Updates the width of the progress bar content.
+ * 
+ * @param {number} index - The index of the task in the guest task list.
+ * @param {number} progress - The progress percentage.
+ */
+function updateGuestProgressBarContent(index, progress) {
+    let progressBarContent = document.getElementById(`progress-bar-content-${index}`);
+    if (progressBarContent) {
+        progressBarContent.style.width = progress + '%';
+    }
+}
 
 
 /**
@@ -393,17 +279,6 @@ function generateGuestTaskDetails(task, i) {
         </footer>
     </div>
     `;
-}
-
-/**
- * Updates the HTML content for the task board by calling functions
- * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
- */
-function updateHTML() {
-    updateTodo();
-    updateInProgress();
-    updateAwaitFeedback();
-    updateDone();
 }
 
 /**
