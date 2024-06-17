@@ -21,7 +21,7 @@ function generateAddTaskHtml() {
     <div class="add-task-section">
 
         <div class="add-task-titel-container">
-            <form onsubmit="addNewTask(event)" action="">
+            <form action="">
                 <p>Titel<span class="color-red">*</span></p>
                 <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title">
                 <p>Description</p>
@@ -29,12 +29,10 @@ function generateAddTaskHtml() {
                     placeholder="Enter a Description"></textarea>
 
                 <p>Assigned to</p>
-                <input onclick="openAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                    placeholder="Select contacts to assign">
-                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
-
-                </div>
-                <div class="selected-contact d-none" id="selectedContact"></div>
+    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                        placeholder="Select contacts to assign">
+                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
+                    <div class="selected-contact d-none" id="selectedContact"></div>
         </div>
 
         <div class="add-task-between-line"></div>
@@ -84,13 +82,14 @@ function generateAddTaskHtml() {
         <div class="buttons">
             <button onclick="clearTask()" type="button" class="clear-button">Clear <img
                     src="assets/img/add_task/close.svg"></button>
-            <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
+            <button onclick="addNewTask(event)" class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
         </div>
     </div>
     </form>
     </div>
     `;
 }
+
 
 
 function closeAddTask() {
@@ -362,14 +361,8 @@ function generateTaskDetails(task, i) {
     `;
 }
 
-/* async function deleteTask(taskJson, i) {
+async function deleteTask(taskJson, i) {
     let personalId = localStorage.getItem('userKey');
-
-    if (!personalId || typeof i === 'undefined') {
-        alert('Benutzer-ID oder Task-Index fehlt, kann Task nicht löschen.');
-        return;
-    }
-
     const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
     console.log('URL für den DELETE-Aufruf:', url);
 
@@ -389,7 +382,7 @@ function generateTaskDetails(task, i) {
         alert('Fehler beim Löschen des Tasks: ' + error.message);
     }
 }
-*/
+
 
 
 
