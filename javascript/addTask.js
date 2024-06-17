@@ -207,15 +207,15 @@ function renderFilteredContacts(contacts) {
   content.innerHTML = '';
 
   for (let i = 0; i < contacts.length; i++) {
-      let contact = contacts[i];
-      let initials = getInitials(contact.name);
-      let initialsBgColor = getRandomColor();
+    let contact = contacts[i];
+    let initials = getInitials(contact.name);
+    let initialsBgColor = getRandomColor();
 
-      content.innerHTML += generateContactsSearchHtml(contact, initials, initialsBgColor, i);
+    content.innerHTML += generateContactsSearchHtml(contact, initials, initialsBgColor, i);
   }
 
   if (document.getElementById('assignedSearch').value.length === 0) {
-      renderContactsAddTask();
+    renderContactsAddTask();
   }
 }
 
@@ -254,18 +254,18 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
  * This function generates a new subtask and adds it to the list of subtasks.
  */
 function addNewSubtasks() {
-    let subtaskInput = document.getElementById('subtask');
-    if (subtasks.length < 2) {
-        if (subtaskInput.value.length >= 1) {
-            let newSubtask = {
-                'title': subtaskInput.value,
-                'state': false
-            };
-            subtasks.push(newSubtask);
-            subtaskInput.value = '';
-            renderSubtasksList();
-        }
+  let subtaskInput = document.getElementById('subtask');
+  if (subtasks.length < 2) {
+    if (subtaskInput.value.length >= 1) {
+      let newSubtask = {
+        'title': subtaskInput.value,
+        'state': false
+      };
+      subtasks.push(newSubtask);
+      subtaskInput.value = '';
+      renderSubtasksList();
     }
+  }
 }
 
 /**
@@ -275,8 +275,8 @@ function renderSubtasksList() {
   let content = document.getElementById('subtasksList');
   content.innerHTML = '';
   for (let i = 0; i < subtasks.length; i++) {
-      let subtask = subtasks[i];
-      content.innerHTML += generateSubtaskHtml(subtask, i);
+    let subtask = subtasks[i];
+    content.innerHTML += generateSubtaskHtml(subtask, i);
   }
 }
 
@@ -325,8 +325,8 @@ function renderAddTaskContactInitials() {
   let content = document.getElementById('selectedContact');
   content.innerHTML = "";
   for (let i = 0; i < taskContacts.length; i++) {
-      let contact = taskContacts[i];
-      content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+    let contact = taskContacts[i];
+    content.innerHTML += generateAddTaskContactInitialsHTML(contact);
   }
 }
 
@@ -374,7 +374,7 @@ function checkSubtasksLength() {
   if (description.length > 40) {
     document.getElementById('subtask').value = description.substring(0, 40);
     document.getElementById('subtask').value = description.substring(0, 40);
-  } 
+  }
 }
 
 function checkSubtasksEditLength(i) {
@@ -382,6 +382,12 @@ function checkSubtasksEditLength(i) {
 
   if (description.length > 40) {
     document.getElementById(`subtaskTitle${i}`).innerHTML = description.substring(0, 40);
-  } 
+  }
+}
+
+
+function closeAddTaskPopupWindow() {
+  let container = document.getElementById('add-task-popup');
+  container.classList.add('d-none');
 }
 
