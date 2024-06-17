@@ -150,9 +150,8 @@ p {
 
 .login_buttons {
     display: flex;
-    justify-content: space-around;
-    width: 260px;
-    margin-left: 40px;
+    justify-content: center;
+    gap: 20px;
 }
 
 .btn_login {
