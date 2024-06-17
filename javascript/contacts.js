@@ -103,7 +103,7 @@ function showContact(contactStr, id, index) {
     let contactContainer = document.getElementById('contact-container');
     let rightContent = document.querySelector('.right-content');
     let addIcon = document.getElementById('new-contact-icon');
-    
+
     container.innerHTML = '';
     container.classList.remove('active');
 
@@ -111,60 +111,97 @@ function showContact(contactStr, id, index) {
     setTimeout(() => {
         container.classList.add('active');
         container.innerHTML = getShowContactTemplate(contact, initials, contactJson, id, index);
+        let editIcon = document.getElementById('edit-contact-icon');
+        if (!editIcon) {
+            console.error('Element with id "edit-contact-icon" not found after rendering');
+            return;
+        }
+        editIcon.classList.remove('d-none');
+        editIcon.classList.add('active');
     }, 0);
-    
+
     contactContainer.classList.add('active');
     rightContent.classList.add('active');
     addIcon.classList.add('active');
-    let editIcon = document.getElementById('edit-contact-icon');
-    editIcon.classList.add('active');
 }
+
+
 
 async function deleteContact(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
 
-    let response = await fetch(`${firebaseUrl}/contacts/${id}.json`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+    try {
+        let response = await fetch(`${firebaseUrl}/contacts/${id}.json`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-    if (response.ok) {
-        let contactElement = document.getElementById(`showContact${id}`);
-        let contactContainer = document.getElementById('contactContainer');
-        let firstLetter = contact.name.charAt(0).toUpperCase();
-        contactElement.remove();
-        clearShowContactDetails();
-        let remainingContacts = Array.from(contactContainer.getElementsByClassName('contact-card')).filter(card => 
-            card.querySelector('.name').textContent.charAt(0).toUpperCase() === firstLetter
-        );
-        if (remainingContacts.length === 0) {
-            let registerLetterElements = Array.from(contactContainer.getElementsByClassName('register-letter'));
-            for (let registerLetterElement of registerLetterElements) {
-                if (registerLetterElement.textContent === firstLetter) {
-                    let separatorElement = registerLetterElement.nextElementSibling;
-                    registerLetterElement.remove();
-                    if (separatorElement && separatorElement.tagName === 'DIV' && separatorElement.querySelector('img')) {
-                        separatorElement.remove();
-                    }
-                    break;
-                }
-            }
+        if (response.ok) {
+            removeContactElement(id);
+            clearShowContactDetails();
+            updateUIAfterContactDeletion(contact);
+        } else {
+            console.error('Fehler beim Löschen des Kontakts:', response.statusText);
         }
-        let showContactContainer = document.getElementById('show-contact-container');
+    } catch (error) {
+        console.error('Fehler beim Löschen des Kontakts:', error);
+    }
+}
+
+function removeContactElement(id) {
+    let contactElement = document.getElementById(`showContact${id}`);
+    if (contactElement) {
+        contactElement.remove();
+    }
+}
+
+function clearShowContactDetails() {
+    let showContactContainer = document.getElementById('show-contact-container');
+    if (showContactContainer) {
         showContactContainer.innerHTML = '';
         showContactContainer.classList.remove('active');
-        let contactContainerWrapper = document.getElementById('contact-container');
+    }
+    let contactContainerWrapper = document.getElementById('contact-container');
+    if (contactContainerWrapper) {
         contactContainerWrapper.classList.remove('active');
-        let rightContent = document.querySelector('.right-content');
+    }
+    let rightContent = document.querySelector('.right-content');
+    if (rightContent) {
         rightContent.classList.remove('active');
-        let addIcon = document.getElementById('new-contact-icon');
+    }
+    let addIcon = document.getElementById('new-contact-icon');
+    if (addIcon) {
         addIcon.classList.remove('active');
-        let editIcon = document.getElementById('edit-contact-icon');
+    }
+    let editIcon = document.getElementById('edit-contact-icon');
+    if (editIcon) {
         editIcon.classList.remove('active');
-    } else {
-        console.error('Fehler beim Löschen des Kontakts:', response.statusText);
+    }
+}
+
+function updateUIAfterContactDeletion(contact) {
+    let contactContainer = document.getElementById('contactContainer');
+    if (!contactContainer) return;
+
+    let firstLetter = contact.name.charAt(0).toUpperCase();
+    let remainingContacts = Array.from(contactContainer.getElementsByClassName('contact-card')).filter(card =>
+        card.querySelector('.name').textContent.charAt(0).toUpperCase() === firstLetter
+    );
+
+    if (remainingContacts.length === 0) {
+        let registerLetterElements = Array.from(contactContainer.getElementsByClassName('register-letter'));
+        for (let registerLetterElement of registerLetterElements) {
+            if (registerLetterElement.textContent === firstLetter) {
+                let separatorElement = registerLetterElement.nextElementSibling;
+                registerLetterElement.remove();
+                if (separatorElement && separatorElement.tagName === 'DIV' && separatorElement.querySelector('img')) {
+                    separatorElement.remove();
+                }
+                break;
+            }
+        }
     }
 }
 
