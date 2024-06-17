@@ -83,6 +83,7 @@ textarea {
     font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
+    padding: 10px;
 }
 
 textarea::placeholder {
@@ -126,6 +127,7 @@ p {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-family: 'Inter';
 }
 
 .prio-selection-medium {
@@ -137,6 +139,7 @@ p {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-family: 'Inter';
 }
 
 .prio-selection-low {
@@ -148,6 +151,7 @@ p {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-family: 'Inter';
 }
 
 .prio-selection-urgent:hover,
@@ -350,6 +354,7 @@ color: red;
     color: white;
     font-size: 14px;
     font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .d-none {
@@ -363,10 +368,13 @@ color: red;
 .selected-contact {
     width: 95%;
     max-width: 95%;
-    height: auto;
+    height: 100px;
     display: flex;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
     padding: 5px;
+    overflow: scroll;
+    scrollbar-width: none;
+
 }
 
 .urgent {
@@ -461,6 +469,12 @@ color: red;
 
 .edit-subtask-container:hover > .subtask-edit-svg {
     display: flex;
+}
+
+.subtasks-list {
+height: 100px;
+overflow: scroll;
+scrollbar-width: none;
 }
 
 @media (max-width: 1300px) {
