@@ -8,14 +8,15 @@ body {
     flex-direction: column;
     width: 456px;
     overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100vh - 100px); 
     box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin;
 }
 
 .contact-list {
     width: 400px;
-    padding-left: 28px;
-    padding-right: 28px;
+    padding-left: 22px;
     display: flex;
     flex-direction: column;
     align-items: center;
