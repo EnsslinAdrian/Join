@@ -79,21 +79,15 @@ function showTaskDetails(task, i) {
         let subtask = task['subtasks'][k];
         let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
 
-        if (subtask['title'] === 0) {
-            document.getElementById('progress').innerHTML = '';
-        } else {
-            subtasks.innerHTML += `
+        subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
             <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask['title']}</p>
         </div>
         `;
-        }
     }
-
-
-    updateAllProgressBars();
-    updateProgressBar(i);
+updateAllProgressBars();
+updateProgressBar(i);
 }
 
 
