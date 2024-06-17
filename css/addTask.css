@@ -296,7 +296,7 @@ color: red;
 }
 
 .assigned-search {
-    width: 95%;
+    width: 102%;
     text-align: start;
     height: 36px;
     padding: 5px;
@@ -311,7 +311,7 @@ color: red;
 }
 
 .assigned-contacts-container {
-    width: 95%;
+    width: 102%;
     background-color: rgb(253, 255, 255);
     height: 300px;
     position: relative;
@@ -557,9 +557,9 @@ scrollbar-width: none;
     }
 
     textarea {
-        width: 100%;
+        width: 98%;
         max-width: 100%;
-        min-width: 100%;
+        min-width: 90%;
         height: 85px;
         max-height: 85px;
         min-height: 85px;
