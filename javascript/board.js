@@ -79,21 +79,15 @@ function showTaskDetails(task, i) {
         let subtask = task['subtasks'][k];
         let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
 
-        if (subtask['title'] === 0) {
-            document.getElementById('progress').innerHTML = '';
-        } else {
-            subtasks.innerHTML += `
+        subtasks.innerHTML += `
         <div id="single_subtask_${i}_${k}" class="single_subtask">
             <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
             <p>${subtask['title']}</p>
         </div>
         `;
-        }
     }
-
-
-    updateAllProgressBars();
-    updateProgressBar(i);
+updateAllProgressBars();
+updateProgressBar(i);
 }
 
 
@@ -208,7 +202,7 @@ async function deleteTask(taskJson, i) {
         });
 
         if (!response.ok) {
-            const errorText = await response.text(); 
+            const errorText = await response.text();
             console.error('Fehler beim Löschen des Tasks:', response.status, errorText);
             throw new Error(`Fehler beim Löschen des Tasks. Status: ${response.status}, Antwort: ${errorText}`);
         }
@@ -235,8 +229,8 @@ async function editTask(taskJson, i) {
     document.getElementById('description').value = task['description'];
     document.getElementById('date').value = task['date'];
     document.getElementById('select').innerHTML = generateSelectOptions(task['taskCategory']);
-    
-    subtasks = task['subtasks'] || []; 
+
+    subtasks = task['subtasks'] || [];
 
     renderSubtasks(task['subtasks']);
     taskContacts = task['taskContacts'];
@@ -274,7 +268,7 @@ function generateSelectOptions(selectedCategory) {
 
 function renderAddTaskContactInitials() {
     let content = document.getElementById('selectedContact');
-    content.innerHTML = ""; 
+    content.innerHTML = "";
 
     if (taskContacts.length > 0) {
         taskContacts.forEach(contact => {
@@ -291,7 +285,7 @@ function generateAddTaskContactInitialsHTML(contact) {
 
 function renderSubtasks(subtasks) {
     let subtasksList = document.getElementById('subtasksList');
-    subtasksList.innerHTML = ''; 
+    subtasksList.innerHTML = '';
 
     subtasks.forEach((subtask, index) => {
         subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
@@ -328,7 +322,7 @@ async function saveEditedTask(i) {
         console.log('Updated Task:', updatedTask);
 
         const updateResponse = await fetch(url, {
-            method: 'PATCH', 
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -349,10 +343,10 @@ async function saveEditedTask(i) {
 
 function toggleAssigned(event) {
     event.stopPropagation();
-  
+
     let assignedContainer = document.getElementById('assignedContainer');
     let selectedContact = document.getElementById('selectedContact');
-  
+
     assignedContainer.classList.toggle('d-none');
     selectedContact.classList.toggle('selected-contact');
     selectedContact.classList.toggle('d-none');
@@ -369,13 +363,13 @@ async function renderContactsBoardPage() {
         let responseToJson = await response.json();
 
         let content = document.getElementById('assignedContainer');
-        content.innerHTML = ''; 
+        content.innerHTML = '';
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
         for (let i = 0; i < contactsArray.length; i++) {
             let contact = contactsArray[i];
-            let initialsBgColor = getRandomColor(); 
+            let initialsBgColor = getRandomColor();
 
             content.innerHTML += generateBoardTaskContactHtml(contact, i, initialsBgColor);
         }
