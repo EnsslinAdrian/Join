@@ -1,10 +1,7 @@
 function generateAddTaskHtml() {
     return `
     <div>
-    <div class="header_add_task_popup">
     <h1>Add Task</h1>
-    <img onclick="closeAddTask()" src="./assets/img/add_task/close.svg">
-    </div>
     <!-- anfang -->
     <div class="add-task-section">
 
@@ -78,6 +75,100 @@ function generateAddTaskHtml() {
     `;
 }
 
+/**
+ * This function generates the HTML for a task card on the board page.
+ * 
+ * @param {Object} element - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
+function generateTodoHTML(element, i) {
+    return /*html*/`
+    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
+        <div class="task-card" onclick="openDialogTask(${i})">
+            <div class="task-card-type">
+                <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
+            </div>
+            <h2>${element['title']}</h2>
+            <p class="task-description shorter_description">${element['description']}</p>
+            <div class="progress" id="progress">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
+                </div>
+                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
+            </div>
+            <div class="task-card-bottom">
+                <div class="taskContacts" id="taskContacts${i}">
+                </div>
+                <img src="${element['prioImg']}">
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+/**
+ * Generates the HTML for displaying the detailed view of a task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
+function generateTaskDetails(task, i) {
+    let taskJson = encodeURIComponent(JSON.stringify(task));
+    return /*html*/`
+    <div class="task-card-type-details">
+        <div class="type-bg type-of-task">${task['taskCategory']}</div>
+        <div class="close_and_change">
+            <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
+        </div>
+    </div>
+    <div class="header_task_details">
+        <h1>${task['title']}</h1>
+        <p class="task-description">${task['description']}</p>
+    </div>
+    <div class="task_details_information">
+        <div class="task_details_date">
+            <span>Due date:</span><p>${task['date']}</p>
+        </div>
+        <div class="task_details_priority">
+            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
+        </div>
+        <div class="task_details_assigned_to">
+            <span>Assigned To:</span>
+            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
+        </div>
+        <div class="task_details_subtasks" id="task_details_subtasks">
+            <span>Subtasks</span>
+            <div class="task_details_subtask" id="task_subtasks">
+            </div>
+        </div>
+        <footer class="details_delete_edit">
+               <div class="delete_task" onclick="deleteTask('${taskJson}', ${i})">
+                <img src="./assets/img/delete.svg" alt="delete">
+                <p>Delete</p>
+            </div>
+            <p>|</p>
+            <div class="edit_task" onclick="editTask('${taskJson}', '${i}')">
+                <img src="./assets/img/edit.svg" alt="">
+                <p>Edit</p>
+            </div>
+        </footer>
+    </div>
+    `;
+}
+
+function generateSubtaskHtml(subtask, i) {
+    return `
+    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
+        <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
+        <div class="subtask-edit-svg" id="subtaskSvg">
+            <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
+            <div class="subtask-edit-line"></div>
+            <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
+        </div>
+    </div>
+    `;
+}
+
 function generateEditPopup(task, i) {
     return `
     <div>
@@ -143,142 +234,3 @@ function generateEditPopup(task, i) {
     `;
 }
 
-/**
- * Generates the HTML for displaying the detailed view of a task.
- * 
- * @param {Object} task - The task object containing the task details.
- * @param {number} i - The index of the task in the task list.
- */
-function generateTaskDetails(task, i) {
-    let taskJson = encodeURIComponent(JSON.stringify(task));
-    return /*html*/`
-    <div class="task-card-type-details">
-        <div class="type-bg type-of-task">${task['taskCategory']}</div>
-        <div class="close_and_change">
-            <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
-        </div>
-    </div>
-    <div class="header_task_details">
-        <h1>${task['title']}</h1>
-        <p class="task-description">${task['description']}</p>
-    </div>
-    <div class="task_details_information">
-        <div class="task_details_date">
-            <span>Due date:</span><p>${task['date']}</p>
-        </div>
-        <div class="task_details_priority">
-            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
-        </div>
-        <div class="task_details_assigned_to">
-            <span>Assigned To:</span>
-            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
-        </div>
-        <div class="task_details_subtasks" id="task_details_subtasks">
-            <span>Subtasks</span>
-            <div class="task_details_subtask" id="task_subtasks">
-            </div>
-        </div>
-        <footer class="details_delete_edit">
-               <div class="delete_task" onclick="deleteTask('${taskJson}', ${i})">
-                <img src="../assets/img/delete.svg" alt="delete">
-                <p>Delete</p>
-            </div>
-            <p>|</p>
-            <div class="edit_task" onclick="editTask('${taskJson}', '${i}')">
-                <img src="../assets/img/edit.svg" alt="">
-                <p>Edit</p>
-            </div>
-        </footer>
-    </div>
-    `;
-}
-
-function generateSubtaskHtml(subtask, i) {
-    return `
-    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-        <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
-        <div class="subtask-edit-svg" id="subtaskSvg">
-            <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
-            <div class="subtask-edit-line"></div>
-            <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
-        </div>
-    </div>
-    `;
-}
-
-
-function generateSubtaskHtml(subtask, isChecked, taskId, subtaskId) {
-    if (subtask['title'] === 0) {
-        return '';
-    } else {
-        return `
-        <div id="single_subtask_${taskId}_${subtaskId}" class="single_subtask">
-            <input onclick="updateProgressBar(${taskId}); saveCheckboxState(${taskId}, ${subtaskId})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-            <p>${subtask['title']}</p>
-        </div>
-        `;
-    }
-}
-
-
-function generateContactHtml(contact) {
-    return `
-    <div class="arrange_assigned_to_contacts">
-        <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
-        <p> ${contact['name']}</p>
-    </div>
-    `;
-}
-
-
-function generateSubtaskCheckboxHtml(subtask, isChecked, taskIndex, subtaskIndex) {
-    return `
-        <div id="single_subtask_${taskIndex}_${subtaskIndex}" class="single_subtask">
-            <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${subtaskIndex})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-            <p>${subtask['title']}</p>
-        </div>
-    `;
-}
-
-
-function generateTodoHTML(element, i) {
-    return /*html*/`
-    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
-        <div class="task-card" onclick="openDialogTask(${i})">
-            <div class="task-card-type">
-                <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
-            </div>
-            <h2>${element['title']}</h2>
-            <p class="task-description shorter_description">${element['description']}</p>
-            <div class="progress" id="progress">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
-                </div>
-                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
-            </div>
-            <div class="task-card-bottom">
-                <div class="taskContacts" id="taskContacts${i}">
-                </div>
-                <img src="${element['prioImg']}">
-            </div>
-        </div>
-    </div>
-    `;
-}
-
-function generateBoardTaskContactHtml(contact, i, color) {
-    let contactName = contact['name'];
-    let initials = contactName.split(' ').map(word => word[0]).join('');
-
-    let isContactAdded = taskContacts.some(c => c.name === contactName);
-
-    return `
-    <div class="assigned-contact" id="contactTask${i}">
-        <div class="contact-name">
-            <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
-            <p>${contactName}</p>
-        </div>
-        <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}', '${initials}', ${i}, '${color}')" class="checkbox" type="checkbox" ${isContactAdded ? 'checked' : ''}>
-    </div>
-    `;
-}

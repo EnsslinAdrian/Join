@@ -59,47 +59,43 @@ function showTaskDetails(task, i) {
     taskDetails.innerHTML = generateTaskDetails(task, i);
 
     renderCheckbox(i);
-    renderTaskContacts(task['taskContacts'], i);
-    renderTaskSubtasks(task['subtasks'], i);
+
+    let content = document.getElementById(`contacts${i}`);
+
+    for (let j = 0; j < task['taskContacts'].length; j++) {
+        let contact = task['taskContacts'][j];
+        content.innerHTML += `
+        <div class="arrange_assigned_to_contacts">
+            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+            <p> ${contact['name']}</p>
+        </div>
+        `;
+    }
+
+    let subtasks = document.getElementById(`task_subtasks`);
+    subtasks.innerHTML = '';
+
+    for (let k = 0; k < task['subtasks'].length; k++) {
+        let subtask = task['subtasks'][k];
+        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
+
+        if (subtask['title'] === 0) {
+            document.getElementById('progress').innerHTML = '';
+        } else {
+            subtasks.innerHTML += `
+        <div id="single_subtask_${i}_${k}" class="single_subtask">
+            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+            <p>${subtask['title']}</p>
+        </div>
+        `;
+        }
+    }
+
 
     updateAllProgressBars();
     updateProgressBar(i);
 }
 
-/**
- * Renders the contacts for a task.
- * 
- * @param {Array} contacts - The list of contacts.
- * @param {number} taskId - The index of the task.
- */
-function renderTaskContacts(contacts, taskId) {
-    let content = document.getElementById(`contacts${taskId}`);
-    content.innerHTML = '';
-
-    for (let j = 0; j < contacts.length; j++) {
-        let contact = contacts[j];
-        content.innerHTML += generateContactHtml(contact);
-    }
-}
-
-
-/**
- * Renders the subtasks for a task.
- * 
- * @param {Array} subtasks - The list of subtasks.
- * @param {number} taskId - The index of the task.
- */
-function renderTaskSubtasks(subtasks, taskId) {
-    let subtasksContainer = document.getElementById(`task_subtasks`);
-    subtasksContainer.innerHTML = '';
-
-    for (let k = 0; k < subtasks.length; k++) {
-        let subtask = subtasks[k];
-        let isChecked = isSubtaskChecked(taskId, k) ? 'checked' : '';
-
-        subtasksContainer.innerHTML += generateSubtaskHtml(subtask, isChecked, taskId, k);
-    }
-}
 
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
@@ -133,70 +129,36 @@ async function saveCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
-/**
- * Updates the progress bars for all tasks.
- */
-async function updateAllProgressBars() {
-    let tasks = await fetchUserTasks();
-    tasks.forEach((task, index) => {
-        updateProgressBarForTask(task, index);
-    });
+function saveCheckboxStateGuest(i) {
+
 }
 
-/**
- * Fetches the tasks of the logged-in user from the database.
- * 
- * @returns {Array} The list of tasks.
- */
-async function fetchUserTasks() {
+
+async function updateAllProgressBars() {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
     let userKey = localStorage.getItem('userKey');
-    return responseToJson['registered'][userKey]['tasks'];
-}
 
-/**
- * Updates the progress bar for a single task.
- * 
- * @param {Object} task - The task object containing the task details.
- * @param {number} index - The index of the task in the task list.
- */
-function updateProgressBarForTask(task, index) {
-    let subtasks = task['subtasks'];
+    let tasks = responseToJson['registered'][userKey]['tasks'];
 
-    let allSubtasks = subtasks.length;
-    let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+        let subtasks = task['subtasks'];
 
-    let progress = (completedSubtasks / allSubtasks) * 100;
+        let allSubtasks = subtasks.length;
+        let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
 
-    updateSubtasksAmount(index, completedSubtasks, allSubtasks);
-    updateProgressBarContent(index, progress);
-}
+        let progress = (completedSubtasks / allSubtasks) * 100;
 
-/**
- * Updates the HTML element showing the amount of completed subtasks.
- * 
- * @param {number} index - The index of the task in the task list.
- * @param {number} completed - The number of completed subtasks.
- * @param {number} total - The total number of subtasks.
- */
-function updateSubtasksAmount(index, completed, total) {
-    let subtasksAmount = document.getElementById(`completed-subtasks-${index}`);
-    if (subtasksAmount) {
-        subtasksAmount.innerHTML = `${completed}/${total} Subtasks`;
-    }
-}
+        let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
 
-/**
- * Updates the width of the progress bar content.
- * 
- * @param {number} index - The index of the task in the task list.
- * @param {number} progress - The progress percentage.
- */
-function updateProgressBarContent(index, progress) {
-    let progressBarContent = document.getElementById(`progress-bar-content-${index}`);
-    if (progressBarContent) {
-        progressBarContent.style.width = progress + '%';
+        let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+
+        if (progressBarContent) {
+            progressBarContent.style.width = progress + '%';
+        }
+
     }
 }
 
@@ -205,11 +167,6 @@ function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
 }
 
-/**
- * Renders the checkboxes for the subtasks of a specific task.
- * 
- * @param {number} taskIndex - The index of the task in the task list.
- */
 async function renderCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -217,40 +174,30 @@ async function renderCheckbox(taskIndex) {
         return;
     }
 
-    let tasks = await fetchUserTasks();
-    subtasksContainer.innerHTML = '';
-
-    if (tasks[taskIndex]) {
-        renderSubtasksCheckboxes(tasks[taskIndex]['subtasks'], taskIndex);
-        updateProgressBar(taskIndex);
-    }
-}
-
-/**
- * Fetches the tasks of the logged-in user from the database.
- * 
- * @returns {Array} The list of tasks.
- */
-async function fetchUserTasks() {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
     let userKey = localStorage.getItem('userKey');
-    return responseToJson['registered'][userKey]['tasks'];
-}
 
-/**
- * Renders the checkboxes for the subtasks of a specific task.
- * 
- * @param {Array} subtasks - The list of subtasks.
- * @param {number} taskIndex - The index of the task in the task list.
- */
-function renderSubtasksCheckboxes(subtasks, taskIndex) {
-    let subtasksContainer = document.getElementById('task_subtasks');
+    let tasks = responseToJson['registered'][userKey]['tasks'];
+    subtasksContainer.innerHTML = '';
 
-    for (let j = 0; j < subtasks.length; j++) {
-        let subtask = subtasks[j];
-        let isChecked = subtask['state'] ? 'checked' : '';
-        subtasksContainer.innerHTML += generateSubtaskCheckboxHtml(subtask, isChecked, taskIndex, j);
+    if (tasks[taskIndex]) {
+        let task = tasks[taskIndex];
+        let subtasks = task['subtasks'];
+
+        for (let j = 0; j < subtasks.length; j++) {
+            let subtask = subtasks[j];
+            let isChecked = subtask['state'] ? 'checked' : '';
+            let subtaskHTML = `
+                <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
+                    <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+                    <p>${subtask['title']}</p>
+                </div>
+            `;
+            subtasksContainer.innerHTML += subtaskHTML;
+        }
+
+        updateProgressBar(taskIndex);
     }
 }
 
@@ -276,6 +223,8 @@ async function deleteTask(taskJson, i) {
         alert('Fehler beim Löschen des Tasks: ' + error.message);
     }
 }
+
+
 
 
 // Die Hauptfunktion zum Bearbeiten eines Tasks
@@ -353,6 +302,7 @@ function renderSubtasks(subtasks) {
         subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
     });
 }
+
 
 async function saveEditedTask(i) {
     const userKey = localStorage.getItem('userKey');
@@ -436,6 +386,23 @@ async function renderContactsBoardPage() {
         }
         content.classList.remove('d-none');
     }
+}
+
+function generateBoardTaskContactHtml(contact, i, color) {
+    let contactName = contact['name'];
+    let initials = contactName.split(' ').map(word => word[0]).join('');
+
+    let isContactAdded = taskContacts.some(c => c.name === contactName);
+
+    return `
+    <div class="assigned-contact" id="contactTask${i}">
+        <div class="contact-name">
+            <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
+            <p>${contactName}</p>
+        </div>
+        <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}', '${initials}', ${i}, '${color}')" class="checkbox" type="checkbox" ${isContactAdded ? 'checked' : ''}>
+    </div>
+    `;
 }
 
 
