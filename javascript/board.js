@@ -129,11 +129,6 @@ async function saveCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
-function saveCheckboxStateGuest(i) {
-
-}
-
-
 async function updateAllProgressBars() {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
