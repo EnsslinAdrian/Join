@@ -64,7 +64,7 @@ input[type="text"] {
 }
 
 .name_icon {
-    background: url("/assets/img/person.svg") no-repeat;
+    background: url("../assets/img/person.svg") no-repeat;
     background-position: 303px 9.5px;
 }
 
