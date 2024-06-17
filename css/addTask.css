@@ -3,6 +3,26 @@
     margin-top: 48px;
 }
 
+.header_add_task_popup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_add_task_popup img {
+    margin-left: 15px;
+    position: relative;
+    flex-direction: column;
+    padding: 8px;
+    height: 13px;
+}
+
+.header_add_task_popup img:hover {
+    cursor: pointer;
+    background-color: #D1D1D1;
+    border-radius: 25px;
+}
+
 .add-task-titel-container {
     width: 440px;
     height: 376px;
