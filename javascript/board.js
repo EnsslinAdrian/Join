@@ -1,5 +1,6 @@
 let currentDraggedTask = null;
 let checkboxStates = {};
+let currentTaskId;
 
 function openAddTask() {
     if (window.matchMedia("(max-width: 1100px)").matches) {
@@ -347,8 +348,8 @@ function generateTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask('${taskJson}, ${i}')">
-                <img src="../assets/img/delete.svg" alt="">
+               <div class="delete_task" onclick="deleteTask('${taskJson}', ${i})">
+                <img src="../assets/img/delete.svg" alt="delete">
                 <p>Delete</p>
             </div>
             <p>|</p>
@@ -361,23 +362,36 @@ function generateTaskDetails(task, i) {
     `;
 }
 
-async function deleteTask(taskJson, i) {
-    let task = JSON.parse(decodeURIComponent(taskJson));
+/* async function deleteTask(taskJson, i) {
     let personalId = localStorage.getItem('userKey');
-    console.log(i);
-    // let response = await fetch(`${task}`, {
 
-    //     method: "DELETE",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    // });
-    // if (response.ok) {
+    if (!personalId || typeof i === 'undefined') {
+        alert('Benutzer-ID oder Task-Index fehlt, kann Task nicht löschen.');
+        return;
+    }
 
-    // } else {
-    //     console.error('Fehler beim Löschen der Task:', response.statusText);
-    // }
+    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
+    console.log('URL für den DELETE-Aufruf:', url);
+
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text(); 
+            console.error('Fehler beim Löschen des Tasks:', response.status, errorText);
+            throw new Error(`Fehler beim Löschen des Tasks. Status: ${response.status}, Antwort: ${errorText}`);
+        }
+        window.location.reload();
+    } catch (error) {
+        console.error('Fehler beim Löschen des Tasks:', error);
+        alert('Fehler beim Löschen des Tasks: ' + error.message);
+    }
 }
+*/
+
+
 
 // Die Hauptfunktion zum Bearbeiten eines Tasks
 async function editTask(taskJson, i) {
@@ -385,15 +399,15 @@ async function editTask(taskJson, i) {
     let container = document.getElementById('taskDetails');
     container.innerHTML = '';
 
-    container.innerHTML = generateEditPopup(task);
+    container.innerHTML = generateEditPopup(task, i);
+    currentTaskId = i;
 
     document.getElementById('title').value = task['title'];
     document.getElementById('description').value = task['description'];
     document.getElementById('date').value = task['date'];
     document.getElementById('select').innerHTML = generateSelectOptions(task['taskCategory']);
     
-    // Wichtig: Sicherstellen, dass subtasks global gesetzt werden
-    subtasks = task['subtasks'] || [];  // Fallback auf leeres Array, falls nicht definiert
+    subtasks = task['subtasks'] || []; 
 
     renderSubtasks(task['subtasks']);
     taskContacts = task['taskContacts'];
@@ -414,12 +428,10 @@ function setPriority(prio) {
             break;
         default:
             console.log('Unbekannte Priorität:', prio);
-            // Optional: Standardmäßig auf Medium setzen oder keine Aktion ausführen
             break;
     }
 }
 
-// Generiert die HTML-Optionen für das Kategorie-Dropdown basierend auf den gespeicherten Daten
 function generateSelectOptions(selectedCategory) {
     const categories = {
         '0': 'Select task category',
@@ -431,10 +443,9 @@ function generateSelectOptions(selectedCategory) {
     ).join('');
 }
 
-// Rendert die Kontakte in den 'selectedContact' Container
 function renderAddTaskContactInitials() {
     let content = document.getElementById('selectedContact');
-    content.innerHTML = ""; // Löscht den aktuellen Inhalt des Containers
+    content.innerHTML = ""; 
 
     if (taskContacts.length > 0) {
         taskContacts.forEach(contact => {
@@ -451,7 +462,7 @@ function generateAddTaskContactInitialsHTML(contact) {
 
 function renderSubtasks(subtasks) {
     let subtasksList = document.getElementById('subtasksList');
-    subtasksList.innerHTML = ''; // Löscht vorhandene Subtasks im Element
+    subtasksList.innerHTML = ''; 
 
     subtasks.forEach((subtask, index) => {
         subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
@@ -471,54 +482,53 @@ function generateSubtaskHtml(subtask, i) {
     `;
 }
 
-async function saveEditedTask() {
-    const userKey = localStorage.getItem('userKey'); // oder eine andere Methode, um den Benutzerschlüssel zu erhalten
-    const taskIdElement = document.getElementById('taskId');
-    if (!taskIdElement || !userKey) {
-        alert('Task-ID oder Benutzer-ID ist nicht verfügbar. Kann Task nicht aktualisieren.');
+async function saveEditedTask(i) {
+    const userKey = localStorage.getItem('userKey');
+    if (!userKey) {
+        console.log("Kein Benutzer-Schlüssel verfügbar.");
         return;
     }
-    const taskId = taskIdElement.value;
 
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const date = document.getElementById('date').value;
-    const taskCategory = document.getElementById('select').value;
-    const priority = prio; // Stelle sicher, dass `prio` irgendwo in deinem Code gesetzt wird
-
-    const updatedTask = {
-        title,
-        description,
-        date,
-        taskCategory,
-        priority,
-        subtasks, // Stelle sicher, dass `subtasks` korrekt ist
-        taskContacts // Stelle sicher, dass `taskContacts` korrekt ist
-    };
-
-    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${taskId}.json`; // Korrekte URL
+    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${i}.json`;
 
     try {
-        const response = await fetch(url, {
-            method: 'PUT',
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('date').value;
+        const taskCategoryElement = document.getElementById('select');
+        const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
+        const priorityElement = document.getElementById('priority');
+        const priority = priorityElement ? priorityElement.value : 'Medium';
+
+        const updatedTask = {
+            title,
+            description,
+            date,
+            taskCategory,
+            priority
+        };
+
+        console.log('Updated Task:', updatedTask);
+
+        const updateResponse = await fetch(url, {
+            method: 'PATCH', 
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedTask)
         });
 
-        if (!response.ok) {
-            throw new Error(`Fehler beim Aktualisieren des Tasks. Status: ${response.status}`);
+        if (updateResponse.ok) {
+            console.log('Update Response:', await updateResponse.json());
+            window.location.reload();
+        } else {
+            console.log("Update fehlgeschlagen. Antwortstatus: ", updateResponse.status);
+            return;
         }
-
-        alert('Task erfolgreich aktualisiert!');
     } catch (error) {
-        console.error('Fehler beim Speichern der Task-Änderungen: ', error);
-        alert('Fehler beim Speichern der Änderungen: ' + error.message);
+        console.error('Fehler beim Aktualisieren des Tasks:', error);
     }
 }
-
-
 
 function toggleAssigned(event) {
     event.stopPropagation();
@@ -526,14 +536,11 @@ function toggleAssigned(event) {
     let assignedContainer = document.getElementById('assignedContainer');
     let selectedContact = document.getElementById('selectedContact');
   
-    // Umschalten der Sichtbarkeit des Containers
     assignedContainer.classList.toggle('d-none');
     selectedContact.classList.toggle('selected-contact');
     selectedContact.classList.toggle('d-none');
 
-    // Prüfen, ob das Container jetzt sichtbar ist
     if (!assignedContainer.classList.contains('d-none')) {
-        // Das Container ist jetzt sichtbar, also laden wir die Kontakte
         renderContactsBoardPage();
     }
 }
@@ -544,20 +551,17 @@ async function renderContactsBoardPage() {
         let response = await fetch(firebaseUrl + '.json');
         let responseToJson = await response.json();
 
-        let content = document.getElementById('assignedContainer'); // Korrekte ID verwenden
-        content.innerHTML = '';  // Inhalte zunächst leeren
+        let content = document.getElementById('assignedContainer');
+        content.innerHTML = ''; 
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
         for (let i = 0; i < contactsArray.length; i++) {
             let contact = contactsArray[i];
-            let initialsBgColor = getRandomColor(); // Stellen Sie sicher, dass diese Funktion existiert
+            let initialsBgColor = getRandomColor(); 
 
-            // Annahme: generateBoardTaskContactHtml existiert und generiert korrekte HTML
             content.innerHTML += generateBoardTaskContactHtml(contact, i, initialsBgColor);
         }
-
-        // Stellen Sie sicher, dass das Element sichtbar ist, falls es versteckt sein sollte
         content.classList.remove('d-none');
     }
 }
@@ -566,7 +570,6 @@ function generateBoardTaskContactHtml(contact, i, color) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
 
-    // Prüfen, ob der Kontakt bereits hinzugefügt wurde
     let isContactAdded = taskContacts.some(c => c.name === contactName);
 
     return `
@@ -581,13 +584,13 @@ function generateBoardTaskContactHtml(contact, i, color) {
 }
 
 
-function generateEditPopup(task) {
+function generateEditPopup(task, i) {
     return `
     <div>
         <div class="add-task-section-edit">
             <div class="add-task-titel-container-edit">
                 <form action="">
-                    <input type="hidden" id="taskId" value="${task.id}"> <!-- Fügt die Task-ID hier ein -->
+                    <input type="hidden" id="taskId" value="${task.id}">
                     <p>Titel<span class="color-red">*</span></p>
                     <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
                     <p>Description</p>
@@ -638,7 +641,7 @@ function generateEditPopup(task) {
         </div>
         <div class="send-add-task-buttons">
             <div class="buttons">
-                <button type="button" class="btn" onclick="saveEditedTask()">OK<img src="assets/img/add_task/check.svg"></button>
+                <button type="button" class="btn" onclick="saveEditedTask(${i})">OK<img src="assets/img/add_task/check.svg"></button>
             </div>
         </div>
         </form>

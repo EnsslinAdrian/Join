@@ -15,8 +15,6 @@ function init() {
     renderContacts();
     renderContactsAddTask();
     renderTaskBoard();
-    renderGuestTaskBoard();
-    updateAllGuestsProgressBars();
 }
 
 async function loadData(path = "") {
@@ -336,4 +334,45 @@ function logOut() {
 function questLogin() {
   localStorage.setItem('username', 'Guest');
   window.location.href = 'summary.html';
+}
+
+/**
+ * Fetches and renders contacts from the specified path in the Firebase database.
+ * If the current page is contacts.html, it updates the contact container with
+ * the fetched contact data.
+ * 
+ * @param {string} path - The path to append to the Firebase URL for fetching contacts.
+ * @returns {Promise<void>}
+ */
+async function renderContacts(path = "") {
+    if (window.location.pathname.endsWith("contacts.html")) {
+        let response = await fetch(firebaseUrl + '.json');
+        let responseToJson = await response.json();
+
+        let content = document.getElementById('contactContainer');
+        let contacts = responseToJson.contacts;
+        let contactsArray = Object.values(contacts);
+
+        // Sort contactsArray alphabetically by name
+        contactsArray.sort((a, b) => a.name.localeCompare(b.name));
+
+        content.innerHTML = "";
+
+        let currentLetter = "";
+        for (let contact of contactsArray) {
+            let key = Object.keys(contacts).find(k => contacts[k] === contact);
+            contact.id = key;
+            
+            let firstLetter = contact.name.charAt(0).toUpperCase();
+            if (firstLetter !== currentLetter) {
+                currentLetter = firstLetter;
+                content.innerHTML += `
+                <span class="register-letter">${currentLetter}</span>
+                <div>
+                    <img src="assets/img/contacts/contact-seperator.svg" alt="">
+                </div>`;
+            }
+            content.innerHTML += generateContactHtml(contact, key, contactsArray.indexOf(contact));
+        }
+    }
 }
