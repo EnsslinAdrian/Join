@@ -255,7 +255,7 @@ function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
  */
 function addNewSubtasks() {
   let subtaskInput = document.getElementById('subtask');
-  if (subtasks.length < 2) {
+  if (subtasks.length < 5) {
     if (subtaskInput.value.length >= 1) {
       let newSubtask = {
         'title': subtaskInput.value,
