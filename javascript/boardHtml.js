@@ -233,3 +233,4 @@ function generateEditPopup(task, i) {
     </div>
     `;
 }
+

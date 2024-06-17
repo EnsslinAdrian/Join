@@ -1,4 +1,4 @@
-let guestTasks = [
+let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [
     {
         'category': 'in-progress',
         'taskCategory': 'User Story',
@@ -29,7 +29,6 @@ let guestTasks = [
             { 'title': 'Stylen', 'state': false }
         ]
     },
-
     {
         'category': 'in-progress',
         'taskCategory': 'User Story',
@@ -60,7 +59,6 @@ let guestTasks = [
             { 'title': 'Beheben', 'state': false }
         ]
     },
-
     {
         'category': 'await-feedback',
         'taskCategory': 'User Story',
@@ -84,14 +82,13 @@ let guestTasks = [
                 'name': 'Felix Richter'
             }
         ],
-        'prioImg': './assets/img/add_task/arrowsMiddle.svg',
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
         'prio': 'Urgent',
         'subtasks': [
             { 'title': 'Analysieren', 'state': false },
             { 'title': 'Designen', 'state': false }
         ]
     },
-
     {
         'category': 'await-feedback',
         'taskCategory': 'User Story',
@@ -122,7 +119,6 @@ let guestTasks = [
             { 'title': 'Implementieren', 'state': false }
         ]
     },
-
     {
         'category': 'done',
         'taskCategory': 'User Story',
@@ -146,7 +142,7 @@ let guestTasks = [
                 'name': 'Julia Krause'
             }
         ],
-        'prioImg': './assets/img/add_task/arrowsBottom.svg',
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
         'prio': 'Urgent',
         'subtasks': [
             { 'title': 'Schreiben', 'state': true },
@@ -154,6 +150,7 @@ let guestTasks = [
         ]
     }
 ];
+
 
 /**
  * Renders the task board for guest users by iterating over guest tasks
