@@ -97,7 +97,7 @@ function renderTaskSubtasks(subtasks, taskId) {
         let subtask = subtasks[k];
         let isChecked = isSubtaskChecked(taskId, k) ? 'checked' : '';
 
-        subtasksContainer.innerHTML += generateSubtaskHtml(subtask, isChecked, taskId, k);
+        subtasksContainer.innerHTML += generateGuestSubtaskHtml(subtask, isChecked, taskId, k);
     }
 }
 

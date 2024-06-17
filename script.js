@@ -97,7 +97,7 @@ function registration(event) {
     event.preventDefault();
 
     let name = document.getElementById('name');
-    let email = document.getElementById('email');
+    let email = document.getElementById('loginEmail');
     let password = document.getElementById('loginPassword');
     let confirmPassword = document.getElementById('confirmLoginPassword');
 

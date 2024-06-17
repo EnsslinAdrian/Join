@@ -163,6 +163,10 @@ function renderGuestCheckbox(taskIndex) {
 
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
+    if (!checkbox) {
+        console.error('Checkbox not found for taskIndex:', taskIndex, 'subtaskIndex:', subtaskIndex);
+        return;
+    }
     let isChecked = checkbox.checked;
 
     guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
