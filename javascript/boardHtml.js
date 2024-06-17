@@ -118,7 +118,7 @@ function generateTaskDetails(task, i) {
     <div class="task-card-type-details">
         <div class="type-bg type-of-task">${task['taskCategory']}</div>
         <div class="close_and_change">
-            <img onclick="closeDialogTask()" src="../assets/img/add_task/close.svg" alt="schließen">
+            <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
         </div>
     </div>
     <div class="header_task_details">
@@ -143,12 +143,12 @@ function generateTaskDetails(task, i) {
         </div>
         <footer class="details_delete_edit">
                <div class="delete_task" onclick="deleteTask('${taskJson}', ${i})">
-                <img src="../assets/img/delete.svg" alt="delete">
+                <img src="./assets/img/delete.svg" alt="delete">
                 <p>Delete</p>
             </div>
             <p>|</p>
             <div class="edit_task" onclick="editTask('${taskJson}', '${i}')">
-                <img src="../assets/img/edit.svg" alt="">
+                <img src="./assets/img/edit.svg" alt="">
                 <p>Edit</p>
             </div>
         </footer>
