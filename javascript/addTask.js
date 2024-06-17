@@ -384,10 +384,3 @@ function checkSubtasksEditLength(i) {
     document.getElementById(`subtaskTitle${i}`).innerHTML = description.substring(0, 40);
   }
 }
-
-
-function closeAddTaskPopupWindow() {
-  let container = document.getElementById('add-task-popup');
-  container.classList.add('d-none');
-}
-

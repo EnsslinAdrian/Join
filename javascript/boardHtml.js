@@ -3,7 +3,7 @@ function generateAddTaskHtml() {
     <div>
     <div class="header_add_task_popup">
     <h1>Add Task</h1>
-    <img onclick="closeAddTask()" src="../assets/img/add_task/close.svg">
+    <img onclick="closeAddTask()" src="./assets/img/add_task/close.svg">
     </div>
     <!-- anfang -->
     <div class="add-task-section">
