@@ -114,6 +114,12 @@ function clearTask() {
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
   subtasks = [];
+
+  let checkboxes = document.querySelectorAll('[id^="taskCheckbox"]');
+  checkboxes.forEach(checkbox => {
+      checkbox.checked = false;
+  });
+
   renderAddTaskContactInitials();
   renderSubtasksList();
 }
