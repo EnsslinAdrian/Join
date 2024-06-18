@@ -301,6 +301,14 @@ width: 25%;
     padding-bottom: 10px;
     padding-top: 10px;
     }
+
+    .hedline-container-responsiv {
+        margin-top: -45px;
+    }
+
+    .parting-line-responsiv {
+        display: none;
+    }
 }
 
 @media (max-width: 550px) {

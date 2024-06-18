@@ -151,6 +151,7 @@ a {
     width: 1212px;
     overflow: hidden;
     transition: transform 0.5s ease-in-out;
+    z-index: 1;
 }
 
 .left-side {
