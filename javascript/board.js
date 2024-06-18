@@ -481,7 +481,6 @@ async function saveEditedTask(taskIndex) {
     }
     const url = generateTaskUrl(userKey, taskIndex);
     const updatedTask = collectFormData();
-
     try {
         console.log('Updated Task:', updatedTask);
         const updateResponse = await updateTaskInDatabase(url, updatedTask);

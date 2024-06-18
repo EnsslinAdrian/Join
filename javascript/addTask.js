@@ -325,6 +325,11 @@ function generateSubtaskHtml(subtask, i) {
 }
 
 
+/**
+ * This function enables editing for a subtask title.
+ * 
+ * @param {number} i - This is the index of the subtask.
+ */
 function editSubtask(i) {
   let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
   subtaskTitle.contentEditable = "true";
@@ -332,6 +337,11 @@ function editSubtask(i) {
 }
 
 
+/**
+ * This function saves the edited subtask title.
+ * 
+ * @param {number} i - This is the index of the subtask.
+ */
 function saveSubtaskTitle(i) {
   if (subtasks && i >= 0 && i < subtasks.length) {
     let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
@@ -347,6 +357,11 @@ function saveSubtaskTitle(i) {
 }
 
 
+/**
+ * This function deletes a subtask.
+ * 
+ * @param {number} i - This is the index of the subtask.
+ */
 function deleteSubtask(i) {
   subtasks.splice(i, 1); // Verwende das globale 'subtasks' Array
   renderSubtasksList();
@@ -377,6 +392,11 @@ function generateAddTaskContactInitialsHTML(contact) {
 }
 
 
+/**
+ * This function checks the length of the description input and updates the display message accordingly.
+ * 
+ * If the description is longer than 300 characters, it trims the input to 300 characters.
+ */
 function checkDescriptionLength() {
   let description = document.getElementById('description').value;
 
@@ -392,6 +412,11 @@ function checkDescriptionLength() {
 }
 
 
+/**
+ * This function checks the length of the title input and updates the display message accordingly.
+ * 
+ * If the title is longer than 30 characters, it trims the input to 30 characters.
+ */
 function checkTitelLength() {
   let description = document.getElementById('title').value;
 
@@ -407,6 +432,9 @@ function checkTitelLength() {
 }
 
 
+/**
+ * This function checks the length of the subtask input and trims it to 40 characters if necessary.
+ */
 function checkSubtasksLength() {
   let description = document.getElementById('subtask').value;
 
@@ -417,6 +445,11 @@ function checkSubtasksLength() {
 }
 
 
+/**
+ * This function checks the length of the subtask title during editing and trims it to 40 characters if necessary.
+ * 
+ * @param {number} i - This is the index of the subtask being edited.
+ */
 function checkSubtasksEditLength(i) {
   let description = document.getElementById(`subtaskTitle${i}`).innerHTML;
 
@@ -426,12 +459,20 @@ function checkSubtasksEditLength(i) {
 }
 
 
+/**
+ * This function sets the minimum date of the date input to today's date.
+ */
 function showDateToday() {
   let dateInput = document.getElementById('date');
   dateInput.min = getTodayDate();
 }
 
 
+/**
+ * This function gets today's date formatted as YYYY-MM-DD.
+ * 
+ * @returns {string} today - This is the formatted date.
+ */
 function getTodayDate() {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
