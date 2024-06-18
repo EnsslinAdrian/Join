@@ -479,7 +479,6 @@ async function saveEditedTask(taskIndex) {
     if (!userKey) {
         return;
     }
-
     const url = generateTaskUrl(userKey, taskIndex);
     const updatedTask = collectFormData();
 
