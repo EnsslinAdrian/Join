@@ -486,6 +486,9 @@ function allowDrop(ev) {
 }
 
 
+let test = [];
+
+
 /**
  * Moves the currently dragged task to a new category and updates the data.
  * 

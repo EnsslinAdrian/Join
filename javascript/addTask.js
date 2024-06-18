@@ -386,6 +386,12 @@ function checkSubtasksEditLength(i) {
 }
 
 
+function showDateToday() {
+  let dateInput = document.getElementById('date');
+  dateInput.min = getTodayDate();
+}
+
+
 function getTodayDate() {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
@@ -395,6 +401,3 @@ function getTodayDate() {
   today = mm + '/' + dd + '/' + yyyy;
   return `${yyyy}-${mm}-${dd}`;
 }
-
-let dateInput = document.getElementById('date');
-dateInput.min = getTodayDate();
