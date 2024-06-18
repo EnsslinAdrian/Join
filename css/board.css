@@ -638,7 +638,7 @@ span {
 
 @media (max-width: 768px) {
     .navbar p {
-        font-size: 16px !important;
+        font-weight: 400 !important;
     }
 
     .tasks-container {
