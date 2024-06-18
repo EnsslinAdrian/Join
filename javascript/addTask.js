@@ -384,3 +384,17 @@ function checkSubtasksEditLength(i) {
     document.getElementById(`subtaskTitle${i}`).innerHTML = description.substring(0, 40);
   }
 }
+
+
+function getTodayDate() {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0');
+  let yyyy = today.getFullYear();
+
+  today = mm + '/' + dd + '/' + yyyy;
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+let dateInput = document.getElementById('date');
+dateInput.min = getTodayDate();
