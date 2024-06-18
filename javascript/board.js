@@ -394,16 +394,24 @@ function generateBoardTaskContactHtml(contact, i, color) {
     `;
 }
 
+async function fetchTasks() {
+    let response = await fetch(`${firebaseUrl}.json`);
+    let responseToJson = await response.json();
+    let userKey = localStorage.getItem('userKey');
+    let tasks = responseToJson['registered'][userKey]['tasks'];
+    return tasks;
+}
 
 /**
  * Updates the HTML content for the task board by calling functions
  * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
  */
-function updateHTML() {
-    updateTodo();
-    updateInProgress();
-    updateAwaitFeedback();
-    updateDone();
+async function updateHTML() {
+    let tasks = await fetchTasks();
+    updateTodo(tasks);
+    updateInProgress(tasks);
+    updateAwaitFeedback(tasks);
+    updateDone(tasks);
 }
 
 
@@ -411,8 +419,8 @@ function updateHTML() {
  * Updates the HTML content for the "ToDo" section by filtering tasks
  * with the category 'todo' and generating their HTML.
  */
-function updateTodo() {
-    let todo = test.filter(t => t['category'] == 'todo');
+function updateTodo(tasks) {
+    let todo = tasks.filter(t => t['category'] == 'todo');
 
     document.getElementById('todo').innerHTML = '';
 
@@ -426,8 +434,8 @@ function updateTodo() {
  * Updates the HTML content for the "In Progress" section by filtering tasks
  * with the category 'in-progress' and generating their HTML.
  */
-function updateInProgress() {
-    let inProgress = test.filter(t => t['category'] == 'in-progress');
+function updateInProgress(tasks) {
+    let inProgress = tasks.filter(t => t['category'] == 'in-progress');
 
     document.getElementById('in-progress').innerHTML = '';
 
@@ -441,8 +449,8 @@ function updateInProgress() {
  * Updates the HTML content for the "Await-feedback" section by filtering tasks
  * with the category 'await-feedback' and generating their HTML.
  */
-function updateAwaitFeedback() {
-    let awaitFeedback = test.filter(t => t['category'] == 'await-feedback');
+function updateAwaitFeedback(tasks) {
+    let awaitFeedback = tasks.filter(t => t['category'] == 'await-feedback');
 
     document.getElementById('await-feedback').innerHTML = '';
 
@@ -456,8 +464,8 @@ function updateAwaitFeedback() {
  * Updates the HTML content for the "Done" section by filtering tasks
  * with the category 'done' and generating their HTML.
  */
-function updateDone() {
-    let done = test.filter(t => t['category'] == 'done');
+function updateDone(tasks) {
+    let done = tasks.filter(t => t['category'] == 'done');
 
     document.getElementById('done').innerHTML = '';
 
@@ -486,21 +494,30 @@ function allowDrop(ev) {
 }
 
 
-let test = [];
-
-
 /**
  * Moves the currently dragged task to a new category and updates the data.
  * 
  * @param {string} category - The new category to move the task to.
  */
 async function moveTo(category) {
+    if (currentDraggedTask == null) {
+        return;
+    }
+    
     if (localStorage.getItem('username') !== 'Guest') {
-        test[currentDraggedTask]['category'] = category;
-        await putData(category);
+        let task = await getTaskFromDatabase(currentDraggedTask);
+        if (!task) {
+            return;
+        }
+        task['category'] = category;
+        await putData(currentDraggedTask, task); // Annahme: putData() aktualisiert den Task in der Datenbank
         updateHTML();
         currentDraggedTask = null;
     } else {
+        let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || {};
+        if (!guestTasks[currentDraggedTask]) {
+            return;
+        }
         guestTasks[currentDraggedTask]['category'] = category;
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
         currentDraggedTask = null;
@@ -509,6 +526,15 @@ async function moveTo(category) {
     }
     removeHighlight(category);
 }
+
+
+async function getTaskFromDatabase(taskId) {
+    let userKey = localStorage.getItem('userKey');
+    let response = await fetch(`${firebaseUrl}/registered/${userKey}/tasks/${taskId}.json`);
+    let task = await response.json();
+    return task;
+}
+
 
 /**
  * Highlights a specified element by adding a CSS class.
@@ -542,24 +568,20 @@ function closeDialogTask() {
  * 
  * @param {string} category - The new category to update the task to.
  */
-async function putData(category) {
+async function putData(taskId, task) {
     try {
-        let response = await fetch(`${firebaseUrl}.json`);
-        let responseToJson = await response.json();
-
-        let user = localStorage.getItem('userKey');
-        let pathUser = responseToJson['registered'][user];
-        let tasks = pathUser['tasks'];
-
-        tasks[currentDraggedTask]['category'] = category;
-        await dataUser(`/registered/${user}/tasks/${currentDraggedTask}`, { category: category });
-
-        renderTaskBoard()
-
+        let userKey = localStorage.getItem('userKey');
+        await fetch(`${firebaseUrl}/registered/${userKey}/tasks/${taskId}.json`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task),
+        });
+        renderTaskBoard();
     } catch (error) {
         console.error('Fehler beim Aktualisieren der Daten:', error);
     }
-
 }
 
 /**
