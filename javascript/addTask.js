@@ -304,6 +304,13 @@ function renderSubtasksList() {
 }
 
 
+/**
+ * This function generates the HTML for a subtask.
+ * 
+ * @param {Object} subtask - This is the subtask object.
+ * @param {number} i - This is the index of the subtask.
+ * @returns {string} This generates HTML string for the subtask.
+ */
 function generateSubtaskHtml(subtask, i) {
   return `
   <div class="edit-subtask-container" id="subtaskEditContainer${i}">
