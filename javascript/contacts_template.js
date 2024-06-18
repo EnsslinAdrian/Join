@@ -23,7 +23,7 @@ function getAddNewContactTemplate() {
             <div class="close-button">
                 <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
             </div>
-            <form class="inputfields">
+            <form onsubmit="newContact()" class="inputfields">
                 <div class="input-container">
                     <input id="contact-Name" class="input" placeholder="Name" type="text" required>
                     <img class="input-icon" src="assets/img/person.svg">
@@ -33,12 +33,12 @@ function getAddNewContactTemplate() {
                     <img class="input-icon" src="assets/img/mail.svg">
                 </div>
                 <div class="input-container">
-                    <input id="contact-Phone" class="input" placeholder="Phone" type="text" required>
+                    <input id="contact-Phone" class="input" placeholder="Phone" type="number" required>
                     <img class="input-icon" src="assets/img/contacts/call.svg">
                 </div>                                    
                 <div class="buttons">
-                    <button onclick="closePopup()" class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
-                    <button type="button" onclick="newContact()" class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
+                    <button type="button" onclick="closePopup()" class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
+                    <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
                 </div>
             </form>
         </div>
