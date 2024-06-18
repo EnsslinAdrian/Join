@@ -637,6 +637,10 @@ span {
 
 
 @media (max-width: 768px) {
+    .navbar p {
+        font-size: 16px !important;
+    }
+
     .tasks-container {
         margin-left: 10px;
         margin-right: 10px;
