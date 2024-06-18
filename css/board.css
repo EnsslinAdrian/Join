@@ -2,6 +2,10 @@ body {
     font-family: 'Inter';
 }
 
+.navbar p {
+    font-weight: 400 !important;
+}
+
 .d_none {
     display: none;
 }
