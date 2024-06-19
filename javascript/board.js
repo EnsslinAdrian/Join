@@ -214,8 +214,6 @@ async function deleteTask(taskJson, i) {
 }
 
 
-
-
 // Die Hauptfunktion zum Bearbeiten eines Tasks
 async function editTask(taskJson, i) {
     let task = JSON.parse(decodeURIComponent(taskJson));
