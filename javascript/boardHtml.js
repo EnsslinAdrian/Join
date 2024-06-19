@@ -253,3 +253,98 @@ function generateEditPopup(task, i) {
     `;
 }
 
+/**
+ * This function generates HTML content for displaying task contacts in the task details view.
+ * 
+ * @param {Object} task - This is the task object that containing contacts.
+ * @param {number} i - This is the index of the task.
+ */
+function generateTaskContactsforDetails(task, i) {
+    let content = document.getElementById(`contacts${i}`);
+
+    for (let j = 0; j < task['taskContacts'].length; j++) {
+        let contact = task['taskContacts'][j];
+        content.innerHTML += `
+        <div class="arrange_assigned_to_contacts">
+            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+            <p> ${contact['name']}</p>
+        </div>
+        `;
+    }
+}
+
+/**
+ * This function generates HTML content for displaying task subtasks in the task details view.
+ * 
+ * @param {Object} task - This is the task object that containing subtasks.
+ * @param {number} i - This is the index of the task.
+ */
+function generateTaskSubtasksforDetails(task, i) {
+    let subtasks = document.getElementById(`task_subtasks`);
+    subtasks.innerHTML = '';
+
+    for (let k = 0; k < task['subtasks'].length; k++) {
+        let subtask = task['subtasks'][k];
+        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
+
+        subtasks.innerHTML += `
+        <div id="single_subtask_${i}_${k}" class="single_subtask">
+            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+            <p>${subtask['title']}</p>
+        </div>
+        `;
+    }
+}
+
+/**
+ * This function generates the HTML string for a subtask checkbox.
+ * 
+ * @function subtaskCheckboxHtml
+ * @param {number} taskIndex - The index of the task containing the subtask.
+ * @param {number} j - The index of the subtask within the task.
+ * @param {Object} subtask - The subtask object containing its details.
+ * @param {string} isChecked - The checked state of the checkbox ('checked' or '').
+ * @returns {string} The HTML string for the subtask checkbox.
+ */
+function subtaskCheckboxHtml(taskIndex, j, subtask, isChecked) {
+    return `
+    <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
+        <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+        <p>${subtask['title']}</p>
+    </div>
+    `;
+}
+
+/**
+ * This ufnction generates HTML for a contact's initials.
+ * 
+ * @param {Object} contact - The contact object.
+ * @param {string} contact.color - The background color for the initials.
+ * @param {string} contact.initials - The initials of the contact.
+ * @returns {string} HTML string of the contact initials.
+ */
+function generateAddTaskContactInitialsHTML(contact) {
+    return `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
+}
+
+/**
+ * This function generates the HTML for a task contact.
+ * 
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} i - The index of the contact.
+ * @param {string} color - The color associated with the contact.
+ * @param {boolean} isContactAdded - Whether the contact is already added to the task.
+ * @returns {string} The HTML string for the contact.
+ */
+function generateBoardsContactHtml(contactName, initials, i, color, isContactAdded) {
+    return `
+    <div class="assigned-contact" id="contactTask${i}">
+        <div class="contact-name">
+            <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
+            <p>${contactName}</p>
+        </div>
+        <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}', '${initials}', ${i}, '${color}')" class="checkbox" type="checkbox" ${isContactAdded ? 'checked' : ''}>
+    </div>
+    `;
+}
