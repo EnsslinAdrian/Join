@@ -158,6 +158,12 @@ if (typeof guestTasks === 'undefined') {
  * and generating the HTML for each task.
  */
 async function renderGuestTaskBoard() {
+    let storedTasks = localStorage.getItem('guestTasks');
+    if (storedTasks) {
+        guestTasks = JSON.parse(storedTasks);
+    } else {
+        guestTasks = []; 
+    }
 
     document.getElementById('todo').innerHTML = '';
     document.getElementById('in-progress').innerHTML = '';
@@ -238,9 +244,16 @@ function showGuestTaskDetails(task, i) {
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
 
     renderGuestCheckbox(i);
+    renderGuestTaskDetailsContacts(task, i);
+    renderGuestTaskDetailsSubtasks(task, i);
+    updateAllGuestsProgressBars();
+    updateProgressBar(i);
+}
 
+
+
+function renderGuestTaskDetailsContacts(task, i) {
     let content = document.getElementById(`contacts${i}`);
-
 
     for (let j = 0; j < task['taskContacts'].length; j++) {
         let contact = task['taskContacts'][j];
@@ -251,7 +264,10 @@ function showGuestTaskDetails(task, i) {
         </div>
         `;
     }
+}
 
+
+function renderGuestTaskDetailsSubtasks(task, i) {
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
 
@@ -266,9 +282,6 @@ function showGuestTaskDetails(task, i) {
         </div>
         `;
     }
-
-    updateAllGuestsProgressBars();
-    updateProgressBar(i);
 }
 
 
@@ -312,12 +325,14 @@ function renderGuestCheckbox(taskIndex) {
  */
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
-    let isChecked = checkbox.checked;
+    if (checkbox) {
+        let isChecked = checkbox.checked;
 
-    guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
+        guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
 
-    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-    updateProgressBar(taskIndex);
+        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+        updateProgressBar(taskIndex);
+    }
 }
 
 
@@ -332,9 +347,9 @@ function updateAllGuestsProgressBars() {
         let subtasks = task['subtasks'];
 
         if (subtasks.length > 0) {
-            updateAllProgressBarsBelowZero(subtasks);
+            updateAllProgressBarsBelowZero(i, subtasks);
         } else {
-            updateAllProgressBarsOverZero();
+            updateAllProgressBarsOverZero(i);
         }
     }
 }
@@ -343,10 +358,10 @@ function updateAllGuestsProgressBars() {
 /**
  * This function updates the progress bar for a task with subtasks when there are completed subtasks.
  * 
- * @function updateAllProgressBarsBelowZero
+ * @param {number} i - The index of the task.
  * @param {Array} subtasks - The array of subtasks for a task.
  */
-function updateAllProgressBarsBelowZero(subtasks) {
+function updateAllProgressBarsBelowZero(i, subtasks) {
     let allSubtasks = subtasks.length;
     let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
 
@@ -367,9 +382,9 @@ function updateAllProgressBarsBelowZero(subtasks) {
 /**
  * This function updates the progress bar for a task with no subtasks or no completed subtasks.
  * 
- * @function updateAllProgressBarsOverZero
+ * @param {number} i - The index of the task.
  */
-function updateAllProgressBarsOverZero() {
+function updateAllProgressBarsOverZero(i) {
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
     if (subtasksAmount) {
         subtasksAmount.innerHTML = '0/0 Subtasks';
