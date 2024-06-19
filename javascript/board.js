@@ -283,7 +283,7 @@ function subtaskCheckBox(taskIndex, tasks, subtasksContainer) {
  * @returns {string} The HTML string for the subtask checkbox.
  */
 function subtaskCheckboxHtml(taskIndex, j, subtask, isChecked) {
-    return`
+    return `
     <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
         <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
         <p>${subtask['title']}</p>
@@ -640,6 +640,7 @@ async function fetchTasks() {
     return tasks;
 }
 
+
 /**
  * Updates the HTML content for the task board by calling functions
  * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
@@ -668,6 +669,7 @@ function updateTodo(tasks) {
     }
 }
 
+
 /**
  * Updates the HTML content for the "In Progress" section by filtering tasks
  * with the category 'in-progress' and generating their HTML.
@@ -682,6 +684,7 @@ function updateInProgress(tasks) {
         document.getElementById('in-progress').innerHTML += generateTodoHTML(inProgressElement);
     }
 }
+
 
 /**
  * Updates the HTML content for the "Await-feedback" section by filtering tasks
@@ -698,6 +701,7 @@ function updateAwaitFeedback(tasks) {
     }
 }
 
+
 /**
  * Updates the HTML content for the "Done" section by filtering tasks
  * with the category 'done' and generating their HTML.
@@ -713,6 +717,7 @@ function updateDone(tasks) {
     }
 }
 
+
 /**
  * Starts the dragging process for a task.
  * 
@@ -721,6 +726,7 @@ function updateDone(tasks) {
 function startDragging(id) {
     currentDraggedTask = id;
 }
+
 
 /**
  * Allows a drop event by preventing the default handling of the event.
@@ -831,6 +837,7 @@ function closeDialogTask() {
     document.getElementById('dialog').classList.add('d_none');
 }
 
+
 /**
  * Updates the category of the currently dragged task in the database and reloads the page.
  * 
@@ -851,6 +858,7 @@ async function putData(taskId, task) {
         console.error('Fehler beim Aktualisieren der Daten:', error);
     }
 }
+
 
 /**
  * Sends a PATCH request to update user data at the specified path in the Firebase database.
@@ -881,7 +889,6 @@ async function filterTasks() {
 }
 
 
-
 /**
  * This function compares the searched task with tasks in the database and filters them based on the title and description.
  * 
@@ -903,7 +910,6 @@ async function compareTasks(searchedTask) {
         compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, taskDescription)
     }
 }
-
 
 
 /**
@@ -942,20 +948,20 @@ async function filterTasksMobile() {
 function showDateToday() {
     let dateInput = document.getElementById('date');
     dateInput.min = getTodayDate();
-  }
-  
-  
-  /**
-   * This function gets today's date formatted as YYYY-MM-DD.
-   * 
-   * @returns {string} today - This is the formatted date.
-   */
-  function getTodayDate() {
+}
+
+
+/**
+ * This function gets today's date formatted as YYYY-MM-DD.
+ * 
+ * @returns {string} today - This is the formatted date.
+ */
+function getTodayDate() {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
-  
+
     today = mm + '/' + dd + '/' + yyyy;
     return `${yyyy}-${mm}-${dd}`;
-  }
+}
