@@ -496,6 +496,11 @@ span {
     margin-left: 0 !important;
 }
 
+#selctedContact {
+    display: flex;
+    margin-top: 8px;
+}
+
 @media (max-width: 1530px) {
     .tasks-container {
         margin-left: 30px;
