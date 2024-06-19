@@ -272,6 +272,12 @@ function showGuestTaskDetails(task, i) {
 }
 
 
+/**
+ * This function renders the checkbox elements for the guest tasks' subtasks.
+ * 
+ * @function renderGuestCheckbox
+ * @param {number} taskIndex - The index of the task in the guest tasks array.
+ */
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -281,9 +287,7 @@ function renderGuestCheckbox(taskIndex) {
 
     let task = guestTasks[taskIndex];
     let subtasks = task['subtasks'];
-
     subtasksContainer.innerHTML = '';
-
     for (let j = 0; j < subtasks.length; j++) {
         let subtask = subtasks[j];
         let isChecked = subtask['state'] ? 'checked' : '';
@@ -295,11 +299,17 @@ function renderGuestCheckbox(taskIndex) {
         `;
         subtasksContainer.innerHTML += subtaskHTML;
     }
-
     updateProgressBar(taskIndex);
 }
 
 
+/**
+ * This function saves the state of the guest task's subtask checkbox and updates the local storage.
+ * 
+ * @function saveGuestCheckboxState
+ * @param {number} taskIndex - The index of the task in the guest tasks array.
+ * @param {number} subtaskIndex - The index of the subtask in the task's subtasks array.
+ */
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     let isChecked = checkbox.checked;
@@ -311,6 +321,11 @@ function saveGuestCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
+/**
+ * This function updates the progress bars for all guest tasks.
+ * 
+ * @function updateAllGuestsProgressBars
+ */
 function updateAllGuestsProgressBars() {
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
@@ -325,6 +340,12 @@ function updateAllGuestsProgressBars() {
 }
 
 
+/**
+ * This function updates the progress bar for a task with subtasks when there are completed subtasks.
+ * 
+ * @function updateAllProgressBarsBelowZero
+ * @param {Array} subtasks - The array of subtasks for a task.
+ */
 function updateAllProgressBarsBelowZero(subtasks) {
     let allSubtasks = subtasks.length;
     let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
@@ -343,6 +364,11 @@ function updateAllProgressBarsBelowZero(subtasks) {
 }
 
 
+/**
+ * This function updates the progress bar for a task with no subtasks or no completed subtasks.
+ * 
+ * @function updateAllProgressBarsOverZero
+ */
 function updateAllProgressBarsOverZero() {
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
     if (subtasksAmount) {

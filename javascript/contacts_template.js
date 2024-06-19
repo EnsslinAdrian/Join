@@ -1,3 +1,9 @@
+/**
+ * This function returns the HTML template string for adding a new contact.
+ *
+ * @function getAddNewContactTemplate
+ * @returns {string} The HTML template for the "Add Contact" popup.
+ */
 function getAddNewContactTemplate() {
     return `
     <div class="left-side">
@@ -46,6 +52,18 @@ function getAddNewContactTemplate() {
     `;
 }
 
+
+/**
+ * R#This function returns the HTML template string for editing an existing contact.
+ *
+ * @function getEditContactTemplate
+ * @param {Object} contact - The contact object containing details of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} contactJson - The JSON representation of the contact.
+ * @param {string} id - The ID of the contact.
+ * @param {number} index - The index of the contact in the list.
+ * @returns {string} The HTML template for the "Edit Contact" popup.
+ */
 function getEditContactTemplate(contact, initials, contactJson, id, index) {
     return `
     <div class="left-side">
@@ -94,6 +112,18 @@ function getEditContactTemplate(contact, initials, contactJson, id, index) {
 }
 
 
+
+/**
+ * This function returns the HTML template string for displaying contact details.
+ *
+ * @function getShowContactTemplate
+ * @param {Object} contact - The contact object containing details of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} contactJson - The JSON representation of the contact.
+ * @param {string} id - The ID of the contact.
+ * @param {number} index - The index of the contact in the list.
+ * @returns {string} The HTML template for displaying contact details.
+ */
 function getShowContactTemplate(contact, initials, contactJson, id, index) {
     return `
     <div class="show-contact slide-in">

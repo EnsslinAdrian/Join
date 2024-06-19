@@ -26,6 +26,7 @@ doneContainer.addEventListener('mouseleave', function () {
     doneImage.src = chopOriginalSrc;
 });
 
+
 /**
  * Greets the user by displaying their username stored in localStorage.
  * Retrieves the username and updates the HTML content of the specified element.
@@ -37,7 +38,6 @@ function greetingUser() {
 
  let currentHour = new Date().getHours();
     let greetingMessage;
-
     if (currentHour < 12) {
         greetingMessage = "Good morning";
     } else if (currentHour < 18) {
@@ -45,11 +45,11 @@ function greetingUser() {
     } else {
         greetingMessage = "Good evening";
     }
-
     document.getElementById('greetingTime').innerHTML = greetingMessage;
 }
 
 greetingUser();
+
 
 /**
  * Renders a responsive summary view based on the window width.
@@ -95,6 +95,7 @@ window.addEventListener('resize', renderResponsivSummary);
 
 renderResponsivSummary();
 
+
 /**
  * Renders the summary of tasks for the logged-in user by fetching task data from the Firebase database.
  * Updates the task counts and the nearest upcoming task information on the summary page.
@@ -119,6 +120,7 @@ async function renderSummaryTasks() {
     }
 }
 
+
 /**
  * Fetches the tasks of the logged-in user from the database.
  * 
@@ -133,6 +135,7 @@ async function fetchUserTasks() {
     return pathUser['tasks'];
 }
 
+
 /**
  * Updates the total task count in the HTML.
  * 
@@ -141,6 +144,7 @@ async function fetchUserTasks() {
 function updateTaskCount(count) {
     document.getElementById('allTask').innerHTML = count;
 }
+
 
 /**
  * Counts the tasks in different categories.
@@ -168,6 +172,7 @@ function countTaskCategories(tasks) {
     return categoryCounts;
 }
 
+
 /**
  * Finds the task with the closest due date.
  * 
@@ -193,6 +198,7 @@ function findClosestDateTask(tasks) {
     return closestDateTask;
 }
 
+
 /**
  * Updates the HTML with the counts of tasks in each category.
  * 
@@ -204,6 +210,7 @@ function updateCategoryCounts(categoryCounts) {
     document.getElementById('doneSummary').innerHTML = categoryCounts['done'];
     document.getElementById('awaitingSummary').innerHTML = categoryCounts['await-feedback'];
 }
+
 
 /**
  * Updates the HTML with the task having the closest due date.
@@ -230,6 +237,7 @@ function updateClosestDateTask(task) {
     }
 }
 
+
 /**
  * Parses a date string in the format 'DD.MM.YYYY' or 'YYYY-MM-DD' into a Date object.
  * 
@@ -251,6 +259,7 @@ function parseDate(dateStr) {
     }
 }
 
+
 /**
  * Renders the summary of tasks for guest users by updating task counts and the nearest upcoming task information on the summary page.
  */
@@ -266,6 +275,12 @@ function renderSummaryGuestTasks() {
 
 renderSummaryTasks();
 
+
+/**
+ * This function redirects the browser to the board.html page.
+ * 
+ * @function pathToBoard
+ */
 function pathToBoard() {
   window.location.href = 'board.html';
 }

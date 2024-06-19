@@ -387,6 +387,15 @@ function remainingTheContacts(contactContainer, firstLetter, remainingContacts) 
 }
 
 
+/**
+ * This function saves the edited contact information to the database.
+ * 
+ * @async
+ * @function saveEditedContact
+ * @param {string} contactJson - The JSON string of the original contact information.
+ * @param {string} id - The unique identifier of the contact.
+ * @param {number} index - The index of the contact in the contacts list.
+ */
 async function saveEditedContact(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
     let newName = document.getElementById('contactName').value;
@@ -404,6 +413,15 @@ async function saveEditedContact(contactJson, id, index) {
 }
 
 
+/**
+ * This function saves the edited contact information to the database.
+ * 
+ * @async
+ * @function saveEditedContactDataBank
+ * @param {string} id - The unique identifier of the contact.
+ * @param {number} index - The index of the contact in the contacts list.
+ * @param {Object} updatedContact - The updated contact information.
+ */
 async function saveEditedContactDataBank(id, index, updatedContact) {
     let response = await fetch(`${firebaseUrl}/contacts/${id}.json`, {
         method: "PUT",
@@ -423,12 +441,24 @@ async function saveEditedContactDataBank(id, index, updatedContact) {
 }
 
 
+/**
+ * This function clears the details shown in the contact details container.
+ * 
+ * @function clearShowContactDetails
+ */
 function clearShowContactDetails() {
     let showContactContainer = document.getElementById('show-contact-container');
     showContactContainer.innerHTML = '';
     showContactContainer.classList.remove('active');
 }
 
+
+/**
+ * This function changes the background color of the selected contact.
+ * 
+ * @function changeBgColor
+ * @param {string} contact - The id of the selected contact element.
+ */
 function changeBgColor(contact) {
     let contacts = document.querySelectorAll('.contact-card');
     contacts.forEach(contact => {
@@ -443,6 +473,12 @@ function changeBgColor(contact) {
     }
 }
 
+
+/**
+ * This function clears the content and active classes of various UI elements.
+ * 
+ * @function clearShowContactContainer
+ */
 function clearShowContactContainer() {
     let contactContainer = document.getElementById('contact-container');
     let showContactContainer = document.getElementById('show-contact-container');
@@ -458,6 +494,12 @@ function clearShowContactContainer() {
     editIcon.classList.remove('active');
 }
 
+
+/**
+ * This function displays a notification for a short duration.
+ * 
+ * @function showNotification
+ */
 function showNotification() {
     let notification = document.getElementById('notification');
     notification.classList.add('show');
@@ -466,6 +508,12 @@ function showNotification() {
     }, 2000);
 }
 
+
+/**
+ * This function closes the 'Add New Contact' popup with a slide-out animation.
+ * 
+ * @function closeAddNewContact
+ */
 function closeAddNewContact() {
     let container = document.getElementById('add-contact-popup');
     container.classList.add('slide-out');
