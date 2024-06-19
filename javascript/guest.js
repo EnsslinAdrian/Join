@@ -183,7 +183,6 @@ async function renderGuestTaskBoard() {
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
     }
-
     updateAllGuestsProgressBars();
 }
 
@@ -251,7 +250,12 @@ function showGuestTaskDetails(task, i) {
 }
 
 
-
+/**
+ * This function renders the contacts section for a guest user's task details.
+ * 
+ * @param {Object} task - The task object containing the task contacts.
+ * @param {number} i - The index of the task in the guest task list.
+ */
 function renderGuestTaskDetailsContacts(task, i) {
     let content = document.getElementById(`contacts${i}`);
 
@@ -267,6 +271,12 @@ function renderGuestTaskDetailsContacts(task, i) {
 }
 
 
+/**
+ * This function renders the subtasks section for a guest user's task details.
+ * 
+ * @param {Object} task - The task object containing the subtasks.
+ * @param {number} i - The index of the task in the guest task list.
+ */
 function renderGuestTaskDetailsSubtasks(task, i) {
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
