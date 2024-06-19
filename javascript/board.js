@@ -2,6 +2,12 @@ let currentDraggedTask = null;
 let checkboxStates = {};
 let currentTaskId;
 
+
+/**
+ * This function opens the 'Add Task' interface. If the viewport width is less than or equal to 1100px,
+ * 
+ * it redirects to 'add_task.html'. Otherwise, it displays a popup for adding a task.
+ */
 function openAddTask() {
     if (window.matchMedia("(max-width: 1100px)").matches) {
         window.location.href = 'add_task.html';
@@ -14,11 +20,20 @@ function openAddTask() {
 }
 
 
+/**
+ * This function closes the 'Add Task' popup by adding the 'd-none' class to the container.
+ */
 function closeAddTask() {
     let container = document.getElementById('add-task-popup');
     container.classList.add('d-none');
 }
 
+
+/**
+ * This function cancels the 'Add Task' operation by initiating a slide-out animation.
+ * 
+ * Once the animation ends, the popup is closed.
+ */
 function cancelAddTask() {
     let popup = document.getElementById('add-task-popup');
     popup.classList.add('slide-out');
@@ -59,7 +74,20 @@ function showTaskDetails(task, i) {
     taskDetails.innerHTML = generateTaskDetails(task, i);
 
     renderCheckbox(i);
+    generateTaskContactsforDetails(task, i);
+    generateTaskSubtasksforDetails(task, i);
+    updateAllProgressBars();
+    updateProgressBar(i);
+}
 
+
+/**
+ * This function generates HTML content for displaying task contacts in the task details view.
+ * 
+ * @param {Object} task - This is the task object that containing contacts.
+ * @param {number} i - This is the index of the task.
+ */
+function generateTaskContactsforDetails(task, i) {
     let content = document.getElementById(`contacts${i}`);
 
     for (let j = 0; j < task['taskContacts'].length; j++) {
@@ -71,7 +99,16 @@ function showTaskDetails(task, i) {
         </div>
         `;
     }
+}
 
+
+/**
+ * This function generates HTML content for displaying task subtasks in the task details view.
+ * 
+ * @param {Object} task - This is the task object that containing subtasks.
+ * @param {number} i - This is the index of the task.
+ */
+function generateTaskSubtasksforDetails(task, i) {
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
 
@@ -86,11 +123,14 @@ function showTaskDetails(task, i) {
         </div>
         `;
     }
-updateAllProgressBars();
-updateProgressBar(i);
 }
 
 
+/**
+ * This function updates the progress bar to reflect the current state of completed subtasks.
+ * 
+ * @param {number} i - The index of the task.
+ */
 function updateProgressBar(i) {
     let allSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]`).length;
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
@@ -107,6 +147,14 @@ function updateProgressBar(i) {
 }
 
 
+
+/**
+ * This function saves the state of a subtask checkbox.
+ * 
+ * @param {number} taskIndex - This is the index of the task.
+ * @param {number} subtaskIndex - This is the index of the subtask.
+ * @returns {Promise<void>} A promise that resolves when the checkbox state is saved.
+ */
 async function saveCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     if (!checkboxStates[taskIndex]) {
@@ -123,39 +171,64 @@ async function saveCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
+/**
+ * This function fetches all tasks from the server and updates the progress bars for all tasks.
+ * 
+ * @async
+ * @returns {Promise<void>} A promise that resolves when all progress bars are updated.
+ */
 async function updateAllProgressBars() {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
     let userKey = localStorage.getItem('userKey');
-
     let tasks = responseToJson['registered'][userKey]['tasks'];
 
+    renderAmountOfAllSubtasks(tasks);
+}
+
+
+/**
+ * This function renders the progress and amount of all subtasks for each task.
+ * 
+ * @param {Array<Object>} tasks - This is an array of task objects.
+ */
+function renderAmountOfAllSubtasks(tasks) {
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         let subtasks = task['subtasks'];
-
         let allSubtasks = subtasks.length;
         let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-
         let progress = (completedSubtasks / allSubtasks) * 100;
 
         let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
         subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
 
         let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-
         if (progressBarContent) {
             progressBarContent.style.width = progress + '%';
         }
-
     }
 }
 
 
+/**
+ * This function checks if a specific subtask is checked.
+ * 
+ * @param {number} taskIndex - This is the index of the task.
+ * @param {number} subtaskIndex - This is the index of the subtask.
+ * @returns {boolean} True if the subtask is checked, false otherwise.
+ */
 function isSubtaskChecked(taskIndex, subtaskIndex) {
     return checkboxStates[taskIndex] && checkboxStates[taskIndex][subtaskIndex];
 }
 
+
+/**
+ * This function renders the checkbox list for a task.
+ * 
+ * @param {number} taskIndex - This is the index of the task.
+ * @returns {Promise<void>} A promise that resolves when the checkbox list is rendered.
+ */
 async function renderCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -166,7 +239,6 @@ async function renderCheckbox(taskIndex) {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
     let userKey = localStorage.getItem('userKey');
-
     let tasks = responseToJson['registered'][userKey]['tasks'];
     subtasksContainer.innerHTML = '';
 
@@ -185,22 +257,26 @@ async function renderCheckbox(taskIndex) {
             `;
             subtasksContainer.innerHTML += subtaskHTML;
         }
-
         updateProgressBar(taskIndex);
     }
 }
 
 
+/**
+ * This function deletes a task from the database.
+ * 
+ * @param {Object} taskJson - This is the task data in JSON format.
+ * @param {number} i - This is the index of the task to be deleted.
+ * @returns {Promise<void>} A promise that resolves when the task is deleted.
+ */
 async function deleteTask(taskJson, i) {
     let personalId = localStorage.getItem('userKey');
     const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
     console.log('URL für den DELETE-Aufruf:', url);
-
     try {
         const response = await fetch(url, {
             method: 'DELETE'
         });
-
         if (!response.ok) {
             const errorText = await response.text();
             console.error('Fehler beim Löschen des Tasks:', response.status, errorText);
@@ -214,7 +290,15 @@ async function deleteTask(taskJson, i) {
 }
 
 
-// Die Hauptfunktion zum Bearbeiten eines Tasks
+
+
+/**
+ * This function edits the task with the specified index.
+ * 
+ * @param {string} taskJson - The JSON string of the task to be edited.
+ * @param {number} i - The index of the task to be edited.
+ * @returns {Promise<void>} A promise that resolves when the task is edited.
+ */
 async function editTask(taskJson, i) {
     let task = JSON.parse(decodeURIComponent(taskJson));
     let container = document.getElementById('taskDetails');
@@ -236,6 +320,12 @@ async function editTask(taskJson, i) {
     setPriority(task['prio']);
 }
 
+
+/**
+ * This function sets the priority of the task.
+ * 
+ * @param {string} prio - The priority of the task (Urgent, Medium, Low).
+ */
 function setPriority(prio) {
     switch (prio) {
         case 'Urgent':
@@ -253,6 +343,13 @@ function setPriority(prio) {
     }
 }
 
+
+/**
+ * This function generates HTML options for task categories.
+ * 
+ * @param {string} selectedCategory - The currently selected category.
+ * @returns {string} HTML string of option elements.
+ */
 function generateSelectOptions(selectedCategory) {
     const categories = {
         '0': 'Select task category',
@@ -264,6 +361,10 @@ function generateSelectOptions(selectedCategory) {
     ).join('');
 }
 
+
+/**
+ * This function renders the initials of the contacts assigned to the task.
+ */
 function renderAddTaskContactInitials() {
     let content = document.getElementById('selectedContact');
     content.innerHTML = "";
@@ -272,15 +373,28 @@ function renderAddTaskContactInitials() {
         taskContacts.forEach(contact => {
             content.innerHTML += generateAddTaskContactInitialsHTML(contact);
         });
-    } else {
-        console.log('Keine Kontakte zu rendern.');
     }
 }
 
+
+/**
+ * This ufnction generates HTML for a contact's initials.
+ * 
+ * @param {Object} contact - The contact object.
+ * @param {string} contact.color - The background color for the initials.
+ * @param {string} contact.initials - The initials of the contact.
+ * @returns {string} HTML string of the contact initials.
+ */
 function generateAddTaskContactInitialsHTML(contact) {
     return `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
 }
 
+
+/**
+ * This function renders the list of subtasks for the task.
+ * 
+ * @param {Array<Object>} subtasks - The array of subtask objects.
+ */
 function renderSubtasks(subtasks) {
     let subtasksList = document.getElementById('subtasksList');
     subtasksList.innerHTML = '';
@@ -291,54 +405,104 @@ function renderSubtasks(subtasks) {
 }
 
 
-async function saveEditedTask(i) {
+/**
+ * Gets the user key from localStorage.
+ * @returns {string|null} The user key or null if not available.
+ */
+function getUserKey() {
     const userKey = localStorage.getItem('userKey');
     if (!userKey) {
         console.log("Kein Benutzer-Schlüssel verfügbar.");
+    }
+    return userKey;
+}
+
+
+/**
+ * Generates the URL for the API request.
+ * @param {string} userKey - The user key.
+ * @param {number} taskIndex - The index of the task.
+ * @returns {string} The generated URL.
+ */
+function generateTaskUrl(userKey, taskIndex) {
+    return `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${taskIndex}.json`;
+}
+
+
+/**
+ * Collects the form data for the task.
+ * @returns {object} The collected task data.
+ */
+function collectFormData() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const date = document.getElementById('date').value;
+    const taskCategoryElement = document.getElementById('select');
+    const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
+    const priorityElement = document.getElementById('priority');
+    const priority = priorityElement ? priorityElement.value : 'Medium';
+
+    return {
+        title,
+        description,
+        date,
+        taskCategory,
+        priority
+    };
+}
+
+
+/**
+ * Updates the task in the database.
+ * @param {string} url - The URL for the API request.
+ * @param {object} updatedTask - The updated task data.
+ * @returns {Promise<Response>} The response from the fetch request.
+ */
+async function updateTaskInDatabase(url, updatedTask) {
+    return await fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedTask)
+    });
+}
+
+
+/**
+ * Saves the edited task.
+ * @param {number} taskIndex - The index of the task.
+ * @returns {Promise<void>} A promise that resolves when the task is saved.
+ */
+async function saveEditedTask(taskIndex) {
+    const userKey = getUserKey();
+    if (!userKey) {
         return;
     }
-
-    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${userKey}/tasks/${i}.json`;
-
+    const url = generateTaskUrl(userKey, taskIndex);
+    const updatedTask = collectFormData();
     try {
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const date = document.getElementById('date').value;
-        const taskCategoryElement = document.getElementById('select');
-        const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
-        const priorityElement = document.getElementById('priority');
-        const priority = priorityElement ? priorityElement.value : 'Medium';
-
-        const updatedTask = {
-            title,
-            description,
-            date,
-            taskCategory,
-            priority
-        };
-
         console.log('Updated Task:', updatedTask);
-
-        const updateResponse = await fetch(url, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedTask)
-        });
+        const updateResponse = await updateTaskInDatabase(url, updatedTask);
 
         if (updateResponse.ok) {
             console.log('Update Response:', await updateResponse.json());
             window.location.reload();
         } else {
             console.log("Update fehlgeschlagen. Antwortstatus: ", updateResponse.status);
-            return;
         }
     } catch (error) {
         console.error('Fehler beim Aktualisieren des Tasks:', error);
     }
 }
 
+
+/**
+ * This function toggles the visibility of the assigned container and selected contact elements.
+ * 
+ * Stops the propagation of the event.
+ * @param {Event} event - The event object.
+ */
 function toggleAssigned(event) {
     event.stopPropagation();
 
@@ -355,6 +519,12 @@ function toggleAssigned(event) {
 }
 
 
+/**
+ * This function fetches the contacts from the server and renders them on the board page.
+ * 
+ * The contacts are displayed in the assigned container element.
+ * @returns {Promise<void>} A promise that resolves when the contacts are rendered.
+ */
 async function renderContactsBoardPage() {
     if (window.location.pathname.endsWith("board.html")) {
         let response = await fetch(firebaseUrl + '.json');
@@ -365,22 +535,58 @@ async function renderContactsBoardPage() {
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
-        for (let i = 0; i < contactsArray.length; i++) {
-            let contact = contactsArray[i];
-            let initialsBgColor = getRandomColor();
+        renderBoardTaskContactHtml(contactsArray, content);
 
-            content.innerHTML += generateBoardTaskContactHtml(contact, i, initialsBgColor);
-        }
         content.classList.remove('d-none');
     }
 }
 
+
+/**
+ * This function renders the HTML for each contact in the contacts array and adds it to the content element.
+ * 
+ * @param {Array} contactsArray - The array of contact objects.
+ * @param {HTMLElement} content - The container element where the contacts will be rendered.
+ */
+function renderBoardTaskContactHtml(contactsArray, content) {
+    for (let i = 0; i < contactsArray.length; i++) {
+        let contact = contactsArray[i];
+        let initialsBgColor = getRandomColor();
+
+        content.innerHTML += generateBoardTaskContactHtml(contact, i, initialsBgColor);
+    }
+}
+
+
+/**
+ * This function generates the HTML for a task contact on the board.
+ * 
+ * @param {Object} contact - The contact object.
+ * @param {number} i - The index of the contact.
+ * @param {string} color - The color associated with the contact.
+ * @returns {string} The HTML string for the contact.
+ */
 function generateBoardTaskContactHtml(contact, i, color) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
 
     let isContactAdded = taskContacts.some(c => c.name === contactName);
 
+    return generateBoardsContactHtml(contactName, initials, i, color, isContactAdded);
+}
+
+
+/**
+ * This function generates the HTML for a task contact.
+ * 
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} i - The index of the contact.
+ * @param {string} color - The color associated with the contact.
+ * @param {boolean} isContactAdded - Whether the contact is already added to the task.
+ * @returns {string} The HTML string for the contact.
+ */
+function generateBoardsContactHtml(contactName, initials, i, color, isContactAdded) {
     return `
     <div class="assigned-contact" id="contactTask${i}">
         <div class="contact-name">
@@ -392,6 +598,12 @@ function generateBoardTaskContactHtml(contact, i, color) {
     `;
 }
 
+
+/**
+ * This function fetches the tasks from the server for the current user.
+ * 
+ * @returns {Promise<Array>} A promise that resolves to an array of task objects.
+ */
 async function fetchTasks() {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
@@ -493,39 +705,70 @@ function allowDrop(ev) {
 
 
 /**
- * Moves the currently dragged task to a new category and updates the data.
+ * This function moves the currently dragged task to the specified category.
  * 
- * @param {string} category - The new category to move the task to.
+ * This function handles both guest and registered users.
+ * 
+ * @param {string} category - The category to move the task to.
+ * @returns {Promise<void>} A promise that resolves when the task has been moved.
  */
 async function moveTo(category) {
     if (currentDraggedTask == null) {
         return;
     }
-    
     if (localStorage.getItem('username') !== 'Guest') {
-        let task = await getTaskFromDatabase(currentDraggedTask);
-        if (!task) {
-            return;
-        }
-        task['category'] = category;
-        await putData(currentDraggedTask, task); // Annahme: putData() aktualisiert den Task in der Datenbank
-        updateHTML();
-        currentDraggedTask = null;
+        moveToNotGuestUser(category, currentDraggedTask);
     } else {
-        let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || {};
-        if (!guestTasks[currentDraggedTask]) {
-            return;
-        }
-        guestTasks[currentDraggedTask]['category'] = category;
-        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        currentDraggedTask = null;
-        updateHTML();
-        renderGuestTaskBoard();
+        moveToGuestUser(category, currentDraggedTask)
     }
     removeHighlight(category);
 }
 
 
+/**
+ * This function moves the currently dragged task to the specified category for registered users.
+ * 
+ * @param {string} category - The category to move the task to.
+ * @param {string} currentDraggedTask - The ID of the currently dragged task.
+ * @returns {Promise<void>} A promise that resolves when the task has been moved and updated in the database.
+ */
+async function moveToNotGuestUser(category, currentDraggedTask) {
+    let task = await getTaskFromDatabase(currentDraggedTask);
+    if (!task) {
+        return;
+    }
+    task['category'] = category;
+    await putData(currentDraggedTask, task); // Annahme: putData() aktualisiert den Task in der Datenbank
+    updateHTML();
+    currentDraggedTask = null;
+}
+
+
+/**
+ * This function moves the currently dragged task to the specified category for guest users.
+ * 
+ * @param {string} category - The category to move the task to.
+ * @param {string} currentDraggedTask - The ID of the currently dragged task.
+ */
+function moveToGuestUser(category, currentDraggedTask) {
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || {};
+    if (!guestTasks[currentDraggedTask]) {
+        return;
+    }
+    guestTasks[currentDraggedTask]['category'] = category;
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    currentDraggedTask = null;
+    updateHTML();
+    renderGuestTaskBoard();
+}
+
+
+/**
+ * This function retrieves a task from the database based on the provided task ID.
+ * 
+ * @param {number|string} taskId - The ID of the task to retrieve.
+ * @returns {Promise<Object>} A promise that resolves to the task object.
+ */
 async function getTaskFromDatabase(taskId) {
     let userKey = localStorage.getItem('userKey');
     let response = await fetch(`${firebaseUrl}/registered/${userKey}/tasks/${taskId}.json`);
@@ -547,7 +790,6 @@ function highlight(id) {
  * Removes the highlight from a specified element by removing a CSS class.
  * 
  * @param {string} id - The ID of the element from which the highlight should be removed.
-
  */
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag_area_hightlight');
@@ -600,12 +842,24 @@ async function dataUser(path = "", data = {}, method = "PATCH") {
 }
 
 
+/**
+ * This function filters tasks based on the search input value from the desktop input field.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the tasks are filtered.
+ */
 async function filterTasks() {
     let searchedTask = document.getElementById('inputField').value.toLowerCase();
     await compareTasks(searchedTask);
 }
 
 
+
+/**
+ * This function compares the searched task with tasks in the database and filters them based on the title and description.
+ * 
+ * @param {string} searchedTask - The task string to search for.
+ * @returns {Promise<void>} A promise that resolves when the tasks are filtered.
+ */
 async function compareTasks(searchedTask) {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
@@ -616,20 +870,38 @@ async function compareTasks(searchedTask) {
     for (let i = 0; i < tasks.length; i++) {
         let taskTitle = tasks[i]['title'].toLowerCase();
         let taskDescription = tasks[i]['description'].toLowerCase();
-
         let taskElement = document.querySelector(`.todo[data-index='${i}']`);
 
-        if (taskElement) {
-            if (searchedTask === "" || taskTitle.includes(searchedTask) || taskDescription.includes(searchedTask)) {
-                taskElement.style.display = "block";
-            } else {
-                taskElement.style.display = "none";
-            }
+        compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, taskDescription)
+    }
+}
+
+
+
+/**
+ * This function compares the searched task string with the task's title and description, and updates the task element's display based on the match.
+ * 
+ * @param {string} searchedTask - The task string to search for.
+ * @param {HTMLElement} taskElement - The DOM element representing the task.
+ * @param {string} taskTitle - The title of the task.
+ * @param {string} taskDescription - The description of the task.
+ */
+function compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, taskDescription) {
+    if (taskElement) {
+        if (searchedTask === "" || taskTitle.includes(searchedTask) || taskDescription.includes(searchedTask)) {
+            taskElement.style.display = "block";
+        } else {
+            taskElement.style.display = "none";
         }
     }
 }
 
 
+/**
+ * This function filters tasks based on the search input value from the mobile input field.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the tasks are filtered.
+ */
 async function filterTasksMobile() {
     let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
     await compareTasks(searchedTask);

@@ -1,3 +1,6 @@
+/**
+ * This function generates the HTML for the Add_task.html page.
+ */
 function generateAddTaskHtml() {
     return `
     <div>
@@ -75,6 +78,7 @@ function generateAddTaskHtml() {
     `;
 }
 
+
 /**
  * This function generates the HTML for a task card on the board page.
  * 
@@ -105,6 +109,7 @@ function generateTodoHTML(element, i) {
     </div>
     `;
 }
+
 
 /**
  * Generates the HTML for displaying the detailed view of a task.
@@ -156,6 +161,13 @@ function generateTaskDetails(task, i) {
     `;
 }
 
+
+/**
+ * This function generates the HTML for the subtasks displayed the detailed view of a task.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
 function generateSubtaskHtml(subtask, i) {
     return `
     <div class="edit-subtask-container" id="subtaskEditContainer${i}">
@@ -169,6 +181,13 @@ function generateSubtaskHtml(subtask, i) {
     `;
 }
 
+
+/**
+ * This function generates the HTML for displaying the papup window for edit tasks.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
 function generateEditPopup(task, i) {
     return `
     <div>
