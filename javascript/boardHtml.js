@@ -193,6 +193,9 @@ function generateEditPopup(task, i) {
     <div>
         <div class="add-task-section-edit">
             <div class="add-task-titel-container-edit">
+                <div class="close_edit_popup">
+                    <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
+                </div>
                 <form action="">
                     <input type="hidden" id="taskId" value="${task.id}">
                     <p>Titel<span class="color-red">*</span></p>
