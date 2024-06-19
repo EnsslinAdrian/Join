@@ -567,10 +567,13 @@ input::-webkit-inner-spin-button {
         align-items: flex-start;
     }
 
-    .inputfields,
-    .show-contact {
+    .inputfields {
         padding-left: 0;
         margin-top: -55px;
+    }
+
+    .show-contact {
+        padding-left: 0;
     }
 
     .show-contact-header {
@@ -595,6 +598,7 @@ input::-webkit-inner-spin-button {
         flex-direction: column;
         align-items: center;
         width: 100%;
+        margin-bottom: 80px;
     }
 
     .edit-contact-popup,

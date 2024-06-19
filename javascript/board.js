@@ -224,10 +224,12 @@ function isSubtaskChecked(taskIndex, subtaskIndex) {
 
 
 /**
- * This function renders the checkbox list for a task.
+ * This function renders the checkboxes for subtasks of a given task.
  * 
- * @param {number} taskIndex - This is the index of the task.
- * @returns {Promise<void>} A promise that resolves when the checkbox list is rendered.
+ * @async
+ * @function renderCheckbox
+ * @param {number} taskIndex - The index of the task to render subtasks for.
+ * @returns {Promise<void>}
  */
 async function renderCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
@@ -242,6 +244,19 @@ async function renderCheckbox(taskIndex) {
     let tasks = responseToJson['registered'][userKey]['tasks'];
     subtasksContainer.innerHTML = '';
 
+    subtaskCheckBox(taskIndex, tasks, subtasksContainer);
+}
+
+
+/**
+ * This function generates and inserts HTML for subtask checkboxes into the subtasks container.
+ * 
+ * @function subtaskCheckBox
+ * @param {number} taskIndex - The index of the task containing the subtasks.
+ * @param {Array} tasks - The list of tasks retrieved from the database.
+ * @param {HTMLElement} subtasksContainer - The container element for subtasks.
+ */
+function subtaskCheckBox(taskIndex, tasks, subtasksContainer) {
     if (tasks[taskIndex]) {
         let task = tasks[taskIndex];
         let subtasks = task['subtasks'];
@@ -249,16 +264,31 @@ async function renderCheckbox(taskIndex) {
         for (let j = 0; j < subtasks.length; j++) {
             let subtask = subtasks[j];
             let isChecked = subtask['state'] ? 'checked' : '';
-            let subtaskHTML = `
-                <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
-                    <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-                    <p>${subtask['title']}</p>
-                </div>
-            `;
+            let subtaskHTML = subtaskCheckboxHtml(taskIndex, j, subtask, isChecked);
             subtasksContainer.innerHTML += subtaskHTML;
         }
         updateProgressBar(taskIndex);
     }
+}
+
+
+/**
+ * This function generates the HTML string for a subtask checkbox.
+ * 
+ * @function subtaskCheckboxHtml
+ * @param {number} taskIndex - The index of the task containing the subtask.
+ * @param {number} j - The index of the subtask within the task.
+ * @param {Object} subtask - The subtask object containing its details.
+ * @param {string} isChecked - The checked state of the checkbox ('checked' or '').
+ * @returns {string} The HTML string for the subtask checkbox.
+ */
+function subtaskCheckboxHtml(taskIndex, j, subtask, isChecked) {
+    return`
+    <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
+        <input onclick="updateProgressBar(${taskIndex}); saveCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+        <p>${subtask['title']}</p>
+    </div>
+    `;
 }
 
 
@@ -288,8 +318,6 @@ async function deleteTask(taskJson, i) {
         alert('Fehler beim Löschen des Tasks: ' + error.message);
     }
 }
-
-
 
 
 /**
@@ -470,7 +498,7 @@ async function updateTaskInDatabase(url, updatedTask) {
 
 
 /**
- * Saves the edited task.
+ * This function saves the edited task.
  * @param {number} taskIndex - The index of the task.
  * @returns {Promise<void>} A promise that resolves when the task is saved.
  */
@@ -906,3 +934,28 @@ async function filterTasksMobile() {
     let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
     await compareTasks(searchedTask);
 }
+
+
+/**
+ * This function sets the minimum date of the date input to today's date.
+ */
+function showDateToday() {
+    let dateInput = document.getElementById('date');
+    dateInput.min = getTodayDate();
+  }
+  
+  
+  /**
+   * This function gets today's date formatted as YYYY-MM-DD.
+   * 
+   * @returns {string} today - This is the formatted date.
+   */
+  function getTodayDate() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+  
+    today = mm + '/' + dd + '/' + yyyy;
+    return `${yyyy}-${mm}-${dd}`;
+  }

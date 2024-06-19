@@ -27,7 +27,7 @@ function generateAddTaskHtml() {
 
         <div class="add-task-date-container">
             <p>Due date<span class="color-red">*</span></p>
-            <input id="date" required class="margin-buttom" type="date">
+            <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date">
             <p>Prio</p>
             <div class="margin-buttom add-task-prio">
                 <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
@@ -207,7 +207,7 @@ function generateEditPopup(task, i) {
             </div>
             <div class="add-task-date-container-edit">
                 <p>Due date<span class="color-red">*</span></p>
-                <input id="date" required class="margin-buttom" type="date" value="${task.date}">
+                <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date" value="${task.date}">
                 <p>Prio</p>
                 <div class="margin-buttom add-task-prio">
                     <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
