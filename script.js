@@ -28,6 +28,12 @@ async function loadData(path = "") {
  * @param {string} event - prevents the page from reloading when the submit action is triggered
  */
 async function checkUser(event) {
+    const keysToRemove = ['guestTasks'];
+
+    keysToRemove.forEach(key => {
+        localStorage.removeItem(key);
+    });
+
     event.preventDefault();
 
     let email = document.getElementById('loginEmail').value;
@@ -374,12 +380,17 @@ function logOut() {
 }
 
 /**
- * This function sets a keyword with the name 'Guest' in localStorage when logging in as a guest user,
- * and then redirects to summary.html.
+ * Setzt den Benutzer auf 'Guest' und leitet zur Summary-Seite weiter.
+ * Falls noch nicht vorhanden, speichert initiale Tasks im Local Storage.
  */
 function questLogin() {
-  localStorage.setItem('username', 'Guest');
-  window.location.href = 'summary.html';
+    // Überprüfen, ob das Array 'guestTasks' bereits im Local Storage gespeichert ist
+    if (!localStorage.getItem('guestTasks')) {
+        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    }
+    
+    localStorage.setItem('username', 'Guest');
+    window.location.href = 'summary.html';
 }
 
 /**

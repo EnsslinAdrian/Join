@@ -689,9 +689,9 @@ function moveToGuestUser(category, currentDraggedTask) {
     }
     guestTasks[currentDraggedTask]['category'] = category;
     localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-    currentDraggedTask = null;
     updateHTML();
     renderGuestTaskBoard();
+    currentDraggedTask = null;
 }
 
 

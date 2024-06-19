@@ -1,169 +1,163 @@
-if (typeof guestTasks === 'undefined') {
-    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [
-        {
-            'category': 'in-progress',
-            'taskCategory': 'User Story',
-            'title': 'Header',
-            'description': 'Header Template erstellen',
-            'date': '16.08.2024',
-            'taskContacts': [
-                {
-                    'color': '#8128EE',
-                    'initials': 'AM',
-                    'name': 'Anton Mayer'
-                },
-                {
-                    'color': '#5E7CE2',
-                    'initials': 'LW',
-                    'name': 'Laura Weiß'
-                },
-                {
-                    'color': '#FF5733',
-                    'initials': 'JD',
-                    'name': 'Johann Dreher'
-                }
-            ],
-            'prioImg': './assets/img/add_task/arrowsTop.svg',
-            'prio': 'Urgent',
-            'subtasks': [
-                { 'title': 'Erstellen', 'state': false },
-                { 'title': 'Stylen', 'state': false }
-            ]
-        },
-        {
-            'category': 'in-progress',
-            'taskCategory': 'User Story',
-            'title': 'Footer-Probleme',
-            'description': 'Footer-Links funktionieren nicht',
-            'date': '20.08.2024',
-            'taskContacts': [
-                {
-                    'color': '#FF5733',
-                    'initials': 'JS',
-                    'name': 'Julia Schmidt'
-                },
-                {
-                    'color': '#C70039',
-                    'initials': 'TH',
-                    'name': 'Thomas Hoffmann'
-                },
-                {
-                    'color': '#FFC300',
-                    'initials': 'MM',
-                    'name': 'Mia Müller'
-                }
-            ],
-            'prioImg': './assets/img/add_task/arrowsTop.svg',
-            'prio': 'Urgent',
-            'subtasks': [
-                { 'title': 'Identifizieren', 'state': false },
-                { 'title': 'Beheben', 'state': false }
-            ]
-        },
-        {
-            'category': 'await-feedback',
-            'taskCategory': 'User Story',
-            'title': 'Navigation optimieren',
-            'description': 'Navigationselemente verbessern',
-            'date': '25.08.2024',
-            'taskContacts': [
-                {
-                    'color': '#28A745',
-                    'initials': 'SK',
-                    'name': 'Stefan König'
-                },
-                {
-                    'color': '#17A2B8',
-                    'initials': 'AB',
-                    'name': 'Anna Bauer'
-                },
-                {
-                    'color': '#FFC107',
-                    'initials': 'FR',
-                    'name': 'Felix Richter'
-                }
-            ],
-            'prioImg': './assets/img/add_task/arrowsTop.svg',
-            'prio': 'Urgent',
-            'subtasks': [
-                { 'title': 'Analysieren', 'state': false },
-                { 'title': 'Designen', 'state': false }
-            ]
-        },
-        {
-            'category': 'await-feedback',
-            'taskCategory': 'User Story',
-            'title': 'Dark Mode hinzufügen',
-            'description': 'Dark Mode für die Website implementieren',
-            'date': '30.08.2024',
-            'taskContacts': [
-                {
-                    'color': '#343A40',
-                    'initials': 'RB',
-                    'name': 'Robert Braun'
-                },
-                {
-                    'color': '#007BFF',
-                    'initials': 'CK',
-                    'name': 'Clara Klein'
-                },
-                {
-                    'color': '#6C757D',
-                    'initials': 'PH',
-                    'name': 'Paul Hartmann'
-                }
-            ],
-            'prioImg': './assets/img/add_task/arrowsTop.svg',
-            'prio': 'Urgent',
-            'subtasks': [
-                { 'title': 'Konzept erstellen', 'state': false },
-                { 'title': 'Implementieren', 'state': false }
-            ]
-        },
-        {
-            'category': 'done',
-            'taskCategory': 'User Story',
-            'title': 'API-Dokumentation aktualisieren',
-            'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
-            'date': '05.09.2024',
-            'taskContacts': [
-                {
-                    'color': '#6610F2',
-                    'initials': 'LB',
-                    'name': 'Lena Becker'
-                },
-                {
-                    'color': '#E83E8C',
-                    'initials': 'TS',
-                    'name': 'Timo Schulz'
-                },
-                {
-                    'color': '#28A745',
-                    'initials': 'JK',
-                    'name': 'Julia Krause'
-                }
-            ],
-            'prioImg': './assets/img/add_task/arrowsTop.svg',
-            'prio': 'Urgent',
-            'subtasks': [
-                { 'title': 'Schreiben', 'state': true },
-                { 'title': 'Überprüfen', 'state': true }
-            ]
-        }
-    ];
-}
+let guestTasks = [
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Header',
+        'description': 'Header Template erstellen',
+        'date': '16.08.2024',
+        'taskContacts': [
+            {
+                'color': '#8128EE',
+                'initials': 'AM',
+                'name': 'Anton Mayer'
+            },
+            {
+                'color': '#5E7CE2',
+                'initials': 'LW',
+                'name': 'Laura Weiß'
+            },
+            {
+                'color': '#FF5733',
+                'initials': 'JD',
+                'name': 'Johann Dreher'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Erstellen', 'state': false },
+            { 'title': 'Stylen', 'state': false }
+        ]
+    },
+    {
+        'category': 'in-progress',
+        'taskCategory': 'User Story',
+        'title': 'Footer-Probleme',
+        'description': 'Footer-Links funktionieren nicht',
+        'date': '20.08.2024',
+        'taskContacts': [
+            {
+                'color': '#FF5733',
+                'initials': 'JS',
+                'name': 'Julia Schmidt'
+            },
+            {
+                'color': '#C70039',
+                'initials': 'TH',
+                'name': 'Thomas Hoffmann'
+            },
+            {
+                'color': '#FFC300',
+                'initials': 'MM',
+                'name': 'Mia Müller'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Identifizieren', 'state': false },
+            { 'title': 'Beheben', 'state': false }
+        ]
+    },
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Navigation optimieren',
+        'description': 'Navigationselemente verbessern',
+        'date': '25.08.2024',
+        'taskContacts': [
+            {
+                'color': '#28A745',
+                'initials': 'SK',
+                'name': 'Stefan König'
+            },
+            {
+                'color': '#17A2B8',
+                'initials': 'AB',
+                'name': 'Anna Bauer'
+            },
+            {
+                'color': '#FFC107',
+                'initials': 'FR',
+                'name': 'Felix Richter'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Analysieren', 'state': false },
+            { 'title': 'Designen', 'state': false }
+        ]
+    },
+    {
+        'category': 'await-feedback',
+        'taskCategory': 'User Story',
+        'title': 'Dark Mode hinzufügen',
+        'description': 'Dark Mode für die Website implementieren',
+        'date': '30.08.2024',
+        'taskContacts': [
+            {
+                'color': '#343A40',
+                'initials': 'RB',
+                'name': 'Robert Braun'
+            },
+            {
+                'color': '#007BFF',
+                'initials': 'CK',
+                'name': 'Clara Klein'
+            },
+            {
+                'color': '#6C757D',
+                'initials': 'PH',
+                'name': 'Paul Hartmann'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Konzept erstellen', 'state': false },
+            { 'title': 'Implementieren', 'state': false }
+        ]
+    },
+    {
+        'category': 'done',
+        'taskCategory': 'User Story',
+        'title': 'API-Dokumentation aktualisieren',
+        'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
+        'date': '05.09.2024',
+        'taskContacts': [
+            {
+                'color': '#6610F2',
+                'initials': 'LB',
+                'name': 'Lena Becker'
+            },
+            {
+                'color': '#E83E8C',
+                'initials': 'TS',
+                'name': 'Timo Schulz'
+            },
+            {
+                'color': '#28A745',
+                'initials': 'JK',
+                'name': 'Julia Krause'
+            }
+        ],
+        'prioImg': './assets/img/add_task/arrowsTop.svg',
+        'prio': 'Urgent',
+        'subtasks': [
+            { 'title': 'Schreiben', 'state': true },
+            { 'title': 'Überprüfen', 'state': true }
+        ]
+    }
+];
+
 
 /**
  * Renders the task board for guest users by iterating over guest tasks
  * and generating the HTML for each task.
  */
-async function renderGuestTaskBoard() {
-    let storedTasks = localStorage.getItem('guestTasks');
-    if (storedTasks) {
-        guestTasks = JSON.parse(storedTasks);
-    } else {
-        guestTasks = []; 
-    }
+function renderGuestTaskBoard() {
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
 
     document.getElementById('todo').innerHTML = '';
     document.getElementById('in-progress').innerHTML = '';
@@ -183,6 +177,7 @@ async function renderGuestTaskBoard() {
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
     }
+
     updateAllGuestsProgressBars();
 }
 
@@ -218,7 +213,6 @@ function generateGuestTodoHTML(element, i) {
     `;
 }
 
-
 /**
  * Opens the task dialog for a guest user's task and shows the detailed view.
  * 
@@ -229,7 +223,6 @@ function openDialogGuestTask(i) {
     showGuestTaskDetails(guestTasks[i], i);
     updateProgressBar(i);
 }
-
 
 /**
  * Displays the detailed view of a guest user's task.
@@ -243,21 +236,9 @@ function showGuestTaskDetails(task, i) {
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
 
     renderGuestCheckbox(i);
-    renderGuestTaskDetailsContacts(task, i);
-    renderGuestTaskDetailsSubtasks(task, i);
-    updateAllGuestsProgressBars();
-    updateProgressBar(i);
-}
 
-
-/**
- * This function renders the contacts section for a guest user's task details.
- * 
- * @param {Object} task - The task object containing the task contacts.
- * @param {number} i - The index of the task in the guest task list.
- */
-function renderGuestTaskDetailsContacts(task, i) {
     let content = document.getElementById(`contacts${i}`);
+
 
     for (let j = 0; j < task['taskContacts'].length; j++) {
         let contact = task['taskContacts'][j];
@@ -268,16 +249,7 @@ function renderGuestTaskDetailsContacts(task, i) {
         </div>
         `;
     }
-}
 
-
-/**
- * This function renders the subtasks section for a guest user's task details.
- * 
- * @param {Object} task - The task object containing the subtasks.
- * @param {number} i - The index of the task in the guest task list.
- */
-function renderGuestTaskDetailsSubtasks(task, i) {
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
 
@@ -292,15 +264,12 @@ function renderGuestTaskDetailsSubtasks(task, i) {
         </div>
         `;
     }
+
+    updateAllGuestsProgressBars();
+    updateProgressBar(i);
 }
 
 
-/**
- * This function renders the checkbox elements for the guest tasks' subtasks.
- * 
- * @function renderGuestCheckbox
- * @param {number} taskIndex - The index of the task in the guest tasks array.
- */
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -310,7 +279,9 @@ function renderGuestCheckbox(taskIndex) {
 
     let task = guestTasks[taskIndex];
     let subtasks = task['subtasks'];
+
     subtasksContainer.innerHTML = '';
+
     for (let j = 0; j < subtasks.length; j++) {
         let subtask = subtasks[j];
         let isChecked = subtask['state'] ? 'checked' : '';
@@ -322,88 +293,54 @@ function renderGuestCheckbox(taskIndex) {
         `;
         subtasksContainer.innerHTML += subtaskHTML;
     }
+
     updateProgressBar(taskIndex);
 }
 
 
-/**
- * This function saves the state of the guest task's subtask checkbox and updates the local storage.
- * 
- * @function saveGuestCheckboxState
- * @param {number} taskIndex - The index of the task in the guest tasks array.
- * @param {number} subtaskIndex - The index of the subtask in the task's subtasks array.
- */
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
-    if (checkbox) {
-        let isChecked = checkbox.checked;
+    let isChecked = checkbox.checked;
 
-        guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
+    guestTasks[taskIndex]['subtasks'][subtaskIndex]['state'] = isChecked;
 
-        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        updateProgressBar(taskIndex);
-    }
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    updateProgressBar(taskIndex);
 }
 
 
-/**
- * This function updates the progress bars for all guest tasks.
- * 
- * @function updateAllGuestsProgressBars
- */
 function updateAllGuestsProgressBars() {
-    for (let i = 0; i < guestTasks.length; i++) {
-        let task = guestTasks[i];
-        let subtasks = task['subtasks'];
-
-        if (subtasks.length > 0) {
-            updateAllProgressBarsBelowZero(i, subtasks);
-        } else {
-            updateAllProgressBarsOverZero(i);
+        for (let i = 0; i < guestTasks.length; i++) {
+            let task = guestTasks[i];
+            let subtasks = task['subtasks'];
+    
+            if (subtasks.length > 0) {
+                let allSubtasks = subtasks.length;
+                let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+    
+                let progress = (completedSubtasks / allSubtasks) * 100;
+    
+                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+                if (subtasksAmount) {
+                    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+                }
+    
+                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+                if (progressBarContent) {
+                    progressBarContent.style.width = progress + '%';
+                }
+            } else {
+                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+                if (subtasksAmount) {
+                    subtasksAmount.innerHTML = '0/0 Subtasks';
+                }
+                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+                if (progressBarContent) {
+                    progressBarContent.style.width = '0%';
+                }
+            }
         }
     }
-}
-
-
-/**
- * This function updates the progress bar for a task with subtasks when there are completed subtasks.
- * 
- * @param {number} i - The index of the task.
- * @param {Array} subtasks - The array of subtasks for a task.
- */
-function updateAllProgressBarsBelowZero(i, subtasks) {
-    let allSubtasks = subtasks.length;
-    let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-
-    let progress = (completedSubtasks / allSubtasks) * 100;
-
-    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-    if (subtasksAmount) {
-        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-    }
-
-    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-    if (progressBarContent) {
-        progressBarContent.style.width = progress + '%';
-    }
-}
-
-
-/**
- * This function updates the progress bar for a task with no subtasks or no completed subtasks.
- * 
- * @param {number} i - The index of the task.
- */
-function updateAllProgressBarsOverZero(i) {
-    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-    if (subtasksAmount) {
-        subtasksAmount.innerHTML = '0/0 Subtasks';
-    }
-    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-    if (progressBarContent) {
-        progressBarContent.style.width = '0%';
-    }
-}
 
 
 /**
@@ -455,7 +392,6 @@ function generateGuestTaskDetails(task, i) {
     `;
 }
 
-
 /**
  * Updates the HTML content for the task board by calling functions
  * to update each section: ToDo, In Progress, Awaiting Feedback, and Done.
@@ -466,7 +402,6 @@ function updateHTML() {
     updateAwaitFeedback();
     updateDone();
 }
-
 
 /**
  * Updates the HTML content for the "ToDo" section by filtering tasks
@@ -487,7 +422,6 @@ function updateTodo() {
     }
 }
 
-
 /**
  * Updates the HTML content for the "In Progress" section by filtering tasks
  * with the category 'in-progress' and generating their HTML.
@@ -506,7 +440,6 @@ function updateInProgress() {
         }
     }
 }
-
 
 /**
  * Updates the HTML content for the "Await-feedback" section by filtering tasks
@@ -527,7 +460,6 @@ function updateAwaitFeedback() {
     }
 }
 
-
 /**
  * Updates the HTML content for the "Done" section by filtering tasks
  * with the category 'done' and generating their HTML.
@@ -547,7 +479,6 @@ function updateDone() {
     }
 }
 
-
 /**
  * Starts the dragging process for a task.
  * 
@@ -556,7 +487,6 @@ function updateDone() {
 function startDragging(i) {
     currentDraggedTask = i;
 }
-
 
 /**
  * Checks if there are guest tasks stored in localStorage.
