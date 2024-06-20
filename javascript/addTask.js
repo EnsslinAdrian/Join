@@ -120,6 +120,8 @@ function clearTask() {
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
   subtasks = [];
+  document.getElementById('titelLengthMessage').innerHTML = '';
+  document.getElementById('descriptionLengthMessage').innerHTML = '';
 
   let checkboxes = document.querySelectorAll('[id^="taskCheckbox"]');
   checkboxes.forEach(checkbox => {

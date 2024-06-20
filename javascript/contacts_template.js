@@ -98,7 +98,7 @@ function getEditContactTemplate(contact, initials, contactJson, id, index) {
                     <img class="input-icon" src="assets/img/mail.svg">
                 </div>
                 <div class="input-container">
-                    <input id="contactPhone" class="input" placeholder="Phone" type="text" required>
+                    <input id="contactPhone" class="input" placeholder="Phone" type="number" required>
                     <img class="input-icon" src="assets/img/contacts/call.svg">
                 </div>                                    
                 <div class="buttons">
