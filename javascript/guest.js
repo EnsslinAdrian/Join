@@ -284,26 +284,27 @@ function deleteGuestTask(index) {
 }
 
 /**
- * This function edits the task with the specified index.
+ * Diese Funktion bearbeitet die Aufgabe mit dem angegebenen Index.
  * 
- * @param {number} i - The index of the task to be edited.
- * @returns {Promise<void>} A promise that resolves when the task is edited.
+ * @param {number} i - Der Index der zu bearbeitenden Aufgabe.
  */
 function editGuestTask(i) {
     const task = guestTasks[i];
+    console.log('Editing task:', task); // Debugging-Zeile
     let container = document.getElementById('taskDetails');
     container.innerHTML = generateEditPopupGuest(task, i);
 }
 
 
 /**
- * This function generates the edit popup for a guest task.
+ * Diese Funktion generiert das Bearbeitungspopup für eine Gastaufgabe.
  * 
- * @param {Object} task - The task to be edited.
- * @param {number} i - The index of the task.
+ * @param {Object} task - Die zu bearbeitende Aufgabe.
+ * @param {number} i - Der Index der Aufgabe.
  */
 function generateEditPopupGuest(task, i) {
-    const formattedDate = formatDateToISO(task.date);
+    const formattedDate = task.date ? formatDateToISO(task.date) : '';
+    console.log('Formatted date:', formattedDate); // Debugging-Zeile
     const prioUrgentSelected = task.priority === 'Urgent' ? 'urgent' : '';
     const prioMediumSelected = task.priority === 'Medium' ? 'medium' : '';
     const prioLowSelected = task.priority === 'Low' ? 'low' : '';
@@ -326,12 +327,11 @@ function generateEditPopupGuest(task, i) {
                     <p>Description</p>
                     <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
                     <p>Assigned to</p>
-                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                        placeholder="Select contacts to assign">
+                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
                     <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
                     <div class="selected-contact" id="selectedContact">
                         ${task.taskContacts ? task.taskContacts.map(contact => `
-                            <p class="user-icon" style="background-color: ${contact.color};">${contact.initials}</p>
+                            <div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>
                         `).join('') : ''}
                     </div>
             </div>
@@ -371,9 +371,14 @@ function generateEditPopupGuest(task, i) {
                 <div class="subtasks-list">
                     <ul id="subtasksList">
                         ${task.subtasks ? task.subtasks.map((subtask, index) => `
-                            <li>
-                                <input type="checkbox" ${subtask.state ? 'checked' : ''}> ${subtask.title}
-                            </li>
+                            <div class="edit-subtask-container" id="subtaskEditContainer${index}">
+                                <li onkeydown="checkSubtasksEditLength(${index})" id="subtaskTitle${index}" contenteditable="false" onblur="saveSubtaskTitle(${index})">${subtask.title}</li>
+                                <div class="subtask-edit-svg" id="subtaskSvg">
+                                    <img onclick="editSubtask(${index})" src="./assets/img/edit.svg">
+                                    <div class="subtask-edit-line"></div>
+                                    <img onclick="deleteSubtask(${index})" src="./assets/img/add_task/delete.svg">
+                                </div>
+                            </div>
                         `).join('') : ''}
                     </ul>
                 </div>
@@ -390,22 +395,27 @@ function generateEditPopupGuest(task, i) {
 }
 
 /**
- * This function formats a date string to ISO format (yyyy-MM-dd).
+ * Diese Funktion formatiert eine Datum-Zeichenkette in das ISO-Format (yyyy-MM-dd).
  * 
- * @param {string} date - The date string to be formatted.
- * @returns {string} The formatted date string in ISO format.
+ * @param {string} date - Die zu formatierende Datum-Zeichenkette.
+ * @returns {string} Die formatierte Datum-Zeichenkette im ISO-Format.
  */
 function formatDateToISO(date) {
+    if (!date) {
+        return '';
+    }
     const [day, month, year] = date.split('.');
+    console.log('Original date:', date); // Debugging-Zeile
     return `${year}-${month}-${day}`;
 }
 
 
+
 /**
- * This function saves the edited task.
+ * Diese Funktion speichert die bearbeitete Aufgabe.
  * 
- * @param {Event} event - The form submit event.
- * @param {number} i - The index of the task to be saved.
+ * @param {Event} event - Das Formularübermittlung-Ereignis.
+ * @param {number} i - Der Index der zu speichernden Aufgabe.
  */
 function saveEditedTaskGuest(event, i) {
     event.preventDefault();
@@ -414,15 +424,39 @@ function saveEditedTaskGuest(event, i) {
     task.title = document.getElementById('title').value;
     task.description = document.getElementById('description').value;
     task.date = document.getElementById('date').value;
+    console.log('Saved date:', task.date); // Debugging-Zeile
     task.priority = document.querySelector('.prio-selection-urgent.urgent') ? 'Urgent' :
                     document.querySelector('.prio-selection-medium.medium') ? 'Medium' : 'Low';
+    task.prioImg = document.querySelector('.prio-selection-urgent.urgent') ? './assets/img/add_task/arrow_white.svg' :
+                   document.querySelector('.prio-selection-medium.medium') ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/arrow_buttom_white.svg';
     task.taskCategory = document.getElementById('select').value === '1' ? 'Technical Task' : 'User Story';
+
+    // Kontakte speichern
+    const assignedContacts = [];
+    document.querySelectorAll('.selected-contact .assigned-initials').forEach(contact => {
+        assignedContacts.push({
+            color: contact.style.backgroundColor,
+            initials: contact.textContent
+        });
+    });
+    task.taskContacts = assignedContacts;
+
+    // Subtasks speichern
+    const updatedSubtasks = [];
+    document.querySelectorAll('#subtasksList .edit-subtask-container').forEach((subtaskContainer, index) => {
+        const subtaskTitle = subtaskContainer.querySelector(`#subtaskTitle${index}`).textContent;
+        // Hier wird der Zustand von Subtasks ohne Checkbox festgelegt. Zum Beispiel: alle Subtasks werden als 'nicht erledigt' gesetzt.
+        const subtaskState = false; 
+        updatedSubtasks.push({ title: subtaskTitle, state: subtaskState });
+    });
+    task.subtasks = updatedSubtasks;
 
     localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
 
-    renderGuestTaskBoard()
+    renderGuestTaskBoard();
     closeDialogTask();
-} 
+}
+
 
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
@@ -450,7 +484,6 @@ function renderGuestCheckbox(taskIndex) {
 
     updateProgressBar(taskIndex);
 }
-
 
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
