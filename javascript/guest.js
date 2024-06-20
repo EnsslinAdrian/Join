@@ -270,6 +270,160 @@ function showGuestTaskDetails(task, i) {
 }
 
 
+/**
+ * Deletes a guest task from localStorage and re-renders the task board.
+ * 
+ * @param {number} index - The index of the task to delete.
+ */
+function deleteGuestTask(index) {
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
+    guestTasks.splice(index, 1);
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    renderGuestTaskBoard();
+    closeDialogTask()
+}
+
+/**
+ * This function edits the task with the specified index.
+ * 
+ * @param {number} i - The index of the task to be edited.
+ * @returns {Promise<void>} A promise that resolves when the task is edited.
+ */
+function editGuestTask(i) {
+    const task = guestTasks[i];
+    let container = document.getElementById('taskDetails');
+    container.innerHTML = generateEditPopupGuest(task, i);
+}
+
+
+/**
+ * This function generates the edit popup for a guest task.
+ * 
+ * @param {Object} task - The task to be edited.
+ * @param {number} i - The index of the task.
+ */
+function generateEditPopupGuest(task, i) {
+    const formattedDate = formatDateToISO(task.date);
+    const prioUrgentSelected = task.priority === 'Urgent' ? 'urgent' : '';
+    const prioMediumSelected = task.priority === 'Medium' ? 'medium' : '';
+    const prioLowSelected = task.priority === 'Low' ? 'low' : '';
+    
+    const prioUrgentIcon = task.priority === 'Urgent' ? './assets/img/add_task/arrow_white.svg' : './assets/img/add_task/arrowsTop.svg';
+    const prioMediumIcon = task.priority === 'Medium' ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/result.svg';
+    const prioLowIcon = task.priority === 'Low' ? './assets/img/add_task/arrow_buttom_white.svg' : './assets/img/add_task/arrowsButtom.svg';
+
+    return `
+    <div>
+        <div class="add-task-section-edit">
+            <div class="add-task-titel-container-edit">
+                <div class="close_edit_popup">
+                    <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
+                </div>
+                <form id="editTaskForm">
+                    <input type="hidden" id="taskId" value="${task.id}">
+                    <p>Titel<span class="color-red">*</span></p>
+                    <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
+                    <p>Description</p>
+                    <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
+                    <p>Assigned to</p>
+                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                        placeholder="Select contacts to assign">
+                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
+                    <div class="selected-contact" id="selectedContact">
+                        ${task.taskContacts ? task.taskContacts.map(contact => `
+                            <p class="user-icon" style="background-color: ${contact.color};">${contact.initials}</p>
+                        `).join('') : ''}
+                    </div>
+            </div>
+            <div class="add-task-date-container-edit">
+                <p>Due date<span class="color-red">*</span></p>
+                <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date" value="${formattedDate}">
+                <p>Prio</p>
+                <div class="margin-buttom add-task-prio">
+                    <div class="prio-selection-urgent ${prioUrgentSelected}" onclick="taskUrgent()" id="urgent">
+                        <span>Urgent</span>
+                        <img id="imgUrgent" class="prio-icons" src="${prioUrgentIcon}">
+                    </div>
+                    <div class="prio-selection-medium ${prioMediumSelected}" onclick="taskMedium()" id="medium">
+                        <span>Medium</span>
+                        <img id="imgMedium" class="prio-icons" src="${prioMediumIcon}">
+                    </div>
+                    <div class="prio-selection-low ${prioLowSelected}" onclick="taskLow()" id="low">
+                        <span>Low</span>
+                        <img id="imgLow" class="prio-icons" src="${prioLowIcon}">
+                    </div>
+                </div>
+                <p>Category<span class="color-red">*</span></p>
+                <div class="custom-select-board" style="width:100%;">
+                    <select id="select">
+                        <option value="0">Select task category</option>
+                        <option value="1" ${task.taskCategory === 'Technical Task' ? 'selected' : ''}>Technical Task</option>
+                        <option value="2" ${task.taskCategory === 'User Story' ? 'selected' : ''}>User Story</option>
+                    </select>
+                </div>
+                <p>Subtasks</p>
+                <div class="subtasks-container">
+                    <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                    <div class="subtasks-button">
+                        <button onclick="addNewSubtasks()" type="button">+</button>
+                    </div>
+                </div>
+                <div class="subtasks-list">
+                    <ul id="subtasksList">
+                        ${task.subtasks ? task.subtasks.map((subtask, index) => `
+                            <li>
+                                <input type="checkbox" ${subtask.state ? 'checked' : ''}> ${subtask.title}
+                            </li>
+                        `).join('') : ''}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="send-add-task-buttons">
+            <div class="buttons">
+                <button onclick="saveEditedTaskGuest(event, ${i})" class="btn">OK<img src="assets/img/add_task/check.svg"></button>
+            </div>
+        </div>
+        </form>
+    </div>
+    `;
+}
+
+/**
+ * This function formats a date string to ISO format (yyyy-MM-dd).
+ * 
+ * @param {string} date - The date string to be formatted.
+ * @returns {string} The formatted date string in ISO format.
+ */
+function formatDateToISO(date) {
+    const [day, month, year] = date.split('.');
+    return `${year}-${month}-${day}`;
+}
+
+
+/**
+ * This function saves the edited task.
+ * 
+ * @param {Event} event - The form submit event.
+ * @param {number} i - The index of the task to be saved.
+ */
+function saveEditedTaskGuest(event, i) {
+    event.preventDefault();
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
+    const task = guestTasks[i];
+    task.title = document.getElementById('title').value;
+    task.description = document.getElementById('description').value;
+    task.date = document.getElementById('date').value;
+    task.priority = document.querySelector('.prio-selection-urgent.urgent') ? 'Urgent' :
+                    document.querySelector('.prio-selection-medium.medium') ? 'Medium' : 'Low';
+    task.taskCategory = document.getElementById('select').value === '1' ? 'Technical Task' : 'User Story';
+
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+
+    renderGuestTaskBoard()
+    closeDialogTask();
+} 
+
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -378,12 +532,12 @@ function generateGuestTaskDetails(task, i) {
             </div>
         </div>
         <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteTask(${i})">
+            <div class="delete_task" onclick="deleteGuestTask(${i})">
                 <img src="./assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
             <p>|</p>
-            <div class="edit_task" onclick="editTask(${i})">
+            <div class="edit_task" onclick="editGuestTask(${i})">
                 <img src="./assets/img/edit.svg" alt="">
                 <p>Edit</p>
             </div>
