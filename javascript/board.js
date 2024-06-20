@@ -150,16 +150,32 @@ function renderAmountOfAllSubtasks(tasks) {
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         let subtasks = task['subtasks'];
-        let allSubtasks = subtasks.length;
-        let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-        let progress = (completedSubtasks / allSubtasks) * 100;
 
-        let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+        if (Array.isArray(subtasks)) {
+            let allSubtasks = subtasks.length;
+            let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+            let progress = (completedSubtasks / allSubtasks) * 100;
 
-        let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-        if (progressBarContent) {
-            progressBarContent.style.width = progress + '%';
+            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+            if (subtasksAmount) {
+                subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+            }
+
+            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+            if (progressBarContent) {
+                progressBarContent.style.width = progress + '%';
+            }
+        } else {
+            // Handle case where there are no subtasks
+            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+            if (subtasksAmount) {
+                subtasksAmount.innerHTML = 'No Subtasks';
+            }
+
+            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+            if (progressBarContent) {
+                progressBarContent.style.width = '0%';
+            }
         }
     }
 }
@@ -214,20 +230,26 @@ function subtaskCheckBox(taskIndex, tasks, subtasksContainer) {
     if (tasks[taskIndex]) {
         let task = tasks[taskIndex];
         let subtasks = task['subtasks'];
+        subtasksContainer.innerHTML = '';
 
-        for (let j = 0; j < subtasks.length; j++) {
-            let subtask = subtasks[j];
-            let isChecked = subtask['state'] ? 'checked' : '';
-            let subtaskHTML = subtaskCheckboxHtml(taskIndex, j, subtask, isChecked);
-            subtasksContainer.innerHTML += subtaskHTML;
+        if (subtasks && Array.isArray(subtasks) && subtasks.length > 0) {
+            for (let j = 0; j < subtasks.length; j++) {
+                let subtask = subtasks[j];
+                let isChecked = subtask['state'] ? 'checked' : '';
+                let subtaskHTML = subtaskCheckboxHtml(taskIndex, j, subtask, isChecked);
+                subtasksContainer.innerHTML += subtaskHTML;
+            }
+        } else {
+            subtasksContainer.innerHTML = '<p>No subtasks available</p>';
         }
         updateProgressBar(taskIndex);
     }
 }
 
 
+
 /**
- * This function deletes a task from the database.
+ * This function deletes a task from the database and reindexes the remaining tasks.
  * 
  * @param {Object} taskJson - This is the task data in JSON format.
  * @param {number} i - This is the index of the task to be deleted.
@@ -235,24 +257,63 @@ function subtaskCheckBox(taskIndex, tasks, subtasksContainer) {
  */
 async function deleteTask(taskJson, i) {
     let personalId = localStorage.getItem('userKey');
-    const url = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
-    console.log('URL für den DELETE-Aufruf:', url);
     try {
-        const response = await fetch(url, {
-            method: 'DELETE'
-        });
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Fehler beim Löschen des Tasks:', response.status, errorText);
-            throw new Error(`Fehler beim Löschen des Tasks. Status: ${response.status}, Antwort: ${errorText}`);
-        }
+        await deleteTaskByUrl(personalId, i);
+        await reindexAndSaveTasks(personalId, i);
         window.location.reload();
     } catch (error) {
-        console.error('Fehler beim Löschen des Tasks:', error);
-        alert('Fehler beim Löschen des Tasks: ' + error.message);
+        console.error('Error deleting task:', error);
+        alert('Error deleting task: ' + error.message);
     }
 }
 
+/**
+ * Deletes a specific task by URL.
+ * 
+ * @param {string} personalId - The user's personal ID.
+ * @param {number} i - The index of the task to be deleted.
+ */
+async function deleteTaskByUrl(personalId, i) {
+    const taskUrl = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
+    console.log('URL for the DELETE request:', taskUrl);
+    const response = await fetch(taskUrl, { method: 'DELETE' });
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error deleting task:', response.status, errorText);
+        throw new Error(`Error deleting task. Status: ${response.status}, Response: ${errorText}`);
+    }
+}
+
+/**
+ * Reindexes the remaining tasks and updates the database.
+ * 
+ * @param {string} personalId - The user's personal ID.
+ * @param {number} i - The index of the task that was deleted.
+ */
+async function reindexAndSaveTasks(personalId, i) {
+    const tasksUrl = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks.json`;
+    const tasksResponse = await fetch(tasksUrl);
+    const tasks = await tasksResponse.json();
+
+    if (tasks) {
+        const taskEntries = Object.entries(tasks);
+        const updatedTasks = taskEntries
+            .filter(([key]) => key !== i.toString())
+            .reduce((acc, [key, task], index) => {
+                acc[index] = task;
+                return acc;
+            }, {});
+
+        // Clear existing tasks in the database
+        await fetch(tasksUrl, { method: 'DELETE' });
+
+        // Update the tasks with the newly indexed values
+        await fetch(tasksUrl, {
+            method: 'PUT',
+            body: JSON.stringify(updatedTasks)
+        });
+    }
+}
 
 /**
  * This function edits the task with the specified index.
@@ -348,15 +409,19 @@ function renderSubtasks(subtasks) {
     let subtasksList = document.getElementById('subtasksList');
     subtasksList.innerHTML = '';
 
-    subtasks.forEach((subtask, index) => {
-        subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
-    });
+    if (subtasks && Array.isArray(subtasks) && subtasks.length > 0) {
+        subtasks.forEach((subtask, index) => {
+            subtasksList.innerHTML += generateSubtaskHtml(subtask, index);
+        });
+    } else {
+        subtasksList.innerHTML = '<p>No subtasks available</p>';
+    }
 }
 
 
 /**
- * Gets the user key from localStorage.
- * @returns {string|null} The user key or null if not available.
+ * Retrieves the user key from local storage.
+ * @returns {string|null} The user key.
  */
 function getUserKey() {
     const userKey = localStorage.getItem('userKey');
@@ -366,9 +431,8 @@ function getUserKey() {
     return userKey;
 }
 
-
 /**
- * Generates the URL for the API request.
+ * Generates the URL for the task.
  * @param {string} userKey - The user key.
  * @param {number} taskIndex - The index of the task.
  * @returns {string} The generated URL.
@@ -388,15 +452,31 @@ function collectFormData() {
     const date = document.getElementById('date').value;
     const taskCategoryElement = document.getElementById('select');
     const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
-    const priorityElement = document.getElementById('priority');
-    const priority = priorityElement ? priorityElement.value : 'Medium';
+    const priority = prio || 'Medium';
+    const priorityImg = prioImg || './assets/img/add_task/result.svg';
+
+    // Verwenden der globalen Variable `taskContacts`
+    const assignedContacts = taskContacts;
+
+    // Sammeln der Unteraufgaben
+    const subtasks = [];
+    document.querySelectorAll('#subtasksList li').forEach(subtaskElement => {
+        const inputElement = subtaskElement.querySelector('input');
+        subtasks.push({
+            title: subtaskElement.textContent.trim(),
+            state: inputElement ? inputElement.checked : false
+        });
+    });
 
     return {
         title,
         description,
         date,
         taskCategory,
-        priority
+        priority,
+        priorityImg,
+        taskContacts: assignedContacts, // Hier verwenden
+        subtasks
     };
 }
 
@@ -408,37 +488,60 @@ function collectFormData() {
  * @returns {Promise<Response>} The response from the fetch request.
  */
 async function updateTaskInDatabase(url, updatedTask) {
-    return await fetch(url, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedTask)
-    });
+    try {
+        const response = await fetch(url, {
+            method: 'PATCH', // Verwenden Sie PATCH, um den vorhandenen Eintrag zu aktualisieren
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedTask)
+        });
+
+        console.log('Update Task Response:', response); // Protokollieren Sie die Antwort
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Update fehlgeschlagen. Antwortstatus: ", response.status, errorText);
+            throw new Error(`Update failed with status ${response.status}: ${errorText}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Fehler beim Aktualisieren des Tasks:', error);
+        throw error;
+    }
 }
 
 
 /**
  * This function saves the edited task.
+ * @param {Event} event - The form submission event.
  * @param {number} taskIndex - The index of the task.
  * @returns {Promise<void>} A promise that resolves when the task is saved.
  */
 async function saveEditedTask(taskIndex) {
+    console.log('saveEditedTask aufgerufen'); // Überprüfen Sie, ob die Funktion aufgerufen wird
+
     const userKey = getUserKey();
     if (!userKey) {
+        console.log("Kein Benutzer-Schlüssel verfügbar.");
         return;
     }
-    const url = generateTaskUrl(userKey, taskIndex);
+    const url = generateTaskUrl(userKey, taskIndex); // Verwenden Sie die richtige URL
+    console.log('Generated URL:', url); // Protokollieren Sie die generierte URL
     const updatedTask = collectFormData();
+
     try {
-        console.log('Updated Task:', updatedTask);
+        console.log('Updated Task:', updatedTask); // Protokollieren Sie die gesammelten Daten
+
         const updateResponse = await updateTaskInDatabase(url, updatedTask);
 
         if (updateResponse.ok) {
             console.log('Update Response:', await updateResponse.json());
             window.location.reload();
         } else {
-            console.log("Update fehlgeschlagen. Antwortstatus: ", updateResponse.status);
+            const errorText = await updateResponse.text();
+            console.error("Update fehlgeschlagen. Antwortstatus: ", updateResponse.status, errorText);
         }
     } catch (error) {
         console.error('Fehler beim Aktualisieren des Tasks:', error);
@@ -519,7 +622,10 @@ function generateBoardTaskContactHtml(contact, i, color) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
 
-    let isContactAdded = taskContacts.some(c => c.name === contactName);
+    let isContactAdded = false;
+    if (Array.isArray(taskContacts)) {
+        isContactAdded = taskContacts.some(c => c.name === contactName);
+    }
 
     return generateBoardsContactHtml(contactName, initials, i, color, isContactAdded);
 }

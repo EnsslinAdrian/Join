@@ -5,6 +5,7 @@ let prio = 'Medium';
 let prioImg = './assets/img/add_task/result.svg';
 const firebaseUrl = "https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/"
 
+
 /**
  * This is the onload function to render and start all functions when the page reloads
  */
@@ -17,10 +18,12 @@ function init() {
     renderTaskBoard();
 }
 
+
 async function loadData(path = "") {
     const response = await fetch(firebaseUrl + ".json");
     const responseToJson = await response.json();
 }
+
 
 /**
  * This function checks if the user's login data is correct
@@ -64,6 +67,7 @@ async function checkUser(event) {
     }
 }
 
+
 /**
  * This function takes the stored username, splits the words, and retrieves the first letter of each word to form the initials
  */
@@ -72,6 +76,7 @@ function initials() {
     let initials = userName.split(' ').map(word => word[0]).join('');
     document.getElementById('initials').innerHTML = initials;
 }
+
 
 /**
  * Sends a POST request to the specified Firebase path with the provided data.
@@ -91,6 +96,7 @@ async function postUser(path = "", data = {}) {
     });
     return responseToJson = await response.json();
 }
+
 
 /**
  * Handles the user registration process by preventing the default form submission,
@@ -132,6 +138,7 @@ function registration(event) {
     confirmPassword.value = "";
 }
 
+
 /**
  * Handles the addition of a new task by preventing the default form submission,
  * collecting task details, and storing the task either in Firebase for registered users
@@ -152,6 +159,7 @@ async function addNewTask(event) {
 
     window.location.href = 'board.html';
 }
+
 
 /**
  * Collects the details of the task from the form inputs.
@@ -177,6 +185,7 @@ function collectTaskDetails() {
         'taskContacts': taskContacts
     };
 }
+
 
 /**
  * Saves the task to Firebase for registered users.
@@ -204,6 +213,7 @@ async function saveTaskToFirebase(task) {
     });
 }
 
+
 /**
  * Saves the task to localStorage for guest users.
  * 
@@ -214,6 +224,7 @@ function saveTaskToLocalStorage(task) {
     guestTasks.push(task);
     localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
 }
+
 
 /**
  * Generates a random background color for the initials of each contact.
@@ -228,6 +239,7 @@ function getRandomColor() {
     }
     return color;
 }
+
 
 /**
  * Renders the contacts on the addTask page for the "Assigned to" section. 
@@ -251,6 +263,7 @@ async function renderContactsAddTask() {
     }
 }
 
+
 /**
  * Generates the HTML for a contact card to be displayed on the task assignment section.
  * 
@@ -273,6 +286,7 @@ function generateTaskContactHtml(contact, i, color) {
     `;
 }
 
+
 /**
  * This function creates a new contact and stores it in the database.
  * 
@@ -289,18 +303,26 @@ function addContactTask(contactName, initials, i, color) {
     };
 
     let checkbox = document.getElementById(`taskCheckbox${i}`);
+
     if (checkbox.checked) {
-        if (!taskContacts.some(contact => contact.name === contactName)) {
-            taskContacts.push(newTaskContact);
+        if (Array.isArray(taskContacts)) {
+            if (!taskContacts.some(contact => contact.name === contactName)) {
+                taskContacts.push(newTaskContact);
+            }
+        } else {
+            taskContacts = [newTaskContact];
         }
     } else {
-        let index = taskContacts.findIndex(contact => contact.name === contactName);
-        if (index !== -1) {
-            taskContacts.splice(index, 1);
+        if (Array.isArray(taskContacts)) {
+            let index = taskContacts.findIndex(contact => contact.name === contactName);
+            if (index !== -1) {
+                taskContacts.splice(index, 1);
+            }
         }
     }
     renderAddTaskContactInitials();
 }
+
 
 /**
  * This function renders the created and stored tasks from the database 
@@ -333,6 +355,7 @@ async function renderTaskBoard() {
     }
 }
 
+
 /**
  * This function renders the tasks into their respective categories.
  * @param {Array} tasks - The list of tasks to render.
@@ -350,24 +373,28 @@ function renderTasks(tasks) {
         if (document.getElementById(id)) {
             document.getElementById(id).innerHTML += generateTodoHTML(task, i);
             
-
             let contactsContent = document.getElementById(`taskContacts${i}`);
             if (contactsContent) {
-                for (let j = 0; j < task['taskContacts'].length; j++) {
-                    let contacts = task['taskContacts'][j];
-
-                    contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+                if (task['taskContacts'] && task['taskContacts'].length > 0) {
+                    for (let j = 0; j < task['taskContacts'].length; j++) {
+                        let contacts = task['taskContacts'][j];
+                        contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+                    }
+                } else {
+                    contactsContent.innerHTML = '';
                 }
             }
         }
     }
 }
 
+
 function openProfilPopup() {
     const popup = document.getElementById('popupLogout');
     popup.classList.toggle('d-none');
     popup.classList.toggle('popup-logout-mobile');
 }
+
 
 function logOut() {
     const keysToRemove = ['userKey', 'username'];
@@ -378,6 +405,7 @@ function logOut() {
 
     window.location.href = 'index.html';
 }
+
 
 /**
  * Setzt den Benutzer auf 'Guest' und leitet zur Summary-Seite weiter.
@@ -392,6 +420,7 @@ function questLogin() {
     localStorage.setItem('username', 'Guest');
     window.location.href = 'summary.html';
 }
+
 
 /**
  * Fetches and renders contacts from the specified path in the Firebase database.

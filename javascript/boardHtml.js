@@ -84,26 +84,31 @@ function generateAddTaskHtml() {
  * 
  * @param {Object} element - The task object containing the task details.
  * @param {number} i - The index of the task in the task list.
+ * @returns {string} The HTML string for the task card.
  */
 function generateTodoHTML(element, i) {
+    const description = element['description'] ? element['description'] : 'Keine Beschreibung vorhanden';
+    const prioImg = element['prioImg'] ? `<img src="${element['prioImg']}">` : '';
+    const taskCategory = element['taskCategory'] ? element['taskCategory'] : 'Keine Kategorie vorhanden';
+
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogTask(${i})">
             <div class="task-card-type">
-                <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
+                <div class="type-bg" style="background-color: blue;">${taskCategory}</div>
             </div>
             <h2>${element['title']}</h2>
-            <p class="task-description shorter_description">${element['description']}</p>
+            <p class="task-description shorter_description">${description}</p>
             <div class="progress" id="progress">
                 <div class="progress-bar" id="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
-                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
+                <span onload="updateProgressBar(${i})" id="completed-subtasks-${i}">Subtasks</span>
             </div>
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
                 </div>
-                <img src="${element['prioImg']}">
+                ${prioImg}
             </div>
         </div>
     </div>
@@ -116,38 +121,49 @@ function generateTodoHTML(element, i) {
  * 
  * @param {Object} task - The task object containing the task details.
  * @param {number} i - The index of the task in the task list.
+ * @returns {string} The HTML string for the task details view.
  */
 function generateTaskDetails(task, i) {
-    let taskJson = encodeURIComponent(JSON.stringify(task));
+    const taskCategory = task['taskCategory'] ? task['taskCategory'] : 'No Category';
+    const title = task['title'] ? task['title'] : 'No Title';
+    const description = task['description'] ? task['description'] : 'No Description Available';
+    const date = task['date'] ? task['date'] : 'No Due Date';
+    const prio = task['prio'] ? task['prio'] : 'No Priority';
+    const prioImg = task['prioImg'] ? `<img src="${task['prioImg']}" alt="">` : '';
+    const taskJson = encodeURIComponent(JSON.stringify(task));
+
     return /*html*/`
     <div class="task-card-type-details">
-        <div class="type-bg type-of-task">${task['taskCategory']}</div>
+        <div class="type-bg type-of-task">${taskCategory}</div>
         <div class="close_and_change">
             <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
         </div>
     </div>
     <div class="header_task_details">
-        <h1>${task['title']}</h1>
-        <p class="task-description">${task['description']}</p>
+        <h1>${title}</h1>
+        <p class="task-description">${description}</p>
     </div>
     <div class="task_details_information">
         <div class="task_details_date">
-            <span>Due date:</span><p>${task['date']}</p>
+            <span>Due date:</span><p>${date}</p>
         </div>
         <div class="task_details_priority">
-            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
+            <span>Priority:</span> <p>${prio}</p> ${prioImg}
         </div>
         <div class="task_details_assigned_to">
             <span>Assigned To:</span>
-            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
+            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts">
+                ${task['taskContacts'] && task['taskContacts'].length > 0 ? '' : '<p>No contacts assigned</p>'}
+            </div>
         </div>
         <div class="task_details_subtasks" id="task_details_subtasks">
             <span>Subtasks</span>
             <div class="task_details_subtask" id="task_subtasks">
+                ${task['subtasks'] && task['subtasks'].length > 0 ? '' : '<p>No subtasks available</p>'}
             </div>
         </div>
         <footer class="details_delete_edit">
-               <div class="delete_task" onclick="deleteTask('${taskJson}', ${i})">
+            <div class="delete_task" onclick="deleteTask('${taskJson}', ${i})">
                 <img src="./assets/img/delete.svg" alt="delete">
                 <p>Delete</p>
             </div>
@@ -163,15 +179,19 @@ function generateTaskDetails(task, i) {
 
 
 /**
- * This function generates the HTML for the subtasks displayed the detailed view of a task.
+ * This function generates the HTML for the subtasks displayed in the detailed view of a task.
  * 
- * @param {Object} task - The task object containing the task details.
+ * @param {Object} subtask - The subtask object containing the subtask details.
  * @param {number} i - The index of the task in the task list.
+ * @returns {string} The HTML string for the subtask.
  */
 function generateSubtaskHtml(subtask, i) {
+    const title = subtask.title || 'No title available'; // Fallback text if no title is provided
+    const subtaskId = `subtaskEditContainer${i}`;
+    
     return `
-    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-        <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
+    <div class="edit-subtask-container" id="${subtaskId}">
+        <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${title}</li>
         <div class="subtask-edit-svg" id="subtaskSvg">
             <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
             <div class="subtask-edit-line"></div>
@@ -183,12 +203,15 @@ function generateSubtaskHtml(subtask, i) {
 
 
 /**
- * This function generates the HTML for displaying the papup window for edit tasks.
+ * This function generates the HTML for displaying the popup window for edit tasks.
  * 
  * @param {Object} task - The task object containing the task details.
  * @param {number} i - The index of the task in the task list.
  */
 function generateEditPopup(task, i) {
+    // Aktualisieren Sie die globale `taskContacts`-Variable
+    taskContacts = task.taskContacts || [];
+
     return `
     <div>
         <div class="add-task-section-edit">
@@ -196,7 +219,7 @@ function generateEditPopup(task, i) {
                 <div class="close_edit_popup">
                     <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
                 </div>
-                <form action="">
+                <form id="editTaskForm" onsubmit="saveEditedTask(event, ${i})">
                     <input type="hidden" id="taskId" value="${task.id}">
                     <p>Titel<span class="color-red">*</span></p>
                     <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
@@ -206,32 +229,36 @@ function generateEditPopup(task, i) {
                     <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
                         placeholder="Select contacts to assign">
                     <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact d-none" id="selectedContact"></div>
+                    <div class="selected-contact" id="selectedContact">
+                        ${task.taskContacts ? task.taskContacts.map(contact => `
+                            <p class="user-icon" style="background-color: ${contact.color};">${contact.initials}</p>
+                        `).join('') : ''}
+                    </div>
             </div>
             <div class="add-task-date-container-edit">
                 <p>Due date<span class="color-red">*</span></p>
                 <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date" value="${task.date}">
                 <p>Prio</p>
                 <div class="margin-buttom add-task-prio">
-                    <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
+                    <div class="prio-selection-urgent ${task.priority === 'urgent' ? 'urgent' : ''}" onclick="taskUrgent()" id="urgent">
                         <span>Urgent</span>
-                        <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                        <img id="imgUrgent" class="prio-icons" src="${task.priority === 'urgent' ? './assets/img/add_task/arrow_white.svg' : './assets/img/add_task/arrowsTop.svg'}">
                     </div>
-                    <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
+                    <div class="prio-selection-medium medium ${task.priority === 'medium' ? 'medium' : ''}" onclick="taskMedium()" id="medium">
                         <span>Medium</span>
-                        <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
+                        <img id="imgMedium" class="prio-icons" src="${task.priority === 'medium' ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/result.svg'}">
                     </div>
-                    <div class="prio-selection-low" onclick="taskLow()" id="low">
+                    <div class="prio-selection-low ${task.priority === 'low' ? 'low' : ''}" onclick="taskLow()" id="low">
                         <span>Low</span>
-                        <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                        <img id="imgLow" class="prio-icons" src="${task.priority === 'low' ? './assets/img/add_task/arrow_buttom_white.svg' : './assets/img/add_task/arrowsButtom.svg'}">
                     </div>
                 </div>
                 <p>Category<span class="color-red">*</span></p>
                 <div class="custom-select-board" style="width:100%;">
                     <select id="select">
                         <option value="0">Select task category</option>
-                        <option value="1">Technical Task</option>
-                        <option value="2">User Story</option>
+                        <option value="1" ${task.taskCategory === 'Technical Task' ? 'selected' : ''}>Technical Task</option>
+                        <option value="2" ${task.taskCategory === 'User Story' ? 'selected' : ''}>User Story</option>
                     </select>
                 </div>
                 <p>Subtasks</p>
@@ -242,7 +269,13 @@ function generateEditPopup(task, i) {
                     </div>
                 </div>
                 <div class="subtasks-list">
-                    <ul id="subtasksList"></ul>
+                    <ul id="subtasksList">
+                        ${task.subtasks ? task.subtasks.map((subtask, index) => `
+                            <li>
+                                <input type="checkbox" ${subtask.state ? 'checked' : ''}> ${subtask.title}
+                            </li>
+                        `).join('') : ''}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -256,48 +289,60 @@ function generateEditPopup(task, i) {
     `;
 }
 
+
 /**
  * This function generates HTML content for displaying task contacts in the task details view.
  * 
- * @param {Object} task - This is the task object that containing contacts.
+ * @param {Object} task - This is the task object that contains contacts.
  * @param {number} i - This is the index of the task.
  */
 function generateTaskContactsforDetails(task, i) {
     let content = document.getElementById(`contacts${i}`);
+    content.innerHTML = '';
 
-    for (let j = 0; j < task['taskContacts'].length; j++) {
-        let contact = task['taskContacts'][j];
-        content.innerHTML += `
-        <div class="arrange_assigned_to_contacts">
-            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
-            <p> ${contact['name']}</p>
-        </div>
-        `;
+    if (task['taskContacts'] && Array.isArray(task['taskContacts']) && task['taskContacts'].length > 0) {
+        for (let j = 0; j < task['taskContacts'].length; j++) {
+            let contact = task['taskContacts'][j];
+            content.innerHTML += `
+            <div class="arrange_assigned_to_contacts">
+                <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+                <p> ${contact['name']}</p>
+            </div>
+            `;
+        }
+    } else {
+        content.innerHTML = '<p>No contacts assigned</p>';
     }
 }
+
 
 /**
  * This function generates HTML content for displaying task subtasks in the task details view.
  * 
- * @param {Object} task - This is the task object that containing subtasks.
+ * @param {Object} task - This is the task object that contains subtasks.
  * @param {number} i - This is the index of the task.
  */
 function generateTaskSubtasksforDetails(task, i) {
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
 
-    for (let k = 0; k < task['subtasks'].length; k++) {
-        let subtask = task['subtasks'][k];
-        let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
+    if (task['subtasks'] && Array.isArray(task['subtasks']) && task['subtasks'].length > 0) {
+        for (let k = 0; k < task['subtasks'].length; k++) {
+            let subtask = task['subtasks'][k];
+            let isChecked = isSubtaskChecked(i, k) ? 'checked' : '';
 
-        subtasks.innerHTML += `
-        <div id="single_subtask_${i}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-            <p>${subtask['title']}</p>
-        </div>
-        `;
+            subtasks.innerHTML += `
+            <div id="single_subtask_${i}_${k}" class="single_subtask">
+                <input onclick="updateProgressBar(${i}); saveCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+                <p>${subtask['title']}</p>
+            </div>
+            `;
+        }
+    } else {
+        subtasks.innerHTML = '<p>No subtasks available</p>';
     }
 }
+
 
 /**
  * This function generates the HTML string for a subtask checkbox.

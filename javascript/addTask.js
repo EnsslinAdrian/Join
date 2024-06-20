@@ -139,15 +139,14 @@ function clearTask() {
  */
 function taskUrgent() {
   prio = 'Urgent';
-  prioImg = './assets/img/add_task/arrowsTop.svg';
-  document.getElementById('urgent').classList.add('urgent')
-  document.getElementById('medium').classList.remove('medium')
-  document.getElementById('low').classList.remove('low')
+  prioImg = './assets/img/add_task/arrow_white.svg';
+  document.getElementById('urgent').classList.add('urgent');
+  document.getElementById('medium').classList.remove('medium');
+  document.getElementById('low').classList.remove('low');
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrow_white.svg';
   document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
 }
-
 
 /**
  * This function saves the priority text as a variable (in this case the string 'Medium') 
@@ -155,15 +154,14 @@ function taskUrgent() {
  */
 function taskMedium() {
   prio = 'Medium';
-  prioImg = './assets/img/add_task/result.svg';
-  document.getElementById('medium').classList.add('medium')
-  document.getElementById('urgent').classList.remove('urgent')
-  document.getElementById('low').classList.remove('low')
+  prioImg = './assets/img/add_task/result_white.svg';
+  document.getElementById('medium').classList.add('medium');
+  document.getElementById('urgent').classList.remove('urgent');
+  document.getElementById('low').classList.remove('low');
   document.getElementById('imgMedium').src = './assets/img/add_task/result_white.svg';
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
 }
-
 
 /**
  * This function saves the priority text as a variable (in this case the string 'Low') 
@@ -171,10 +169,10 @@ function taskMedium() {
  */
 function taskLow() {
   prio = 'Low';
-  prioImg = './assets/img/add_task/arrowsButtom.svg';
-  document.getElementById('low').classList.add('low')
-  document.getElementById('urgent').classList.remove('urgent')
-  document.getElementById('medium').classList.remove('medium')
+  prioImg = './assets/img/add_task/arrow_buttom_white.svg';
+  document.getElementById('low').classList.add('low');
+  document.getElementById('urgent').classList.remove('urgent');
+  document.getElementById('medium').classList.remove('medium');
   document.getElementById('imgLow').src = './assets/img/add_task/arrow_buttom_white.svg';
   document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
@@ -375,10 +373,15 @@ function deleteSubtask(i) {
  */
 function renderAddTaskContactInitials() {
   let content = document.getElementById('selectedContact');
-  content.innerHTML = "";
-  for (let i = 0; i < taskContacts.length; i++) {
-    let contact = taskContacts[i];
-    content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+  content.innerHTML = '';
+
+  if (taskContacts && Array.isArray(taskContacts) && taskContacts.length > 0) {
+    for (let i = 0; i < taskContacts.length; i++) {
+      let contact = taskContacts[i];
+      content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+    }
+  } else {
+    content.innerHTML = '<p>No contacts assigned</p>';
   }
 }
 
@@ -390,7 +393,10 @@ function renderAddTaskContactInitials() {
  * @returns {string} The generated HTML string for the contact's initials.
  */
 function generateAddTaskContactInitialsHTML(contact) {
-  return `<div style="background-color: ${contact['color']};" class="assigned-initials">${contact['initials']}</div>`;
+  const color = contact.color || '#ccc'; // Default color if not provided
+  const initials = contact.initials || 'N/A'; // Default initials if not provided
+
+  return `<div style="background-color: ${color};" class="assigned-initials">${initials}</div>`;
 }
 
 
