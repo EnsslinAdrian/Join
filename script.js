@@ -462,3 +462,20 @@ async function renderContacts(path = "") {
         }
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    checkUsername();
+});
+
+/**
+ * Diese Funktion überprüft, ob ein Benutzername im localStorage vorhanden ist.
+ * Wenn kein Benutzername vorhanden ist und die aktuelle Seite nicht index.html oder sign_up.html ist,
+ * wird der Benutzer auf die index.html weitergeleitet.
+ */
+function checkUsername() {
+    const username = localStorage.getItem('username');
+    const currentPage = window.location.pathname.split('/').pop(); // Ermittelt den Namen der aktuellen Seite
+    if (!username && currentPage !== 'index.html' && currentPage !== 'sign_up.html') {
+        window.location.href = 'index.html';
+    }
+}
