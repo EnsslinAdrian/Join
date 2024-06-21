@@ -551,11 +551,8 @@ function toggleAssigned(event) {
     event.stopPropagation();
 
     let assignedContainer = document.getElementById('assignedContainer');
-    let selectedContact = document.getElementById('selectedContact');
 
     assignedContainer.classList.toggle('d-none');
-    selectedContact.classList.toggle('selected-contact');
-    selectedContact.classList.toggle('d-none');
 
     if (!assignedContainer.classList.contains('d-none')) {
         renderContactsBoardPage();

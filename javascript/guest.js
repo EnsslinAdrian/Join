@@ -4,7 +4,7 @@ let guestTasks = [
         'taskCategory': 'User Story',
         'title': 'Header',
         'description': 'Header Template erstellen',
-        'date': '16.08.2024',
+        'date': '2024-06-26',
         'taskContacts': [
             {
                 'color': '#8128EE',
@@ -34,7 +34,7 @@ let guestTasks = [
         'taskCategory': 'User Story',
         'title': 'Footer-Probleme',
         'description': 'Footer-Links funktionieren nicht',
-        'date': '20.08.2024',
+        'date': '2024-06-27',
         'taskContacts': [
             {
                 'color': '#FF5733',
@@ -64,7 +64,7 @@ let guestTasks = [
         'taskCategory': 'User Story',
         'title': 'Navigation optimieren',
         'description': 'Navigationselemente verbessern',
-        'date': '25.08.2024',
+        'date': '2024-06-28',
         'taskContacts': [
             {
                 'color': '#28A745',
@@ -94,7 +94,7 @@ let guestTasks = [
         'taskCategory': 'User Story',
         'title': 'Dark Mode hinzufügen',
         'description': 'Dark Mode für die Website implementieren',
-        'date': '30.08.2024',
+        'date': '2024-06-29',
         'taskContacts': [
             {
                 'color': '#343A40',
@@ -124,7 +124,7 @@ let guestTasks = [
         'taskCategory': 'User Story',
         'title': 'API-Dokumentation aktualisieren',
         'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
-        'date': '05.09.2024',
+        'date': '2024-06-25',
         'taskContacts': [
             {
                 'color': '#6610F2',
@@ -278,20 +278,6 @@ function showGuestTaskDetails(task, i) {
 }
 
 
-/**
- * Deletes a guest task from localStorage and re-renders the task board.
- * 
- * @param {number} index - The index of the task to delete.
- */
-function deleteGuestTask(index) {
-    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-    guestTasks.splice(index, 1);
-    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-    renderGuestTaskBoard();
-    closeDialogTask()
-}
-
-
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
@@ -404,6 +390,11 @@ function generateGuestTaskDetails(task, i) {
                 <img src="./assets/img/delete.svg" alt="">
                 <p>Delete</p>
             </div>
+            <p>|</p>
+            <div class="edit_task" onclick="editTaskGuest(${i})">
+                <img src="./assets/img/edit.svg" alt="">
+                <p>Edit</p>
+            </div>
         </footer>
     </div>
     `;
@@ -512,3 +503,154 @@ function startDragging(i) {
 if (localStorage.getItem('guestTasks')) {
     guestTasks = JSON.parse(localStorage.getItem('guestTasks'));
 }
+
+
+/**
+ * Deletes a guest task from localStorage and re-renders the task board.
+ * 
+ * @param {number} index - The index of the task to delete.
+ */
+function deleteGuestTask(index) {
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
+    guestTasks.splice(index, 1);
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    renderGuestTaskBoard();
+    closeDialogTask()
+}
+
+
+/**
+ * This function generates the HTML for displaying the popup window for edit tasks.
+ * 
+ * @param {Object} task - The task object containing the task details.
+ * @param {number} i - The index of the task in the task list.
+ */
+function generateEditPopupGuest(task, i) {
+    // Aktualisieren Sie die globale `taskContacts`-Variable
+    taskContacts = task.taskContacts || [];
+    subtasks = task.subtasks || [];
+
+    return `
+    <div>
+        <div class="add-task-section-edit">
+            <div class="add-task-titel-container-edit">
+                <div class="close_edit_popup">
+                    <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
+                </div>
+                <form id="editTaskForm" onsubmit="saveEditedTask(event, ${i})">
+                    <input type="hidden" id="taskId" value="${task.id}">
+                    <p>Titel<span class="color-red">*</span></p>
+                    <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
+                    <p>Description</p>
+                    <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
+                    <p>Assigned to</p>
+                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                        placeholder="Select contacts to assign">
+                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
+                    <div class="selected-contact d-none" id="selectedContact${i}"></div>
+            </div>
+            <div class="add-task-date-container-edit">
+                <p>Due date<span class="color-red">*</span></p>
+                <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date" value="${task.date}">
+                <p>Prio</p>
+                <div class="margin-buttom add-task-prio">
+                    <div class="prio-selection-urgent ${task.priority === 'urgent' ? 'urgent' : ''}" onclick="taskUrgent()" id="urgent">
+                        <span>Urgent</span>
+                        <img id="imgUrgent" class="prio-icons" src="${task.priority === 'urgent' ? './assets/img/add_task/arrow_white.svg' : './assets/img/add_task/arrowsTop.svg'}">
+                    </div>
+                    <div class="prio-selection-medium medium ${task.priority === 'medium' ? 'medium' : ''}" onclick="taskMedium()" id="medium">
+                        <span>Medium</span>
+                        <img id="imgMedium" class="prio-icons" src="${task.priority === 'medium' ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/result.svg'}">
+                    </div>
+                    <div class="prio-selection-low ${task.priority === 'low' ? 'low' : ''}" onclick="taskLow()" id="low">
+                        <span>Low</span>
+                        <img id="imgLow" class="prio-icons" src="${task.priority === 'low' ? './assets/img/add_task/arrow_buttom_white.svg' : './assets/img/add_task/arrowsButtom.svg'}">
+                    </div>
+                </div>
+                <p>Category<span class="color-red">*</span></p>
+                <div class="custom-select-board" style="width:100%;">
+                    <select id="select">
+                        <option value="0">Select task category</option>
+                        <option value="1" ${task.taskCategory === 'Technical Task' ? 'selected' : ''}>Technical Task</option>
+                        <option value="2" ${task.taskCategory === 'User Story' ? 'selected' : ''}>User Story</option>
+                    </select>
+                </div>
+                <p>Subtasks</p>
+                <div class="subtasks-container">
+                    <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                    <div class="subtasks-button">
+                        <button onclick="addNewSubtasks()" type="button">+</button>
+                    </div>
+                </div>
+            <div class="subtasks-list">
+                            <ul id="subtasksList${i}"></ul>
+                        </div>
+            </div>
+        </div>
+        <div class="send-add-task-buttons">
+            <div class="buttons">
+                <button type="button" class="btn" onclick="saveEditedTaskGuest(${i})">OK<img src="assets/img/add_task/check.svg"></button>
+            </div>
+        </div>
+        </form>
+    </div>
+    `;
+}
+
+function editTaskGuest(i) {
+    let container = document.getElementById('taskDetails');
+    container.innerHTML = '';
+    let tasks = guestTasks[i];
+    container.innerHTML = generateEditPopupGuest(tasks, i);
+    console.log(tasks)
+
+    let conatactsContent = document.getElementById(`selectedContact${i}`);
+    for (let j = 0; j < tasks['taskContacts'].length; j++) {
+        let contact = tasks['taskContacts'][j];
+        conatactsContent.innerHTML += `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
+    }
+
+    let subtasksContent = document.getElementById(`subtasksList${i}`);
+    for (let k = 0; k < tasks['subtasks'].length; k++) {
+        let contact = tasks['subtasks'][k];
+        subtasksContent.innerHTML += generateSubtaskGuestHtml(contact, k);
+ }
+}
+
+/**
+ * This function generates the HTML for a subtask.
+ * 
+ * @param {Object} subtask - This is the subtask object.
+ * @param {number} i - This is the index of the subtask.
+ * @returns {string} This generates HTML string for the subtask.
+ */
+function generateSubtaskGuestHtml(contact, i) {
+    return `
+    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
+      <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})">${contact.title}</li>
+      <div class="subtask-edit-svg" id="subtaskSvg">
+        <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
+        <div class="subtask-edit-line"></div>
+        <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
+      </div>
+    </div>
+    `;
+  }
+
+  function saveEditedTaskGuest(i) {
+    let taskCategory = document.getElementById('select');
+    let title = document.getElementById('title');
+    let description = document.getElementById('description');
+    let date = document.getElementById('date');
+    
+    console.log(taskCategory.options[taskCategory.selectedIndex].text);
+    console.log(title.value);
+    console.log(description.value);
+    console.log(date.value);
+    console.log(prio);
+    console.log(prioImg)
+    console.log(taskContacts)
+    console.log(subtasks)
+
+  }
+
