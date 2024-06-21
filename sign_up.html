@@ -22,11 +22,11 @@
         </div>
     </header>
     <div class="main_login_container">
+        <div class="back_to_login">
+            <a href="index.html"><img src="./assets/img/arrow-back-blue.svg" alt=""></a>
+        </div>
         <div class="main_login_content">
             <div class="sign_up_header">
-                <div class="back_to_login">
-                    <a href="index.html"><img src="./assets/img/arrow-back-blue.svg" alt=""></a>
-                </div>
                 <div class="sign_up_headline">
                     <h1>Sign up</h1>
                 </div>
@@ -35,7 +35,7 @@
                 <img src="./assets/img/login-underline.svg">
             </div>
             <form id="registrationForm" onsubmit="registration(event)">
-                <div class="input_login_field" id="signUpInputsContainer">
+                <div class="input_login_field">
                     <input id="name" type="text" required class="name_icon" placeholder="Name">
                     <div class="input_login_field">
                         <div class="input_field_mail" id="input_field_mail">
@@ -59,22 +59,21 @@
                     </div>
                     <p class="answer-message" id="signAnswer"></p>
                 </div>
-                <div class="accept_privacy_policy" id="acceptPrivacy">
+                <div class="accept_privacy_policy">
                     <input required type="checkbox">
-                    <p>I accept the <a href="privacy_policy.html">Privacy policy</a></p> 
+                    <p>I accept the <a href="privacy_policy.html">Privacy policy</a></p>
                 </div>
-                <p class="reistrationMessage" id="reistrationMessage"></p>
                 <div class="sign_up_container">
                     <div class="sign_up">
-                        <button id="reistrationBtn" type="submit" class="btn">Sign up</button>
+                        <button type="submit" class="btn">Sign up</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="footer_login">
-        <a href="privacy_policy_guest.html">Pivacy Policy</a> 
-        <a href="legal_notice_guest.html">Legal notice</a> 
+        <a href="privacy_policy_guest.html">Pivacy Policy</a>
+        <a href="legal_notice_guest.html">Legal notice</a>
     </div>
 
     <script src="script.js"></script>
