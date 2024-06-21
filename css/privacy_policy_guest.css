@@ -33,6 +33,15 @@ p {
     cursor: pointer;
 }
 
+.d-none {
+    display: none!important;
+    }
+
+    header {
+        width: 100vw!important;
+    }
+
+
 @media(max-width: 1300px) {
     body {
         padding-right: 50px;
@@ -43,16 +52,23 @@ p {
 @media(max-width: 1000px) {
     .back-arrow {
         margin-top: 50px;
+        margin-left: 100px;
     }
 
     h1 {
         margin-top: 0;
     }
-}
 
-@media(max-width: 1000px) {
     body {
         padding-left: 10px;
         padding-right: 10px;
     }
+}
+
+@media(max-width: 900px) {
+    .back-arrow {
+        margin-top: 50px;
+        margin-left: 20px;
+    }
+
 }

@@ -8,10 +8,31 @@
     <link rel="stylesheet" href="/css/fonts.css">
     <link rel="stylesheet" href="/css/privacy_policy_guest.css">
     <link rel="icon" type="image/x-icon" href="./assets/img/favicon.png">
+    <link rel="stylesheet" href="./css/menubar.css">
+
+    <script src="script.js"></script>
     <title>Privacy Policy</title>
 </head>
 
 <body>
+
+    <div class="main-content">
+        <header id="header">
+            <img class="header-logo" src="./assets/img/logo.svg" alt="Join Logo">
+            <p class="header-description">Kanban Project Management Tool</p>
+            <div class="help-profil-container">
+                <a href="help.html"><img src="./assets/img/help.png" alt="Help"></a>
+                <div class="profil-initials" onclick="openProfilPopup()">
+                    <span id="initials">G</span>
+                </div>
+                <div class="popup-logout d-none" id="popupLogout">
+                    <a class="popup-help" href="help.html">Help</a>
+                    <a href="legal_notice.html">Legal Notice</a>
+                    <a href="privacy_policy.html">Privacy Police</a>
+                    <a onclick="logOut()" href="#">Log out</a>
+                </div>
+            </div>
+        </header>
     <div class="back-arrow">
         <a href="index.html"><img src="assets/img/contacts/bluearrow.svg" alt=""></a>
     </div>
