@@ -497,6 +497,7 @@ function checkUsername() {
         } else {
             const navbarContainer = document.querySelector('.navbar-container');
             const profileInitials = document.querySelector('.profil-initials');
+            const backToLogin = document.querySelector('.back_to_login');
 
             if (navbarContainer) {
                 navbarContainer.classList.add('d-none');
@@ -504,6 +505,10 @@ function checkUsername() {
 
             if (profileInitials) {
                 profileInitials.classList.add('d-none');
+            }
+
+            if (backToLogin) {
+                backToLogin.classList.remove('d-none');
             }
         }
     }
