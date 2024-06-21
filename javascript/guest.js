@@ -187,26 +187,34 @@ function renderGuestTaskBoard() {
  * 
  * @param {Object} element - The task object containing the task details.
  * @param {number} i - The index of the task in the task list.
+ * @returns {string} The HTML string for the task card.
  */
 function generateGuestTodoHTML(element, i) {
+    const description = element['description'] ? element['description'] : '';
+    const prioImg = element['prioImg'] ? `<img src="${element['prioImg']}">` : '';
+    const taskCategory = element['taskCategory'] ? element['taskCategory'] : 'Keine Kategorie vorhanden';
+    const hasSubtasks = element['subtasks'] && element['subtasks'].length > 0;
+
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
         <div class="task-card" onclick="openDialogGuestTask(${i})">
-        <div class="task-card-type">
-                <div class="type-bg" style="background-color: blue;">${element['taskCategory']}</div>
+            <div class="task-card-type">
+                <div class="type-bg" style="background-color: blue;">${taskCategory}</div>
             </div>
             <h2>${element['title']}</h2>
-            <p class="task-description shorter_description">${element['description']}</p>
+            <p class="task-description shorter_description">${description}</p>
+            ${hasSubtasks ? `
             <div class="progress" id="progress">
                 <div class="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
-                <span onload="updateProgressBar(i)" id="completed-subtasks-${i}">Subtasks</span>
+                <span onload="updateProgressBar(${i})" id="completed-subtasks-${i}">Subtasks</span>
             </div>
+            ` : ''}
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
                 </div>
-                <img src="${element['prioImg']}">
+                ${prioImg}
             </div>
         </div>
     </div>

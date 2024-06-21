@@ -87,9 +87,10 @@ function generateAddTaskHtml() {
  * @returns {string} The HTML string for the task card.
  */
 function generateTodoHTML(element, i) {
-    const description = element['description'] ? element['description'] : 'Keine Beschreibung vorhanden';
+    const description = element['description'] ? element['description'] : '';
     const prioImg = element['prioImg'] ? `<img src="${element['prioImg']}">` : '';
     const taskCategory = element['taskCategory'] ? element['taskCategory'] : 'Keine Kategorie vorhanden';
+    const hasSubtasks = element['subtasks'] && element['subtasks'].length > 0;
 
     return /*html*/`
     <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
@@ -99,12 +100,14 @@ function generateTodoHTML(element, i) {
             </div>
             <h2>${element['title']}</h2>
             <p class="task-description shorter_description">${description}</p>
+            ${hasSubtasks ? `
             <div class="progress" id="progress">
                 <div class="progress-bar" id="progress-bar">
                     <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
                 </div>
                 <span onload="updateProgressBar(${i})" id="completed-subtasks-${i}">Subtasks</span>
             </div>
+            ` : ''}
             <div class="task-card-bottom">
                 <div class="taskContacts" id="taskContacts${i}">
                 </div>
