@@ -69,12 +69,17 @@ async function checkUser(event) {
 
 
 /**
- * This function takes the stored username, splits the words, and retrieves the first letter of each word to form the initials
+ * Diese Funktion extrahiert die Initialen des Benutzernamens und setzt sie im entsprechenden Element.
  */
 function initials() {
-    let userName = localStorage.getItem('username');
-    let initials = userName.split(' ').map(word => word[0]).join('');
-    document.getElementById('initials').innerHTML = initials;
+    const username = localStorage.getItem('username');
+    if (username) {
+        const initials = username.split(' ').map(name => name[0].toUpperCase()).join('');
+        const profileInitialsElement = document.querySelector('.profil-initials');
+        if (profileInitialsElement) {
+            profileInitialsElement.textContent = initials;
+        }
+    }
 }
 
 
@@ -478,16 +483,28 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Diese Funktion überprüft, ob ein Benutzername im localStorage vorhanden ist.
- * Wenn kein Benutzername vorhanden ist und die aktuelle Seite nicht index.html oder sign_up.html ist,
- * wird der Benutzer auf die index.html weitergeleitet.
+ * This function checks if a username exists in localStorage.
+ * If no username is found, certain elements on the page will be hidden.
  */
 function checkUsername() {
     const username = localStorage.getItem('username');
     const currentPage = window.location.pathname.split('/').pop();
-    const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy_guest.html', 'legal_notice_guest.html'];
+    const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy.html', 'legal_notice.html', 'help.html'];
 
-    if (!username && !allowedPages.includes(currentPage)) {
-        window.location.href = 'index.html';
+    if (!username) {
+        if (!allowedPages.includes(currentPage)) {
+            window.location.href = 'index.html';
+        } else {
+            const navbarContainer = document.querySelector('.navbar-container');
+            const profileInitials = document.querySelector('.profil-initials');
+
+            if (navbarContainer) {
+                navbarContainer.classList.add('d-none');
+            }
+
+            if (profileInitials) {
+                profileInitials.classList.add('d-none');
+            }
+        }
     }
 }
