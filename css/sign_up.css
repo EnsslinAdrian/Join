@@ -75,10 +75,10 @@ input[type="text"] {
 }
 
 .reistrationMessage {
-font-size: 24px;
-color: rgb(7, 161, 7);
-margin-bottom: 50px;
-margin-top: 50px;
+    font-size: 24px;
+    color: rgb(7, 161, 7);
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 @media(max-width:580px) {
@@ -117,7 +117,6 @@ margin-top: 50px;
 @media(max-width: 500px) {
     .main_login_content {
         max-width: 270px;
-        margin-right: 10px;
     }
 
     .sign_up_header {
