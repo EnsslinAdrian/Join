@@ -91,14 +91,18 @@ function updateProgressBar(i) {
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
 
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+    if (!subtasksAmount) {
+        return;
+    }
     subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-
-    if (progressBarContent) {
-        progressBarContent.style.width = progress + '%';
+    
+    if (!progressBarContent) {
+        return;
     }
+    progressBarContent.style.width = progress + '%';
 }
 
 
