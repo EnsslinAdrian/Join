@@ -6,10 +6,6 @@
     display: flex;
 }
 
-.sign_up_headline {
-    padding-left: 76px;
-}
-
 .name_icon {
     margin: 10px 0 0 0;
 }
@@ -22,6 +18,8 @@
 
 .back_to_login img {
     object-fit: cover;
+    position: relative;
+    margin-right: -30px;
 }
 
 .back_to_login img:hover {
@@ -33,6 +31,7 @@
 
 .main_login_container {
     margin-top: 30px !important;
+    margin-left: 70px;
 }
 
 .accept_privacy_policy {
@@ -103,27 +102,26 @@ margin-top: 50px;
         margin-left: 20px;
     }
 
-    .sign_up_headline {
-        padding-left: 65px !important;
-    }
-
     .main_login_content {
         height: 460px !important;
+        margin-left: 0px;
+    }
+
+    .back_to_login img {
+        margin-top: 40px !important;
+        margin-left: 20px;
     }
 }
 
 @media(max-width: 500px) {
     .main_login_content {
         max-width: 270px;
+        margin-right: 10px;
     }
 
     .sign_up_header {
         padding-left: 20px !important;
         margin: 0;
-    }
-
-    .sign_up_headline {
-        padding-left: 28px !important;
     }
 
     input[type="text"] {
@@ -132,6 +130,8 @@ margin-top: 50px;
 
     .back_to_login img {
         height: 19px;
+        margin-left: -60px !important;
+        margin-top: 35px !important;
     }
 
     input {
