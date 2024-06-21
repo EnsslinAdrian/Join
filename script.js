@@ -126,16 +126,23 @@ function registration(event) {
 
     postUser("registered", user)
         .then(() => {
-            window.location.href = "index.html";
+            name.value = "";
+            email.value = "";
+            password.value = "";
+            confirmPassword.value = "";
+            document.getElementById('signUpInputsContainer').classList.add('d-none');
+            document.getElementById('acceptPrivacy').classList.add('d-none');
+            document.getElementById('reistrationBtn').classList.add('d-none');
+            document.getElementById('reistrationMessage').innerHTML = 'Registration was successful'
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 2000);
         })
         .catch(error => {
             console.error('Fehler beim Speichern des Benutzers:', error);
         });
 
-    name.value = "";
-    email.value = "";
-    password.value = "";
-    confirmPassword.value = "";
 }
 
 

@@ -136,6 +136,10 @@ p {
     margin-left: 16px;
 }
 
+.d-none {
+display: none;
+}
+
 .input_login_field img {
     margin-right: 13px;
 }

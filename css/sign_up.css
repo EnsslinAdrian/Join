@@ -74,6 +74,13 @@ input[type="text"] {
     letter-spacing: 1px;
 }
 
+.reistrationMessage {
+font-size: 24px;
+color: rgb(7, 161, 7);
+margin-bottom: 50px;
+margin-top: 50px;
+}
+
 @media(max-width:580px) {
     body {
         background-color: #f6f7f8 !important;
