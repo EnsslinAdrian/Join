@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function checkUsername() {
     const username = localStorage.getItem('username');
     const currentPage = window.location.pathname.split('/').pop();
-    const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy_guest.html', 'privacy_policy_guest.html'];
+    const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy_guest.html', 'legal_notice_guest.html'];
 
     if (!username && !allowedPages.includes(currentPage)) {
         window.location.href = 'index.html';
