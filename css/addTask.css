@@ -324,6 +324,11 @@ color: red;
     overflow-y: scroll;
 }
 
+input[type="search"] {
+    background: url("../assets/img/arrow_drop_down.svg") no-repeat right center;
+    background-color: white;
+}
+
 .assigned-contact {
     display: flex;
     align-items: center;
