@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/menubar.css">
+    <link rel="stylesheet" href="./css/help.css">
 
     <script src="./javascript/template.js"></script>
     <script src="script.js"></script>
@@ -36,6 +37,13 @@
         h2 {
             font-size: 50px;
         }
+
+        .back_to_login img {
+            position: absolute;
+            margin-top: 30px;
+            margin-left: 30px;
+        }
+
     </style>
 
 </head>
@@ -45,12 +53,28 @@
         <section class="menubar-section">
             <img class="logo" src="./assets/img/logo_hell.svg" alt="Join Logo">
             <div class="navbar-container">
-                <a href="summary.html"><div class="navbar"><img src="./assets/img/menubar/summary.svg" alt=""><p class="link-text">Summary</p></div></a>
-                <a href="add_task.html"><div class="navbar"><img src="./assets/img/menubar/addtask.svg" alt=""><p class="link-text">Add Task</p></div></a>
-                <a href="board.html"><div class="navbar"><img src="./assets/img/menubar/board.svg" alt=""><p class="link-text">Board</p></div></a>
-                <a href="contacts.html"><div class="navbar"><img src="./assets/img/menubar/contact.svg" alt=""><p class="link-text">Contacts</p></div></a>
+                <a href="summary.html">
+                    <div class="navbar"><img src="./assets/img/menubar/summary.svg" alt="">
+                        <p class="link-text">Summary</p>
+                    </div>
+                </a>
+                <a href="add_task.html">
+                    <div class="navbar"><img src="./assets/img/menubar/addtask.svg" alt="">
+                        <p class="link-text">Add Task</p>
+                    </div>
+                </a>
+                <a href="board.html">
+                    <div class="navbar"><img src="./assets/img/menubar/board.svg" alt="">
+                        <p class="link-text">Board</p>
+                    </div>
+                </a>
+                <a href="contacts.html">
+                    <div class="navbar"><img src="./assets/img/menubar/contact.svg" alt="">
+                        <p class="link-text">Contacts</p>
+                    </div>
+                </a>
             </div>
-        
+
             <div class="protection-container">
                 <a style="margin-bottom: 20px;" href="privacy_policy.html">Privacy Policy</a>
                 <a style="margin-bottom: 72px;" href="legal_notice.html">Legal notice</a>
@@ -73,7 +97,9 @@
                     </div>
                 </div>
             </header>
-
+            <div class="back_to_login">
+                <a href="index.html"><img src="./assets/img/arrow-back-blue.svg" alt=""></a>
+            </div>
             <div class="margin-left-right">
 
                 <h2>Help</h2>
@@ -112,7 +138,9 @@
                     <h3>2.</h3>
                     <div>
                         <h4>Creating Contacts</h4>
-                        <p>In Join, you can add contacts to collaborate on your projects. Go to the "Contacts" section, click on "New contact", and fill in the required information. Once added, these contacts can be assigned tasks and they can interact with the tasks on the board.</p>
+                        <p>In Join, you can add contacts to collaborate on your projects. Go to the "Contacts" section,
+                            click on "New contact", and fill in the required information. Once added, these contacts can
+                            be assigned tasks and they can interact with the tasks on the board.</p>
                     </div>
                 </div>
 
@@ -120,7 +148,9 @@
                     <h3>3.</h3>
                     <div>
                         <h4>Adding Cards</h4>
-                        <p>Now that you've added your contacts, you can start adding cards. Cards represent individual tasks. Click the "+" button under the appropriate list to create a new card. Fill in the task details in the card, like task name, description, due date, assignees, etc.</p>
+                        <p>Now that you've added your contacts, you can start adding cards. Cards represent individual
+                            tasks. Click the "+" button under the appropriate list to create a new card. Fill in the
+                            task details in the card, like task name, description, due date, assignees, etc.</p>
                     </div>
                 </div>
 
