@@ -313,6 +313,7 @@ color: red;
     font-size: 20px;
     cursor: pointer;
     outline: none;
+    display: inline-block;
 }
 
 .assigned-contacts-container {
