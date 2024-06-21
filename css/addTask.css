@@ -317,16 +317,28 @@ color: red;
 }
 
 .assigned-contacts-container {
-    width: 102%;
+    width: 100%;
     background-color: rgb(253, 255, 255);
     height: 300px;
     position: relative;
     overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 input[type="search"] {
-    background: url("../assets/img/arrow_drop_down.svg") no-repeat right center;
+    background: url("../assets/img/arrow_drop_down.svg") no-repeat;
     background-color: white;
+    background-position: 417px;
+}
+
+input[type="search"]:focus {
+    background: url("../assets/img/add_task/up_arrow.svg") no-repeat;
+    background-color: white;
+    background-position: 417px;
+}
+
+.input-bg {
+    background: url("../assets/img/add_task/up_arrow.svg") no-repeat; 
 }
 
 .assigned-contact {

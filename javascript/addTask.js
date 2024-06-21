@@ -43,7 +43,7 @@ function clearTask() {
 
   let checkboxes = document.querySelectorAll('[id^="taskCheckbox"]');
   checkboxes.forEach(checkbox => {
-      checkbox.checked = false;
+    checkbox.checked = false;
   });
 
   renderAddTaskContactInitials();
