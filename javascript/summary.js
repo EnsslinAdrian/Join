@@ -66,7 +66,6 @@ function renderResponsivSummary() {
     let greet = document.getElementById('greeting');
 
     if (window.innerWidth <= 1200) {
-        renderResponsivSummaryMaxWidth();
         headline.classList.add('d-none');
         headlineResponsiv.classList.add('d-none');
         taskDashboard.classList.add('d-none');
