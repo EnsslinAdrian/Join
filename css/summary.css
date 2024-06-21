@@ -1,3 +1,7 @@
+body {
+    font-family: 'Inter';
+}
+
 .task-dashboard-section {
     display: flex;
     height: 60vh;

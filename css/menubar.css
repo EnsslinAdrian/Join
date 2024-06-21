@@ -3,6 +3,7 @@ body {
     display: flex;
     justify-content: center;
     overflow-x: hidden;
+    font-family: 'Inter';
 }
 
 .content-container {
