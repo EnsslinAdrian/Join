@@ -37,7 +37,7 @@
             <form id="registrationForm" onsubmit="registration(event)">
                 <div class="input_login_field">
                     <input id="name" type="text" required class="name_icon" placeholder="Name">
-                    <div class="input_login_field">
+                    <div class="input_login_field" id="signUpInputsContainer">
                         <div class="input_field_mail" id="input_field_mail">
                             <input id="loginEmail" type="email" required placeholder=" Email">
                             <img src="./assets/img/mail.svg" alt="">
@@ -59,13 +59,14 @@
                     </div>
                     <p class="answer-message" id="signAnswer"></p>
                 </div>
-                <div class="accept_privacy_policy">
+                <div class="accept_privacy_policy" id="acceptPrivacy">
                     <input required type="checkbox">
                     <p>I accept the <a href="privacy_policy.html">Privacy policy</a></p>
                 </div>
+                <p class="reistrationMessage" id="reistrationMessage"></p>
                 <div class="sign_up_container">
                     <div class="sign_up">
-                        <button type="submit" class="btn">Sign up</button>
+                        <button id="reistrationBtn" type="submit" class="btn">Sign up</button>
                     </div>
                 </div>
             </form>
@@ -80,7 +81,3 @@
 </body>
 
 </html>
-
-<div class="back-arrow">
-    <a href="index.html"><img src="assets/img/contacts/bluearrow.svg" alt=""></a>
-</div>

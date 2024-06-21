@@ -4,6 +4,7 @@
 
 .sign_up_header {
     display: flex;
+    justify-content: center;
 }
 
 .name_icon {
