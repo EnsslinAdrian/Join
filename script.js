@@ -338,13 +338,11 @@ async function renderTaskBoard() {
             let path = responseToJson['registered'][user];
             let tasks = path ? path['tasks'] : [];
 
-            // Clear existing tasks in the UI
             document.getElementById('todo').innerHTML = '';
             document.getElementById('in-progress').innerHTML = '';
             document.getElementById('await-feedback').innerHTML = '';
             document.getElementById('done').innerHTML = '';
 
-            // Render tasks if they exist
             if (Array.isArray(tasks) && tasks.length > 0) {
                 renderTasks(tasks);
                 await updateAllProgressBars();
@@ -361,9 +359,8 @@ async function renderTaskBoard() {
  * @param {Array} tasks - The list of tasks to render.
  */
 function renderTasks(tasks) {
-    // Überprüfen, ob tasks definiert ist und ein Array ist
     if (!Array.isArray(tasks) || tasks.length === 0) {
-        return; // Beenden der Funktion, wenn keine Aufgaben vorhanden sind
+        return;
     }
 
     for (let i = 0; i < tasks.length; i++) {
@@ -389,13 +386,21 @@ function renderTasks(tasks) {
 }
 
 
+/**
+ * Toggles the visibility of the profile popup.
+ * It adds or removes the 'd-none' and 'popup-logout-mobile' classes
+ * to/from the element with the ID 'popupLogout'.
+ */
 function openProfilPopup() {
     const popup = document.getElementById('popupLogout');
     popup.classList.toggle('d-none');
     popup.classList.toggle('popup-logout-mobile');
 }
 
-
+/**
+ * Logs out the user by removing specified keys from local storage
+ * and redirects to the index page.
+ */
 function logOut() {
     const keysToRemove = ['userKey', 'username'];
 
@@ -408,11 +413,10 @@ function logOut() {
 
 
 /**
- * Setzt den Benutzer auf 'Guest' und leitet zur Summary-Seite weiter.
- * Falls noch nicht vorhanden, speichert initiale Tasks im Local Storage.
+ * Sets the user to 'Guest' and redirects to the summary page.
+ * If not already present, stores initial tasks in local storage.
  */
 function questLogin() {
-    // Überprüfen, ob das Array 'guestTasks' bereits im Local Storage gespeichert ist
     if (!localStorage.getItem('guestTasks')) {
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
     }
@@ -439,7 +443,6 @@ async function renderContacts(path = "") {
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
-        // Sort contactsArray alphabetically by name
         contactsArray.sort((a, b) => a.name.localeCompare(b.name));
 
         content.innerHTML = "";
@@ -474,8 +477,10 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function checkUsername() {
     const username = localStorage.getItem('username');
-    const currentPage = window.location.pathname.split('/').pop(); // Ermittelt den Namen der aktuellen Seite
-    if (!username && currentPage !== 'index.html' && currentPage !== 'sign_up.html') {
+    const currentPage = window.location.pathname.split('/').pop();
+    const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy_guest.html', 'privacy_policy_guest.html'];
+
+    if (!username && !allowedPages.includes(currentPage)) {
         window.location.href = 'index.html';
     }
 }

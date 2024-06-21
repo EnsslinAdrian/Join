@@ -283,180 +283,6 @@ function deleteGuestTask(index) {
     closeDialogTask()
 }
 
-/**
- * Diese Funktion bearbeitet die Aufgabe mit dem angegebenen Index.
- * 
- * @param {number} i - Der Index der zu bearbeitenden Aufgabe.
- */
-function editGuestTask(i) {
-    const task = guestTasks[i];
-    console.log('Editing task:', task); // Debugging-Zeile
-    let container = document.getElementById('taskDetails');
-    container.innerHTML = generateEditPopupGuest(task, i);
-}
-
-
-/**
- * Diese Funktion generiert das Bearbeitungspopup für eine Gastaufgabe.
- * 
- * @param {Object} task - Die zu bearbeitende Aufgabe.
- * @param {number} i - Der Index der Aufgabe.
- */
-function generateEditPopupGuest(task, i) {
-    const formattedDate = task.date ? formatDateToISO(task.date) : '';
-    console.log('Formatted date:', formattedDate); // Debugging-Zeile
-    const prioUrgentSelected = task.priority === 'Urgent' ? 'urgent' : '';
-    const prioMediumSelected = task.priority === 'Medium' ? 'medium' : '';
-    const prioLowSelected = task.priority === 'Low' ? 'low' : '';
-    
-    const prioUrgentIcon = task.priority === 'Urgent' ? './assets/img/add_task/arrow_white.svg' : './assets/img/add_task/arrowsTop.svg';
-    const prioMediumIcon = task.priority === 'Medium' ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/result.svg';
-    const prioLowIcon = task.priority === 'Low' ? './assets/img/add_task/arrow_buttom_white.svg' : './assets/img/add_task/arrowsButtom.svg';
-
-    return `
-    <div>
-        <div class="add-task-section-edit">
-            <div class="add-task-titel-container-edit">
-                <div class="close_edit_popup">
-                    <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
-                </div>
-                <form id="editTaskForm">
-                    <input type="hidden" id="taskId" value="${task.id}">
-                    <p>Titel<span class="color-red">*</span></p>
-                    <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
-                    <p>Description</p>
-                    <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
-                    <p>Assigned to</p>
-                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
-                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact" id="selectedContact">
-                        ${task.taskContacts ? task.taskContacts.map(contact => `
-                            <div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>
-                        `).join('') : ''}
-                    </div>
-            </div>
-            <div class="add-task-date-container-edit">
-                <p>Due date<span class="color-red">*</span></p>
-                <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date" value="${formattedDate}">
-                <p>Prio</p>
-                <div class="margin-buttom add-task-prio">
-                    <div class="prio-selection-urgent ${prioUrgentSelected}" onclick="taskUrgent()" id="urgent">
-                        <span>Urgent</span>
-                        <img id="imgUrgent" class="prio-icons" src="${prioUrgentIcon}">
-                    </div>
-                    <div class="prio-selection-medium ${prioMediumSelected}" onclick="taskMedium()" id="medium">
-                        <span>Medium</span>
-                        <img id="imgMedium" class="prio-icons" src="${prioMediumIcon}">
-                    </div>
-                    <div class="prio-selection-low ${prioLowSelected}" onclick="taskLow()" id="low">
-                        <span>Low</span>
-                        <img id="imgLow" class="prio-icons" src="${prioLowIcon}">
-                    </div>
-                </div>
-                <p>Category<span class="color-red">*</span></p>
-                <div class="custom-select-board" style="width:100%;">
-                    <select id="select">
-                        <option value="0">Select task category</option>
-                        <option value="1" ${task.taskCategory === 'Technical Task' ? 'selected' : ''}>Technical Task</option>
-                        <option value="2" ${task.taskCategory === 'User Story' ? 'selected' : ''}>User Story</option>
-                    </select>
-                </div>
-                <p>Subtasks</p>
-                <div class="subtasks-container">
-                    <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                    <div class="subtasks-button">
-                        <button onclick="addNewSubtasks()" type="button">+</button>
-                    </div>
-                </div>
-                <div class="subtasks-list">
-                    <ul id="subtasksList">
-                        ${task.subtasks ? task.subtasks.map((subtask, index) => `
-                            <div class="edit-subtask-container" id="subtaskEditContainer${index}">
-                                <li onkeydown="checkSubtasksEditLength(${index})" id="subtaskTitle${index}" contenteditable="false" onblur="saveSubtaskTitle(${index})">${subtask.title}</li>
-                                <div class="subtask-edit-svg" id="subtaskSvg">
-                                    <img onclick="editSubtask(${index})" src="./assets/img/edit.svg">
-                                    <div class="subtask-edit-line"></div>
-                                    <img onclick="deleteSubtask(${index})" src="./assets/img/add_task/delete.svg">
-                                </div>
-                            </div>
-                        `).join('') : ''}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="send-add-task-buttons">
-            <div class="buttons">
-                <button onclick="saveEditedTaskGuest(event, ${i})" class="btn">OK<img src="assets/img/add_task/check.svg"></button>
-            </div>
-        </div>
-        </form>
-    </div>
-    `;
-}
-
-/**
- * Diese Funktion formatiert eine Datum-Zeichenkette in das ISO-Format (yyyy-MM-dd).
- * 
- * @param {string} date - Die zu formatierende Datum-Zeichenkette.
- * @returns {string} Die formatierte Datum-Zeichenkette im ISO-Format.
- */
-function formatDateToISO(date) {
-    if (!date) {
-        return '';
-    }
-    const [day, month, year] = date.split('.');
-    console.log('Original date:', date); // Debugging-Zeile
-    return `${year}-${month}-${day}`;
-}
-
-
-
-/**
- * Diese Funktion speichert die bearbeitete Aufgabe.
- * 
- * @param {Event} event - Das Formularübermittlung-Ereignis.
- * @param {number} i - Der Index der zu speichernden Aufgabe.
- */
-function saveEditedTaskGuest(event, i) {
-    event.preventDefault();
-    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-    const task = guestTasks[i];
-    task.title = document.getElementById('title').value;
-    task.description = document.getElementById('description').value;
-    task.date = document.getElementById('date').value;
-    console.log('Saved date:', task.date); // Debugging-Zeile
-    task.priority = document.querySelector('.prio-selection-urgent.urgent') ? 'Urgent' :
-                    document.querySelector('.prio-selection-medium.medium') ? 'Medium' : 'Low';
-    task.prioImg = document.querySelector('.prio-selection-urgent.urgent') ? './assets/img/add_task/arrow_white.svg' :
-                   document.querySelector('.prio-selection-medium.medium') ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/arrow_buttom_white.svg';
-    task.taskCategory = document.getElementById('select').value === '1' ? 'Technical Task' : 'User Story';
-
-    // Kontakte speichern
-    const assignedContacts = [];
-    document.querySelectorAll('.selected-contact .assigned-initials').forEach(contact => {
-        assignedContacts.push({
-            color: contact.style.backgroundColor,
-            initials: contact.textContent
-        });
-    });
-    task.taskContacts = assignedContacts;
-
-    // Subtasks speichern
-    const updatedSubtasks = [];
-    document.querySelectorAll('#subtasksList .edit-subtask-container').forEach((subtaskContainer, index) => {
-        const subtaskTitle = subtaskContainer.querySelector(`#subtaskTitle${index}`).textContent;
-        // Hier wird der Zustand von Subtasks ohne Checkbox festgelegt. Zum Beispiel: alle Subtasks werden als 'nicht erledigt' gesetzt.
-        const subtaskState = false; 
-        updatedSubtasks.push({ title: subtaskTitle, state: subtaskState });
-    });
-    task.subtasks = updatedSubtasks;
-
-    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-
-    renderGuestTaskBoard();
-    closeDialogTask();
-}
-
 
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
@@ -485,6 +311,7 @@ function renderGuestCheckbox(taskIndex) {
     updateProgressBar(taskIndex);
 }
 
+
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     let isChecked = checkbox.checked;
@@ -497,37 +324,37 @@ function saveGuestCheckboxState(taskIndex, subtaskIndex) {
 
 
 function updateAllGuestsProgressBars() {
-        for (let i = 0; i < guestTasks.length; i++) {
-            let task = guestTasks[i];
-            let subtasks = task['subtasks'];
-    
-            if (subtasks.length > 0) {
-                let allSubtasks = subtasks.length;
-                let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-    
-                let progress = (completedSubtasks / allSubtasks) * 100;
-    
-                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-                if (subtasksAmount) {
-                    subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-                }
-    
-                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-                if (progressBarContent) {
-                    progressBarContent.style.width = progress + '%';
-                }
-            } else {
-                let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-                if (subtasksAmount) {
-                    subtasksAmount.innerHTML = '0/0 Subtasks';
-                }
-                let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-                if (progressBarContent) {
-                    progressBarContent.style.width = '0%';
-                }
+    for (let i = 0; i < guestTasks.length; i++) {
+        let task = guestTasks[i];
+        let subtasks = task['subtasks'];
+
+        if (subtasks.length > 0) {
+            let allSubtasks = subtasks.length;
+            let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+
+            let progress = (completedSubtasks / allSubtasks) * 100;
+
+            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+            if (subtasksAmount) {
+                subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+            }
+
+            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+            if (progressBarContent) {
+                progressBarContent.style.width = progress + '%';
+            }
+        } else {
+            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+            if (subtasksAmount) {
+                subtasksAmount.innerHTML = '0/0 Subtasks';
+            }
+            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+            if (progressBarContent) {
+                progressBarContent.style.width = '0%';
             }
         }
     }
+}
 
 
 /**
@@ -568,11 +395,6 @@ function generateGuestTaskDetails(task, i) {
             <div class="delete_task" onclick="deleteGuestTask(${i})">
                 <img src="./assets/img/delete.svg" alt="">
                 <p>Delete</p>
-            </div>
-            <p>|</p>
-            <div class="edit_task" onclick="editGuestTask(${i})">
-                <img src="./assets/img/edit.svg" alt="">
-                <p>Edit</p>
             </div>
         </footer>
     </div>

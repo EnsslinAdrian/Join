@@ -17,7 +17,7 @@ function generateAddTaskHtml() {
                     placeholder="Enter a Description"></textarea>
 
                 <p>Assigned to</p>
-    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
+                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
                         placeholder="Select contacts to assign">
                     <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
                     <div class="selected-contact d-none" id="selectedContact"></div>
@@ -188,7 +188,7 @@ function generateTaskDetails(task, i) {
 function generateSubtaskHtml(subtask, i) {
     const title = subtask.title || 'No title available'; // Fallback text if no title is provided
     const subtaskId = `subtaskEditContainer${i}`;
-    
+
     return `
     <div class="edit-subtask-container" id="${subtaskId}">
         <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="true" onblur="saveSubtaskTitle(${i})">${title}</li>

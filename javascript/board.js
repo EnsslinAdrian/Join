@@ -275,7 +275,6 @@ async function deleteTask(taskJson, i) {
  */
 async function deleteTaskByUrl(personalId, i) {
     const taskUrl = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks/${i}.json`;
-    console.log('URL for the DELETE request:', taskUrl);
     const response = await fetch(taskUrl, { method: 'DELETE' });
     if (!response.ok) {
         const errorText = await response.text();
@@ -361,7 +360,6 @@ function setPriority(prio) {
             taskLow();
             break;
         default:
-            console.log('Unbekannte Priorität:', prio);
             break;
     }
 }
@@ -426,7 +424,6 @@ function renderSubtasks(subtasks) {
 function getUserKey() {
     const userKey = localStorage.getItem('userKey');
     if (!userKey) {
-        console.log("Kein Benutzer-Schlüssel verfügbar.");
     }
     return userKey;
 }
@@ -497,8 +494,6 @@ async function updateTaskInDatabase(url, updatedTask) {
             body: JSON.stringify(updatedTask)
         });
 
-        console.log('Update Task Response:', response); // Protokollieren Sie die Antwort
-
         if (!response.ok) {
             const errorText = await response.text();
             console.error("Update fehlgeschlagen. Antwortstatus: ", response.status, errorText);
@@ -520,24 +515,17 @@ async function updateTaskInDatabase(url, updatedTask) {
  * @returns {Promise<void>} A promise that resolves when the task is saved.
  */
 async function saveEditedTask(taskIndex) {
-    console.log('saveEditedTask aufgerufen'); // Überprüfen Sie, ob die Funktion aufgerufen wird
-
     const userKey = getUserKey();
     if (!userKey) {
-        console.log("Kein Benutzer-Schlüssel verfügbar.");
         return;
     }
     const url = generateTaskUrl(userKey, taskIndex); // Verwenden Sie die richtige URL
-    console.log('Generated URL:', url); // Protokollieren Sie die generierte URL
     const updatedTask = collectFormData();
 
     try {
-        console.log('Updated Task:', updatedTask); // Protokollieren Sie die gesammelten Daten
-
         const updateResponse = await updateTaskInDatabase(url, updatedTask);
 
         if (updateResponse.ok) {
-            console.log('Update Response:', await updateResponse.json());
             window.location.reload();
         } else {
             const errorText = await updateResponse.text();

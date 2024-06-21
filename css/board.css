@@ -465,6 +465,7 @@ span {
     overflow-x: hidden;
     position: relative;
     width: 273px;
+    margin-top: 20px;
 }
 
 ::-webkit-scrollbar {
