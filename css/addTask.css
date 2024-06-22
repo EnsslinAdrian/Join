@@ -107,8 +107,13 @@ select {
     font-size: 20px;
 }
 
-#select option {
-    padding: 4px;
+.option {
+    padding: 2px !important;
+    margin: 5px;
+}
+
+.option:hover {
+    background-color: lightgrey !important;
 }
 
 p {
@@ -174,30 +179,24 @@ p {
     margin-left: 8px;
 }
 
-.custom-select {
-    position: relative;
-    font-family: 'inter';
-    margin-bottom: 20px;
-    font-family: 'Inter';
-    font-size: 20px;
-    font-weight: 400;
-}
-
-.custom-select select {
+.select-hide {
     display: none;
 }
 
-.custom-select-board {
+.custom-select {
     position: relative;
-    font-family: 'inter';
+    font-family: 'Inter', sans-serif;
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 400;
 }
 
-.select-selected {
-    background-color: white;
-    border: 2px solid black;
+.custom-select-hidden {
+    display: none;
+}
+
+.custom-select option {
+    height: 20px !important;
 }
 
 .select-selected:after {
@@ -211,52 +210,45 @@ p {
     border-color: black transparent transparent transparent;
 }
 
-.custom-select option {
-    height: 20px !
-    ;
-}
-
 .select-selected.select-arrow-active:after {
     border-color: transparent transparent black transparent;
     top: 7px;
 }
 
-.select-items div,
-.select-selected {
-    color: black;
-    padding: 8px 16px;
-    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-    cursor: pointer;
-    user-select: none;
-    border-radius: 10px;
-}
-
 .select-items {
     position: absolute;
-    background-color: white;
-    border-radius: 10px;
+    background-color: pink;
     top: 100%;
-    padding: 3px;
     left: 0;
     right: 0;
     z-index: 99;
+  }
+
+.select-items div {
+    color: black;
+    padding: 8px 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.select-items div:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .select-hide {
     display: none;
 }
 
-.select-items div:hover,
 .same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
 .send-add-task-buttons {
-display: flex;
-justify-content: space-between;
-align-items: center;
-width: 59em;
-margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 59em;
+    margin-top: 50px;
 }
 
 .btn {
@@ -299,15 +291,15 @@ margin-top: 50px;
 .required-text {
     font-family: 'Inter';
     font-size: 16px;
-    font-weight: 400;    
+    font-weight: 400;
 }
 
 .color-red {
-color: red;
+    color: red;
 }
 
-.assigned-conainer p{
-color: red;
+.assigned-conainer p {
+    color: red;
 }
 
 .assigned-search {
@@ -348,7 +340,7 @@ input[type="search"]:focus {
 }
 
 .input-bg {
-    background: url("../assets/img/add_task/up_arrow.svg") no-repeat; 
+    background: url("../assets/img/add_task/up_arrow.svg") no-repeat;
 }
 
 .assigned-contact {
@@ -475,39 +467,39 @@ input[type="search"]:focus {
     font-weight: 400;
     font-family: 'inter';
     height: 25px;
-    }
+}
 
-    .subtask-edit-svg {
+.subtask-edit-svg {
     display: flex;
     align-items: center;
     margin-right: 10px;
     display: none;
-    }
+}
 
-    .subtask-edit-svg img{
-     cursor: pointer;
-        }
+.subtask-edit-svg img {
+    cursor: pointer;
+}
 
-    .subtask-edit-line {
+.subtask-edit-line {
     width: 2px;
     height: 20px;
     margin-left: 5px;
     margin-right: 5px;
     background-color: #00000059;
-    }
+}
 
 .edit-subtask-container:hover {
     background-color: #d6e2f3;
 }
 
-.edit-subtask-container:hover > .subtask-edit-svg {
+.edit-subtask-container:hover>.subtask-edit-svg {
     display: flex;
 }
 
 .subtasks-list {
-height: 100px;
-overflow: scroll;
-scrollbar-width: none;
+    height: 100px;
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 @media (max-width: 1300px) {
@@ -519,14 +511,14 @@ scrollbar-width: none;
         width: 50%;
         height: 376px;
     }
-    
+
     .add-task-between-line {
         height: 424px;
         border: 1px solid #D1D1D1;
         margin-left: 48px;
         margin-right: 48px;
     }
-    
+
     .add-task-date-container {
         height: 440px;
         width: 50%;
@@ -541,13 +533,13 @@ scrollbar-width: none;
         width: 30%;
         border-radius: 10px;
     }
-    
+
     .prio-selection-medium {
         height: 40px;
         width: 30%;
         border-radius: 10px;
     }
-    
+
     .prio-selection-low {
         height: 40px;
         width: 30%;
@@ -606,67 +598,67 @@ scrollbar-width: none;
     .add-task-between-line {
         display: none;
     }
-    
+
     .send-add-task-buttons {
         display: flex;
         justify-content: space-between;
         width: 100%;
         margin-top: 20px;
-        }
+    }
 
-        .add-task-titel-container {
-            width: 100%;
-            height: auto;
-        }
+    .add-task-titel-container {
+        width: 100%;
+        height: auto;
+    }
 
-        .margin-left-top {
-            margin-left: 10px;
-            margin-top: 50px;
-            height: auto;
-            margin-right: 15px;
-            margin-bottom: 100px;
-        }
+    .margin-left-top {
+        margin-left: 10px;
+        margin-top: 50px;
+        height: auto;
+        margin-right: 15px;
+        margin-bottom: 100px;
+    }
 
-        h1 {
-            font-size: 47px;
-        }
+    h1 {
+        font-size: 47px;
+    }
 
-        .add-task-date-container {
-            height: auto;
-            width: 100%;
-        }
+    .add-task-date-container {
+        height: auto;
+        width: 100%;
+    }
 
-        .clear-button {
+    .clear-button {
         display: none;
-        }
+    }
 
-        .prio-selection-urgent {
-            height: 40px;
-            width: 30%;
-            border-radius: 10px;
-        }
-        
-        .prio-selection-medium {
-            height: 40px;
-            width: 30%;
-            border-radius: 10px;
-        }
-        
-        .prio-selection-low {
-            height: 40px;
-            width: 30%;
-            border-radius: 10px;
-        }
+    .prio-selection-urgent {
+        height: 40px;
+        width: 30%;
+        border-radius: 10px;
+    }
 
-        .select-items div, .select-selected {
-            padding: 10px 0px;
-            width: 100%;
-        }
+    .prio-selection-medium {
+        height: 40px;
+        width: 30%;
+        border-radius: 10px;
+    }
 
-        .btn {
-            padding: 12px 12px;
-            margin-left: 10px;
-            width: 100%;
-        }
+    .prio-selection-low {
+        height: 40px;
+        width: 30%;
+        border-radius: 10px;
+    }
+
+    .select-items div,
+    .select-selected {
+        padding: 10px 0px;
+        width: 100%;
+    }
+
+    .btn {
+        padding: 12px 12px;
+        margin-left: 10px;
+        width: 100%;
+    }
 }
-
