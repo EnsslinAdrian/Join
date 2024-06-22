@@ -105,31 +105,11 @@ select {
     text-indent: 10px;
     margin-bottom: 20px;
     font-size: 20px;
-    -webkit-appearance: none; /* Remove default arrow */
-    -moz-appearance: none; /* Remove default arrow */
-    appearance: none; /* Remove default arrow */
-    background-color: white;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14l-4.796-5.481C2.06 5.28 2.522 4.5 3.053 4.5h9.894c.53 0 .992.78.602 1.159l-4.796 5.481a.75.75 0 0 1-1.106 0z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
 }
 
-option {
-    padding: 10px;
+.option {
+    padding: 2px;
 }
-
-/* To change hover color */
-select:hover,
-select:focus {
-    border-color: gray;
-}
-
-/* Fallback for browsers that do not support custom arrows */
-select::-ms-expand {
-    display: none;
-}
-
-
 
 
 p {
