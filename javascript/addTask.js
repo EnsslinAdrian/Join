@@ -30,16 +30,17 @@ function clearTask() {
   document.getElementById('description').value = '';
   taskContacts = [];
   document.getElementById('date').value = '';
-  prio = '';
+  prio = 'Medium';
   document.getElementById('urgent').classList.remove('urgent')
-  document.getElementById('medium').classList.remove('medium')
+  document.getElementById('medium').classList.add('medium')
   document.getElementById('low').classList.remove('low')
-  document.getElementById('imgMedium').src = './assets/img/add_task/result.svg';
+  document.getElementById('imgMedium').src = './assets/img/add_task/result_white.svg';
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
   subtasks = [];
   document.getElementById('titelLengthMessage').innerHTML = '';
   document.getElementById('descriptionLengthMessage').innerHTML = '';
+  document.getElementById('select').value = '';
 
   let checkboxes = document.querySelectorAll('[id^="taskCheckbox"]');
   checkboxes.forEach(checkbox => {
