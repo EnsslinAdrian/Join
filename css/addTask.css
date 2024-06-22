@@ -191,7 +191,6 @@ p {
     position: relative;
     font-family: 'inter';
     margin-bottom: 20px;
-    font-family: 'Inter';
     font-size: 20px;
     font-weight: 400;
 }
@@ -210,6 +209,11 @@ p {
     height: 0;
     border: 6px solid transparent;
     border-color: black transparent transparent transparent;
+}
+
+.custom-select option {
+    height: 20px !
+    ;
 }
 
 .select-selected.select-arrow-active:after {
@@ -232,6 +236,7 @@ p {
     background-color: white;
     border-radius: 10px;
     top: 100%;
+    padding: 3px;
     left: 0;
     right: 0;
     z-index: 99;
@@ -333,13 +338,13 @@ color: red;
 input[type="search"] {
     background: url("../assets/img/arrow_drop_down.svg") no-repeat;
     background-color: white;
-    background-position: 417px;
+    background-position: right 10px center;
 }
 
 input[type="search"]:focus {
     background: url("../assets/img/add_task/up_arrow.svg") no-repeat;
     background-color: white;
-    background-position: 417px;
+    background-position: right 10px center;
 }
 
 .input-bg {
