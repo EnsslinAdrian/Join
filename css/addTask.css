@@ -108,8 +108,8 @@ select {
 }
 
 .option {
-    padding: 2px !important;
-    margin: 5px;
+    padding: 2px;
+    height: 
 }
 
 .option:hover {
@@ -193,10 +193,6 @@ p {
 
 .custom-select-hidden {
     display: none;
-}
-
-.custom-select option {
-    height: 20px !important;
 }
 
 .select-selected:after {
