@@ -180,12 +180,12 @@ function getInitials(name) {
 function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
   return `
   <div class="assigned-contact" id="contactTask${i}">
-              <div class="contact-name">
-                  <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
-                  <p>${contact.name}</p>
-              </div>
-              <input id="taskCheckbox${i}" onclick="addContactTask('${contact.name}', '${initials}', ${i}, '${initialsBgColor}')" class="checkbox" type="checkbox">
-          </div>
+    <div class="contact-name">
+        <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
+        <p>${contact.name}</p>
+    </div>
+    <input id="taskCheckbox${i}" onclick="addContactTask('${contact.name}', '${initials}', ${i}, '${initialsBgColor}')" class="checkbox" type="checkbox">
+  </div>
   `;
 }
 

@@ -288,7 +288,7 @@ function generateTaskContactHtml(contact, i, color) {
     let contactName = contact['name'];
     let initials = contactName.split(' ').map(word => word[0]).join('');
     return `
-    <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox(${i})">
+    <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${color}')">
     <div class="contact-name">
     <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
     <p>${contact['name']}</p>
@@ -299,10 +299,18 @@ function generateTaskContactHtml(contact, i, color) {
 }
 
 
-function toggleCheckbox(index) {
-    const checkbox = document.getElementById(`taskCheckbox${index}`);
+/**
+ * This function allows the checkbox to be selected when you click on the name.
+ *
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} index - The index of the contact task.
+ * @param {string} color - The color associated with the contact.
+ */
+function toggleCheckbox(index, contactName, initials, color) {
+    let checkbox = document.getElementById(`taskCheckbox${index}`);
     checkbox.checked = !checkbox.checked;
-    addContactTask('John Doe', 'AB', index, '#f00'); // Call the function if needed
+    addContactTask(contactName, initials, index, color);
 }
 
 

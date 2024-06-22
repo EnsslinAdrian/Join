@@ -98,12 +98,17 @@ textarea::placeholder {
 
 select {
     height: 40px;
-    width: 95%;
+    width: 100%;
     border-radius: 8px;
     color: grey;
     border: 1px solid lightgray;
     text-indent: 10px;
     margin-bottom: 20px;
+    font-size: 20px;
+}
+
+#select option {
+    padding: 4px;
 }
 
 p {
