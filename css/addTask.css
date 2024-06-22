@@ -105,6 +105,7 @@ select {
     text-indent: 10px;
     margin-bottom: 20px;
     font-size: 20px;
+    outline: none;
 }
 
 .option {
