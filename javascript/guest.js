@@ -579,7 +579,7 @@ function generateEditPopupGuest(task, i) {
                 <div class="subtasks-container">
                     <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
                     <div class="subtasks-button">
-                        <button onclick="addNewSubtasks()" type="button">+</button>
+                        <button onclick="addNewSubtasksGuest()" type="button">+</button>
                     </div>
                 </div>
             <div class="subtasks-list">
@@ -653,4 +653,32 @@ function generateSubtaskGuestHtml(contact, i) {
     console.log(subtasks)
 
   }
+
+  function addNewSubtasksGuest() {
+    let subtaskInput = document.getElementById('subtask');
+    if (subtasks.length < 5) {
+      if (subtaskInput.value.length >= 1) {
+        let newSubtask = {
+          'title': subtaskInput.value,
+          'state': false
+        };
+        subtasks.push(newSubtask);
+        subtaskInput.value = '';
+        renderSubtasksListGuest();
+      }
+    }
+  }
+
+  /**
+ * This function renders the created subtasks and displays them in the content area.
+ */
+function renderSubtasksListGuest() {
+    let content = document.getElementById('subtasksList');
+    content.innerHTML = '';
+    for (let i = 0; i < subtasks.length; i++) {
+      let subtask = subtasks[i];
+      content.innerHTML += generateSubtaskGuestHtml(subtask, i);
+    }
+  }
+
 

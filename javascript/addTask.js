@@ -408,3 +408,25 @@ function getTodayDate() {
   today = mm + '/' + dd + '/' + yyyy;
   return `${yyyy}-${mm}-${dd}`;
 }
+
+const customSelect = document.querySelector('.custom-select');
+const customSelectTrigger = customSelect.querySelector('.custom-select-trigger');
+const customOptions = customSelect.querySelector('.custom-options');
+const customOptionList = customOptions.querySelectorAll('.custom-option');
+
+customSelectTrigger.addEventListener('click', () => {
+    customSelect.classList.toggle('open');
+});
+
+customOptionList.forEach(option => {
+    option.addEventListener('click', () => {
+        customSelectTrigger.textContent = option.textContent;
+        customSelect.classList.remove('open');
+    });
+});
+
+document.addEventListener('click', (e) => {
+    if (!customSelect.contains(e.target)) {
+        customSelect.classList.remove('open');
+    }
+});

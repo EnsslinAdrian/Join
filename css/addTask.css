@@ -96,25 +96,65 @@ textarea::placeholder {
     font-weight: 400;
 }
 
-select {
-    height: 40px;
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
     width: 100%;
-    border-radius: 8px;
-    color: grey;
-    border: 1px solid lightgray;
-    text-indent: 10px;
-    margin-bottom: 20px;
+}
+
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 40px;
     font-size: 20px;
+    color: grey;
+    background: white;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-.option {
-    padding: 2px;
-    height: 
+.custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    background: white;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    max-height: 150px;
+    overflow-y: auto;
 }
 
-.option:hover {
-    background-color: lightgrey !important;
+.custom-option {
+    padding: 10px;
+    font-size: 20px;
+    color: grey;
+    cursor: pointer;
 }
+
+.custom-option:hover {
+    background: lightgray;
+}
+
+.custom-select.open .custom-options {
+    display: flex;
+}
+
+
+
 
 p {
     font-family: 'Inter';
