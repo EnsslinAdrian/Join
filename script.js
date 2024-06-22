@@ -182,8 +182,8 @@ function collectTaskDetails() {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('date').value;
-    let categoryElement = document.getElementById('select');
-    let categoryText = categoryElement.selectedOptions[0].text;
+    let hiddenSelect = document.querySelector('.hidden-select');
+    let categoryText = hiddenSelect.options[hiddenSelect.selectedIndex].text;
 
     return {
         'category': 'todo',

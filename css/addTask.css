@@ -96,61 +96,37 @@ textarea::placeholder {
     font-weight: 400;
 }
 
-.custom-select-wrapper {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.custom-select {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.custom-select-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
+select {
     height: 40px;
-    font-size: 20px;
+    width: 100%;
+    border-radius: 8px;
     color: grey;
-    background: white;
     border: 1px solid lightgray;
-    border-radius: 8px;
-    cursor: pointer;
+    text-indent: 10px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    -webkit-appearance: none; /* Remove default arrow */
+    -moz-appearance: none; /* Remove default arrow */
+    appearance: none; /* Remove default arrow */
+    background-color: white;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14l-4.796-5.481C2.06 5.28 2.522 4.5 3.053 4.5h9.894c.53 0 .992.78.602 1.159l-4.796 5.481a.75.75 0 0 1-1.106 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
 }
 
-.custom-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    border: 1px solid lightgray;
-    border-radius: 8px;
-    background: white;
-    z-index: 10;
-    display: none;
-    flex-direction: column;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-.custom-option {
+option {
     padding: 10px;
-    font-size: 20px;
-    color: grey;
-    cursor: pointer;
 }
 
-.custom-option:hover {
-    background: lightgray;
+/* To change hover color */
+select:hover,
+select:focus {
+    border-color: gray;
 }
 
-.custom-select.open .custom-options {
-    display: flex;
+/* Fallback for browsers that do not support custom arrows */
+select::-ms-expand {
+    display: none;
 }
 
 
