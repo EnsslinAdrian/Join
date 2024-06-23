@@ -25,7 +25,7 @@ async function newContact() {
     closeAddNewContact();
     showContact(JSON.stringify(contact), newContactId, newContactIndex);
     showNotification();
-    changeBgColor(`showContact${newContactId}`);
+    changeBgColor(`showContact${newContactId}`);Testzwei
 }
 
 
