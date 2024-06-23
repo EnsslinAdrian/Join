@@ -649,9 +649,20 @@ function generateSubtaskGuestHtml(contact, i) {
     console.log(date.value);
     console.log(prio);
     console.log(prioImg)
-    console.log(taskContacts)
-    console.log(subtasks)
+    // console.log(taskContacts)
+    // console.log(subtasks)
 
+        // Aktualisiere den Task an der Stelle i
+        guestTasks[i].taskCategory = taskCategory.options[taskCategory.selectedIndex].text;
+        guestTasks[i].title = title.value;
+        guestTasks[i].description = description.value;
+        guestTasks[i].date = date.value;
+        guestTasks[i].prio = prio;
+        guestTasks[i].prioImg = prioImg;
+    
+        // Speichere die aktualisierte guestTasks-Liste im localStorage
+        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+        window.location.reload();
   }
 
   function addNewSubtasksGuest() {
