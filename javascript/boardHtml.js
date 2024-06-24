@@ -4,10 +4,12 @@
 function generateAddTaskHtml() {
     return `
     <div>
+    <div class="close-button">
     <h1>Add Task</h1>
+        <img class="close-popup" onclick="closeAddTask()" src="assets/img/add_task/close.svg">
+    </div>
     <!-- anfang -->
     <div class="add-task-section">
-
         <div class="add-task-titel-container">
             <form action="">
                 <p>Titel<span class="color-red">*</span></p>
@@ -17,10 +19,9 @@ function generateAddTaskHtml() {
                     placeholder="Enter a Description"></textarea>
 
                 <p>Assigned to</p>
-                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                        placeholder="Select contacts to assign">
-                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact d-none" id="selectedContact"></div>
+                <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
+                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
+                <div class="selected-contact d-none" id="selectedContact"></div>
         </div>
 
         <div class="add-task-between-line"></div>
@@ -393,7 +394,7 @@ function generateBoardsContactHtml(contactName, initials, i, color, isContactAdd
     <div class="assigned-contact" id="contactTask${i}">
         <div class="contact-name">
             <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
-            <p>${contactName}</p>
+            <label for="taskCheckbox${i}" style="cursor: pointer;">${contactName}</label>
         </div>
         <input id="taskCheckbox${i}" onclick="addContactTask('${contactName}', '${initials}', ${i}, '${color}')" class="checkbox" type="checkbox" ${isContactAdded ? 'checked' : ''}>
     </div>

@@ -401,7 +401,6 @@ span {
     display: flex;
     align-items: center;
     height: 13.5px;
-    margin-right: 40px;
     cursor: pointer;
     border: 1px;
     border-radius: 50%;
@@ -518,6 +517,14 @@ span {
     background-color: #D1D1D1;
     border-radius: 25px;
     cursor: pointer;
+}
+
+.close-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-right: 0 !important;
 }
 
 @media (max-width: 1530px) {
