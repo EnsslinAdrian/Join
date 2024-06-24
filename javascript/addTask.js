@@ -147,9 +147,8 @@ function renderFilteredContacts(contacts) {
   for (let i = 0; i < contacts.length; i++) {
     let contact = contacts[i];
     let initials = getInitials(contact.name);
-    let initialsBgColor = getRandomColor();
 
-    content.innerHTML += generateContactsSearchHtml(contact, initials, initialsBgColor, i);
+    content.innerHTML += generateContactsSearchHtml(contact, initials, i);
   }
 
   if (document.getElementById('assignedSearch').value.length === 0) {
@@ -178,14 +177,14 @@ function getInitials(name) {
  * @param {number} i - The index of the contact in the contact list.
  * @returns {string} The generated HTML string for the contact card in the search results.
  */
-function generateContactsSearchHtml(contact, initials, initialsBgColor, i) {
+function generateContactsSearchHtml(contact, initials, i) {
   return `
   <div class="assigned-contact" id="contactTask${i}">
     <div class="contact-name">
-        <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
+        <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
         <p>${contact.name}</p>
     </div>
-    <input id="taskCheckbox${i}" onclick="addContactTask('${contact.name}', '${initials}', ${i}, '${initialsBgColor}')" class="checkbox" type="checkbox">
+    <input id="taskCheckbox${i}" onclick="addContactTask('${contact.name}', '${initials}', ${i})" class="checkbox" type="checkbox">
   </div>
   `;
 }

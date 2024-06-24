@@ -277,6 +277,29 @@ async function renderContactsAddTask() {
 
 
 /**
+ * Renders the contacts on the addTask page for the "Assigned to" section. 
+ */
+async function renderContactsAddTaskGuest() {
+    if (window.location.pathname.endsWith("board.html")) {
+        let response = await fetch(firebaseUrl + '.json');
+        let responseToJson = await response.json();
+
+        let content = document.getElementById('assignedContainer');
+        content.innerHTML = '';
+        let contacts = responseToJson.contacts;
+        let contactsArray = Object.values(contacts);
+
+        for (let i = 0; i < contactsArray.length; i++) {
+            let contact = contactsArray[i];
+            let initialsBgColor = getRandomColor();
+
+            content.innerHTML += generateTaskContactHtml(contact, i, initialsBgColor);
+        }
+    }
+}
+
+
+/**
  * Generates the HTML for a contact card to be displayed on the task assignment section.
  * 
  * @param {Object} contact - The contact object containing the contact details.

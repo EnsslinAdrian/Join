@@ -544,10 +544,13 @@ function generateEditPopupGuest(task, i) {
                     <p>Description</p>
                     <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
                     <p>Assigned to</p>
-                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                        placeholder="Select contacts to assign">
-                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact d-none" id="selectedContact${i}"></div>
+                     <input onclick="openAssignedGuest(event, ${i})" id="assignedSearch" type="search"
+                                onkeydown="filterContacts()" class="assigned-search"
+                                placeholder="Select contacts to assign">
+                            <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
+
+                            </div>
+                            <div class="selected-contact d-none" id="selectedContact${i}"></div>
             </div>
             <div class="add-task-date-container-edit">
                 <p>Due date<span class="color-red">*</span></p>
@@ -579,7 +582,7 @@ function generateEditPopupGuest(task, i) {
                 <div class="subtasks-container">
                     <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
                     <div class="subtasks-button">
-                        <button onclick="addNewSubtasksGuest()" type="button">+</button>
+                        <button onclick="addNewSubtasksGuest(${i})" type="button">+</button>
                     </div>
                 </div>
             <div class="subtasks-list">
@@ -650,7 +653,7 @@ function generateSubtaskGuestHtml(contact, i) {
     console.log(prio);
     console.log(prioImg)
     // console.log(taskContacts)
-    // console.log(subtasks)
+    console.log(subtasks)
 
         // Aktualisiere den Task an der Stelle i
         guestTasks[i].taskCategory = taskCategory.options[taskCategory.selectedIndex].text;
@@ -665,7 +668,7 @@ function generateSubtaskGuestHtml(contact, i) {
         window.location.reload();
   }
 
-  function addNewSubtasksGuest() {
+  function addNewSubtasksGuest(i) {
     let subtaskInput = document.getElementById('subtask');
     if (subtasks.length < 5) {
       if (subtaskInput.value.length >= 1) {
@@ -675,7 +678,7 @@ function generateSubtaskGuestHtml(contact, i) {
         };
         subtasks.push(newSubtask);
         subtaskInput.value = '';
-        renderSubtasksListGuest();
+        renderSubtasksListGuest(i);
       }
     }
   }
@@ -683,8 +686,8 @@ function generateSubtaskGuestHtml(contact, i) {
   /**
  * This function renders the created subtasks and displays them in the content area.
  */
-function renderSubtasksListGuest() {
-    let content = document.getElementById('subtasksList');
+function renderSubtasksListGuest(i) {
+    let content = document.getElementById(`subtasksList${i}`);
     content.innerHTML = '';
     for (let i = 0; i < subtasks.length; i++) {
       let subtask = subtasks[i];
@@ -692,4 +695,15 @@ function renderSubtasksListGuest() {
     }
   }
 
+  /**
+   * This function opens the pop-up window for contacts in the "Assigned to" section.
+   * 
+   * @param {Event} event - The event object representing the user interaction.
+   */
+  function openAssignedGuest(event, i) {
+    event.stopPropagation();
+    document.getElementById('assignedContainer').classList.toggle('d-none');
+    document.getElementById(`selectedContact${i}`).classList.toggle('d-none');
+    renderContactsAddTaskGuest();
+  }
 
