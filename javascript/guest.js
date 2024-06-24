@@ -550,7 +550,7 @@ function generateEditPopupGuest(task, i) {
                             <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer">
 
                             </div>
-                            <div class="selected-contact d-none" id="selectedContact${i}"></div>
+                            <div class="selected-contact d-none" id="selectedContact"></div>
             </div>
             <div class="add-task-date-container-edit">
                 <p>Due date<span class="color-red">*</span></p>
@@ -607,7 +607,7 @@ function editTaskGuest(i) {
     container.innerHTML = generateEditPopupGuest(tasks, i);
     console.log(tasks)
 
-    let conatactsContent = document.getElementById(`selectedContact${i}`);
+    let conatactsContent = document.getElementById(`selectedContact`);
     for (let j = 0; j < tasks['taskContacts'].length; j++) {
         let contact = tasks['taskContacts'][j];
         conatactsContent.innerHTML += `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
@@ -640,33 +640,45 @@ function generateSubtaskGuestHtml(contact, i) {
     `;
   }
 
-  function saveEditedTaskGuest(i) {
+
+/**
+ * This function saves the edited task for a guest user.
+ * 
+ * @param {number} i - The index of the task in the guestTasks list.
+ */
+function saveEditedTaskGuest(i) {
     let taskCategory = document.getElementById('select');
     let title = document.getElementById('title');
     let description = document.getElementById('description');
     let date = document.getElementById('date');
-    
+
     console.log(taskCategory.options[taskCategory.selectedIndex].text);
     console.log(title.value);
     console.log(description.value);
     console.log(date.value);
     console.log(prio);
-    console.log(prioImg)
-    // console.log(taskContacts)
-    console.log(subtasks)
+    console.log(prioImg);
+    console.log(subtasks);
+    console.log(taskContacts);
 
-        // Aktualisiere den Task an der Stelle i
-        guestTasks[i].taskCategory = taskCategory.options[taskCategory.selectedIndex].text;
-        guestTasks[i].title = title.value;
-        guestTasks[i].description = description.value;
-        guestTasks[i].date = date.value;
-        guestTasks[i].prio = prio;
-        guestTasks[i].prioImg = prioImg;
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
     
-        // Speichere die aktualisierte guestTasks-Liste im localStorage
-        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        window.location.reload();
-  }
+    guestTasks[i] = {
+        ...guestTasks[i],
+        taskCategory: taskCategory.options[taskCategory.selectedIndex].text,
+        title: title.value,
+        description: description.value,
+        date: date.value,
+        prio: prio,
+        prioImg: prioImg,
+        subtasks: subtasks,
+        taskContacts: [...taskContacts] // Use the updated contacts
+    };
+
+    // Save the updated guestTasks list in localStorage
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    window.location.reload();
+}
 
   function addNewSubtasksGuest(i) {
     let subtaskInput = document.getElementById('subtask');
@@ -695,15 +707,69 @@ function renderSubtasksListGuest(i) {
     }
   }
 
-  /**
-   * This function opens the pop-up window for contacts in the "Assigned to" section.
-   * 
-   * @param {Event} event - The event object representing the user interaction.
-   */
-  function openAssignedGuest(event, i) {
+/**
+ * This function opens the pop-up window for contacts in the "Assigned to" section.
+ * 
+ * @param {Event} event - The event object representing the user interaction.
+ * @param {number} i - The index of the contact in the contact list.
+ */
+function openAssignedGuest(event, i) {
     event.stopPropagation();
     document.getElementById('assignedContainer').classList.toggle('d-none');
-    document.getElementById(`selectedContact${i}`).classList.toggle('d-none');
-    renderContactsAddTaskGuest();
-  }
+    document.getElementById(`selectedContact`).classList.toggle('d-none');
+    renderContactsAddTaskGuest(i);
+}
 
+
+/**
+ * This function adds or removes a contact from the task for a guest user.
+ * 
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} i - The index of the contact in the contact list.
+ * @param {string} color - The background color for the contact's initials.
+ */
+function addContactTaskForGuest(contactName, initials, i, color) {
+    let newTaskContact = {
+        'initials': initials,
+        'color': color,
+        'name': contactName
+    };
+
+    let checkbox = document.getElementById(`taskCheckbox${i}`);
+
+    if (checkbox.checked) {
+        if (!taskContacts.some(contact => contact.name === contactName)) {
+            taskContacts.push(newTaskContact);
+        }
+    } else {
+        let contactIndex = taskContacts.findIndex(contact => contact.name === contactName);
+        if (contactIndex !== -1) {
+            taskContacts.splice(contactIndex, 1);
+        }
+    }
+
+    renderAddTaskContactInitialsGuest(i);
+}
+
+/**
+ * This function renders the initials for the contacts in the "Assigned to" section.
+ */
+function renderAddTaskContactInitialsGuest(i) {
+    let content = document.getElementById(`selectedContact`);
+    if (!content) {
+        console.error(`Element with id selectedContact${i} not found.`);
+        return;
+    }
+
+    content.innerHTML = '';
+
+    if (taskContacts && Array.isArray(taskContacts) && taskContacts.length > 0) {
+        for (let j = 0; j < taskContacts.length; j++) {
+            let contact = taskContacts[j];
+            content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+        }
+    } else {
+        content.innerHTML = '<p>No contacts assigned</p>';
+    }
+}

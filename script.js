@@ -279,7 +279,7 @@ async function renderContactsAddTask() {
 /**
  * Renders the contacts on the addTask page for the "Assigned to" section. 
  */
-async function renderContactsAddTaskGuest() {
+async function renderContactsAddTaskGuest(taskIndex) {
     if (window.location.pathname.endsWith("board.html")) {
         let response = await fetch(firebaseUrl + '.json');
         let responseToJson = await response.json();
@@ -292,8 +292,19 @@ async function renderContactsAddTaskGuest() {
         for (let i = 0; i < contactsArray.length; i++) {
             let contact = contactsArray[i];
             let initialsBgColor = getRandomColor();
+            let isChecked = taskContacts.some(tc => tc.name === contact.name);
+            let contactName = contact['name'];
+            let initials = contactName.split(' ').map(word => word[0]).join('');
 
-            content.innerHTML += generateTaskContactHtml(contact, i, initialsBgColor);
+            content.innerHTML += `
+                <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${initialsBgColor}')">
+                    <div class="contact-name">
+                        <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
+                        <p>${contactName}</p>
+                    </div>
+                    <input id="taskCheckbox${i}" class="checkbox" type="checkbox" ${isChecked ? 'checked' : ''}>
+                </div>
+            `;
         }
     }
 }
@@ -333,7 +344,12 @@ function generateTaskContactHtml(contact, i, color) {
 function toggleCheckbox(index, contactName, initials, color) {
     let checkbox = document.getElementById(`taskCheckbox${index}`);
     checkbox.checked = !checkbox.checked;
-    addContactTask(contactName, initials, index, color);
+
+    if (localStorage.getItem('username') !== 'Guest') {
+        addContactTask(contactName, initials, index, color);
+    } else {
+        addContactTaskForGuest(contactName, initials, index, color);
+    }
 }
 
 
