@@ -522,7 +522,7 @@ function renderTasks(tasks) {
 
         if (document.getElementById(id)) {
             document.getElementById(id).innerHTML += generateTodoHTML(task, i);
-            
+
             let contactsContent = document.getElementById(`taskContacts${i}`);
             if (contactsContent) {
                 if (task['taskContacts'] && task['taskContacts'].length > 0) {
@@ -573,7 +573,7 @@ function questLogin() {
     if (!localStorage.getItem('guestTasks')) {
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
     }
-    
+
     localStorage.setItem('username', 'Guest');
     window.location.href = 'summary.html';
 }
@@ -604,7 +604,7 @@ async function renderContacts(path = "") {
         for (let contact of contactsArray) {
             let key = Object.keys(contacts).find(k => contacts[k] === contact);
             contact.id = key;
-            
+
             let firstLetter = contact.name.charAt(0).toUpperCase();
             if (firstLetter !== currentLetter) {
                 currentLetter = firstLetter;
@@ -619,7 +619,7 @@ async function renderContacts(path = "") {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     checkUsername();
 });
 
