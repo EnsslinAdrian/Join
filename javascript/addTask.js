@@ -73,7 +73,7 @@ function clearTask() {
  */
 function taskUrgent() {
   prio = 'Urgent';
-  prioImg = './assets/img/add_task/arrow.svg';
+  prioImg = './assets/img/add_task/arrowsTop.svg';
   document.getElementById('urgent').classList.add('urgent');
   document.getElementById('medium').classList.remove('medium');
   document.getElementById('low').classList.remove('low');
@@ -103,7 +103,7 @@ function taskMedium() {
  */
 function taskLow() {
   prio = 'Low';
-  prioImg = './assets/img/add_task/arrow_buttom.svg';
+  prioImg = './assets/img/add_task/arrowsButtom.svg';
   document.getElementById('low').classList.add('low');
   document.getElementById('urgent').classList.remove('urgent');
   document.getElementById('medium').classList.remove('medium');
