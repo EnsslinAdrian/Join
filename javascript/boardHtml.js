@@ -404,7 +404,7 @@ function generateAddTaskContactInitialsHTML(contact) {
  */
 function generateBoardsContactHtml(contactName, initials, i, color, isContactAdded) {
     return `
-        <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox(${i}, '${contactName}', '${initials}''${color}')">
+        <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox(${i}, '${contactName}', '${initials}','${color}')">
             <div class="contact-name">
                 <div style="background-color: ${color};" class="assigned-initials">${initials}</div>
                 <label for="taskCheckbox${i}" style="cursor: pointer;">${contactName}</label>
