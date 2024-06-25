@@ -6,7 +6,6 @@ function closeAssigned() {
   document.getElementById('assignedContainer').classList.add('d-none');
   document.getElementById('selectedContact').classList.add('selected-contact');
   document.getElementById('selectedContact').classList.remove('d-none');
-  document.getElementById('add-task-popup').style.height = 'auto';
 }
 
 
