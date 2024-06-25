@@ -328,7 +328,24 @@ async function renderContactsAddTaskGuest(taskIndex) {
                     <input id="taskCheckbox${i}" class="checkbox" type="checkbox" ${isChecked ? 'checked' : ''}>
                 </div>
             `;
+
+            applyStylesIfChecked(i);
         }
+    }
+}
+
+
+
+function applyStylesIfChecked(index) {
+    let checkbox = document.getElementById(`taskCheckbox${index}`);
+    let contactElement = document.getElementById(`contactTask${index}`);
+
+    if (checkbox.checked) {
+        contactElement.style.backgroundColor = '#2A3647';
+        contactElement.style.color = 'white';
+    } else {
+        contactElement.style.backgroundColor = '';
+        contactElement.style.color = '';
     }
 }
 
@@ -367,15 +384,8 @@ function generateTaskContactHtml(contact, i, color) {
 function toggleCheckbox(index, contactName, initials, color) {
     let checkbox = document.getElementById(`taskCheckbox${index}`);
     checkbox.checked = !checkbox.checked;
-    let contactElement = document.getElementById(`contactTask${index}`);
 
-    if (checkbox.checked) {
-        contactElement.style.backgroundColor = '#2A3647';
-        contactElement.style.color = 'white';
-    } else {
-        contactElement.style.backgroundColor = '';
-        contactElement.style.color = '';
-    }
+    applyStylesIfChecked(index);
 
     if (localStorage.getItem('username') !== 'Guest') {
         addContactTask(contactName, initials, index, color);

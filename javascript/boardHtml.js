@@ -71,7 +71,7 @@ function generateAddTaskHtml() {
         </div>
     </form>
     <!-- ende -->
-</div>
+    </div>
     `;
 }
 
