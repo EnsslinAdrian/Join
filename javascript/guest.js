@@ -15,7 +15,6 @@ function renderGuestTaskBoard() {
         let contactsContent = document.getElementById(`taskContacts${i}`);
         for (let j = 0; j < task['taskContacts'].length; j++) {
             let contacts = task['taskContacts'][j];
-
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
     }
