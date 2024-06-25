@@ -348,7 +348,7 @@ function generateTaskContactHtml(contact, i, color) {
     <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${color}')">
     <div class="contact-name">
     <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
-    <p>${contact['name']}</p>
+    ${contact['name']}
     </div>
     <input id="taskCheckbox${i}" class="checkbox" type="checkbox">
     </div>
