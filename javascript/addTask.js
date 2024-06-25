@@ -44,9 +44,9 @@ function clearTask() {
   taskContacts = [];
   document.getElementById('date').value = '';
   prio = 'Medium';
-  document.getElementById('urgent').classList.remove('urgent')
-  document.getElementById('medium').classList.add('medium')
-  document.getElementById('low').classList.remove('low')
+  document.getElementById('urgent').classList.remove('urgent');
+  document.getElementById('medium').classList.add('medium');
+  document.getElementById('low').classList.remove('low');
   document.getElementById('imgMedium').src = './assets/img/add_task/result_white.svg';
   document.getElementById('imgUrgent').src = './assets/img/add_task/arrowsTop.svg';
   document.getElementById('imgLow').src = './assets/img/add_task/arrowsButtom.svg';
@@ -57,7 +57,12 @@ function clearTask() {
 
   let checkboxes = document.querySelectorAll('[id^="taskCheckbox"]');
   checkboxes.forEach(checkbox => {
-    checkbox.checked = false;
+      checkbox.checked = false;
+      let contactElement = document.getElementById(`contactTask${checkbox.id.replace('taskCheckbox', '')}`);
+      if (contactElement) {
+          contactElement.style.backgroundColor = '';
+          contactElement.style.color = '';
+      }
   });
 
   renderAddTaskContactInitials();

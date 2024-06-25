@@ -374,7 +374,7 @@ function toggleCheckbox(index, contactName, initials, color) {
         contactElement.style.color = 'white';
     } else {
         contactElement.style.backgroundColor = '';
-        contactElement.style.color = 'black';
+        contactElement.style.color = '';
     }
 
     if (localStorage.getItem('username') !== 'Guest') {
