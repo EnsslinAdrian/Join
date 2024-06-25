@@ -313,7 +313,7 @@ function generateEditPopupGuest(task, i) {
                     <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
                         placeholder="Select contacts to assign">
                     <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact d-none" id="selectedContact${i}"></div>
+                    <div class="selected-contact d-none" id="selectedContact"></div>
             </div>
             <div class="add-task-date-container-edit">
                 <p>Due date<span class="color-red">*</span></p>
