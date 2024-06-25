@@ -12,6 +12,7 @@ function showPassword() {
     document.getElementById('loginPassword').type = 'text';
 }
 
+
 /**
  * Toggles the visibility of the password input field.
  * Switches the password input type from 'text' back to 'password',

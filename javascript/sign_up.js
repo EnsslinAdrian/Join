@@ -12,6 +12,7 @@ function showConfirmedPassword() {
     document.getElementById('confirmLoginPassword').type = 'text';
 }
 
+
 /**
  * Toggles the visibility of the confirmed password input field.
  * Switches the confirmed password input type from 'text' back to 'password',

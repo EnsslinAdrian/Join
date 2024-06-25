@@ -28,6 +28,7 @@ window.addEventListener('resize', function() {
     }
 });
 
+
 /**
  * This function closes the 'Add Task' popup by adding the 'd-none' class to the container.
  */
@@ -69,6 +70,7 @@ async function openDialogTask(i) {
 
     updateProgressBar(i);
 }
+
 
 /**
  * Displays the detailed view of a task.
@@ -315,10 +317,8 @@ async function reindexAndSaveTasks(personalId, i) {
                 return acc;
             }, {});
 
-        // Clear existing tasks in the database
         await fetch(tasksUrl, { method: 'DELETE' });
 
-        // Update the tasks with the newly indexed values
         await fetch(tasksUrl, {
             method: 'PUT',
             body: JSON.stringify(updatedTasks)
@@ -462,10 +462,8 @@ function collectFormData() {
     const taskCategoryElement = document.getElementById('select');
     const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
 
-    // Verwenden der globalen Variable `taskContacts`
     const assignedContacts = taskContacts;
 
-    // Sammeln der Unteraufgaben
     const subtasks = [];
     document.querySelectorAll('#subtasksList li').forEach(subtaskElement => {
         const inputElement = subtaskElement.querySelector('input');
@@ -482,7 +480,7 @@ function collectFormData() {
         taskCategory,
         prio,
         prioImg,
-        taskContacts: assignedContacts, // Hier verwenden
+        taskContacts: assignedContacts, 
         subtasks
     };
 }
@@ -818,6 +816,7 @@ async function getTaskFromDatabase(taskId) {
 function highlight(id) {
     document.getElementById(id).classList.add('drag_area_hightlight');
 }
+
 
 /**
  * Removes the highlight from a specified element by removing a CSS class.

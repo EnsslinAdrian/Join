@@ -39,6 +39,7 @@ function openDialogGuestTask(i) {
     updateProgressBar(i);
 }
 
+
 /**
  * Displays the detailed view of a guest user's task.
  * 
@@ -285,86 +286,6 @@ function deleteGuestTask(index) {
 }
 
 
-/**
- * This function generates the HTML for displaying the popup window for edit tasks.
- * 
- * @param {Object} task - The task object containing the task details.
- * @param {number} i - The index of the task in the task list.
- */
-function generateEditPopupGuest(task, i) {
-    // Aktualisieren Sie die globale `taskContacts`-Variable
-    taskContacts = task.taskContacts || [];
-    subtasks = task.subtasks || [];
-
-    return `
-    <div>
-        <div class="add-task-section-edit">
-            <div class="add-task-titel-container-edit">
-                <div class="close_edit_popup">
-                    <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
-                </div>
-                <form id="editTaskForm" onsubmit="saveEditedTask(event, ${i})">
-                    <input type="hidden" id="taskId" value="${task.id}">
-                    <p>Titel<span class="color-red">*</span></p>
-                    <input id="title" required class="margin-buttom" type="text" placeholder="Enter a title" value="${task.title}">
-                    <p>Description</p>
-                    <textarea id="description" class="margin-buttom" placeholder="Enter a Description">${task.description}</textarea>
-                    <p>Assigned to</p>
-                    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search"
-                        placeholder="Select contacts to assign">
-                    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                    <div class="selected-contact d-none" id="selectedContact"></div>
-            </div>
-            <div class="add-task-date-container-edit">
-                <p>Due date<span class="color-red">*</span></p>
-                <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date" value="${task.date}">
-                <p>Prio</p>
-                <div class="margin-buttom add-task-prio">
-                    <div class="prio-selection-urgent ${task.priority === 'urgent' ? 'urgent' : ''}" onclick="taskUrgent()" id="urgent">
-                        <span>Urgent</span>
-                        <img id="imgUrgent" class="prio-icons" src="${task.priority === 'urgent' ? './assets/img/add_task/arrow_white.svg' : './assets/img/add_task/arrowsTop.svg'}">
-                    </div>
-                    <div class="prio-selection-medium medium ${task.priority === 'medium' ? 'medium' : ''}" onclick="taskMedium()" id="medium">
-                        <span>Medium</span>
-                        <img id="imgMedium" class="prio-icons" src="${task.priority === 'medium' ? './assets/img/add_task/result_white.svg' : './assets/img/add_task/result.svg'}">
-                    </div>
-                    <div class="prio-selection-low ${task.priority === 'low' ? 'low' : ''}" onclick="taskLow()" id="low">
-                        <span>Low</span>
-                        <img id="imgLow" class="prio-icons" src="${task.priority === 'low' ? './assets/img/add_task/arrow_buttom_white.svg' : './assets/img/add_task/arrowsButtom.svg'}">
-                    </div>
-                </div>
-                <p>Category<span class="color-red">*</span></p>
-                <div id="customSelect">
-                <div class="custom-select-board" style="width:100%;">
-                    <select id="select" class="custom-select" required>
-                        <option value="" disabled selected>Select task category</option>
-                        <option value="1" ${task.taskCategory === 'Technical Task' ? 'selected' : ''}>Technical Task</option>
-                        <option value="2" ${task.taskCategory === 'User Story' ? 'selected' : ''}>User Story</option>
-                    </select>
-                    </div>
-                </div>
-                <p>Subtasks</p>
-                <div class="subtasks-container">
-                    <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                    <div class="subtasks-button">
-                        <button onclick="addNewSubtasksGuest()" type="button">+</button>
-                    </div>
-                </div>
-            <div class="subtasks-list">
-                            <ul id="subtasksList${i}"></ul>
-                        </div>
-            </div>
-        </div>
-        <div class="send-add-task-buttons">
-            <div class="buttons">
-                <button type="button" class="btn" onclick="saveEditedTaskGuest(${i})">OK<img src="assets/img/add_task/check.svg"></button>
-            </div>
-        </div>
-        </form>
-    </div>
-    `;
-}
-
 function editTaskGuest(i) {
     let container = document.getElementById('taskDetails');
     container.innerHTML = '';
@@ -382,7 +303,7 @@ function editTaskGuest(i) {
     for (let k = 0; k < tasks['subtasks'].length; k++) {
         let contact = tasks['subtasks'][k];
         subtasksContent.innerHTML += generateSubtaskGuestHtml(contact, k);
- }
+    }
 }
 
 
@@ -396,9 +317,8 @@ function saveEditedTaskGuest(i) {
     let title = document.getElementById('title');
     let description = document.getElementById('description');
     let date = document.getElementById('date');
-
     let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-    
+
     guestTasks[i] = {
         ...guestTasks[i],
         taskCategory: taskCategory.options[taskCategory.selectedIndex].text,
@@ -415,32 +335,34 @@ function saveEditedTaskGuest(i) {
     window.location.reload();
 }
 
-  function addNewSubtasksGuest(i) {
+
+function addNewSubtasksGuest(i) {
     let subtaskInput = document.getElementById('subtask');
     if (subtasks.length < 5) {
-      if (subtaskInput.value.length >= 1) {
-        let newSubtask = {
-          'title': subtaskInput.value,
-          'state': false
-        };
-        subtasks.push(newSubtask);
-        subtaskInput.value = '';
-        renderSubtasksListGuest(i);
-      }
+        if (subtaskInput.value.length >= 1) {
+            let newSubtask = {
+                'title': subtaskInput.value,
+                'state': false
+            };
+            subtasks.push(newSubtask);
+            subtaskInput.value = '';
+            renderSubtasksListGuest(i);
+        }
     }
-  }
+}
 
-  /**
- * This function renders the created subtasks and displays them in the content area.
- */
-  function renderSubtasksListGuest(i) {
+
+/**
+* This function renders the created subtasks and displays them in the content area.
+*/
+function renderSubtasksListGuest(i) {
     let content = document.getElementById(`subtasksList${i}`);
     content.innerHTML = '';
 
     if (subtasks.length === 0) {
         content.innerHTML = '<p>No subtasks available.</p>';
     } else {
-        for (let j = 0; j < subtasks.length; j++) { 
+        for (let j = 0; j < subtasks.length; j++) {
             let subtask = subtasks[j];
             content.innerHTML += generateSubtaskGuestHtml(subtask, j);
         }
@@ -456,7 +378,7 @@ function saveEditedTaskGuest(i) {
 function deleteSubtaskGuest(i) {
     subtasks.splice(i, 1);
     renderSubtasksListGuest(i);
-  }
+}
 
 
 /**
