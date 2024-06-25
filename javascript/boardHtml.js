@@ -5,88 +5,73 @@ function generateAddTaskHtml() {
     return `
     <div>
     <div class="close-button">
-    <h1>Add Task</h1>
+        <h1>Add Task</h1>
         <img class="close-popup" onclick="closeAddTask()" src="assets/img/add_task/close.svg">
     </div>
     <!-- anfang -->
-                <div class="add-task-section">
-
-                    <div class="add-task-titel-container">
-                        <form onsubmit="addNewTask(event)" action="">
-                            <p>Titel<span class="color-red">*</span></p>
-                            <input onkeydown="checkTitelLength()" id="title" required type="text"
-                                placeholder="Enter a title">
-                            <span id="titelLengthMessage"></span>
-                            <p style="margin-top: 32px;">Description</p>
-                            <textarea id="description" placeholder="Enter a Description"
-                                onkeydown="checkDescriptionLength()"></textarea>
-                            <span id="descriptionLengthMessage"></span>
-
-                            <p style="margin-top: 32px;">Assigned to</p>
-                            <input onclick="openAssignedPopUp(event)" id="assignedSearch" type="search"
-                                onkeydown="filterContacts()" class="assigned-search"
-                                placeholder="Select contacts to assign">
-                            <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none"
-                                id="assignedContainer">
-
-                            </div>
-                            <div class="selected-contact d-none" id="selectedContact"></div>
-                    </div>
-
-                    <div class="add-task-between-line"></div>
-
-                    <div class="add-task-date-container">
-                        <p>Due date<span class="color-red">*</span></p>
-                        <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date">
-                        <p>Prio</p>
-                        <div class="margin-buttom add-task-prio">
-                            <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
-                                <span>Urgent</span>
-                                <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
-                            </div>
-                            <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
-                                <span>Medium </span>
-                                <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
-                            </div>
-                            <div class="prio-selection-low" onclick="taskLow()" id="low">
-                                <span>Low</span>
-                                <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                            </div>
-                        </div>
-                        <p>Category<span class="color-red">*</span></p>
-                        <div id="customSelect">
-                            <select id="select" class="custom-select" required>
-                                <option class="option" value="" disabled selected>Select task category</option>
-                                <option class="option" value="1">Technical Task</option>
-                                <option class="option" value="2">User Story</option>
-                            </select>
-                        </div>
-                        <p>Subtasks</p>
-                        <div class="subtasks-container">
-                            <input onkeydown="checkSubtasksLength()" id="subtask" placeholder="Add new subtask"
-                                onkeypress="return event.keyCode!=13">
-                            <div class="subtasks-button">
-                                <button onclick="addNewSubtasks()" type="button">+</button>
-                            </div>
-                        </div>
-                        <div class="subtasks-list">
-                            <ul id="subtasksList"></ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="send-add-task-buttons">
-                    <p class="required-text"><span class="color-red">*</span>This field is required</p>
-                    <div class="buttons">
-                        <button onclick="clearTask()" type="button" class="clear-button">Clear <img
-                                src="assets/img/add_task/close.svg"></button>
-                        <button class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
-                    </div>
-                </div>
-                </form>
-                <!-- ende -->
+    <form onsubmit="addNewTask(event)" action="">
+        <div class="add-task-section">
+            <div class="add-task-titel-container">
+                <p>Titel<span class="color-red">*</span></p>
+                <input onkeydown="checkTitelLength()" id="title" required type="text" placeholder="Enter a title">
+                <span id="titelLengthMessage"></span>
+                <p style="margin-top: 32px;">Description</p>
+                <textarea id="description" placeholder="Enter a Description" onkeydown="checkDescriptionLength()"></textarea>
+                <span id="descriptionLengthMessage"></span>
+                <p style="margin-top: 32px;">Assigned to</p>
+                <input onclick="openAssignedPopUp(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
+                <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
+                <div class="selected-contact d-none" id="selectedContact"></div>
             </div>
+            <div class="add-task-between-line"></div>
+            <div class="add-task-date-container">
+                <p>Due date<span class="color-red">*</span></p>
+                <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date">
+                <p>Prio</p>
+                <div class="margin-buttom add-task-prio">
+                    <div class="prio-selection-urgent" onclick="taskUrgent()" id="urgent">
+                        <span>Urgent</span>
+                        <img id="imgUrgent" class="prio-icons" src="./assets/img/add_task/arrowsTop.svg">
+                    </div>
+                    <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
+                        <span>Medium </span>
+                        <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
+                    </div>
+                    <div class="prio-selection-low" onclick="taskLow()" id="low">
+                        <span>Low</span>
+                        <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
+                    </div>
+                </div>
+                <p>Category<span class="color-red">*</span></p>
+                <div id="customSelect">
+                    <select id="select" class="custom-select" required>
+                        <option class="option" value="" disabled selected>Select task category</option>
+                        <option class="option" value="1">Technical Task</option>
+                        <option class="option" value="2">User Story</option>
+                    </select>
+                </div>
+                <p>Subtasks</p>
+                <div class="subtasks-container">
+                    <input onkeydown="checkSubtasksLength()" id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
+                    <div class="subtasks-button">
+                        <button onclick="addNewSubtasks()" type="button">+</button>
+                    </div>
+                </div>
+                <div class="subtasks-list">
+                    <ul id="subtasksList"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="send-add-task-buttons">
+            <p class="required-text"><span class="color-red">*</span>This field is required</p>
+            <div class="buttons">
+                <button onclick="clearTask()" type="button" class="clear-button">Clear <img src="assets/img/add_task/close.svg"></button>
+                <button type="submit" class="btn">Create Task <img src="assets/img/add_task/check.svg"></button>
+            </div>
+        </div>
+    </form>
+    <!-- ende -->
+</div>
     `;
 }
 
