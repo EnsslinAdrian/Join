@@ -568,12 +568,14 @@ function generateEditPopupGuest(task, i) {
                     </div>
                 </div>
                 <p>Category<span class="color-red">*</span></p>
+                <div id="customSelect">
                 <div class="custom-select-board" style="width:100%;">
-                    <select id="select">
-                        <option value="0">Select task category</option>
+                    <select id="select" class="custom-select" required>
+                        <option value="" disabled selected>Select task category</option>
                         <option value="1" ${task.taskCategory === 'Technical Task' ? 'selected' : ''}>Technical Task</option>
                         <option value="2" ${task.taskCategory === 'User Story' ? 'selected' : ''}>User Story</option>
                     </select>
+                    </div>
                 </div>
                 <p>Subtasks</p>
                 <div class="subtasks-container">
