@@ -11,11 +11,6 @@ function generateAddTaskHtml() {
     <!-- anfang -->
                 <div class="add-task-section">
 
-                <p>Assigned to</p>
-    <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
-    <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-    <div class="selected-contact d-none" id="selectedContact"></div>
-        </div>
                     <div class="add-task-titel-container">
                         <form onsubmit="addNewTask(event)" action="">
                             <p>Titel<span class="color-red">*</span></p>
