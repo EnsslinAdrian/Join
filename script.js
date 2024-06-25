@@ -344,6 +344,15 @@ function generateTaskContactHtml(contact, i, color) {
 function toggleCheckbox(index, contactName, initials, color) {
     let checkbox = document.getElementById(`taskCheckbox${index}`);
     checkbox.checked = !checkbox.checked;
+    let contactElement = document.getElementById(`contactTask${index}`);
+
+    if (checkbox.checked) {
+        contactElement.style.backgroundColor = '#2A3647';
+        contactElement.style.color = 'white';
+    } else {
+        contactElement.style.backgroundColor = '';
+        contactElement.style.color = 'black';
+    }
 
     if (localStorage.getItem('username') !== 'Guest') {
         addContactTask(contactName, initials, index, color);
