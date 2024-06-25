@@ -296,6 +296,7 @@ span {
     right: 150px;
     background-color: white;
     transition: transform 0.5s ease-in-out;
+    padding: 10px;
 }
 
 .add-task-popup-heigth {
