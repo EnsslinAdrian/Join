@@ -29,7 +29,7 @@ function getAddNewContactTemplate() {
             <div class="close-button">
                 <img class="close-popup" onclick="closePopup()" src="assets/img/add_task/close.svg">
             </div>
-            <form onsubmit="newContact()" class="inputfields">
+            <form onsubmit="event.preventDefault(); newContact();" class="inputfields">
                 <div class="input-container">
                     <input id="contact-Name" class="input" placeholder="Name" type="text" required>
                     <img class="input-icon" src="assets/img/person.svg">
@@ -44,7 +44,7 @@ function getAddNewContactTemplate() {
                 </div>                                    
                 <div class="buttons">
                     <button type="button" onclick="closePopup()" class="cancel-button">Cancel<img src="assets/img/add_task/close.svg"></button>
-                    <button class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
+                    <button type="submit" class="btn">Create Contact<img src="assets/img/add_task/check.svg"></button>
                 </div>
             </form>
         </div>

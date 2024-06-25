@@ -6,27 +6,27 @@
  * @returns {Promise<void>}
  */
 async function newContact() {
-    let name = document.getElementById('contact-Name');
-    let email = document.getElementById('contact-Email');
-    let phone = document.getElementById('contact-Phone');
-    let initialsBgColor = getRandomColor();
+    try {
+        let nameElement = document.getElementById('contact-Name');
+        let emailElement = document.getElementById('contact-Email');
+        let phoneElement = document.getElementById('contact-Phone');
+        let initialsBgColor = getRandomColor();
 
-    let contact = {
-        'name': name.value,
-        'email': email.value,
-        'phone': phone.value,
-        'color': initialsBgColor
+        let contact = {
+            'name': nameElement.value,
+            'email': emailElement.value,
+            'phone': phoneElement.value,
+            'color': initialsBgColor
+        };
+
+        await postUser('contacts', contact);
+        closeAddNewContact();
+        await renderContacts();
+    } catch (error) {
+        console.error('Error creating new contact:', error);
     }
-    let newContactResponse = await postUser('contacts', contact);
-    let newContactId = newContactResponse.name;
-    let newContactIndex = Array.from(document.querySelectorAll('.contact-card')).findIndex(contact => contact.id === `showContact${newContactId}`);
-
-    await renderContacts();
-    closeAddNewContact();
-    showContact(JSON.stringify(contact), newContactId, newContactIndex);
-    showNotification();
-    changeBgColor(`showContact${newContactId}`);Testzwei
 }
+
 
 
 /**
