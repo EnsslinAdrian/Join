@@ -22,7 +22,7 @@ function openAddTask() {
     renderContactsAddTaskPopup();
 }
 
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     if (isAddTaskPopupOpen && window.matchMedia("(max-width: 1100px)").matches) {
         window.location.href = 'add_task.html';
     }
@@ -108,7 +108,7 @@ function updateProgressBar(i) {
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-    
+
     if (!progressBarContent) {
         return;
     }
@@ -166,31 +166,51 @@ function renderAmountOfAllSubtasks(tasks) {
         let subtasks = task['subtasks'];
 
         if (Array.isArray(subtasks)) {
-            let allSubtasks = subtasks.length;
-            let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-            let progress = (completedSubtasks / allSubtasks) * 100;
-
-            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-            if (subtasksAmount) {
-                subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-            }
-
-            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-            if (progressBarContent) {
-                progressBarContent.style.width = progress + '%';
-            }
+            ifSubtasksAvailable(subtasks, i);
         } else {
-            // Handle case where there are no subtasks
-            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-            if (subtasksAmount) {
-                subtasksAmount.innerHTML = 'No Subtasks';
-            }
-
-            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-            if (progressBarContent) {
-                progressBarContent.style.width = '0%';
-            }
+            ifNoSubtasksAvailable(i);
         }
+    }
+}
+
+
+/**
+ * This function updates the subtasks display and progress bar for a given task if subtasks are available.
+ *
+ * @param {Array} subtasks - The array of subtasks for the task.
+ * @param {number} i - The index of the task.
+ */
+function ifSubtasksAvailable(subtasks, i) {
+    let allSubtasks = subtasks.length;
+    let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+    let progress = (completedSubtasks / allSubtasks) * 100;
+    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+
+    if (subtasksAmount) {
+        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+    }
+
+    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+    if (progressBarContent) {
+        progressBarContent.style.width = progress + '%';
+    }
+}
+
+
+/**
+ * This function updates the subtasks display and progress bar for a given task if no subtasks are available.
+ *
+ * @param {number} i - The index of the task.
+ */
+function ifNoSubtasksAvailable(i) {
+    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+    if (subtasksAmount) {
+        subtasksAmount.innerHTML = 'No Subtasks';
+    }
+
+    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+    if (progressBarContent) {
+        progressBarContent.style.width = '0%';
     }
 }
 
@@ -281,6 +301,7 @@ async function deleteTask(taskJson, i) {
     }
 }
 
+
 /**
  * Deletes a specific task by URL.
  * 
@@ -297,6 +318,7 @@ async function deleteTaskByUrl(personalId, i) {
     }
 }
 
+
 /**
  * Reindexes the remaining tasks and updates the database.
  * 
@@ -307,7 +329,6 @@ async function reindexAndSaveTasks(personalId, i) {
     const tasksUrl = `https://join-69a70-default-rtdb.europe-west1.firebasedatabase.app/registered/${personalId}/tasks.json`;
     const tasksResponse = await fetch(tasksUrl);
     const tasks = await tasksResponse.json();
-
     if (tasks) {
         const taskEntries = Object.entries(tasks);
         const updatedTasks = taskEntries
@@ -316,15 +337,14 @@ async function reindexAndSaveTasks(personalId, i) {
                 acc[index] = task;
                 return acc;
             }, {});
-
         await fetch(tasksUrl, { method: 'DELETE' });
-
         await fetch(tasksUrl, {
             method: 'PUT',
             body: JSON.stringify(updatedTasks)
         });
     }
 }
+
 
 /**
  * This function edits the task with the specified index.
@@ -337,15 +357,12 @@ async function editTask(taskJson, i) {
     let task = JSON.parse(decodeURIComponent(taskJson));
     let container = document.getElementById('taskDetails');
     container.innerHTML = '';
-
     container.innerHTML = generateEditPopup(task, i);
     currentTaskId = i;
-
     document.getElementById('title').value = task['title'];
     document.getElementById('description').value = task['description'];
     document.getElementById('date').value = task['date'];
     document.getElementById('select').innerHTML = generateSelectOptions(task['taskCategory']);
-
     subtasks = task['subtasks'] || [];
 
     renderSubtasks(task['subtasks']);
@@ -440,6 +457,7 @@ function getUserKey() {
     return userKey;
 }
 
+
 /**
  * Generates the URL for the task.
  * @param {string} userKey - The user key.
@@ -461,9 +479,28 @@ function collectFormData() {
     const date = document.getElementById('date').value;
     const taskCategoryElement = document.getElementById('select');
     const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
-
     const assignedContacts = taskContacts;
+    const subtasks = [];
+    collectSubtasks();
+    return {
+        title,
+        description,
+        date,
+        taskCategory,
+        prio,
+        prioImg,
+        taskContacts: assignedContacts,
+        subtasks
+    };
+}
 
+
+/**
+ * Collects the subtasks from the DOM.
+ * 
+ * @returns {Array} An array of subtasks.
+ */
+function collectSubtasks() {
     const subtasks = [];
     document.querySelectorAll('#subtasksList li').forEach(subtaskElement => {
         const inputElement = subtaskElement.querySelector('input');
@@ -472,17 +509,7 @@ function collectFormData() {
             state: inputElement ? inputElement.checked : false
         });
     });
-
-    return {
-        title,
-        description,
-        date,
-        taskCategory,
-        prio,
-        prioImg,
-        taskContacts: assignedContacts, 
-        subtasks
-    };
+    return subtasks;
 }
 
 
@@ -529,10 +556,8 @@ async function saveEditedTask(taskIndex) {
     }
     const url = generateTaskUrl(userKey, taskIndex); // Verwenden Sie die richtige URL
     const updatedTask = collectFormData();
-
     try {
         const updateResponse = await updateTaskInDatabase(url, updatedTask);
-
         if (updateResponse.ok) {
             window.location.reload();
         } else {
@@ -574,9 +599,9 @@ async function renderContactsBoardPage() {
     if (window.location.pathname.endsWith("board.html")) {
         let response = await fetch(firebaseUrl + '.json');
         let responseToJson = await response.json();
-
         let content = document.getElementById('assignedContainer');
         content.innerHTML = '';
+        
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 

@@ -35,8 +35,7 @@ function greetingUser() {
     let userName = localStorage.getItem('username');
     let name = document.getElementById('greetingUserName');
     name.innerHTML = userName;
-
- let currentHour = new Date().getHours();
+    let currentHour = new Date().getHours();
     let greetingMessage;
     if (currentHour < 12) {
         greetingMessage = "Good morning";
@@ -52,6 +51,48 @@ greetingUser();
 
 
 /**
+ * This function renders a responsive summary by hiding and showing elements in a specific sequence.
+ * 
+ * @param {HTMLElement} headline - The main headline element to be hidden.
+ * @param {HTMLElement} headlineResponsiv - The responsive headline element to be shown.
+ * @param {HTMLElement} taskDashboard - The task dashboard element to be shown.
+ * @param {HTMLElement} greet - The greeting element to be shown and then hidden.
+ */
+function renderResponsiveSummaryBelow(headline, headlineResponsiv, taskDashboard, greet) {
+    headline.classList.add('d-none');
+    headlineResponsiv.classList.add('d-none');
+    taskDashboard.classList.add('d-none');
+    greet.classList.add('d-none');
+    setTimeout(() => {
+        greet.classList.remove('d-none');
+    }, 100);
+    setTimeout(() => {
+        greet.classList.add('d-none');
+        headlineResponsiv.classList.remove('d-none');
+        taskDashboard.classList.remove('d-none');
+        isRendering = false;
+    }, 1500);
+}
+
+
+/**
+ * This function renders a responsive summary by showing and hiding elements in a specific sequence.
+ * 
+ * @param {HTMLElement} headline - The main headline element to be shown.
+ * @param {HTMLElement} headlineResponsiv - The responsive headline element to be hidden.
+ * @param {HTMLElement} taskDashboard - The task dashboard element to be shown.
+ * @param {HTMLElement} greet - The greeting element to be hidden.
+ */
+function renderResponsiveSummaryAbove(headline, headlineResponsiv, taskDashboard, greet) {
+    headline.classList.remove('d-none');
+    headlineResponsiv.classList.add('d-none');
+    taskDashboard.classList.remove('d-none');
+    greet.classList.remove('d-none');
+    isRendering = false;
+}
+
+
+/**
  * Renders a responsive summary view based on the window width.
  * If the window width is less than or equal to 1200 pixels, it shows
  * a greeting and hides other elements temporarily.
@@ -59,40 +100,18 @@ greetingUser();
 function renderResponsivSummary() {
     if (isRendering) return;
     isRendering = true;
-
     let headline = document.getElementById('summaryHeadline');
     let headlineResponsiv = document.getElementById('summaryHeadlineResponsiv');
     let taskDashboard = document.getElementById('summaryTaskDashboard');
     let greet = document.getElementById('greeting');
-
     if (window.innerWidth <= 1200) {
-        headline.classList.add('d-none');
-        headlineResponsiv.classList.add('d-none');
-        taskDashboard.classList.add('d-none');
-        greet.classList.add('d-none');
-
-        setTimeout(() => {
-            greet.classList.remove('d-none');
-        }, 100);
-
-        setTimeout(() => {
-            greet.classList.add('d-none');
-            headlineResponsiv.classList.remove('d-none');
-            taskDashboard.classList.remove('d-none');
-            isRendering = false;
-        }, 1500);
-
+        renderResponsiveSummaryBelow(headline, headlineResponsiv, taskDashboard, greet, isRendering);
     } else {
-        headline.classList.remove('d-none');
-        headlineResponsiv.classList.add('d-none');
-        taskDashboard.classList.remove('d-none');
-        greet.classList.remove('d-none');
-        isRendering = false;
+        renderResponsiveSummaryAbove(headline, headlineResponsiv, taskDashboard, greet, isRendering);
     }
 }
 
 window.addEventListener('resize', renderResponsivSummary);
-
 renderResponsivSummary();
 
 
@@ -107,7 +126,6 @@ async function renderSummaryTasks() {
         if (!Array.isArray(tasks)) {
             tasks = [];
         }
-
         updateTaskCount(tasks.length);
 
         let categoryCounts = countTaskCategories(tasks);
@@ -282,5 +300,5 @@ renderSummaryTasks();
  * @function pathToBoard
  */
 function pathToBoard() {
-  window.location.href = 'board.html';
+    window.location.href = 'board.html';
 }

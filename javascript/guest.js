@@ -50,12 +50,26 @@ function showGuestTaskDetails(task, i) {
     let taskDetails = document.getElementById('taskDetails');
     taskDetails.innerHTML = '';
     taskDetails.innerHTML = generateGuestTaskDetails(task, i);
-
     renderGuestCheckbox(i);
+    showGuestTaskContacts(task, i);
+    showGuestTaskSubtasks(task, i);
+    updateAllGuestsProgressBars();
+    updateProgressBar(i);
+}
 
+
+/**
+ * This function displays the contacts associated with a guest task.
+ * 
+ * This function clears the content of the specified element and populates it with the contacts
+ * associated with the given task. If no contacts are available, it displays a message indicating this.
+ *
+ * @param {Object} task - The task object containing the contacts.
+ * @param {number} i - The index of the task.
+ */
+function showGuestTaskContacts(task, i) {
     let content = document.getElementById(`contacts${i}`);
     content.innerHTML = '';
-
     if (task['taskContacts'].length === 0) {
         content.innerHTML = '<p>No contacts available.</p>';
     } else {
@@ -69,17 +83,28 @@ function showGuestTaskDetails(task, i) {
             `;
         }
     }
+}
 
+
+/**
+ * This function displays the subtasks associated with a guest task.
+ * 
+ * This function clears the content of the specified element and populates it with the subtasks
+ * associated with the given task. If no subtasks are available, it displays a message indicating this.
+ * Each subtask is rendered with a checkbox that updates the progress bar and saves its state when clicked.
+ *
+ * @param {Object} task - The task object containing the subtasks.
+ * @param {number} i - The index of the task.
+ */
+function showGuestTaskSubtasks(task, i) {
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
-
     if (task['subtasks'].length === 0) {
         subtasks.innerHTML = '<p>No subtasks available.</p>';
     } else {
         for (let k = 0; k < task['subtasks'].length; k++) {
             let subtask = task['subtasks'][k];
             let isChecked = subtask['state'] ? 'checked' : '';
-
             subtasks.innerHTML += `
             <div id="single_subtask_${i}_${k}" class="single_subtask">
                 <input onclick="updateProgressBar(${i}); saveGuestCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
@@ -88,40 +113,66 @@ function showGuestTaskDetails(task, i) {
             `;
         }
     }
-
-    updateAllGuestsProgressBars();
-    updateProgressBar(i);
 }
 
 
+/**
+ * This function renders the checkboxes for a guest task's subtasks and updates the progress bar.
+ * 
+ * This function retrieves the subtasks for a specified task, clears the subtasks container,
+ * and then renders each subtask with a checkbox. It also updates the progress bar for the task.
+ *
+ * @param {number} taskIndex - The index of the task.
+ */
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
     if (!subtasksContainer) {
         console.error('task_subtasks element not found');
         return;
     }
-
     let task = guestTasks[taskIndex];
     let subtasks = task['subtasks'];
-
     subtasksContainer.innerHTML = '';
-
     for (let j = 0; j < subtasks.length; j++) {
-        let subtask = subtasks[j];
-        let isChecked = subtask['state'] ? 'checked' : '';
-        let subtaskHTML = `
-            <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
-                <input onclick="updateProgressBar(${taskIndex}); saveGuestCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-                <p>${subtask['title']}</p>
-            </div>
-        `;
-        subtasksContainer.innerHTML += subtaskHTML;
+        renderGuestSubtasksCheckbox(subtasks, j, taskIndex, subtasksContainer);
     }
-
     updateProgressBar(taskIndex);
 }
 
 
+/**
+ * This function renders a single subtask with a checkbox for a guest task.
+ * 
+ * This function generates the HTML for a subtask with a checkbox and appends it to the subtasks container.
+ * It also sets up the checkbox to update the progress bar and save its state when clicked.
+ *
+ * @param {Array} subtasks - The array of subtasks for the task.
+ * @param {number} j - The index of the subtask.
+ * @param {number} taskIndex - The index of the task.
+ * @param {HTMLElement} subtasksContainer - The container element where the subtasks will be rendered.
+ */
+function renderGuestSubtasksCheckbox(subtasks, j, taskIndex, subtasksContainer) {
+    let subtask = subtasks[j];
+    let isChecked = subtask['state'] ? 'checked' : '';
+    let subtaskHTML = `
+    <div id="single_subtask_${taskIndex}_${j}" class="single_subtask">
+        <input onclick="updateProgressBar(${taskIndex}); saveGuestCheckboxState(${taskIndex}, ${j})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+        <p>${subtask['title']}</p>
+    </div>
+    `;
+    subtasksContainer.innerHTML += subtaskHTML;
+}
+
+
+/**
+ * This function saves the state of a guest's subtask checkbox and updates the progress bar.
+ * 
+ * This function updates the state of a subtask's checkbox for a specified task and subtask index.
+ * It also saves the updated guest tasks to localStorage and updates the progress bar for the task.
+ *
+ * @param {number} taskIndex - The index of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ */
 function saveGuestCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
     let isChecked = checkbox.checked;
@@ -133,36 +184,68 @@ function saveGuestCheckboxState(taskIndex, subtaskIndex) {
 }
 
 
+/**
+ * This function updates the progress bars for all guest tasks.
+ * 
+ * This function iterates through all guest tasks and updates their progress bars
+ * based on the completion status of their subtasks.
+ */
 function updateAllGuestsProgressBars() {
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
         let subtasks = task['subtasks'];
 
         if (subtasks.length > 0) {
-            let allSubtasks = subtasks.length;
-            let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
-
-            let progress = (completedSubtasks / allSubtasks) * 100;
-
-            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-            if (subtasksAmount) {
-                subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-            }
-
-            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-            if (progressBarContent) {
-                progressBarContent.style.width = progress + '%';
-            }
+            updateProgressBarAboveZero(subtasks, i);
         } else {
-            let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-            if (subtasksAmount) {
-                subtasksAmount.innerHTML = '0/0 Subtasks';
-            }
-            let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-            if (progressBarContent) {
-                progressBarContent.style.width = '0%';
-            }
+            updateProgressBarBelowZero(subtasks, i);
         }
+    }
+}
+
+
+/**
+ * This function updates the progress bar for a task with one or more subtasks.
+ * 
+ * This function calculates the progress of completed subtasks for a specified task
+ * and updates the corresponding progress bar and subtasks amount display.
+ *
+ * @param {Array} subtasks - The array of subtasks for the task.
+ * @param {number} i - The index of the task.
+ */
+function updateProgressBarAboveZero(subtasks, i) {
+    let allSubtasks = subtasks.length;
+    let completedSubtasks = subtasks.filter(subtask => subtask['state']).length;
+
+    let progress = (completedSubtasks / allSubtasks) * 100;
+
+    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+    if (subtasksAmount) {
+        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
+    }
+
+    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+    if (progressBarContent) {
+        progressBarContent.style.width = progress + '%';
+    }
+}
+
+
+/**
+ * This function updates the progress bar for a task with no subtasks.
+ * 
+ * This function sets the progress bar to 0% and displays '0/0 Subtasks' for a specified task.
+ *
+ * @param {number} i - The index of the task.
+ */
+function updateProgressBarBelowZero() {
+    let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
+    if (subtasksAmount) {
+        subtasksAmount.innerHTML = '0/0 Subtasks';
+    }
+    let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
+    if (progressBarContent) {
+        progressBarContent.style.width = '0%';
     }
 }
 
@@ -178,6 +261,7 @@ function updateHTML() {
     updateDone();
 }
 
+
 /**
  * Updates the HTML content for the "ToDo" section by filtering tasks
  * with the category 'todo' and generating their HTML.
@@ -188,7 +272,6 @@ function updateTodo() {
     for (let i = 0; i < todo.length; i++) {
         const todoElement = todo[i];
         document.getElementById('todo').innerHTML += generateGuestTodoHTML(todoElement, i);
-
         let contactsContent = document.getElementById(`taskContacts${i}`);
         for (let j = 0; j < todoElement['taskContacts'].length; j++) {
             let contacts = todoElement['taskContacts'][j];
@@ -196,6 +279,7 @@ function updateTodo() {
         }
     }
 }
+
 
 /**
  * Updates the HTML content for the "In Progress" section by filtering tasks
@@ -216,6 +300,7 @@ function updateInProgress() {
     }
 }
 
+
 /**
  * Updates the HTML content for the "Await-feedback" section by filtering tasks
  * with the category 'await-feedback' and generating their HTML.
@@ -234,6 +319,7 @@ function updateAwaitFeedback() {
         }
     }
 }
+
 
 /**
  * Updates the HTML content for the "Done" section by filtering tasks
@@ -254,6 +340,7 @@ function updateDone() {
     }
 }
 
+
 /**
  * Starts the dragging process for a task.
  * 
@@ -262,6 +349,7 @@ function updateDone() {
 function startDragging(i) {
     currentDraggedTask = i;
 }
+
 
 /**
  * Checks if there are guest tasks stored in localStorage.
@@ -286,19 +374,25 @@ function deleteGuestTask(index) {
 }
 
 
+/**
+ * This function edits the specified task for a guest user by generating the edit popup and populating it with task details.
+ * 
+ * This function clears the task details container, generates the edit popup HTML for the specified task, and
+ * populates it with the task's contacts and subtasks.
+ *
+ * @param {number} i - The index of the task to be edited.
+ */
 function editTaskGuest(i) {
     let container = document.getElementById('taskDetails');
     container.innerHTML = '';
     let tasks = guestTasks[i];
     container.innerHTML = generateEditPopupGuest(tasks, i);
     console.log(tasks)
-
     let conatactsContent = document.getElementById(`selectedContact`);
     for (let j = 0; j < tasks['taskContacts'].length; j++) {
         let contact = tasks['taskContacts'][j];
         conatactsContent.innerHTML += `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
     }
-
     let subtasksContent = document.getElementById(`subtasksList${i}`);
     for (let k = 0; k < tasks['subtasks'].length; k++) {
         let contact = tasks['subtasks'][k];
@@ -318,7 +412,6 @@ function saveEditedTaskGuest(i) {
     let description = document.getElementById('description');
     let date = document.getElementById('date');
     let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-
     guestTasks[i] = {
         ...guestTasks[i],
         taskCategory: taskCategory.options[taskCategory.selectedIndex].text,
@@ -330,12 +423,20 @@ function saveEditedTaskGuest(i) {
         subtasks: subtasks,
         taskContacts: [...taskContacts]
     };
-
     localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
     window.location.reload();
 }
 
 
+/**
+ * This function adds a new subtask to the list of subtasks for a guest user.
+ * 
+ * This function checks if the subtask input is valid and the total number of subtasks
+ * is less than 5. If both conditions are met, it adds the new subtask to the list
+ * and renders the updated list.
+ *
+ * @param {number} i - The index of the current task.
+ */
 function addNewSubtasksGuest(i) {
     let subtaskInput = document.getElementById('subtask');
     if (subtasks.length < 5) {
