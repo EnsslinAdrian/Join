@@ -277,6 +277,40 @@ async function renderContactsAddTask() {
 
 
 /**
+ * Renders the contacts on the addTask page for the "Assigned to" section. 
+ */
+async function renderContactsAddTaskGuest(taskIndex) {
+    if (window.location.pathname.endsWith("board.html")) {
+        let response = await fetch(firebaseUrl + '.json');
+        let responseToJson = await response.json();
+
+        let content = document.getElementById('assignedContainer');
+        content.innerHTML = '';
+        let contacts = responseToJson.contacts;
+        let contactsArray = Object.values(contacts);
+
+        for (let i = 0; i < contactsArray.length; i++) {
+            let contact = contactsArray[i];
+            let initialsBgColor = getRandomColor();
+            let isChecked = taskContacts.some(tc => tc.name === contact.name);
+            let contactName = contact['name'];
+            let initials = contactName.split(' ').map(word => word[0]).join('');
+
+            content.innerHTML += `
+                <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${initialsBgColor}')">
+                    <div class="contact-name">
+                        <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
+                        <p>${contactName}</p>
+                    </div>
+                    <input id="taskCheckbox${i}" class="checkbox" type="checkbox" ${isChecked ? 'checked' : ''}>
+                </div>
+            `;
+        }
+    }
+}
+
+
+/**
  * Generates the HTML for a contact card to be displayed on the task assignment section.
  * 
  * @param {Object} contact - The contact object containing the contact details.
@@ -310,7 +344,67 @@ function generateTaskContactHtml(contact, i, color) {
 function toggleCheckbox(index, contactName, initials, color) {
     let checkbox = document.getElementById(`taskCheckbox${index}`);
     checkbox.checked = !checkbox.checked;
-    addContactTask(contactName, initials, index, color);
+
+    if (localStorage.getItem('username') !== 'Guest') {
+        addContactTask(contactName, initials, index, color);
+    } else {
+        addContactTaskForGuest(contactName, initials, index, color);
+    }
+}
+
+
+/**
+ * This function adds or removes a contact from the task for a guest user.
+ * 
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} i - The index of the contact in the contact list.
+ * @param {string} color - The background color for the contact's initials.
+ */
+function addContactTaskForGuest(contactName, initials, i, color) {
+    let newTaskContact = {
+        'initials': initials,
+        'color': color,
+        'name': contactName
+    };
+
+    let checkbox = document.getElementById(`taskCheckbox${i}`);
+
+    if (checkbox.checked) {
+        if (!taskContacts.some(contact => contact.name === contactName)) {
+            taskContacts.push(newTaskContact);
+        }
+    } else {
+        let contactIndex = taskContacts.findIndex(contact => contact.name === contactName);
+        if (contactIndex !== -1) {
+            taskContacts.splice(contactIndex, 1);
+        }
+    }
+
+    renderAddTaskContactInitialsGuest(i);
+}
+
+
+/**
+ * This function renders the initials for the contacts in the "Assigned to" section.
+ */
+function renderAddTaskContactInitialsGuest(i) {
+    let content = document.getElementById(`selectedContact`);
+    if (!content) {
+        console.error(`Element with id selectedContact${i} not found.`);
+        return;
+    }
+
+    content.innerHTML = '';
+
+    if (taskContacts && Array.isArray(taskContacts) && taskContacts.length > 0) {
+        for (let j = 0; j < taskContacts.length; j++) {
+            let contact = taskContacts[j];
+            content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+        }
+    } else {
+        content.innerHTML = '<p>No contacts assigned</p>';
+    }
 }
 
 

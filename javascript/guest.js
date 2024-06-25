@@ -1,157 +1,3 @@
-let guestTasks = [
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '2024-06-26',
-        'taskContacts': [
-            {
-                'color': '#8128EE',
-                'initials': 'AM',
-                'name': 'Anton Mayer'
-            },
-            {
-                'color': '#5E7CE2',
-                'initials': 'LW',
-                'name': 'Laura Weiß'
-            },
-            {
-                'color': '#FF5733',
-                'initials': 'JD',
-                'name': 'Johann Dreher'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Footer-Probleme',
-        'description': 'Footer-Links funktionieren nicht',
-        'date': '2024-06-27',
-        'taskContacts': [
-            {
-                'color': '#FF5733',
-                'initials': 'JS',
-                'name': 'Julia Schmidt'
-            },
-            {
-                'color': '#C70039',
-                'initials': 'TH',
-                'name': 'Thomas Hoffmann'
-            },
-            {
-                'color': '#FFC300',
-                'initials': 'MM',
-                'name': 'Mia Müller'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Identifizieren', 'state': false },
-            { 'title': 'Beheben', 'state': false }
-        ]
-    },
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Navigation optimieren',
-        'description': 'Navigationselemente verbessern',
-        'date': '2024-06-28',
-        'taskContacts': [
-            {
-                'color': '#28A745',
-                'initials': 'SK',
-                'name': 'Stefan König'
-            },
-            {
-                'color': '#17A2B8',
-                'initials': 'AB',
-                'name': 'Anna Bauer'
-            },
-            {
-                'color': '#FFC107',
-                'initials': 'FR',
-                'name': 'Felix Richter'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Analysieren', 'state': false },
-            { 'title': 'Designen', 'state': false }
-        ]
-    },
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Dark Mode hinzufügen',
-        'description': 'Dark Mode für die Website implementieren',
-        'date': '2024-06-29',
-        'taskContacts': [
-            {
-                'color': '#343A40',
-                'initials': 'RB',
-                'name': 'Robert Braun'
-            },
-            {
-                'color': '#007BFF',
-                'initials': 'CK',
-                'name': 'Clara Klein'
-            },
-            {
-                'color': '#6C757D',
-                'initials': 'PH',
-                'name': 'Paul Hartmann'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Konzept erstellen', 'state': false },
-            { 'title': 'Implementieren', 'state': false }
-        ]
-    },
-    {
-        'category': 'done',
-        'taskCategory': 'User Story',
-        'title': 'API-Dokumentation aktualisieren',
-        'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
-        'date': '2024-06-25',
-        'taskContacts': [
-            {
-                'color': '#6610F2',
-                'initials': 'LB',
-                'name': 'Lena Becker'
-            },
-            {
-                'color': '#E83E8C',
-                'initials': 'TS',
-                'name': 'Timo Schulz'
-            },
-            {
-                'color': '#28A745',
-                'initials': 'JK',
-                'name': 'Julia Krause'
-            }
-        ],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Schreiben', 'state': true },
-            { 'title': 'Überprüfen', 'state': true }
-        ]
-    }
-];
-
-
 /**
  * Renders the task board for guest users by iterating over guest tasks
  * and generating the HTML for each task.
@@ -183,45 +29,6 @@ function renderGuestTaskBoard() {
 
 
 /**
- * Generates the HTML for a guest user's task card on the board page.
- * 
- * @param {Object} element - The task object containing the task details.
- * @param {number} i - The index of the task in the task list.
- * @returns {string} The HTML string for the task card.
- */
-function generateGuestTodoHTML(element, i) {
-    const description = element['description'] ? element['description'] : '';
-    const prioImg = element['prioImg'] ? `<img src="${element['prioImg']}">` : '';
-    const taskCategory = element['taskCategory'] ? element['taskCategory'] : 'Keine Kategorie vorhanden';
-    const hasSubtasks = element['subtasks'] && element['subtasks'].length > 0;
-
-    return /*html*/`
-    <div id="task${i}" draggable="true" ondragstart="startDragging(${i})" class="todo task-item" data-index="${i}">
-        <div class="task-card" onclick="openDialogGuestTask(${i})">
-            <div class="task-card-type">
-                <div class="type-bg" style="background-color: blue;">${taskCategory}</div>
-            </div>
-            <h2>${element['title']}</h2>
-            <p class="task-description shorter_description">${description}</p>
-            ${hasSubtasks ? `
-            <div class="progress" id="progress">
-                <div class="progress-bar">
-                    <div class="progress-bar-content" id="progress-bar-content-${i}"></div>
-                </div>
-                <span onload="updateProgressBar(${i})" id="completed-subtasks-${i}">Subtasks</span>
-            </div>
-            ` : ''}
-            <div class="task-card-bottom">
-                <div class="taskContacts" id="taskContacts${i}">
-                </div>
-                ${prioImg}
-            </div>
-        </div>
-    </div>
-    `;
-}
-
-/**
  * Opens the task dialog for a guest user's task and shows the detailed view.
  * 
  * @param {number} i - The index of the task in the guest task list.
@@ -246,31 +53,39 @@ function showGuestTaskDetails(task, i) {
     renderGuestCheckbox(i);
 
     let content = document.getElementById(`contacts${i}`);
+    content.innerHTML = '';
 
-
-    for (let j = 0; j < task['taskContacts'].length; j++) {
-        let contact = task['taskContacts'][j];
-        content.innerHTML += `
-        <div class="arrange_assigned_to_contacts">
-            <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
-            <p> ${contact['name']}</p>
-        </div>
-        `;
+    if (task['taskContacts'].length === 0) {
+        content.innerHTML = '<p>No contacts available.</p>';
+    } else {
+        for (let j = 0; j < task['taskContacts'].length; j++) {
+            let contact = task['taskContacts'][j];
+            content.innerHTML += `
+            <div class="arrange_assigned_to_contacts">
+                <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
+                <p>${contact['name']}</p>
+            </div>
+            `;
+        }
     }
 
     let subtasks = document.getElementById(`task_subtasks`);
     subtasks.innerHTML = '';
 
-    for (let k = 0; k < task['subtasks'].length; k++) {
-        let subtask = task['subtasks'][k];
-        let isChecked = subtask['state'] ? 'checked' : '';
+    if (task['subtasks'].length === 0) {
+        subtasks.innerHTML = '<p>No subtasks available.</p>';
+    } else {
+        for (let k = 0; k < task['subtasks'].length; k++) {
+            let subtask = task['subtasks'][k];
+            let isChecked = subtask['state'] ? 'checked' : '';
 
-        subtasks.innerHTML += `
-        <div id="single_subtask_${i}_${k}" class="single_subtask">
-            <input onclick="updateProgressBar(${i}); saveGuestCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
-            <p>${subtask['title']}</p>
-        </div>
-        `;
+            subtasks.innerHTML += `
+            <div id="single_subtask_${i}_${k}" class="single_subtask">
+                <input onclick="updateProgressBar(${i}); saveGuestCheckboxState(${i}, ${k})" class="subtask-checkbox" type="checkbox" ${isChecked}>
+                <p>${subtask['title']}</p>
+            </div>
+            `;
+        }
     }
 
     updateAllGuestsProgressBars();
@@ -350,55 +165,6 @@ function updateAllGuestsProgressBars() {
     }
 }
 
-
-/**
- * Generates the HTML for displaying the detailed view of a guest user's task.
- * 
- * @param {Object} task - The task object containing the task details.
- * @param {number} i - The index of the task in the guest task list.
- */
-function generateGuestTaskDetails(task, i) {
-    return /*html*/`
-    <div class="task-card-type-details">
-        <div class="type-bg type-of-task">${task['taskCategory']}</div>
-        <div class="close_and_change">
-            <img onclick="closeDialogTask()" src="./assets/img/add_task/close.svg" alt="schließen">
-        </div>
-    </div>
-    <div class="header_task_details">
-        <h1>${task['title']}</h1>
-        <p class="task-description">${task['description']}</p>
-    </div>
-    <div class="task_details_information">
-        <div class="task_details_date">
-            <span>Due date:</span><p>${task['date']}</p>
-        </div>
-        <div class="task_details_priority">
-            <span>Priority:</span> <p>${task['prio']}</p> <img src="${task['prioImg']}" alt="">
-        </div>
-        <div class="task_details_assigned_to">
-            <span>Assigned To:</span>
-            <div class="task_details_contacts" id="contacts${i}" class="openTaskContacts"></div>
-        </div>
-        <div class="task_details_subtasks" id="task_details_subtasks">
-            <span>Subtasks</span>
-            <div class="task_details_subtask" id="task_subtasks">
-            </div>
-        </div>
-        <footer class="details_delete_edit">
-            <div class="delete_task" onclick="deleteGuestTask(${i})">
-                <img src="./assets/img/delete.svg" alt="">
-                <p>Delete</p>
-            </div>
-            <p>|</p>
-            <div class="edit_task" onclick="editTaskGuest(${i})">
-                <img src="./assets/img/edit.svg" alt="">
-                <p>Edit</p>
-            </div>
-        </footer>
-    </div>
-    `;
-}
 
 /**
  * Updates the HTML content for the task board by calling functions
@@ -606,7 +372,7 @@ function editTaskGuest(i) {
     container.innerHTML = generateEditPopupGuest(tasks, i);
     console.log(tasks)
 
-    let conatactsContent = document.getElementById(`selectedContact${i}`);
+    let conatactsContent = document.getElementById(`selectedContact`);
     for (let j = 0; j < tasks['taskContacts'].length; j++) {
         let contact = tasks['taskContacts'][j];
         conatactsContent.innerHTML += `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
@@ -619,55 +385,37 @@ function editTaskGuest(i) {
  }
 }
 
-/**
- * This function generates the HTML for a subtask.
- * 
- * @param {Object} subtask - This is the subtask object.
- * @param {number} i - This is the index of the subtask.
- * @returns {string} This generates HTML string for the subtask.
- */
-function generateSubtaskGuestHtml(contact, i) {
-    return `
-    <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-      <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})">${contact.title}</li>
-      <div class="subtask-edit-svg" id="subtaskSvg">
-        <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
-        <div class="subtask-edit-line"></div>
-        <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
-      </div>
-    </div>
-    `;
-  }
 
-  function saveEditedTaskGuest(i) {
+/**
+ * This function saves the edited task for a guest user.
+ * 
+ * @param {number} i - The index of the task in the guestTasks list.
+ */
+function saveEditedTaskGuest(i) {
     let taskCategory = document.getElementById('select');
     let title = document.getElementById('title');
     let description = document.getElementById('description');
     let date = document.getElementById('date');
-    
-    console.log(taskCategory.options[taskCategory.selectedIndex].text);
-    console.log(title.value);
-    console.log(description.value);
-    console.log(date.value);
-    console.log(prio);
-    console.log(prioImg)
-    // console.log(taskContacts)
-    // console.log(subtasks)
 
-        // Aktualisiere den Task an der Stelle i
-        guestTasks[i].taskCategory = taskCategory.options[taskCategory.selectedIndex].text;
-        guestTasks[i].title = title.value;
-        guestTasks[i].description = description.value;
-        guestTasks[i].date = date.value;
-        guestTasks[i].prio = prio;
-        guestTasks[i].prioImg = prioImg;
+    let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
     
-        // Speichere die aktualisierte guestTasks-Liste im localStorage
-        localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
-        window.location.reload();
-  }
+    guestTasks[i] = {
+        ...guestTasks[i],
+        taskCategory: taskCategory.options[taskCategory.selectedIndex].text,
+        title: title.value,
+        description: description.value,
+        date: date.value,
+        prio: prio,
+        prioImg: prioImg,
+        subtasks: subtasks,
+        taskContacts: [...taskContacts]
+    };
 
-  function addNewSubtasksGuest() {
+    localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
+    window.location.reload();
+}
+
+  function addNewSubtasksGuest(i) {
     let subtaskInput = document.getElementById('subtask');
     if (subtasks.length < 5) {
       if (subtaskInput.value.length >= 1) {
@@ -677,7 +425,7 @@ function generateSubtaskGuestHtml(contact, i) {
         };
         subtasks.push(newSubtask);
         subtaskInput.value = '';
-        renderSubtasksListGuest();
+        renderSubtasksListGuest(i);
       }
     }
   }
@@ -685,13 +433,42 @@ function generateSubtaskGuestHtml(contact, i) {
   /**
  * This function renders the created subtasks and displays them in the content area.
  */
-function renderSubtasksListGuest() {
-    let content = document.getElementById('subtasksList');
+  function renderSubtasksListGuest(i) {
+    let content = document.getElementById(`subtasksList${i}`);
     content.innerHTML = '';
-    for (let i = 0; i < subtasks.length; i++) {
-      let subtask = subtasks[i];
-      content.innerHTML += generateSubtaskGuestHtml(subtask, i);
+
+    if (subtasks.length === 0) {
+        content.innerHTML = '<p>No subtasks available.</p>';
+    } else {
+        for (let j = 0; j < subtasks.length; j++) { 
+            let subtask = subtasks[j];
+            content.innerHTML += generateSubtaskGuestHtml(subtask, j);
+        }
     }
+}
+
+
+/**
+ * This function deletes a subtask.
+ * 
+ * @param {number} i - This is the index of the subtask.
+ */
+function deleteSubtaskGuest(i) {
+    subtasks.splice(i, 1);
+    renderSubtasksListGuest(i);
   }
 
+
+/**
+ * This function opens the pop-up window for contacts in the "Assigned to" section.
+ * 
+ * @param {Event} event - The event object representing the user interaction.
+ * @param {number} i - The index of the contact in the contact list.
+ */
+function openAssignedGuest(event, i) {
+    event.stopPropagation();
+    document.getElementById('assignedContainer').classList.toggle('d-none');
+    document.getElementById(`selectedContact`).classList.toggle('d-none');
+    renderContactsAddTaskGuest(i);
+}
 
