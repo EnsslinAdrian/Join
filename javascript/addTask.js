@@ -73,7 +73,7 @@ function clearTask() {
  */
 function taskUrgent() {
   prio = 'Urgent';
-  prioImg = './assets/img/add_task/arrow_white.svg';
+  prioImg = './assets/img/add_task/arrow.svg';
   document.getElementById('urgent').classList.add('urgent');
   document.getElementById('medium').classList.remove('medium');
   document.getElementById('low').classList.remove('low');
@@ -88,7 +88,7 @@ function taskUrgent() {
  */
 function taskMedium() {
   prio = 'Medium';
-  prioImg = './assets/img/add_task/result_white.svg';
+  prioImg = './assets/img/add_task/result.svg';
   document.getElementById('medium').classList.add('medium');
   document.getElementById('urgent').classList.remove('urgent');
   document.getElementById('low').classList.remove('low');
@@ -103,7 +103,7 @@ function taskMedium() {
  */
 function taskLow() {
   prio = 'Low';
-  prioImg = './assets/img/add_task/arrow_buttom_white.svg';
+  prioImg = './assets/img/add_task/arrow_buttom.svg';
   document.getElementById('low').classList.add('low');
   document.getElementById('urgent').classList.remove('urgent');
   document.getElementById('medium').classList.remove('medium');
