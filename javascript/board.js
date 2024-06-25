@@ -1,6 +1,7 @@
 let currentDraggedTask = null;
 let checkboxStates = {};
 let currentTaskId;
+let isAddTaskPopupOpen = false;
 
 
 /**
@@ -16,10 +17,16 @@ function openAddTask() {
         container.classList.remove('slide-out');
         container.classList.remove('d-none');
         container.innerHTML = generateAddTaskHtml();
+        isAddTaskPopupOpen = true;
     }
     renderContactsAddTaskPopup();
 }
 
+window.addEventListener('resize', function() {
+    if (isAddTaskPopupOpen && window.matchMedia("(max-width: 1100px)").matches) {
+        window.location.href = 'add_task.html';
+    }
+});
 
 /**
  * This function closes the 'Add Task' popup by adding the 'd-none' class to the container.
