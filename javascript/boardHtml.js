@@ -11,13 +11,11 @@ function generateAddTaskHtml() {
     <!-- anfang -->
                 <div class="add-task-section">
 
-<<<<<<< HEAD
                 <p>Assigned to</p>
     <input onclick="toggleAssigned(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
     <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
     <div class="selected-contact d-none" id="selectedContact"></div>
         </div>
-=======
                     <div class="add-task-titel-container">
                         <form onsubmit="addNewTask(event)" action="">
                             <p>Titel<span class="color-red">*</span></p>
@@ -28,7 +26,6 @@ function generateAddTaskHtml() {
                             <textarea id="description" placeholder="Enter a Description"
                                 onkeydown="checkDescriptionLength()"></textarea>
                             <span id="descriptionLengthMessage"></span>
->>>>>>> 2b9f2bafd3107a00065d4ed39782289ab6cc9fef
 
                             <p style="margin-top: 32px;">Assigned to</p>
                             <input onclick="openAssigned(event)" id="assignedSearch" type="search"
@@ -83,37 +80,6 @@ function generateAddTaskHtml() {
                     </div>
 
                 </div>
-<<<<<<< HEAD
-                <div class="prio-selection-medium medium" onclick="taskMedium()" id="medium">
-                    <span>Medium </span>
-                    <img id="imgMedium" class="prio-icons" src="./assets/img/add_task/result_white.svg">
-                </div>
-                <div class="prio-selection-low" onclick="taskLow()" id="low">
-                    <span>Low</span>
-                    <img id="imgLow" class="prio-icons" src="./assets/img/add_task/arrowsButtom.svg">
-                </div>
-            </div>
-            <p>Category<span class="color-red">*</span></p>
-                <div id="customSelect">
-                    <select id="select" class="custom-select" required>
-                        <option class="option" value="" disabled selected>Select task category</option>
-                        <option class="option" value="1">Technical Task</option>
-                        <option class="option" value="2">User Story</option>                    
-                    </select>
-                </div>
-            <p>Subtasks</p>
-            <div class="subtasks-container">
-                <input id="subtask" placeholder="Add new subtask" onkeypress="return event.keyCode!=13">
-                <div class="subtasks-button">
-                    <button onclick="addNewSubtasks()" type="button">+</button>
-                </div>
-            </div>
-            <div class="subtasks-list">
-                <ul id="subtasksList"></ul>
-            </div>
-        </div>
-=======
->>>>>>> 2b9f2bafd3107a00065d4ed39782289ab6cc9fef
 
                 <div class="send-add-task-buttons">
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
