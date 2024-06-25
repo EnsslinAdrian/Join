@@ -17,6 +17,7 @@ function openAddTask() {
         container.classList.remove('d-none');
         container.innerHTML = generateAddTaskHtml();
     }
+    renderContactsAddTaskPopup();
 }
 
 
