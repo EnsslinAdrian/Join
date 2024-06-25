@@ -461,8 +461,6 @@ function collectFormData() {
     const date = document.getElementById('date').value;
     const taskCategoryElement = document.getElementById('select');
     const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
-    const priority = prio || 'Medium';
-    const priorityImg = prioImg || './assets/img/add_task/result.svg';
 
     // Verwenden der globalen Variable `taskContacts`
     const assignedContacts = taskContacts;
@@ -482,8 +480,8 @@ function collectFormData() {
         description,
         date,
         taskCategory,
-        priority,
-        priorityImg,
+        prio,
+        prioImg,
         taskContacts: assignedContacts, // Hier verwenden
         subtasks
     };
