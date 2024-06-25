@@ -933,28 +933,3 @@ async function filterTasksMobile() {
     let searchedTask = document.getElementById('inputFieldMobile').value.toLowerCase();
     await compareTasks(searchedTask);
 }
-
-
-/**
- * This function sets the minimum date of the date input to today's date.
- */
-function showDateToday() {
-    let dateInput = document.getElementById('date');
-    dateInput.min = getTodayDate();
-}
-
-
-/**
- * This function gets today's date formatted as YYYY-MM-DD.
- * 
- * @returns {string} today - This is the formatted date.
- */
-function getTodayDate() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-
-    today = mm + '/' + dd + '/' + yyyy;
-    return `${yyyy}-${mm}-${dd}`;
-}

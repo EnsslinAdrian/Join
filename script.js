@@ -354,6 +354,61 @@ function toggleCheckbox(index, contactName, initials, color) {
 
 
 /**
+ * This function adds or removes a contact from the task for a guest user.
+ * 
+ * @param {string} contactName - The name of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {number} i - The index of the contact in the contact list.
+ * @param {string} color - The background color for the contact's initials.
+ */
+function addContactTaskForGuest(contactName, initials, i, color) {
+    let newTaskContact = {
+        'initials': initials,
+        'color': color,
+        'name': contactName
+    };
+
+    let checkbox = document.getElementById(`taskCheckbox${i}`);
+
+    if (checkbox.checked) {
+        if (!taskContacts.some(contact => contact.name === contactName)) {
+            taskContacts.push(newTaskContact);
+        }
+    } else {
+        let contactIndex = taskContacts.findIndex(contact => contact.name === contactName);
+        if (contactIndex !== -1) {
+            taskContacts.splice(contactIndex, 1);
+        }
+    }
+
+    renderAddTaskContactInitialsGuest(i);
+}
+
+
+/**
+ * This function renders the initials for the contacts in the "Assigned to" section.
+ */
+function renderAddTaskContactInitialsGuest(i) {
+    let content = document.getElementById(`selectedContact`);
+    if (!content) {
+        console.error(`Element with id selectedContact${i} not found.`);
+        return;
+    }
+
+    content.innerHTML = '';
+
+    if (taskContacts && Array.isArray(taskContacts) && taskContacts.length > 0) {
+        for (let j = 0; j < taskContacts.length; j++) {
+            let contact = taskContacts[j];
+            content.innerHTML += generateAddTaskContactInitialsHTML(contact);
+        }
+    } else {
+        content.innerHTML = '<p>No contacts assigned</p>';
+    }
+}
+
+
+/**
  * This function creates a new contact and stores it in the database.
  * 
  * @param {string} contactName - The name of the contact.
