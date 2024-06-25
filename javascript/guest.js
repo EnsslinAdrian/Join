@@ -4,18 +4,14 @@
  */
 function renderGuestTaskBoard() {
     let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-
     document.getElementById('todo').innerHTML = '';
     document.getElementById('in-progress').innerHTML = '';
     document.getElementById('await-feedback').innerHTML = '';
     document.getElementById('done').innerHTML = '';
-
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
         let id = task['category'];
-
         document.getElementById(id).innerHTML += generateGuestTodoHTML(task, i);
-
         let contactsContent = document.getElementById(`taskContacts${i}`);
         for (let j = 0; j < task['taskContacts'].length; j++) {
             let contacts = task['taskContacts'][j];
@@ -23,7 +19,6 @@ function renderGuestTaskBoard() {
             contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
         }
     }
-
     updateAllGuestsProgressBars();
 }
 
