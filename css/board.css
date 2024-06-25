@@ -298,6 +298,10 @@ span {
     transition: transform 0.5s ease-in-out;
 }
 
+.add-task-popup-heigth {
+height: 1000px;
+}
+
 .close_and_change {
     display: flex;
 }

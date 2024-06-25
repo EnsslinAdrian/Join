@@ -32,7 +32,7 @@ function openAssignedPopUp(event) {
   event.stopPropagation();
   document.getElementById('assignedContainer').classList.toggle('d-none');
   document.getElementById(`selectedContact`).classList.toggle('d-none');
-  document.getElementById('add-task-popup').style.height = '1000px';
+  document.getElementById('add-task-popup').classList.toggle('add-task-popup-heigth');
 }
 
 
