@@ -21,6 +21,19 @@ function openAssigned(event) {
   document.getElementById('selectedContact').classList.add('d-none');
 }
 
+/**
+ * This function opens the pop-up window for contacts in the "Assigned to" section.
+ * 
+ * @param {Event} event - The event object representing the user interaction.
+ * @param {number} i - The index of the contact in the contact list.
+ */
+function openAssignedPopUp(event) {
+  event.stopPropagation();
+  document.getElementById('assignedContainer').classList.toggle('d-none');
+  document.getElementById(`selectedContact`).classList.toggle('d-none');
+}
+
+
 
 /**
  * This function clears the content of all entered fields in the task form.

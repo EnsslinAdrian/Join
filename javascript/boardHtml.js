@@ -23,7 +23,7 @@ function generateAddTaskHtml() {
                             <span id="descriptionLengthMessage"></span>
 
                             <p style="margin-top: 32px;">Assigned to</p>
-                            <input onclick="openAssigned(event)" id="assignedSearch" type="search"
+                            <input onclick="openAssignedPopUp(event)" id="assignedSearch" type="search"
                                 onkeydown="filterContacts()" class="assigned-search"
                                 placeholder="Select contacts to assign">
                             <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none"
