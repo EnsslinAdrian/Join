@@ -179,7 +179,7 @@ function getInitials(name) {
  */
 function generateContactsSearchHtml(contact, initials, i) {
   return `
-  <div class="assigned-contact" id="contactTask${i}">
+  <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${color}')">
     <div class="contact-name">
         <div style="background-color: ${contact['color']};" class="assigned-initials">${initials}</div>
         <p>${contact.name}</p>
