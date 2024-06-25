@@ -39,6 +39,7 @@ function openDialogGuestTask(i) {
     updateProgressBar(i);
 }
 
+
 /**
  * Displays the detailed view of a guest user's task.
  * 
@@ -302,7 +303,7 @@ function editTaskGuest(i) {
     for (let k = 0; k < tasks['subtasks'].length; k++) {
         let contact = tasks['subtasks'][k];
         subtasksContent.innerHTML += generateSubtaskGuestHtml(contact, k);
- }
+    }
 }
 
 
@@ -316,9 +317,8 @@ function saveEditedTaskGuest(i) {
     let title = document.getElementById('title');
     let description = document.getElementById('description');
     let date = document.getElementById('date');
-
     let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || [];
-    
+
     guestTasks[i] = {
         ...guestTasks[i],
         taskCategory: taskCategory.options[taskCategory.selectedIndex].text,
@@ -335,32 +335,34 @@ function saveEditedTaskGuest(i) {
     window.location.reload();
 }
 
-  function addNewSubtasksGuest(i) {
+
+function addNewSubtasksGuest(i) {
     let subtaskInput = document.getElementById('subtask');
     if (subtasks.length < 5) {
-      if (subtaskInput.value.length >= 1) {
-        let newSubtask = {
-          'title': subtaskInput.value,
-          'state': false
-        };
-        subtasks.push(newSubtask);
-        subtaskInput.value = '';
-        renderSubtasksListGuest(i);
-      }
+        if (subtaskInput.value.length >= 1) {
+            let newSubtask = {
+                'title': subtaskInput.value,
+                'state': false
+            };
+            subtasks.push(newSubtask);
+            subtaskInput.value = '';
+            renderSubtasksListGuest(i);
+        }
     }
-  }
+}
 
-  /**
- * This function renders the created subtasks and displays them in the content area.
- */
-  function renderSubtasksListGuest(i) {
+
+/**
+* This function renders the created subtasks and displays them in the content area.
+*/
+function renderSubtasksListGuest(i) {
     let content = document.getElementById(`subtasksList${i}`);
     content.innerHTML = '';
 
     if (subtasks.length === 0) {
         content.innerHTML = '<p>No subtasks available.</p>';
     } else {
-        for (let j = 0; j < subtasks.length; j++) { 
+        for (let j = 0; j < subtasks.length; j++) {
             let subtask = subtasks[j];
             content.innerHTML += generateSubtaskGuestHtml(subtask, j);
         }
@@ -376,7 +378,7 @@ function saveEditedTaskGuest(i) {
 function deleteSubtaskGuest(i) {
     subtasks.splice(i, 1);
     renderSubtasksListGuest(i);
-  }
+}
 
 
 /**
