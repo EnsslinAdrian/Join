@@ -70,7 +70,7 @@ function showGuestTaskContacts(task, i) {
         for (let j = 0; j < task['taskContacts'].length; j++) {
             let contact = task['taskContacts'][j];
             content.innerHTML += `
-            <div class="arrange_assigned_to_contacts">
+            <div class="arrange_assigned_to_contacts" onclick="toggleCheckbox('${i}', '${contact}')">
                 <span class="user-icon" style="background-color: ${contact['color']};">${contact['initials']}</span>
                 <p>${contact['name']}</p>
             </div>

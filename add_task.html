@@ -36,12 +36,10 @@
                     </div>
                 </div>
             </header>
-
             <div class="margin-left-top" onclick="closeAssigned()">
                 <h1>Add Task</h1>
                 <!-- anfang -->
                 <div class="add-task-section">
-
                     <div class="add-task-titel-container">
                         <form onsubmit="addNewTask(event)" action="">
                             <p>Titel<span class="color-red">*</span></p>
@@ -52,20 +50,16 @@
                             <textarea id="description" placeholder="Enter a Description"
                                 onkeydown="checkDescriptionLength()"></textarea>
                             <span id="descriptionLengthMessage"></span>
-
                             <p style="margin-top: 32px;">Assigned to</p>
                             <input onclick="openAssigned(event)" id="assignedSearch" type="search"
                                 onkeydown="filterContacts()" class="assigned-search"
                                 placeholder="Select contacts to assign">
                             <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none"
                                 id="assignedContainer">
-
                             </div>
                             <div class="selected-contact d-none" id="selectedContact"></div>
                     </div>
-
                     <div class="add-task-between-line"></div>
-
                     <div class="add-task-date-container">
                         <p>Due date<span class="color-red">*</span></p>
                         <input id="date" onclick="showDateToday()" required class="margin-buttom" type="date">

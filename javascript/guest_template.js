@@ -1,81 +1,103 @@
-(function() {
+(function () {
     const storedGuestTasks = localStorage.getItem('guestTasks');
     if (storedGuestTasks) {
         window.guestTasks = JSON.parse(storedGuestTasks);
     } else {
         window.guestTasks = [
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Header',
-        'description': 'Header Template erstellen',
-        'date': '2024-06-26',
-        'taskContacts': [],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Erstellen', 'state': false },
-            { 'title': 'Stylen', 'state': false }
-        ]
-    },
-    {
-        'category': 'in-progress',
-        'taskCategory': 'User Story',
-        'title': 'Footer-Probleme',
-        'description': 'Footer-Links funktionieren nicht',
-        'date': '2024-06-27',
-        'taskContacts': [],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Identifizieren', 'state': false },
-            { 'title': 'Beheben', 'state': false }
-        ]
-    },
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Navigation optimieren',
-        'description': 'Navigationselemente verbessern',
-        'date': '2024-06-28',
-        'taskContacts': [],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Analysieren', 'state': true },
-            { 'title': 'Designen', 'state': true }
-        ]
-    },
-    {
-        'category': 'await-feedback',
-        'taskCategory': 'User Story',
-        'title': 'Dark Mode hinzufügen',
-        'description': 'Dark Mode für die Website implementieren',
-        'date': '2024-06-29',
-        'taskContacts': [],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Konzept erstellen', 'state': true },
-            { 'title': 'Implementieren', 'state': true }
-        ]
-    },
-    {
-        'category': 'done',
-        'taskCategory': 'User Story',
-        'title': 'API-Dokumentation aktualisieren',
-        'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
-        'date': '2024-06-25',
-        'taskContacts': [],
-        'prioImg': './assets/img/add_task/arrowsTop.svg',
-        'prio': 'Urgent',
-        'subtasks': [
-            { 'title': 'Schreiben', 'state': true },
-            { 'title': 'Überprüfen', 'state': true }
-        ]
+            {
+                'category': 'in-progress',
+                'taskCategory': 'User Story',
+                'title': 'Header',
+                'description': 'Header Template erstellen',
+                'date': '2024-06-26',
+                'taskContacts': [
+                    { initials: "EM", color: "#E64DAF", name: "Emmanuel Mauer" },
+                    { initials: "MB", color: "#12B638", name: "Marcel Bauer" },
+                    { initials: "AS", color: "#E0C880", name: "Anna Schmidt" }
+                ],
+                'prioImg': './assets/img/add_task/result.svg',
+                'prio': 'Medium',
+                'subtasks': [
+                    { 'title': 'Erstellen', 'state': false },
+                    { 'title': 'Stylen', 'state': false }
+                ]
+            },
+            {
+                'category': 'in-progress',
+                'taskCategory': 'User Story',
+                'title': 'Footer-Probleme',
+                'description': 'Footer-Links funktionieren nicht',
+                'date': '2024-06-27',
+                'taskContacts': [
+                    { initials: "LF", color: "#91CBAE", name: "Lukas Fischer" },
+                    { initials: "AE", color: "#8DCBED", name: "Adrian Enßlin" },
+                    { initials: "MW", color: "#35EED2", name: "Mia Wagner" },
+                    { initials: "SM", color: "#9DDB29", name: "Stefan Meyer" },
+                    { initials: "TM", color: "#A47096", name: "Tina Müller" }
+                ],
+                'prioImg': './assets/img/add_task/arrowsButtom.svg',
+                'prio': 'Low',
+                'subtasks': [
+                    { 'title': 'Identifizieren', 'state': false },
+                    { 'title': 'Beheben', 'state': false }
+                ]
+            },
+            {
+                'category': 'await-feedback',
+                'taskCategory': 'User Story',
+                'title': 'Navigation optimieren',
+                'description': 'Navigationselemente verbessern',
+                'date': '2024-06-28',
+                'taskContacts': [
+                    { initials: "MB", color: "#5EC75C", name: "Marcel Bauer" },
+                    { initials: "AS", color: "#E0DB18", name: "Anna Schmidt" }
+                ],
+                'prioImg': './assets/img/add_task/arrowsTop.svg',
+                'prio': 'Urgent',
+                'subtasks': [
+                    { 'title': 'Analysieren', 'state': true },
+                    { 'title': 'Designen', 'state': true }
+                ]
+            },
+            {
+                'category': 'await-feedback',
+                'taskCategory': 'User Story',
+                'title': 'Dark Mode hinzufügen',
+                'description': 'Dark Mode für die Website implementieren',
+                'date': '2024-06-29',
+                'taskContacts': [
+                    { initials: "MB", color: "#B15736", name: "Marcel Bauer" },
+                    { initials: "AE", color: "#97AB21", name: "Adrian Enßlin" },
+                    { initials: "EM", color: "#F73F8D", name: "Emmanuel Mauer" },
+                    { initials: "AS", color: "#CC76C5", name: "Anna Schmidt" }
+                ],
+                'prioImg': './assets/img/add_task/arrowsButtom.svg',
+                'prio': 'Low',
+                'subtasks': [
+                    { 'title': 'Konzept erstellen', 'state': true },
+                    { 'title': 'Implementieren', 'state': true }
+                ]
+            },
+            {
+                'category': 'done',
+                'taskCategory': 'User Story',
+                'title': 'API-Dokumentation aktualisieren',
+                'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
+                'date': '2024-06-25',
+                'taskContacts': [
+                    { initials: "AS", color: "#19148F", name: "Anna Schmidt" },
+                    { initials: "SB", color: "#F757FE", name: "Sophie Becker" },
+                    { initials: "MW", color: "#CB8C36", name: "Mia Wagner" }
+                ],
+                'prioImg': './assets/img/add_task/arrowsTop.svg',
+                'prio': 'Urgent',
+                'subtasks': [
+                    { 'title': 'Schreiben', 'state': true },
+                    { 'title': 'Überprüfen', 'state': true }
+                ]
+            }
+        ];
     }
-];
-}
 })();
 
 
@@ -180,7 +202,6 @@ function generateEditPopupGuest(task, i) {
     // Aktualisieren Sie die globale `taskContacts`-Variable
     taskContacts = task.taskContacts || [];
     subtasks = task.subtasks || [];
-
     return `
     <div>
         <div class="add-task-section-edit">
@@ -270,6 +291,5 @@ function generateSubtaskGuestHtml(contact, i) {
       </div>
     </div>
     `;
-  }
+}
 
-  

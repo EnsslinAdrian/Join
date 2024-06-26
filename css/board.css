@@ -108,7 +108,11 @@ h2 {
 p {
     height: 24px;
     color: #42526E;
-    font-weight: bold !important;
+    font-weight: bold;
+}
+
+.white-text {
+    color: white !important;
 }
 
 .tasks-container {
@@ -817,7 +821,7 @@ height: 1000px;
 }
 
 .dialog {
-    width: 400px;
+    width: 500px;
     height: 80vh;
     background-color: white;
     border: 1 px solid lightgray;
