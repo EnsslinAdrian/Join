@@ -440,25 +440,17 @@ function addNewSubtasksGuest(i) {
             };
             subtasks.push(newSubtask);
             subtaskInput.value = '';
-            renderSubtasksListGuest(i);
-        }
-    }
-}
+            let content = document.getElementById(`subtasksList${i}`);
+            content.innerHTML = '';
 
-
-/**
-* This function renders the created subtasks and displays them in the content area.
-*/
-function renderSubtasksListGuest(i) {
-    let content = document.getElementById(`subtasksList${i}`);
-    content.innerHTML = '';
-
-    if (subtasks.length === 0) {
-        content.innerHTML = '<p>No subtasks available.</p>';
-    } else {
-        for (let j = 0; j < subtasks.length; j++) {
-            let subtask = subtasks[j];
-            content.innerHTML += generateSubtaskGuestHtml(subtask, j);
+            if (subtasks.length === 0) {
+                content.innerHTML = '<p>No subtasks available.</p>';
+            } else {
+                for (let j = 0; j < subtasks.length; j++) {
+                    let subtask = subtasks[j];
+                    content.innerHTML += generateSubtaskGuestHtml(subtask, j);
+                }
+            }
         }
     }
 }

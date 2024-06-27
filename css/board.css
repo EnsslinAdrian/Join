@@ -187,6 +187,10 @@ p {
     height: auto;
 }
 
+.task-description p {
+    color: black !important;
+}
+
 .shorter_description {
     white-space: nowrap;
     overflow: hidden;
