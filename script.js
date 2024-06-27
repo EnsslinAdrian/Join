@@ -136,6 +136,7 @@ function registration(event) {
             password.value = "";
             confirmPassword.value = "";
             document.getElementById('signUpInputsContainer').classList.add('d-none');
+            document.getElementById('name').classList.add('d-none');
             document.getElementById('acceptPrivacy').classList.add('d-none');
             document.getElementById('reistrationBtn').classList.add('d-none');
             document.getElementById('reistrationMessage').innerHTML = 'Registration was successful'
