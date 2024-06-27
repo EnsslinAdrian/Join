@@ -446,9 +446,6 @@ function addNewSubtasksGuest(i) {
 }
 
 
-/**
-* This function renders the created subtasks and displays them in the content area.
-*/
 function renderSubtasksListGuest(i) {
     let content = document.getElementById(`subtasksList${i}`);
     content.innerHTML = '';
