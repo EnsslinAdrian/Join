@@ -441,15 +441,6 @@ function addNewSubtasksGuest(i) {
             subtasks.push(newSubtask);
             subtaskInput.value = '';
             renderSubtasksListGuest(i);
-
-            if (subtasks.length === 0) {
-                content.innerHTML = '<p>No subtasks available.</p>';
-            } else {
-                for (let j = 0; j < subtasks.length; j++) {
-                    let subtask = subtasks[j];
-                    content.innerHTML += generateSubtaskGuestHtml(subtask, j);
-                }
-            }
         }
     }
 }
