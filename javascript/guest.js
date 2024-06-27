@@ -386,7 +386,7 @@ function editTaskGuest(i) {
         let contact = tasks['taskContacts'][j];
         conatactsContent.innerHTML += `<div style="background-color: ${contact.color};" class="assigned-initials">${contact.initials}</div>`;
     }
-    let subtasksContent = document.getElementById(`subtasksList${i}`);
+    let subtasksContent = document.getElementById(`subtasksList`);
     for (let k = 0; k < tasks['subtasks'].length; k++) {
         let contact = tasks['subtasks'][k];
         subtasksContent.innerHTML += generateSubtaskGuestHtml(contact, k);
@@ -447,7 +447,7 @@ function addNewSubtasksGuest(i) {
 
 
 function renderSubtasksListGuest(i) {
-    let content = document.getElementById(`subtasksList${i}`);
+    let content = document.getElementById(`subtasksList`);
     content.innerHTML = '';
 
     if (subtasks.length === 0) {

@@ -258,7 +258,7 @@ function generateEditPopupGuest(task, i) {
                     </div>
                 </div>
             <div class="subtasks-list">
-                            <ul id="subtasksList${i}"></ul>
+                            <ul id="subtasksList"></ul>
                         </div>
             </div>
         </div>
