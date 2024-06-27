@@ -21,7 +21,7 @@ function generateAddTaskHtml() {
                 <p style="margin-top: 32px;">Assigned to</p>
                 <input onclick="openAssignedPopUp(event)" id="assignedSearch" type="search" onkeydown="filterContacts()" class="assigned-search" placeholder="Select contacts to assign">
                 <div onclick="event.stopPropagation()" class="assigned-contacts-container d-none" id="assignedContainer"></div>
-                <div class="selected-contact d-none" id="selectedContact"></div>
+                <div class="selected-contact-board d-none" id="selectedContact"></div>
             </div>
             <div class="add-task-between-line"></div>
             <div class="add-task-date-container">
@@ -57,7 +57,7 @@ function generateAddTaskHtml() {
                         <button onclick="addNewSubtasks()" type="button">+</button>
                     </div>
                 </div>
-                <div class="subtasks-list">
+                <div class="subtasks-list-board">
                     <ul id="subtasksList"></ul>
                 </div>
             </div>

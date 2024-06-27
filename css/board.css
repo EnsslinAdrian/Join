@@ -176,7 +176,8 @@ p {
     padding: 16px;
     font-size: 16px;
     font-weight: 400;
-    margin-top: -575px;    ;
+    margin-top: -575px;
+    ;
     margin-left: 7px;
     position: absolute;
 }
@@ -307,7 +308,7 @@ span {
 }
 
 .add-task-popup-heigth {
-height: 1000px;
+    height: 1000px;
 }
 
 .close_and_change {
@@ -541,7 +542,24 @@ height: 1000px;
 
 .color-white {
     color: white !important;
-    }
+}
+
+.selected-contact-board {
+    width: 95%;
+    max-width: 95%;
+    height: 90px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.subtasks-list-board {
+    height: 90px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
 
 @media (max-width: 1530px) {
     .tasks-container {
@@ -582,7 +600,7 @@ height: 1000px;
         width: 900px;
         height: 350px;
     }
-    
+
     .show_categories {
         display: block;
         text-align: end;
