@@ -400,9 +400,7 @@ function addContactTaskForGuest(contactName, initials, i, color) {
         'color': color,
         'name': contactName
     };
-
     let checkbox = document.getElementById(`taskCheckbox${i}`);
-
     if (checkbox.checked) {
         if (!taskContacts.some(contact => contact.name === contactName)) {
             taskContacts.push(newTaskContact);
@@ -413,7 +411,6 @@ function addContactTaskForGuest(contactName, initials, i, color) {
             taskContacts.splice(contactIndex, 1);
         }
     }
-
     renderAddTaskContactInitialsGuest(i);
 }
 
@@ -427,9 +424,7 @@ function renderAddTaskContactInitialsGuest(i) {
         console.error(`Element with id selectedContact${i} not found.`);
         return;
     }
-
     content.innerHTML = '';
-
     if (taskContacts && Array.isArray(taskContacts) && taskContacts.length > 0) {
         for (let j = 0; j < taskContacts.length; j++) {
             let contact = taskContacts[j];
@@ -455,9 +450,7 @@ function addContactTask(contactName, initials, i, color) {
         'color': color,
         'name': contactName
     };
-
     let checkbox = document.getElementById(`taskCheckbox${i}`);
-
     if (checkbox.checked) {
         if (Array.isArray(taskContacts)) {
             if (!taskContacts.some(contact => contact.name === contactName)) {
@@ -516,14 +509,11 @@ function renderTasks(tasks) {
     if (!Array.isArray(tasks) || tasks.length === 0) {
         return;
     }
-
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         let id = task['category'];
-
         if (document.getElementById(id)) {
             document.getElementById(id).innerHTML += generateTodoHTML(task, i);
-
             let contactsContent = document.getElementById(`taskContacts${i}`);
             if (contactsContent) {
                 if (task['taskContacts'] && task['taskContacts'].length > 0) {
@@ -551,6 +541,7 @@ function openProfilPopup() {
     popup.classList.toggle('popup-logout-mobile');
 }
 
+
 /**
  * Logs out the user by removing specified keys from local storage
  * and redirects to the index page.
@@ -574,7 +565,6 @@ function questLogin() {
     if (!localStorage.getItem('guestTasks')) {
         localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
     }
-
     localStorage.setItem('username', 'Guest');
     window.location.href = 'summary.html';
 }
@@ -592,20 +582,16 @@ async function renderContacts(path = "") {
     if (window.location.pathname.endsWith("contacts.html")) {
         let response = await fetch(firebaseUrl + '.json');
         let responseToJson = await response.json();
-
         let content = document.getElementById('contactContainer');
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
         contactsArray.sort((a, b) => a.name.localeCompare(b.name));
-
         content.innerHTML = "";
-
         let currentLetter = "";
         for (let contact of contactsArray) {
             let key = Object.keys(contacts).find(k => contacts[k] === contact);
             contact.id = key;
-
             let firstLetter = contact.name.charAt(0).toUpperCase();
             if (firstLetter !== currentLetter) {
                 currentLetter = firstLetter;
@@ -624,6 +610,7 @@ document.addEventListener('DOMContentLoaded', function () {
     checkUsername();
 });
 
+
 /**
  * This function checks if a username exists in localStorage.
  * If no username is found, certain elements on the page will be hidden.
@@ -632,7 +619,6 @@ function checkUsername() {
     const username = localStorage.getItem('username');
     const currentPage = window.location.pathname.split('/').pop();
     const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy.html', 'legal_notice.html', 'help.html'];
-
     if (!username) {
         if (!allowedPages.includes(currentPage)) {
             window.location.href = 'index.html';
@@ -640,15 +626,12 @@ function checkUsername() {
             const navbarContainer = document.querySelector('.navbar-container');
             const profileInitials = document.querySelector('.profil-initials');
             const backToLogin = document.querySelector('.back_to_login');
-
             if (navbarContainer) {
                 navbarContainer.classList.add('d-none');
             }
-
             if (profileInitials) {
                 profileInitials.classList.add('d-none');
             }
-
             if (backToLogin) {
                 backToLogin.classList.remove('d-none');
             }

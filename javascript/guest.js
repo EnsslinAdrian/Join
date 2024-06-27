@@ -192,7 +192,7 @@ function updateAllGuestsProgressBars() {
         if (subtasks.length > 0) {
             updateProgressBarAboveZero(subtasks, i);
         } else {
-            updateProgressBarBelowZero(subtasks, i);
+            updateProgressBarBelowZero(i);
         }
     }
 }
@@ -232,7 +232,7 @@ function updateProgressBarAboveZero(subtasks, i) {
  *
  * @param {number} i - The index of the task.
  */
-function updateProgressBarBelowZero() {
+function updateProgressBarBelowZero(i) {
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
     if (subtasksAmount) {
         subtasksAmount.innerHTML = '0/0 Subtasks';
