@@ -919,6 +919,7 @@ async function filterTasks() {
  * @returns {Promise<void>} A promise that resolves when the tasks are filtered.
  */
 async function compareTasks(searchedTask) {
+    if (localStorage.getItem('username') !== 'Guest') {
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
     let user = localStorage.getItem('userKey');
@@ -932,6 +933,18 @@ async function compareTasks(searchedTask) {
 
         compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, taskDescription)
     }
+} else {
+    const storedGuestTasks = localStorage.getItem('guestTasks');
+    let guestTasks = storedGuestTasks ? JSON.parse(storedGuestTasks) : [];
+
+    for (let i = 0; i < guestTasks.length; i++) {
+        let taskTitle = guestTasks[i]['title'].toLowerCase();
+        let taskDescription = guestTasks[i]['description'].toLowerCase();
+        let taskElement = document.querySelector(`.todo[data-index='${i}']`);
+
+        compareTaskTitleAndDescriptionGuest(searchedTask, taskElement, taskTitle, taskDescription);
+    }
+}
 }
 
 
@@ -950,6 +963,24 @@ function compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, ta
         } else {
             taskElement.style.display = "none";
         }
+    }
+}
+
+
+/**
+ * This function compares the task title and description with the searched task and updates the task element.
+ *
+ * @param {string} searchedTask - The task string to search for.
+ * @param {HTMLElement} taskElement - The DOM element representing the task.
+ * @param {string} taskTitle - The title of the task.
+ * @param {string} taskDescription - The description of the task.
+ */
+function compareTaskTitleAndDescriptionGuest(searchedTask, taskElement, taskTitle, taskDescription) {
+    searchedTask = searchedTask.toLowerCase();
+    if (taskTitle.includes(searchedTask) || taskDescription.includes(searchedTask)) {
+        taskElement.style.display = '';
+    } else {
+        taskElement.style.display = 'none';
     }
 }
 

@@ -107,7 +107,6 @@ h2 {
 
 p {
     height: 24px;
-    color: #42526E;
     font-weight: bold;
 }
 
@@ -535,6 +534,10 @@ height: 1000px;
     margin-top: 30px;
     margin-right: 0 !important;
 }
+
+.color-white {
+    color: white !important;
+    }
 
 @media (max-width: 1530px) {
     .tasks-container {
