@@ -440,8 +440,7 @@ function addNewSubtasksGuest(i) {
             };
             subtasks.push(newSubtask);
             subtaskInput.value = '';
-            let content = document.getElementById(`subtasksList${i}`);
-            content.innerHTML = '';
+            renderSubtasksListGuest(i);
 
             if (subtasks.length === 0) {
                 content.innerHTML = '<p>No subtasks available.</p>';
@@ -456,6 +455,21 @@ function addNewSubtasksGuest(i) {
 }
 
 
+function renderSubtasksListGuest(i) {
+    let content = document.getElementById(`subtasksList${i}`);
+    content.innerHTML = '';
+
+    if (subtasks.length === 0) {
+        content.innerHTML = '<p>No subtasks available.</p>';
+    } else {
+        for (let j = 0; j < subtasks.length; j++) {
+            let subtask = subtasks[j];
+            content.innerHTML += generateSubtaskGuestHtml(subtask, j);
+        }
+    }
+}
+
+
 /**
  * This function deletes a subtask.
  * 
@@ -463,7 +477,7 @@ function addNewSubtasksGuest(i) {
  */
 function deleteSubtaskGuest(i) {
     subtasks.splice(i, 1);
-    addNewSubtasksGuest(i);
+    renderSubtasksListGuest(i);
 }
 
 
