@@ -497,6 +497,10 @@ input[type="search"]:focus {
     scrollbar-width: none;
 }
 
+.color-white {
+    color: white !important;
+    }
+
 @media (max-width: 1300px) {
     p {
         font-size: 16px;

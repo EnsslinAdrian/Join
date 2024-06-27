@@ -136,6 +136,7 @@ function registration(event) {
             password.value = "";
             confirmPassword.value = "";
             document.getElementById('signUpInputsContainer').classList.add('d-none');
+            document.getElementById('name').classList.add('d-none');
             document.getElementById('acceptPrivacy').classList.add('d-none');
             document.getElementById('reistrationBtn').classList.add('d-none');
             document.getElementById('reistrationMessage').innerHTML = 'Registration was successful'
@@ -368,15 +369,12 @@ function toggleCheckbox(index, contactName, initials, color) {
     let checkbox = document.getElementById(`taskCheckbox${index}`);
     checkbox.checked = !checkbox.checked;
     let contactElement = document.getElementById(`contactTask${index}`);
-    let pElement = contactElement.querySelector('p');
     if (checkbox.checked) {
         contactElement.style.backgroundColor = '#2A3647';
-        contactElement.style.color = 'white';
-        pElement.style.color = 'white'; 
+        contactElement.classList.add('color-white');
     } else {
         contactElement.style.backgroundColor = '';
-        contactElement.style.color = '';
-        pElement.style.color = '#42526E'; 
+        contactElement.classList.remove('color-white');
     }
     if (localStorage.getItem('username') !== 'Guest') {
         addContactTask(contactName, initials, index, color);
