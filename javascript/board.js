@@ -481,7 +481,13 @@ function collectFormData() {
     const taskCategory = taskCategoryElement.options[taskCategoryElement.selectedIndex].text;
     const assignedContacts = taskContacts;
     const subtasks = [];
-    collectSubtasks();
+    document.querySelectorAll('#subtasksList li').forEach(subtaskElement => {
+        const inputElement = subtaskElement.querySelector('input');
+        subtasks.push({
+            title: subtaskElement.textContent.trim(),
+            state: inputElement ? inputElement.checked : false
+        });
+    });
     return {
         title,
         description,
@@ -492,24 +498,6 @@ function collectFormData() {
         taskContacts: assignedContacts,
         subtasks
     };
-}
-
-
-/**
- * Collects the subtasks from the DOM.
- * 
- * @returns {Array} An array of subtasks.
- */
-function collectSubtasks() {
-    const subtasks = [];
-    document.querySelectorAll('#subtasksList li').forEach(subtaskElement => {
-        const inputElement = subtaskElement.querySelector('input');
-        subtasks.push({
-            title: subtaskElement.textContent.trim(),
-            state: inputElement ? inputElement.checked : false
-        });
-    });
-    return subtasks;
 }
 
 
@@ -601,7 +589,7 @@ async function renderContactsBoardPage() {
         let responseToJson = await response.json();
         let content = document.getElementById('assignedContainer');
         content.innerHTML = '';
-        
+
         let contacts = responseToJson.contacts;
         let contactsArray = Object.values(contacts);
 
@@ -920,31 +908,31 @@ async function filterTasks() {
  */
 async function compareTasks(searchedTask) {
     if (localStorage.getItem('username') !== 'Guest') {
-    let response = await fetch(`${firebaseUrl}.json`);
-    let responseToJson = await response.json();
-    let user = localStorage.getItem('userKey');
-    let pathUser = responseToJson['registered'][user];
-    let tasks = pathUser['tasks'];
+        let response = await fetch(`${firebaseUrl}.json`);
+        let responseToJson = await response.json();
+        let user = localStorage.getItem('userKey');
+        let pathUser = responseToJson['registered'][user];
+        let tasks = pathUser['tasks'];
 
-    for (let i = 0; i < tasks.length; i++) {
-        let taskTitle = tasks[i]['title'].toLowerCase();
-        let taskDescription = tasks[i]['description'].toLowerCase();
-        let taskElement = document.querySelector(`.todo[data-index='${i}']`);
+        for (let i = 0; i < tasks.length; i++) {
+            let taskTitle = tasks[i]['title'].toLowerCase();
+            let taskDescription = tasks[i]['description'].toLowerCase();
+            let taskElement = document.querySelector(`.todo[data-index='${i}']`);
 
-        compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, taskDescription)
+            compareTaskTitleAndDescription(searchedTask, taskElement, taskTitle, taskDescription)
+        }
+    } else {
+        const storedGuestTasks = localStorage.getItem('guestTasks');
+        let guestTasks = storedGuestTasks ? JSON.parse(storedGuestTasks) : [];
+
+        for (let i = 0; i < guestTasks.length; i++) {
+            let taskTitle = guestTasks[i]['title'].toLowerCase();
+            let taskDescription = guestTasks[i]['description'].toLowerCase();
+            let taskElement = document.querySelector(`.todo[data-index='${i}']`);
+
+            compareTaskTitleAndDescriptionGuest(searchedTask, taskElement, taskTitle, taskDescription);
+        }
     }
-} else {
-    const storedGuestTasks = localStorage.getItem('guestTasks');
-    let guestTasks = storedGuestTasks ? JSON.parse(storedGuestTasks) : [];
-
-    for (let i = 0; i < guestTasks.length; i++) {
-        let taskTitle = guestTasks[i]['title'].toLowerCase();
-        let taskDescription = guestTasks[i]['description'].toLowerCase();
-        let taskElement = document.querySelector(`.todo[data-index='${i}']`);
-
-        compareTaskTitleAndDescriptionGuest(searchedTask, taskElement, taskTitle, taskDescription);
-    }
-}
 }
 
 
