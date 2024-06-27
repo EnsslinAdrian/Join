@@ -463,7 +463,7 @@ function addNewSubtasksGuest(i) {
  */
 function deleteSubtaskGuest(i) {
     subtasks.splice(i, 1);
-    renderSubtasksListGuest(i);
+    addNewSubtasksGuest(i);
 }
 
 
