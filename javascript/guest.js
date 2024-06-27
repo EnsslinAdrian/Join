@@ -381,7 +381,6 @@ function editTaskGuest(i) {
     container.innerHTML = '';
     let tasks = guestTasks[i];
     container.innerHTML = generateEditPopupGuest(tasks, i);
-    console.log(tasks)
     let conatactsContent = document.getElementById(`selectedContact`);
     for (let j = 0; j < tasks['taskContacts'].length; j++) {
         let contact = tasks['taskContacts'][j];
