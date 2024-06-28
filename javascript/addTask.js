@@ -246,14 +246,39 @@ function renderSubtasksList() {
 function generateSubtaskHtml(subtask, i) {
   return `
   <div class="edit-subtask-container" id="subtaskEditContainer${i}">
-    <li onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})">${subtask.title}</li>
-    <div class="subtask-edit-svg" id="subtaskSvg">
-      <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
-      <div class="subtask-edit-line"></div>
-      <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
-    </div>
+      <li oninput="limitSubtaskLength(${i})" onkeydown="checkSubtasksEditLength(${i})" id="subtaskTitle${i}" contenteditable="false" onblur="saveSubtaskTitle(${i})" style="outline: none;">${subtask.title}</li>
+      <div class="subtask-edit-svg" id="subtaskSvg">
+          <img onclick="editSubtask(${i})" src="./assets/img/edit.svg">
+          <div class="subtask-edit-line"></div>
+          <img onclick="deleteSubtask(${i})" src="./assets/img/add_task/delete.svg">
+      </div>
   </div>
   `;
+}
+
+
+/**
+ * This function saves the edited subtask title.
+ * 
+ * @param {number} i - This is the index of the subtask.
+ */
+function saveSubtaskTitle(i) {
+  if (subtasks && i >= 0 && i < subtasks.length) {
+      let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
+      if (subtaskTitle) {
+          let trimmedTitle = subtaskTitle.innerText.trim();
+          if (trimmedTitle.length === 0) {
+              deleteSubtask(i);
+          } else {
+              subtasks[i].title = trimmedTitle;
+              subtaskTitle.contentEditable = "false";
+          }
+      } else {
+          console.error("Element mit ID subtaskTitle" + i + " existiert nicht im DOM.");
+      }
+  } else {
+      console.error("subtasks Array ist nicht definiert oder der Index " + i + " ist außerhalb der Grenzen.");
+  }
 }
 
 
@@ -266,25 +291,27 @@ function editSubtask(i) {
   let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
   subtaskTitle.contentEditable = "true";
   subtaskTitle.focus();
+  subtaskTitle.style.outline = "none"; // Remove the default border/outline when editing
 }
 
 
 /**
- * This function saves the edited subtask title.
+ * This function limits the length of the subtask title.
  * 
  * @param {number} i - This is the index of the subtask.
  */
-function saveSubtaskTitle(i) {
-  if (subtasks && i >= 0 && i < subtasks.length) {
-    let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
-    if (subtaskTitle) {
-      subtasks[i].title = subtaskTitle.innerText;
-      subtaskTitle.contentEditable = "false";
-    } else {
-      console.error("Element mit ID subtaskTitle" + i + " existiert nicht im DOM.");
-    }
-  } else {
-    console.error("subtasks Array ist nicht definiert oder der Index " + i + " ist außerhalb der Grenzen.");
+function limitSubtaskLength(i) {
+  let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
+  if (subtaskTitle.innerText.length > 20) {
+      subtaskTitle.innerText = subtaskTitle.innerText.substring(0, 20);
+  }
+}
+
+
+function checkSubtasksLength() {
+  let subtaskTitle = document.getElementById('subtask');
+  if (subtaskTitle.value.length > 1) {
+      subtaskTitle.value = subtaskTitle.value.substring(0, 1);
   }
 }
 
@@ -292,11 +319,15 @@ function saveSubtaskTitle(i) {
 /**
  * This function deletes a subtask.
  * 
- * @param {number} i - This is the index of the subtask.
+ * @param {number} i - This is the index of the subtask to be deleted.
  */
 function deleteSubtask(i) {
-  subtasks.splice(i, 1); // Verwende das globale 'subtasks' Array
-  renderSubtasksList();
+    if (subtasks && i >= 0 && i < subtasks.length) {
+        subtasks.splice(i, 1); // Remove the subtask from the array
+        renderSubtasksList(); // Re-render the subtask list
+    } else {
+        console.error("subtasks Array ist nicht definiert oder der Index " + i + " ist außerhalb der Grenzen.");
+    }
 }
 
 
@@ -378,9 +409,9 @@ function checkTitelLength() {
 function checkSubtasksLength() {
   let description = document.getElementById('subtask').value;
 
-  if (description.length > 40) {
-    document.getElementById('subtask').value = description.substring(0, 40);
-    document.getElementById('subtask').value = description.substring(0, 40);
+  if (description.length > 20) {
+    document.getElementById('subtask').value = description.substring(0, 20);
+    document.getElementById('subtask').value = description.substring(0, 20);
   }
 }
 
