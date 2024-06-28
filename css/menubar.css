@@ -32,15 +32,15 @@ header {
 }
 
 .header-bg {
-height: 96px;
-position: absolute;
-background-color: #FFFFFF;
-box-shadow: 0px 4px 4px 0px #0000001A;
-top: 0;
-left: 0;
-left: 232px;
-width: 100%;
-z-index: 1;
+    height: 96px;
+    position: absolute;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px #0000001A;
+    top: 0;
+    left: 0;
+    left: 232px;
+    width: 100%;
+    z-index: 1;
 }
 
 .header-logo {
@@ -170,30 +170,30 @@ a {
 }
 
 .popup-logout {
-width: 150px;
-height: 140px;
-color: white;
-background-color: #2A3647;
-position: absolute;
-right: 20px;
-top: 96px;
-border-radius: 20px 0px 20px 20px;
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-align-items: center;
-padding-bottom: 10px;
-padding-top: 10px;
+    width: 150px;
+    height: 140px;
+    color: white;
+    background-color: #2A3647;
+    position: absolute;
+    right: 20px;
+    top: 96px;
+    border-radius: 20px 0px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .popup-logout a {
-text-decoration: none;
-color: white;
-font-family: 'Inter';
-padding: 5px;
-width: 110px;
-text-align: center;
-transition: all 225ms ease-in-out;
+    text-decoration: none;
+    color: white;
+    font-family: 'Inter';
+    padding: 5px;
+    width: 110px;
+    text-align: center;
+    transition: all 225ms ease-in-out;
 }
 
 .popup-logout a:hover {
@@ -201,7 +201,7 @@ transition: all 225ms ease-in-out;
 }
 
 .popup-help {
-display: none
+    display: none
 }
 
 @media (max-width: 900px) {
@@ -298,7 +298,7 @@ display: none
         display: none;
     }
 
-    .profil-initials  {
+    .profil-initials {
         color: #29ABE2;
         font-weight: 800;
         font-size: 16px;
@@ -324,29 +324,29 @@ display: none
 
     .popup-help {
         display: block;
-        }
+    }
 
-        .popup-logout {
-            right: 10px;
-            top: 80px;
-            transform: translate(150%);
-            transition: all 225ms ease-in-out;
-            }
+    .popup-logout {
+        right: 10px;
+        top: 80px;
+        transform: translate(150%);
+        transition: all 225ms ease-in-out;
+    }
 
-        .popup-logout-mobile {
+    .popup-logout-mobile {
         transform: translate(0);
-        }  
-        
-        .header-bg {
-            height: 80px;
-            position: absolute;
-            background-color: #FFFFFF;
-            box-shadow: 0px 4px 4px 0px #0000001A;
-            top: 0;
-            left: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            }
-        
+    }
+
+    .header-bg {
+        height: 80px;
+        position: absolute;
+        background-color: #FFFFFF;
+        box-shadow: 0px 4px 4px 0px #0000001A;
+        top: 0;
+        left: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
 }

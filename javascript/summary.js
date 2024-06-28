@@ -132,7 +132,7 @@ async function renderSummaryTasks() {
         updateCategoryCounts(categoryCounts);
 
         let closestDateTask = findClosestDateTask(tasks);
-        updateClosestDateTask(closestDateTask);
+        updateClosestDateTask(closestDateTask, tasks);
     } else {
         renderSummaryGuestTasks();
     }
@@ -234,11 +234,14 @@ function updateCategoryCounts(categoryCounts) {
  * Updates the HTML with the task having the closest due date.
  * 
  * @param {Object} task - The task with the closest due date.
+ * @param {Array} tasks - The array of all tasks.
  */
-function updateClosestDateTask(task) {
+function updateClosestDateTask(task, tasks) {
+    // Update the task with the closest due date
     if (task) {
         document.getElementById('upComingPrioImg').src = task['prioImg'];
         document.getElementById('upComingPrio').innerHTML = task['prio'];
+        document.getElementById('upComingPrioImg').classList.remove('d-none');
 
         let formattedDate = new Date(task['date']).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -249,10 +252,33 @@ function updateClosestDateTask(task) {
         document.getElementById('upComingDate').innerHTML = formattedDate;
     } else {
         document.getElementById('upComingDate').innerHTML = 'Keine bevorstehenden Aufgaben';
-        document.getElementById('prioCurrent').innerHTML = '0';
         document.getElementById('upComingPrio').innerHTML = '';
         document.getElementById('upComingPrioImg').classList.add('d-none');
     }
+
+    // Get the count of tasks for the priority of the closest task
+    let selectedPriorityCount = countTasksByPriority(tasks, task ? task.prio : '');
+
+    // Update the HTML element to show the count of tasks with the selected priority
+    document.getElementById('prioCurrent').innerHTML = selectedPriorityCount;
+}
+
+
+/**
+ * Counts the number of tasks based on the given priority.
+ * 
+ * @param {Array} tasks - The array of all tasks.
+ * @param {String} priority - The priority to count (Low, Normal, or Urgent).
+ * @returns {Number} - The count of tasks with the given priority.
+ */
+function countTasksByPriority(tasks, priority) {
+    let count = 0;
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].prio === priority) {
+            count++;
+        }
+    }
+    return count;
 }
 
 
@@ -279,16 +305,19 @@ function parseDate(dateStr) {
 
 
 /**
- * Renders the summary of tasks for guest users by updating task counts and the nearest upcoming task information on the summary page.
+ * Rendert die Zusammenfassung der Aufgaben für Gastnutzer, indem die Anzahl der Aufgaben und die Informationen zur nächsten bevorstehenden Aufgabe auf der Zusammenfassungsseite aktualisiert werden.
  */
 function renderSummaryGuestTasks() {
+    const storedGuestTasks = localStorage.getItem('guestTasks');
+    let guestTasks = storedGuestTasks ? JSON.parse(storedGuestTasks) : [];
+
     updateTaskCount(guestTasks.length);
 
     let categoryCounts = countTaskCategories(guestTasks);
     updateCategoryCounts(categoryCounts);
 
     let closestDateTask = findClosestDateTask(guestTasks);
-    updateClosestDateTask(closestDateTask);
+    updateClosestDateTaskForGuest(closestDateTask, guestTasks);
 }
 
 renderSummaryTasks();
@@ -301,4 +330,53 @@ renderSummaryTasks();
  */
 function pathToBoard() {
     window.location.href = 'board.html';
+}
+
+/**
+ * Aktualisiert die HTML-Anzeige mit der Aufgabe, die das nächste Fälligkeitsdatum hat.
+ * 
+ * @param {Object} task - Die Aufgabe mit dem nächsten Fälligkeitsdatum.
+ * @param {Array} tasks - Das Array aller Aufgaben.
+ */
+function updateClosestDateTaskForGuest(task, tasks) {
+    if (task) {
+        document.getElementById('upComingPrioImg').src = task['prioImg'];
+        document.getElementById('upComingPrio').innerHTML = task['prio'];
+        document.getElementById('upComingPrioImg').classList.remove('d-none');
+
+        let formattedDate = new Date(task['date']).toLocaleDateString('de-DE', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        document.getElementById('upComingDate').innerHTML = formattedDate;
+    } else {
+        document.getElementById('upComingDate').innerHTML = 'Keine bevorstehenden Aufgaben';
+        document.getElementById('upComingPrio').innerHTML = '';
+        document.getElementById('upComingPrioImg').classList.add('d-none');
+    }
+
+    // Zähle die Anzahl der Aufgaben für die ausgewählte Priorität
+    let selectedPriorityCount = task ? countTasksByPriority(tasks, task.prio) : 0;
+
+    // Aktualisiere das HTML-Element, um die Anzahl der Aufgaben mit der ausgewählten Priorität anzuzeigen
+    document.getElementById('prioCurrent').innerHTML = selectedPriorityCount;
+}
+
+/**
+ * Zählt die Anzahl der Aufgaben basierend auf der gegebenen Priorität.
+ * 
+ * @param {Array} tasks - Das Array aller Aufgaben.
+ * @param {String} priority - Die Priorität, die gezählt werden soll (Low, Normal oder Urgent).
+ * @returns {Number} - Die Anzahl der Aufgaben mit der gegebenen Priorität.
+ */
+function countTasksByPriority(tasks, priority) {
+    let count = 0;
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].prio === priority) {
+            count++;
+        }
+    }
+    return count;
 }
