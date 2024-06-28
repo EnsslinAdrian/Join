@@ -598,7 +598,7 @@ span {
     .scrollable_part {
         overflow-y: hidden;
         overflow-x: auto;
-        width: 70vw;
+        width: 74vw;
         height: 350px;
     }
 
@@ -626,18 +626,27 @@ span {
     }
 }
 
+@media (max-width: 1200px) {
+    .board-btn p {
+        display: none;
+    }
+
+    .scrollable_part {
+        width: 70vw;
+    }
+}
+
 @media (max-width: 1010px) {
     .board-btn p {
         display: none;
     }
 
     .scrollable_part {
-        width: 60vw;
+        width: 64vw;
     }
 }
 
 @media (max-width: 920px) {
-
     .btn {
         margin-left: 0 !important;
     }
@@ -659,6 +668,10 @@ span {
 
     .input-icon {
         margin-inline-start: auto;
+    }
+
+    .scrollable_part {
+        width: 60vw;
     }
 }
 
