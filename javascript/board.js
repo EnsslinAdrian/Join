@@ -101,17 +101,13 @@ function updateProgressBar(i) {
     let completedSubtasks = document.querySelectorAll(`#task_subtasks .single_subtask input[type="checkbox"]:checked`).length;
 
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-    if (!subtasksAmount) {
-        return;
-    }
+    if (!subtasksAmount) {return;}
     subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
 
     let progress = (completedSubtasks / allSubtasks) * 100;
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
 
-    if (!progressBarContent) {
-        return;
-    }
+    if (!progressBarContent) {return;}
     progressBarContent.style.width = progress + '%';
 }
 
@@ -125,9 +121,7 @@ function updateProgressBar(i) {
  */
 async function saveCheckboxState(taskIndex, subtaskIndex) {
     let checkbox = document.querySelector(`#single_subtask_${taskIndex}_${subtaskIndex} .subtask-checkbox`);
-    if (!checkboxStates[taskIndex]) {
-        checkboxStates[taskIndex] = {};
-    }
+    if (!checkboxStates[taskIndex]) {checkboxStates[taskIndex] = {};}
 
     let isChecked = checkbox.checked;
     checkboxStates[taskIndex][subtaskIndex] = isChecked;
@@ -165,11 +159,8 @@ function renderAmountOfAllSubtasks(tasks) {
         let task = tasks[i];
         let subtasks = task['subtasks'];
 
-        if (Array.isArray(subtasks)) {
-            ifSubtasksAvailable(subtasks, i);
-        } else {
-            ifNoSubtasksAvailable(i);
-        }
+        if (Array.isArray(subtasks)) { ifSubtasksAvailable(subtasks, i);
+        } else {ifNoSubtasksAvailable(i);}
     }
 }
 
@@ -186,14 +177,10 @@ function ifSubtasksAvailable(subtasks, i) {
     let progress = (completedSubtasks / allSubtasks) * 100;
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
 
-    if (subtasksAmount) {
-        subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;
-    }
+    if (subtasksAmount) {subtasksAmount.innerHTML = `${completedSubtasks}/${allSubtasks} Subtasks`;}
 
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
-    if (progressBarContent) {
-        progressBarContent.style.width = progress + '%';
-    }
+    if (progressBarContent) {progressBarContent.style.width = progress + '%';}
 }
 
 
@@ -204,9 +191,7 @@ function ifSubtasksAvailable(subtasks, i) {
  */
 function ifNoSubtasksAvailable(i) {
     let subtasksAmount = document.getElementById(`completed-subtasks-${i}`);
-    if (subtasksAmount) {
-        subtasksAmount.innerHTML = 'No Subtasks';
-    }
+    if (subtasksAmount) {subtasksAmount.innerHTML = 'No Subtasks';}
 
     let progressBarContent = document.getElementById(`progress-bar-content-${i}`);
     if (progressBarContent) {
@@ -237,10 +222,7 @@ function isSubtaskChecked(taskIndex, subtaskIndex) {
  */
 async function renderCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
-    if (!subtasksContainer) {
-        console.error('task_subtasks element not found');
-        return;
-    }
+    if (!subtasksContainer) {return;}
 
     let response = await fetch(`${firebaseUrl}.json`);
     let responseToJson = await response.json();
@@ -295,10 +277,7 @@ async function deleteTask(taskJson, i) {
         await deleteTaskByUrl(personalId, i);
         await reindexAndSaveTasks(personalId, i);
         window.location.reload();
-    } catch (error) {
-        console.error('Error deleting task:', error);
-        alert('Error deleting task: ' + error.message);
-    }
+    } catch (error) {}
 }
 
 
@@ -313,7 +292,6 @@ async function deleteTaskByUrl(personalId, i) {
     const response = await fetch(taskUrl, { method: 'DELETE' });
     if (!response.ok) {
         const errorText = await response.text();
-        console.error('Error deleting task:', response.status, errorText);
         throw new Error(`Error deleting task. Status: ${response.status}, Response: ${errorText}`);
     }
 }
@@ -519,15 +497,11 @@ async function updateTaskInDatabase(url, updatedTask) {
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error("Update fehlgeschlagen. Antwortstatus: ", response.status, errorText);
             throw new Error(`Update failed with status ${response.status}: ${errorText}`);
         }
 
         return response;
-    } catch (error) {
-        console.error('Fehler beim Aktualisieren des Tasks:', error);
-        throw error;
-    }
+    } catch (error) {throw error;}
 }
 
 
@@ -546,15 +520,9 @@ async function saveEditedTask(taskIndex) {
     const updatedTask = collectFormData();
     try {
         const updateResponse = await updateTaskInDatabase(url, updatedTask);
-        if (updateResponse.ok) {
-            window.location.reload();
-        } else {
-            const errorText = await updateResponse.text();
-            console.error("Update fehlgeschlagen. Antwortstatus: ", updateResponse.status, errorText);
-        }
-    } catch (error) {
-        console.error('Fehler beim Aktualisieren des Tasks:', error);
-    }
+        if (updateResponse.ok) {window.location.reload();
+        } else {const errorText = await updateResponse.text();}
+    } catch (error) {}
 }
 
 
@@ -571,9 +539,7 @@ function toggleAssigned(event) {
 
     assignedContainer.classList.toggle('d-none');
 
-    if (!assignedContainer.classList.contains('d-none')) {
-        renderContactsBoardPage();
-    }
+    if (!assignedContainer.classList.contains('d-none')) {renderContactsBoardPage();}
 }
 
 
@@ -757,14 +723,10 @@ function allowDrop(ev) {
  * @returns {Promise<void>} A promise that resolves when the task has been moved.
  */
 async function moveTo(category) {
-    if (currentDraggedTask == null) {
-        return;
-    }
+    if (currentDraggedTask == null) {return;}
     if (localStorage.getItem('username') !== 'Guest') {
         moveToNotGuestUser(category, currentDraggedTask);
-    } else {
-        moveToGuestUser(category, currentDraggedTask)
-    }
+    } else {moveToGuestUser(category, currentDraggedTask)}
     removeHighlight(category);
 }
 
@@ -778,9 +740,7 @@ async function moveTo(category) {
  */
 async function moveToNotGuestUser(category, currentDraggedTask) {
     let task = await getTaskFromDatabase(currentDraggedTask);
-    if (!task) {
-        return;
-    }
+    if (!task) {return;}
     task['category'] = category;
     await putData(currentDraggedTask, task); // Annahme: putData() aktualisiert den Task in der Datenbank
     updateHTML();
@@ -796,9 +756,7 @@ async function moveToNotGuestUser(category, currentDraggedTask) {
  */
 function moveToGuestUser(category, currentDraggedTask) {
     let guestTasks = JSON.parse(localStorage.getItem('guestTasks')) || {};
-    if (!guestTasks[currentDraggedTask]) {
-        return;
-    }
+    if (!guestTasks[currentDraggedTask]) {return;}
     guestTasks[currentDraggedTask]['category'] = category;
     localStorage.setItem('guestTasks', JSON.stringify(guestTasks));
     updateHTML();
@@ -865,9 +823,7 @@ async function putData(taskId, task) {
             body: JSON.stringify(task),
         });
         renderTaskBoard();
-    } catch (error) {
-        console.error('Fehler beim Aktualisieren der Daten:', error);
-    }
+    } catch (error) {}
 }
 
 

@@ -28,45 +28,43 @@ async function loadData(path = "") {
 /**
  * This function checks if the user's login data is correct
  * 
- * @param {string} event - prevents the page from reloading when the submit action is triggered
+ * @param {Event} event - Prevents the page from reloading when the submit action is triggered
  */
 async function checkUser(event) {
-    const keysToRemove = ['guestTasks'];
-
-    keysToRemove.forEach(key => {
-        localStorage.removeItem(key);
-    });
-
     event.preventDefault();
+    ['guestTasks'].forEach(key => localStorage.removeItem(key));
 
     let email = document.getElementById('loginEmail').value;
     let password = document.getElementById('loginPassword').value;
 
     const response = await fetch(firebaseUrl + ".json");
-    const responseToJson = await response.json();
+    const { registered } = await response.json();
 
-    let registered = responseToJson.registered;
-    let userFound = false;
-
-    for (let key in registered) {
-        if (registered.hasOwnProperty(key)) {
-            let user = registered[key];
-            localStorage.setItem('userKey', key);
-
-            if (user.email === email && user.password === password) {
-                localStorage.setItem('username', user.name)
-                window.location.href = "summary.html";
-                userFound = true;
-                break;
-            }
-        }
-    }
-
-    if (!userFound) {
+    if (!findUser(registered, email, password)) {
         document.getElementById('loginAnswer').innerHTML = 'Passwort falsch oder Benutzer nicht gefunden';
     }
 }
 
+/**
+ * This function searches for a user in the registered users list
+ * 
+ * @param {Object} registered - The list of registered users
+ * @param {string} email - The email of the user
+ * @param {string} password - The password of the user
+ * @returns {boolean} - Returns true if the user is found and authenticated, otherwise false
+ */
+function findUser(registered, email, password) {
+    for (let key in registered) {
+        let user = registered[key];
+        if (user.email === email && user.password === password) {
+            localStorage.setItem('userKey', key);
+            localStorage.setItem('username', user.name);
+            window.location.href = "summary.html";
+            return true;
+        }
+    }
+    return false;
+}
 
 /**
  * Diese Funktion extrahiert die Initialen des Benutzernamens und setzt sie im entsprechenden Element.
@@ -113,42 +111,35 @@ async function postUser(path = "", data = {}) {
 function registration(event) {
     event.preventDefault();
 
-    let name = document.getElementById('name');
-    let email = document.getElementById('loginEmail');
-    let password = document.getElementById('loginPassword');
-    let confirmPassword = document.getElementById('confirmLoginPassword');
-
+    let [name, email, password, confirmPassword] = getInputElements();
     if (password.value !== confirmPassword.value) {
         document.getElementById('signAnswer').innerHTML = 'Passwörter stimmen nicht überein';
         return;
     }
 
-    let user = {
-        'name': name.value,
-        'email': email.value,
-        'password': password.value
-    };
-
+    let user = { 'name': name.value, 'email': email.value, 'password': password.value };
     postUser("registered", user)
-        .then(() => {
-            name.value = "";
-            email.value = "";
-            password.value = "";
-            confirmPassword.value = "";
-            document.getElementById('signUpInputsContainer').classList.add('d-none');
-            document.getElementById('name').classList.add('d-none');
-            document.getElementById('acceptPrivacy').classList.add('d-none');
-            document.getElementById('reistrationBtn').classList.add('d-none');
-            document.getElementById('reistrationMessage').innerHTML = 'Registration was successful'
+        .then(() => handleSuccess([name, email, password, confirmPassword]))
+        .catch(error => console.error('Fehler beim Speichern des Benutzers:', error));
+}
 
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 2000);
-        })
-        .catch(error => {
-            console.error('Fehler beim Speichern des Benutzers:', error);
-        });
+/**
+ * Retrieves the input elements for registration.
+ * @returns {HTMLElement[]} - An array of input elements.
+ */
+function getInputElements() {
+    return ['name', 'loginEmail', 'loginPassword', 'confirmLoginPassword'].map(id => document.getElementById(id));
+}
 
+/**
+ * Handles the actions to perform on successful registration.
+ * @param {HTMLElement[]} elements - An array of input elements to clear and hide.
+ */
+function handleSuccess(elements) {
+    elements.forEach(element => element.value = "");
+    ['signUpInputsContainer', 'name', 'acceptPrivacy', 'reistrationBtn'].forEach(id => document.getElementById(id).classList.add('d-none'));
+    document.getElementById('reistrationMessage').innerHTML = 'Registration was successful';
+    setTimeout(() => window.location.href = "index.html", 2000);
 }
 
 
@@ -163,27 +154,34 @@ async function addNewTask(event) {
     event.preventDefault();
 
     let task = collectTaskDetails();
+    localStorage.getItem('username') !== 'Guest' ? await saveTaskToFirebase(task) : saveTaskToLocalStorage(task);
 
-    if (localStorage.getItem('username') !== 'Guest') {
-        await saveTaskToFirebase(task);
-    } else {
-        saveTaskToLocalStorage(task);
-    }
+    toggleTaskElements();
+    startCountdown(3, 'timeToBoard', 'board.html');
+}
 
-    document.getElementById('addTaskSection').classList.add('d-none');
-    document.getElementById('sendAddTaskButtons').classList.add('d-none');
+/**
+ * Toggles the visibility of task elements after submission.
+ */
+function toggleTaskElements() {
+    ['addTaskSection', 'sendAddTaskButtons'].forEach(id => document.getElementById(id).classList.add('d-none'));
     document.getElementById('taskFeedback').classList.remove('d-none');
+}
 
-    let countdownValue = 3; 
-    document.getElementById('timeToBoard').innerHTML = countdownValue;
-
+/**
+ * Starts a countdown and redirects to the specified URL when finished.
+ * 
+ * @param {number} countdownValue - The initial value of the countdown.
+ * @param {string} countdownElementId - The ID of the element displaying the countdown.
+ * @param {string} redirectUrl - The URL to redirect to after the countdown.
+ */
+function startCountdown(countdownValue, countdownElementId, redirectUrl) {
+    document.getElementById(countdownElementId).innerHTML = countdownValue;
     let countdownInterval = setInterval(() => {
-        countdownValue--;
-        document.getElementById('timeToBoard').innerHTML = countdownValue;
-
+        document.getElementById(countdownElementId).innerHTML = --countdownValue;
         if (countdownValue <= 0) {
             clearInterval(countdownInterval);
-            window.location.href = 'board.html';
+            window.location.href = redirectUrl;
         }
     }, 1000);
 }
@@ -335,17 +333,21 @@ async function renderContactsAddTaskGuest(taskIndex) {
             let contactName = contact['name'];
             let initials = contactName.split(' ').map(word => word[0]).join('');
 
-            content.innerHTML += `
-                <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${initialsBgColor}')">
-                    <div class="contact-name">
-                        <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
-                        <p>${contactName}</p>
-                    </div>
-                    <input id="taskCheckbox${i}" class="checkbox" type="checkbox" ${isChecked ? 'checked' : ''}>
-                </div>
-            `;
+            content.innerHTML += generateContactAddTaskHtml(initialsBgColor, isChecked, initials, i, contactName, isChecked);
         }
     }
+}
+
+function generateContactAddTaskHtml(initialsBgColor, isChecked, initials, i, contactName, isChecked) {
+    return `
+        <div class="assigned-contact" id="contactTask${i}" onclick="toggleCheckbox('${i}', '${contactName}', '${initials}', '${initialsBgColor}')">
+            <div class="contact-name">
+                <div style="background-color: ${initialsBgColor};" class="assigned-initials">${initials}</div>
+                <p>${contactName}</p>
+            </div>
+            <input id="taskCheckbox${i}" class="checkbox" type="checkbox" ${isChecked ? 'checked' : ''}>
+        </div>
+    `;
 }
 
 
@@ -433,10 +435,7 @@ function addContactTaskForGuest(contactName, initials, i, color) {
  */
 function renderAddTaskContactInitialsGuest(i) {
     let content = document.getElementById(`selectedContact`);
-    if (!content) {
-        console.error(`Element with id selectedContact${i} not found.`);
-        return;
-    }
+    if (!content) {return;}
     content.innerHTML = '';
     if (taskContacts && Array.isArray(taskContacts) && taskContacts.length > 0) {
         for (let j = 0; j < taskContacts.length; j++) {
@@ -507,11 +506,9 @@ async function renderTaskBoard() {
                 renderTasks(tasks);
                 toggleNoTasksMessages(tasks);
                 await updateAllProgressBars();
-            } else {
-                toggleNoTasksMessages([]);
+            } else { toggleNoTasksMessages([]);
             }
-        } else {
-            renderGuestTaskBoard();
+        } else { renderGuestTaskBoard();
         }
     }
 }
@@ -538,13 +535,9 @@ function toggleNoTasksMessage(category, taskCount) {
     let noTasksElementId = categoryIdMap[category];
     let noTasksElement = document.getElementById(noTasksElementId);
     if (noTasksElement) { // Check if the element exists
-        if (taskCount > 0) {
-            noTasksElement.classList.add('d-none');
-        } else {
-            noTasksElement.classList.remove('d-none');
+        if (taskCount > 0) { noTasksElement.classList.add('d-none');
+        } else { noTasksElement.classList.remove('d-none');
         }
-    } else {
-        console.error(`Element with ID ${noTasksElementId} not found.`);
     }
 }
 
@@ -553,9 +546,7 @@ function toggleNoTasksMessage(category, taskCount) {
  * @param {Array} tasks - The list of tasks to render.
  */
 function renderTasks(tasks) {
-    if (!Array.isArray(tasks) || tasks.length === 0) {
-        return;
-    }
+    if (!Array.isArray(tasks) || tasks.length === 0) { return; }
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         let id = task['category'];
@@ -568,8 +559,7 @@ function renderTasks(tasks) {
                         let contacts = task['taskContacts'][j];
                         contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
                     }
-                } else {
-                    contactsContent.innerHTML = '';
+                } else { contactsContent.innerHTML = '';
                 }
             }
         }
@@ -667,20 +657,16 @@ function checkUsername() {
     const currentPage = window.location.pathname.split('/').pop();
     const allowedPages = ['index.html', 'sign_up.html', 'privacy_policy.html', 'legal_notice.html', 'help.html'];
     if (!username) {
-        if (!allowedPages.includes(currentPage)) {
-            window.location.href = 'index.html';
+        if (!allowedPages.includes(currentPage)) { window.location.href = 'index.html';
         } else {
             const navbarContainer = document.querySelector('.navbar-container');
             const profileInitials = document.querySelector('.profil-initials');
             const backToLogin = document.querySelector('.back_to_login');
-            if (navbarContainer) {
-                navbarContainer.classList.add('d-none');
+            if (navbarContainer) { navbarContainer.classList.add('d-none');
             }
-            if (profileInitials) {
-                profileInitials.classList.add('d-none');
+            if (profileInitials) { profileInitials.classList.add('d-none');
             }
-            if (backToLogin) {
-                backToLogin.classList.remove('d-none');
+            if (backToLogin) { backToLogin.classList.remove('d-none');
             }
         }
     }

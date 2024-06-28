@@ -165,8 +165,7 @@ function renderFilteredContacts(contacts) {
     content.innerHTML += generateContactsSearchHtml(contact, initials, i);
   }
 
-  if (document.getElementById('assignedSearch').value.length === 0) {
-    renderContactsAddTask();
+  if (document.getElementById('assignedSearch').value.length === 0) { renderContactsAddTask();
   }
 }
 
@@ -263,8 +262,8 @@ function generateSubtaskHtml(subtask, i) {
  * @param {number} i - This is the index of the subtask.
  */
 function saveSubtaskTitle(i) {
-  if (subtasks && i >= 0 && i < subtasks.length) {
-      let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
+  if (subtasks && i >= 0 && i < subtasks.length) { 
+    let subtaskTitle = document.getElementById(`subtaskTitle${i}`);
       if (subtaskTitle) {
           let trimmedTitle = subtaskTitle.innerText.trim();
           if (trimmedTitle.length === 0) {
@@ -273,12 +272,8 @@ function saveSubtaskTitle(i) {
               subtasks[i].title = trimmedTitle;
               subtaskTitle.contentEditable = "false";
           }
-      } else {
-          console.error("Element mit ID subtaskTitle" + i + " existiert nicht im DOM.");
-      }
-  } else {
-      console.error("subtasks Array ist nicht definiert oder der Index " + i + " ist außerhalb der Grenzen.");
-  }
+      } 
+  } 
 }
 
 
@@ -325,8 +320,6 @@ function deleteSubtask(i) {
     if (subtasks && i >= 0 && i < subtasks.length) {
         subtasks.splice(i, 1); // Remove the subtask from the array
         renderSubtasksList(); // Re-render the subtask list
-    } else {
-        console.error("subtasks Array ist nicht definiert oder der Index " + i + " ist außerhalb der Grenzen.");
     }
 }
 

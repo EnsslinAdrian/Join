@@ -22,9 +22,7 @@ async function newContact() {
         await postUser('contacts', contact);
         closeAddNewContact();
         await renderContacts();
-    } catch (error) {
-        console.error('Error creating new contact:', error);
-    }
+    } catch (error) {}
 }
 
 
@@ -129,10 +127,7 @@ function generateContactHtml(contact, id, index) {
         </div>
     </div>
   `;
-    } else {
-        console.error("Fehler: Der Name des Kontakts ist undefiniert.");
-        return '';
-    }
+    } else {return '';}
 }
 
 
@@ -181,10 +176,7 @@ function contactTemplateAnimation(contactContainer, rightContent, addIcon, conta
         container.classList.add('active');
         container.innerHTML = getShowContactTemplate(contact, initials, contactJson, id, index);
         let editIcon = document.getElementById('edit-contact-icon');
-        if (!editIcon) {
-            console.error('Element with id "edit-contact-icon" not found after rendering');
-            return;
-        }
+        if (!editIcon) {return;}
         editIcon.classList.remove('d-none');
         editIcon.classList.add('active');
     }, 0);
@@ -208,9 +200,7 @@ async function deleteContact(contactJson, id, index) {
     let contact = JSON.parse(decodeURIComponent(contactJson));
     try {
         await deleteContactDataBank(contact, id);
-    } catch (error) {
-        console.error('Fehler beim Löschen des Kontakts:', error);
-    }
+    } catch (error) {}
 }
 
 
@@ -234,8 +224,6 @@ async function deleteContactDataBank(contact, id) {
         removeContactElement(id);
         clearShowContactDetails();
         updateUIAfterContactDeletion(contact);
-    } else {
-        console.error('Fehler beim Löschen des Kontakts:', response.statusText);
     }
 }
 
@@ -435,8 +423,6 @@ async function saveEditedContactDataBank(id, index, updatedContact) {
         await renderContacts();
         showContact(JSON.stringify(updatedContact), id, index);
         closeEditPopup();
-    } else {
-        console.error('Fehler beim Speichern des bearbeiteten Kontakts:', response.statusText);
     }
 }
 

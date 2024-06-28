@@ -182,11 +182,8 @@ function countTaskCategories(tasks) {
         let category = tasks[i]['category'];
         if (categoryCounts.hasOwnProperty(category)) {
             categoryCounts[category]++;
-        } else {
-            categoryCounts[category] = 1;
-        }
+        } else {categoryCounts[category] = 1;}
     }
-
     return categoryCounts;
 }
 

@@ -124,10 +124,7 @@ function showGuestTaskSubtasks(task, i) {
  */
 function renderGuestCheckbox(taskIndex) {
     let subtasksContainer = document.getElementById('task_subtasks');
-    if (!subtasksContainer) {
-        console.error('task_subtasks element not found');
-        return;
-    }
+    if (!subtasksContainer) {return;}
     let task = guestTasks[taskIndex];
     let subtasks = task['subtasks'];
     subtasksContainer.innerHTML = '';
