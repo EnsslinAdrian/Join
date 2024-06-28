@@ -485,6 +485,10 @@ input::-webkit-inner-spin-button {
         display: block;
         padding-right: 16px;
     }
+
+    .contact-container {
+        scrollbar-width: none;
+    }
 }
 
 @media (max-width: 1055px) {
@@ -586,7 +590,7 @@ input::-webkit-inner-spin-button {
     }
 
     .contact-container {
-        width: 100%;
+        width: 100vw;
     }
 
     .contact-list {
