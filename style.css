@@ -86,8 +86,12 @@ input:focus::placeholder {
 
 .margin-left-right {
     margin-top: 50px;
-    padding-left: 96px;
-    
+    padding-left: 96px; 
+}
+
+.help-margin {
+    margin-top: 50px;
+    margin-left: 96px;
 }
 
 .notice-content {
@@ -165,6 +169,11 @@ color: red;
         flex-direction: column;
         width: 98%;
     }
+
+    .help-margin {
+    margin-left: 20px;
+    margin-right: 20px;
+    } 
 
     .impresseum-section {
     margin-bottom: 100px;

@@ -852,6 +852,7 @@ input::-webkit-inner-spin-button {
         height: 600px;
         width: 300px;
         margin-top: 10px;
+        z-index: 999;
     }
 
     .inputfields {
