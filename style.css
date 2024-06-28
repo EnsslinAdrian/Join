@@ -1,5 +1,6 @@
 body {
     font-family: 'Inter';
+    background: #F6F7F8;
 }
 
 .btn {
@@ -85,8 +86,8 @@ input:focus::placeholder {
 
 .margin-left-right {
     margin-top: 50px;
-    margin-left: 96px;
-    margin-right: 20px;
+    padding-left: 96px;
+    
 }
 
 .notice-content {

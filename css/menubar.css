@@ -4,6 +4,7 @@ body {
     justify-content: center;
     overflow-x: hidden;
     font-family: 'Inter';
+    background: #F6F7F8;
 }
 
 .content-container {
@@ -23,11 +24,23 @@ body {
 header {
     height: 96px;
     width: 100%;
-    background-color: #FFFFFF;
-    box-shadow: 0px 4px 4px 0px #0000001A;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 2;
+    position: relative;
+}
+
+.header-bg {
+height: 96px;
+position: absolute;
+background-color: #FFFFFF;
+box-shadow: 0px 4px 4px 0px #0000001A;
+top: 0;
+left: 0;
+left: 232px;
+width: 100%;
+z-index: 1;
 }
 
 .header-logo {
@@ -314,7 +327,7 @@ display: none
         }
 
         .popup-logout {
-            right: 20px;
+            right: 10px;
             top: 80px;
             transform: translate(150%);
             transition: all 225ms ease-in-out;
@@ -322,6 +335,18 @@ display: none
 
         .popup-logout-mobile {
         transform: translate(0);
-        }    
+        }  
+        
+        .header-bg {
+            height: 80px;
+            position: absolute;
+            background-color: #FFFFFF;
+            box-shadow: 0px 4px 4px 0px #0000001A;
+            top: 0;
+            left: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            }
         
 }
