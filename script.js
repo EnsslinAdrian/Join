@@ -170,7 +170,22 @@ async function addNewTask(event) {
         saveTaskToLocalStorage(task);
     }
 
-    window.location.href = 'board.html';
+    document.getElementById('addTaskSection').classList.add('d-none');
+    document.getElementById('sendAddTaskButtons').classList.add('d-none');
+    document.getElementById('taskFeedback').classList.remove('d-none');
+
+    let countdownValue = 3; 
+    document.getElementById('timeToBoard').innerHTML = countdownValue;
+
+    let countdownInterval = setInterval(() => {
+        countdownValue--;
+        document.getElementById('timeToBoard').innerHTML = countdownValue;
+
+        if (countdownValue <= 0) {
+            clearInterval(countdownInterval);
+            window.location.href = 'board.html';
+        }
+    }, 1000);
 }
 
 

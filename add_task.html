@@ -39,8 +39,9 @@
             </header>
             <div class="margin-left-top" onclick="closeAssigned()">
                 <h1>Add Task</h1>
+                <p id="taskFeedback" class="task-feedback d-none">Task successfully created. Redirecting in <span id="timeToBoard">3</span></p>
                 <!-- anfang -->
-                <div class="add-task-section">
+                <div class="add-task-section" id="addTaskSection">
                     <div class="add-task-titel-container">
                         <form onsubmit="addNewTask(event)" action="">
                             <p>Titel<span class="color-red">*</span></p>
@@ -101,7 +102,7 @@
 
                 </div>
 
-                <div class="send-add-task-buttons">
+                <div class="send-add-task-buttons" id="sendAddTaskButtons">
                     <p class="required-text"><span class="color-red">*</span>This field is required</p>
                     <div class="buttons">
                         <button onclick="clearTask()" type="button" class="clear-button">Clear <img

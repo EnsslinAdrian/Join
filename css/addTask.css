@@ -215,7 +215,7 @@ p {
     left: 0;
     right: 0;
     z-index: 99;
-  }
+}
 
 .select-items div {
     color: black;
@@ -500,7 +500,13 @@ input[type="search"]:focus {
 
 .color-white {
     color: white !important;
-    }
+}
+
+.task-feedback {
+font-size: 30px;
+margin-top: 50px;
+color: rgb(4, 173, 4);
+}
 
 @media (max-width: 1300px) {
     p {
