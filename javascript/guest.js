@@ -8,16 +8,20 @@ function renderGuestTaskBoard() {
     document.getElementById('in-progress').innerHTML = '';
     document.getElementById('await-feedback').innerHTML = '';
     document.getElementById('done').innerHTML = '';
+
     for (let i = 0; i < guestTasks.length; i++) {
         let task = guestTasks[i];
         let id = task['category'];
         document.getElementById(id).innerHTML += generateGuestTodoHTML(task, i);
         let contactsContent = document.getElementById(`taskContacts${i}`);
-        for (let j = 0; j < task['taskContacts'].length; j++) {
-            let contacts = task['taskContacts'][j];
-            contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+        if (contactsContent) {
+            for (let j = 0; j < task['taskContacts'].length; j++) {
+                let contacts = task['taskContacts'][j];
+                contactsContent.innerHTML += `<p class="user-icon" style="background-color: ${contacts['color']};">${contacts['initials']}</p>`;
+            }
         }
     }
+    toggleNoTasksMessages(guestTasks);
     updateAllGuestsProgressBars();
 }
 

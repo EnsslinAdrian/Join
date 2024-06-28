@@ -505,7 +505,10 @@ async function renderTaskBoard() {
 
             if (Array.isArray(tasks) && tasks.length > 0) {
                 renderTasks(tasks);
+                toggleNoTasksMessages(tasks);
                 await updateAllProgressBars();
+            } else {
+                toggleNoTasksMessages([]);
             }
         } else {
             renderGuestTaskBoard();
@@ -513,6 +516,37 @@ async function renderTaskBoard() {
     }
 }
 
+/**
+ * This function toggles the visibility of the "No tasks" messages.
+ * @param {Array} tasks - The list of tasks to check.
+ */
+function toggleNoTasksMessages(tasks) {
+    let categories = ['todo', 'in-progress', 'await-feedback', 'done'];
+    categories.forEach(category => {
+        let taskCount = tasks.filter(task => task.category === category).length;
+        toggleNoTasksMessage(category, taskCount);
+    });
+}
+
+function toggleNoTasksMessage(category, taskCount) {
+    let categoryIdMap = {
+        'todo': 'noTasksTodo',
+        'in-progress': 'noTasksInProgress',
+        'await-feedback': 'noTasksAwaitFeedback',
+        'done': 'noTasksDone'
+    };
+    let noTasksElementId = categoryIdMap[category];
+    let noTasksElement = document.getElementById(noTasksElementId);
+    if (noTasksElement) { // Check if the element exists
+        if (taskCount > 0) {
+            noTasksElement.classList.add('d-none');
+        } else {
+            noTasksElement.classList.remove('d-none');
+        }
+    } else {
+        console.error(`Element with ID ${noTasksElementId} not found.`);
+    }
+}
 
 /**
  * This function renders the tasks into their respective categories.
