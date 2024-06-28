@@ -477,7 +477,6 @@ span {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
-    width: 273px;
 }
 
 ::-webkit-scrollbar {
@@ -598,7 +597,7 @@ span {
     .scrollable_part {
         overflow-y: hidden;
         overflow-x: auto;
-        width: 900px;
+        width: 70vw;
         height: 350px;
     }
 
@@ -626,31 +625,13 @@ span {
     }
 }
 
-@media (max-width: 1205px) {
-    .scrollable_part {
-        width: 830px;
-    }
-}
-
-@media (max-width: 1140px) {
-    .scrollable_part {
-        width: 700px;
-    }
-}
-
 @media (max-width: 1010px) {
     .board-btn p {
         display: none;
     }
 
     .scrollable_part {
-        width: 650px;
-    }
-}
-
-@media (max-width: 998px) {
-    .scrollable_part {
-        width: 600px;
+        width: 70vw;
     }
 }
 
@@ -662,11 +643,6 @@ span {
 
     .board-btn {
         padding: 12px 16px 12px 16px !important;
-    }
-
-    .scrollable_part {
-        width: 550px;
-        height: 330px;
     }
 }
 
@@ -685,25 +661,12 @@ span {
     }
 }
 
-@media (max-width: 872px) {
-    .scrollable_part {
-        width: 500px;
-    }
-}
-
 @media(max-width: 848px) {
     .board-btn {
         height: 35px;
         padding: 0 7px !important;
     }
 }
-
-@media (max-width: 824px) {
-    .scrollable_part {
-        width: 450px;
-    }
-}
-
 
 @media (max-width: 768px) {
     .navbar p {
