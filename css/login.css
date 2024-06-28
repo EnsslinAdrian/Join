@@ -9,6 +9,7 @@ body {
     max-width: 1440px;
     text-align: center;
     animation: backgroundColorChange 2s ease forwards;
+    position: relative;
 }
 
 h1 {
@@ -69,7 +70,7 @@ header {
     }
 
     100% {
-        top: 60px;
+        top: 0;
         left: 60px;
         transform: translate(0, 0) scale(1);
     }
