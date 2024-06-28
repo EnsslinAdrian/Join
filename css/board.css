@@ -736,7 +736,7 @@ span {
 
 @media (max-width: 630px) {
     .scrollable_part {
-        width: 500px;
+        width: 94vw;
     }
 
     .add-task-popup {
@@ -748,10 +748,6 @@ span {
 }
 
 @media (max-width: 524px) {
-    .scrollable_part {
-        width: 440px;
-    }
-
     .header_task_details h1 {
         font-size: 40px !important;
     }
@@ -783,29 +779,7 @@ span {
     }
 }
 
-@media (max-width: 470px) {
-    .scrollable_part {
-        width: 400px;
-    }
-}
-
-@media (max-width: 460px) {
-    .scrollable_part {
-        width: 350px;
-    }
-}
-
-@media (max-width: 380px) {
-    .scrollable_part {
-        width: 300px;
-    }
-}
-
 @media (max-width: 363px) {
-    .scrollable_part {
-        width: 280px;
-    }
-
     .details_delete_edit {
         width: 160px;
     }
@@ -815,7 +789,6 @@ span {
     .tasks-container {
         margin-left: 10px;
         margin-right: 10px;
-        align-self: center;
     }
 
     .board-header {
