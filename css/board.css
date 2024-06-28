@@ -296,16 +296,18 @@ span {
 
 .add-task-popup {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     position: absolute;
     border-radius: 20px;
     top: 100px;
     bottom: 100px;
     left: 150px;
-    right: 150px;
+    right: 0;
     background-color: white;
     transition: transform 0.5s ease-in-out;
     padding: 10px;
+    max-height: 1000px;
+    padding-left: 150px;
 }
 
 .add-task-popup-heigth {

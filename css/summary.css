@@ -6,6 +6,7 @@ body {
 .task-dashboard-section {
     display: flex;
     height: 60vh;
+    max-height: 600px;
 }
 
 .task-dashboard-container {
