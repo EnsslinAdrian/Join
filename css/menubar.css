@@ -2,7 +2,6 @@ body {
     margin: 0;
     display: flex;
     justify-content: center;
-    overflow-x: hidden;
     font-family: 'Inter';
     background: #F6F7F8;
 }
@@ -91,7 +90,7 @@ header {
 .menubar-section {
     background-color: #2A3647;
     width: 232px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
