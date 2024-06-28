@@ -9,7 +9,7 @@
                 'taskCategory': 'User Story',
                 'title': 'Header',
                 'description': 'Header Template erstellen',
-                'date': '2024-06-26',
+                'date': '2024-07-26',
                 'taskContacts': [
                     { initials: "EM", color: "#E64DAF", name: "Emmanuel Mauer" },
                     { initials: "MB", color: "#12B638", name: "Marcel Bauer" },
@@ -27,7 +27,7 @@
                 'taskCategory': 'User Story',
                 'title': 'Footer-Probleme',
                 'description': 'Footer-Links funktionieren nicht',
-                'date': '2024-06-27',
+                'date': '2024-07-27',
                 'taskContacts': [
                     { initials: "LF", color: "#91CBAE", name: "Lukas Fischer" },
                     { initials: "AE", color: "#8DCBED", name: "Adrian Enßlin" },
@@ -47,7 +47,7 @@
                 'taskCategory': 'User Story',
                 'title': 'Navigation optimieren',
                 'description': 'Navigationselemente verbessern',
-                'date': '2024-06-28',
+                'date': '2024-07-28',
                 'taskContacts': [
                     { initials: "MB", color: "#5EC75C", name: "Marcel Bauer" },
                     { initials: "AS", color: "#E0DB18", name: "Anna Schmidt" }
@@ -64,7 +64,7 @@
                 'taskCategory': 'User Story',
                 'title': 'Dark Mode hinzufügen',
                 'description': 'Dark Mode für die Website implementieren',
-                'date': '2024-06-29',
+                'date': '2024-07-29',
                 'taskContacts': [
                     { initials: "MB", color: "#B15736", name: "Marcel Bauer" },
                     { initials: "AE", color: "#97AB21", name: "Adrian Enßlin" },
@@ -83,7 +83,7 @@
                 'taskCategory': 'User Story',
                 'title': 'API-Dokumentation aktualisieren',
                 'description': 'Neue Endpunkte zur API-Dokumentation hinzufügen',
-                'date': '2024-06-25',
+                'date': '2024-07-25',
                 'taskContacts': [
                     { initials: "AS", color: "#19148F", name: "Anna Schmidt" },
                     { initials: "SB", color: "#F757FE", name: "Sophie Becker" },
