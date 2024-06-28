@@ -477,6 +477,7 @@ span {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    width: 105%;
 }
 
 ::-webkit-scrollbar {
@@ -631,7 +632,7 @@ span {
     }
 
     .scrollable_part {
-        width: 70vw;
+        width: 60vw;
     }
 }
 
